@@ -55,7 +55,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="prose prose-gray prose-lg max-w-none font-serif leading-relaxed text-gray-800"
+              className="prose prose-gray prose-lg max-w-none font-reading leading-relaxed text-gray-800"
             >
               {article.content.split('\n\n').map((para, i) => (
                 <p key={i} className="mb-6">{para}</p>

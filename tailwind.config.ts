@@ -21,6 +21,7 @@ export default {
       fontFamily: {
         serif: ['"Instrument Serif"', "serif"],
         sans: ["Inter", "sans-serif"],
+        reading: ["Lora", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

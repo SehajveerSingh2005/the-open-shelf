@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -51,5 +52,9 @@
 
   h1, h2, h3, h4, .font-serif {
     font-family: 'Instrument Serif', serif;
+  }
+
+  .font-reading {
+    font-family: 'Lora', serif;
   }
 }

@@ -35,7 +35,7 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        <p className="text-sm text-gray-600 line-clamp-3 font-serif leading-relaxed">
+        <p className="text-sm text-gray-600 line-clamp-3 font-reading leading-relaxed">
           {article.excerpt}
         </p>
         
