@@ -4,8 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { MadeWithDyad } from "@/components/made-with-dyad";
-import { BookOpen, Map, Zap } from 'lucide-react';
+import { BookOpen, Map, Zap, Mail } from 'lucide-react';
 
 const FloatingCard = ({ delay, x, y, title, source, readingTime, author, excerpt, opacity = 0.9 }: any) => (
   <motion.div
@@ -56,7 +55,6 @@ const Landing = () => {
     <div className="min-h-screen w-full bg-[#fafafa] flex flex-col relative overflow-x-hidden">
       {/* Hero Section */}
       <section className="h-screen flex flex-col items-center justify-center relative shrink-0">
-        {/* Background Grid */}
         <div 
           className="absolute inset-0 pointer-events-none opacity-40"
           style={{
@@ -65,7 +63,6 @@ const Landing = () => {
           }}
         />
 
-        {/* Floating Cards */}
         <FloatingCard 
           delay={0.2} x="-320px" y="-220px" 
           title="The Architecture of Silence" 
@@ -139,7 +136,7 @@ const Landing = () => {
         </main>
       </section>
 
-      {/* Philosophy/Features Section */}
+      {/* Philosophy Section */}
       <section className="py-32 border-t border-gray-100 bg-white relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12">
@@ -171,14 +168,46 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-20 border-t border-gray-100">
-        <div className="max-w-screen-xl mx-auto px-6 flex flex-col items-center space-y-8 opacity-40">
-          <div className="flex justify-between w-full items-center">
-            <p className="text-[10px] uppercase tracking-[0.2em] font-sans">v0.1 Alpha</p>
-            <p className="text-[10px] uppercase tracking-[0.2em] font-sans">Spatial Reader</p>
+      {/* New Matching Footer */}
+      <footer className="bg-white pt-24 pb-12 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-24">
+            <div className="col-span-1 lg:col-span-2 space-y-6">
+              <h3 className="text-3xl font-serif font-medium text-gray-900">The Open Shelf</h3>
+              <p className="text-gray-500 font-serif italic max-w-sm leading-relaxed">
+                A non-linear repository for ideas, essays, and slow media. Built for those who find depth in the details.
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans font-medium">Explore</p>
+              <ul className="space-y-2 font-serif text-gray-600">
+                <li><Link to="/app" className="hover:text-gray-900 transition-colors">The Canvas</Link></li>
+                <li><Link to="/app" className="hover:text-gray-900 transition-colors">The Feed</Link></li>
+                <li><a href="#" className="hover:text-gray-900 transition-colors">Manifesto</a></li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans font-medium">Connection</p>
+              <ul className="space-y-2 font-serif text-gray-600">
+                <li><a href="#" className="hover:text-gray-900 transition-colors">Twitter</a></li>
+                <li><a href="#" className="hover:text-gray-900 transition-colors">Substack</a></li>
+                <li><a href="#" className="hover:text-gray-900 transition-colors">Contact</a></li>
+              </ul>
+            </div>
           </div>
-          <MadeWithDyad />
+
+          <div className="pt-12 border-t border-gray-50 flex flex-col md:row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gray-300 font-sans">
+              © 2024 The Open Shelf • All thoughts reserved
+            </p>
+            <div className="flex items-center space-x-6">
+              <a href="#" className="text-gray-300 hover:text-gray-900 transition-colors">
+                <Mail size={16} strokeWidth={1.5} />
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
