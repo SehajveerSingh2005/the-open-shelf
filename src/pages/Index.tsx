@@ -7,12 +7,42 @@ import FeedView from '@/components/FeedView';
 import ReaderView from '@/components/ReaderView';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus, Rss } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
+import { showSuccess, showError } from '@/utils/toast';
 
 const Index = () => {
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  const { data: articles, isLoading, error } = useArticles();
+  const [newFeedUrl, setNewFeedUrl] = useState('');
+  const [isAddingFeed, setIsAddingFeed] = useState(false);
+  
+  const { data: articles, isLoading, error, refetch } = useArticles();
+
+  const handleAddFeed = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newFeedUrl) return;
+
+    setIsAddingFeed(true);
+    try {
+      // In a real implementation, you would call the Edge Function here:
+      // await supabase.functions.invoke('fetch-rss', { body: { feedUrl: newFeedUrl } });
+      
+      // For now, let's simulate adding a feed entry
+      const { error } = await supabase.from('feeds').insert([{ url: newFeedUrl }]);
+      if (error) throw error;
+
+      showSuccess("Feed added! It might take a moment to fetch articles.");
+      setNewFeedUrl('');
+      refetch();
+    } catch (err: any) {
+      showError(err.message || "Failed to add feed");
+    } finally {
+      setIsAddingFeed(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -31,21 +61,44 @@ const Index = () => {
           The Open Shelf
         </h1>
         
-        <Tabs value={view} onValueChange={(v) => setView(v as 'canvas' | 'feed')}>
-          <TabsList className="bg-gray-100/50">
-            <TabsTrigger value="canvas" className="text-[10px] uppercase tracking-widest px-4">Canvas</TabsTrigger>
-            <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4">Feed</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center space-x-4">
+          <form onSubmit={handleAddFeed} className="flex items-center space-x-2">
+            <div className="relative">
+              <Rss className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+              <Input
+                type="url"
+                placeholder="RSS URL..."
+                value={newFeedUrl}
+                onChange={(e) => setNewFeedUrl(e.target.value)}
+                className="pl-9 h-9 w-48 lg:w-64 text-xs font-sans rounded-none border-gray-100 bg-gray-50/50 focus-visible:ring-gray-200"
+              />
+            </div>
+            <Button 
+              type="submit" 
+              size="sm" 
+              disabled={isAddingFeed}
+              className="rounded-none h-9 bg-gray-900 hover:bg-black text-[10px] uppercase tracking-widest px-4"
+            >
+              {isAddingFeed ? <Loader2 className="animate-spin" size={14} /> : "Add"}
+            </Button>
+          </form>
+
+          <div className="h-6 w-px bg-gray-100 mx-2 hidden md:block" />
+
+          <Tabs value={view} onValueChange={(v) => setView(v as 'canvas' | 'feed')}>
+            <TabsList className="bg-gray-100/50 rounded-none h-9">
+              <TabsTrigger value="canvas" className="text-[10px] uppercase tracking-widest px-4 h-7 data-[state=active]:bg-white data-[state=active]:shadow-none">Canvas</TabsTrigger>
+              <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4 h-7 data-[state=active]:bg-white data-[state=active]:shadow-none">Feed</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
       </header>
 
       {/* Main Content Area */}
       <main className="flex-1 mt-[73px] relative overflow-hidden">
         {error ? (
           <div className="h-full flex items-center justify-center text-gray-400 font-serif italic p-12 text-center">
-            {error instanceof Error && error.message.includes('relation "articles" does not exist') 
-              ? "Please run the SQL schema in your Supabase dashboard to set up the database."
-              : "Something went wrong while loading articles."}
+            Something went wrong while loading articles.
           </div>
         ) : articles && articles.length > 0 ? (
           view === 'canvas' ? (
@@ -62,8 +115,15 @@ const Index = () => {
             </div>
           )
         ) : (
-          <div className="h-full flex items-center justify-center text-gray-400 font-serif italic">
-            Your shelf is currently empty. Add an RSS feed to begin.
+          <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
+            <p className="font-serif italic text-lg text-center max-w-sm">
+              Your shelf is empty. Paste an RSS URL above to begin your spatial collection.
+            </p>
+            <div className="flex space-x-4 opacity-50 grayscale">
+              <span className="text-[10px] uppercase tracking-widest">Aeon</span>
+              <span className="text-[10px] uppercase tracking-widest">The Browser</span>
+              <span className="text-[10px] uppercase tracking-widest">Substack</span>
+            </div>
           </div>
         )}
       </main>
