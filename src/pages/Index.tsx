@@ -23,9 +23,10 @@ const Index = () => {
     try {
       const { data: feeds } = await supabase.from('feeds').select('url');
       if (feeds && feeds.length > 0) {
-        // Trigger the Edge Function for each feed using the full hardcoded URL
+        // Trigger the Edge Function for each feed using the function name
+        // The Supabase client handles the base URL automatically
         const promises = feeds.map(feed => 
-          supabase.functions.invoke('https://uukulcagkypsgguzzaei.supabase.co/functions/v1/fetch-rss', { 
+          supabase.functions.invoke('fetch-rss', { 
             body: { feedUrl: feed.url } 
           })
         );
