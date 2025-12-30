@@ -6,49 +6,22 @@ import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
 import ReaderView from '@/components/ReaderView';
 import { Article } from '@/types/article';
-
-const MOCK_ARTICLES: Article[] = [
-  {
-    id: '1',
-    title: 'The Architecture of Silence',
-    author: 'Elena Rossi',
-    source: 'Aeon',
-    readingTime: '12 min read',
-    publishedAt: 'Oct 24, 2023',
-    excerpt: 'In the modern world, silence has become a luxury. We explore how minimalist design can restore our cognitive peace.',
-    content: 'Silence is not merely the absence of sound. It is a presence in its own right...\n\nWhen we build spaces that invite quiet, we are building spaces that invite thought. The modern office, the open-plan home, the bustling city street—these are all environments designed for activity, but rarely for contemplation.',
-    x: 100,
-    y: 100
-  },
-  {
-    id: '2',
-    title: 'Why We Read Long-Form',
-    author: 'Julian Barnes',
-    source: 'The Browser',
-    readingTime: '8 min read',
-    publishedAt: 'Nov 2, 2023',
-    excerpt: 'The neurological benefits of deep reading are being lost to the scroll. Here is why we must fight to keep them.',
-    content: 'Deep reading is a specialized form of consciousness. It requires a specific kind of focus that the digital age is rapidly eroding...\n\nWhen you engage with an essay that spans thousands of words, you aren\'t just consuming information; you are co-creating a reality with the author.',
-    x: 450,
-    y: 200
-  },
-  {
-    id: '3',
-    title: 'The Lost Art of Letter Writing',
-    author: 'Sarah Jenkins',
-    source: 'Substack',
-    readingTime: '15 min read',
-    publishedAt: 'Dec 12, 2023',
-    excerpt: 'A letter is a physical manifestation of time spent thinking about someone else. In an era of instant messaging, its value has skyrocketed.',
-    content: 'There is a specific weight to a letter. It is the weight of intention. Unlike an email, which can be fired off in seconds, a letter demands a physical ritual...',
-    x: 200,
-    y: 400
-  }
-];
+import { useArticles } from '@/hooks/useArticles';
+import { Loader2 } from 'lucide-react';
 
 const Index = () => {
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const { data: articles, isLoading, error } = useArticles();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
+        <Loader2 className="animate-spin text-gray-400" size={32} />
+        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">Loading your shelf...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-screen bg-[#fafafa] flex flex-col overflow-hidden">
@@ -68,17 +41,29 @@ const Index = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 mt-[73px] relative overflow-hidden">
-        {view === 'canvas' ? (
-          <CanvasView 
-            articles={MOCK_ARTICLES} 
-            onArticleClick={setSelectedArticle} 
-          />
-        ) : (
-          <div className="h-full overflow-y-auto subtle-grid">
-            <FeedView 
-              articles={MOCK_ARTICLES} 
+        {error ? (
+          <div className="h-full flex items-center justify-center text-gray-400 font-serif italic p-12 text-center">
+            {error instanceof Error && error.message.includes('relation "articles" does not exist') 
+              ? "Please run the SQL schema in your Supabase dashboard to set up the database."
+              : "Something went wrong while loading articles."}
+          </div>
+        ) : articles && articles.length > 0 ? (
+          view === 'canvas' ? (
+            <CanvasView 
+              articles={articles} 
               onArticleClick={setSelectedArticle} 
             />
+          ) : (
+            <div className="h-full overflow-y-auto subtle-grid">
+              <FeedView 
+                articles={articles} 
+                onArticleClick={setSelectedArticle} 
+              />
+            </div>
+          )
+        ) : (
+          <div className="h-full flex items-center justify-center text-gray-400 font-serif italic">
+            Your shelf is currently empty. Add an RSS feed to begin.
           </div>
         )}
       </main>
