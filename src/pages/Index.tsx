@@ -1,54 +1,55 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
 import ReaderView from '@/components/ReaderView';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2, Plus, Rss } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Loader2, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showSuccess, showError } from '@/utils/toast';
 
 const Index = () => {
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-  const [newFeedUrl, setNewFeedUrl] = useState('');
-  const [isAddingFeed, setIsAddingFeed] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   
   const { data: articles, isLoading, error, refetch } = useArticles();
 
-  const handleAddFeed = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newFeedUrl) return;
-
-    setIsAddingFeed(true);
+  const syncFeeds = async () => {
+    setIsSyncing(true);
     try {
-      // In a real implementation, you would call the Edge Function here:
-      // await supabase.functions.invoke('fetch-rss', { body: { feedUrl: newFeedUrl } });
-      
-      // For now, let's simulate adding a feed entry
-      const { error } = await supabase.from('feeds').insert([{ url: newFeedUrl }]);
-      if (error) throw error;
-
-      showSuccess("Feed added! It might take a moment to fetch articles.");
-      setNewFeedUrl('');
-      refetch();
-    } catch (err: any) {
-      showError(err.message || "Failed to add feed");
+      const { data: feeds } = await supabase.from('feeds').select('url');
+      if (feeds && feeds.length > 0) {
+        // Trigger the Edge Function for each feed
+        const promises = feeds.map(feed => 
+          supabase.functions.invoke('fetch-rss', { body: { feedUrl: feed.url } })
+        );
+        await Promise.all(promises);
+        showSuccess("Shelf updated with latest articles");
+        refetch();
+      }
+    } catch (err) {
+      console.error("Sync error:", err);
     } finally {
-      setIsAddingFeed(false);
+      setIsSyncing(false);
     }
   };
 
-  if (isLoading) {
+  // Auto-sync on first load if empty
+  useEffect(() => {
+    if (!isLoading && (!articles || articles.length === 0)) {
+      syncFeeds();
+    }
+  }, [isLoading, articles?.length]);
+
+  if (isLoading && !isSyncing) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
         <Loader2 className="animate-spin text-gray-400" size={32} />
-        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">Loading your shelf...</p>
+        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">Opening the shelf...</p>
       </div>
     );
   }
@@ -61,29 +62,17 @@ const Index = () => {
           The Open Shelf
         </h1>
         
-        <div className="flex items-center space-x-4">
-          <form onSubmit={handleAddFeed} className="flex items-center space-x-2">
-            <div className="relative">
-              <Rss className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
-              <Input
-                type="url"
-                placeholder="RSS URL..."
-                value={newFeedUrl}
-                onChange={(e) => setNewFeedUrl(e.target.value)}
-                className="pl-9 h-9 w-48 lg:w-64 text-xs font-sans rounded-none border-gray-100 bg-gray-50/50 focus-visible:ring-gray-200"
-              />
-            </div>
-            <Button 
-              type="submit" 
-              size="sm" 
-              disabled={isAddingFeed}
-              className="rounded-none h-9 bg-gray-900 hover:bg-black text-[10px] uppercase tracking-widest px-4"
-            >
-              {isAddingFeed ? <Loader2 className="animate-spin" size={14} /> : "Add"}
-            </Button>
-          </form>
+        <div className="flex items-center space-x-6">
+          <button 
+            onClick={syncFeeds}
+            disabled={isSyncing}
+            className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={isSyncing ? "animate-spin" : ""} size={14} />
+            <span>{isSyncing ? "Syncing..." : "Sync Feeds"}</span>
+          </button>
 
-          <div className="h-6 w-px bg-gray-100 mx-2 hidden md:block" />
+          <div className="h-6 w-px bg-gray-100 mx-2" />
 
           <Tabs value={view} onValueChange={(v) => setView(v as 'canvas' | 'feed')}>
             <TabsList className="bg-gray-100/50 rounded-none h-9">
@@ -96,7 +85,12 @@ const Index = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 mt-[73px] relative overflow-hidden">
-        {error ? (
+        {isSyncing && (!articles || articles.length === 0) ? (
+          <div className="h-full flex flex-col items-center justify-center space-y-4 text-gray-400">
+            <Loader2 className="animate-spin" size={24} />
+            <p className="font-serif italic">Collecting thoughts from across the web...</p>
+          </div>
+        ) : error ? (
           <div className="h-full flex items-center justify-center text-gray-400 font-serif italic p-12 text-center">
             Something went wrong while loading articles.
           </div>
@@ -117,13 +111,8 @@ const Index = () => {
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
             <p className="font-serif italic text-lg text-center max-w-sm">
-              Your shelf is empty. Paste an RSS URL above to begin your spatial collection.
+              Your shelf is empty. We couldn't find any articles in your feeds.
             </p>
-            <div className="flex space-x-4 opacity-50 grayscale">
-              <span className="text-[10px] uppercase tracking-widest">Aeon</span>
-              <span className="text-[10px] uppercase tracking-widest">The Browser</span>
-              <span className="text-[10px] uppercase tracking-widest">Substack</span>
-            </div>
           </div>
         )}
       </main>
