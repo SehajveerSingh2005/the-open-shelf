@@ -6,7 +6,6 @@ import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
 import ReaderView from '@/components/ReaderView';
 import { Article } from '@/types/article';
-import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const MOCK_ARTICLES: Article[] = [
   {
@@ -89,10 +88,6 @@ const Index = () => {
         article={selectedArticle} 
         onClose={() => setSelectedArticle(null)} 
       />
-
-      <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
-        <MadeWithDyad />
-      </div>
     </div>
   );
 };

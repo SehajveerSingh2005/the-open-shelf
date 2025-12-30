@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useMotionValue } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -14,21 +14,41 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const [scale, setScale] = useState(1);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  const handleWheel = (e: React.WheelEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      const delta = e.deltaY > 0 ? 0.9 : 1.1;
-      setScale(prev => Math.min(Math.max(prev * delta, 0.2), 2));
-    } else {
-      x.set(x.get() - e.deltaX);
-      y.set(y.get() - e.deltaY);
-    }
-  };
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Prevent browser zoom on pinch (ctrl + wheel)
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        
+        const zoomSpeed = 0.01;
+        const delta = -e.deltaY;
+        const newScale = Math.min(Math.max(scale + delta * zoomSpeed, 0.2), 3);
+        
+        setScale(newScale);
+      } else {
+        // Regular panning
+        x.set(x.get() - e.deltaX);
+        y.set(y.get() - e.deltaY);
+      }
+    };
+
+    // We must use a non-passive listener to be able to preventDefault
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, [scale, x, y]);
 
   return (
     <div 
+      ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] cursor-grab active:cursor-grabbing select-none"
-      onWheel={handleWheel}
       style={{
         backgroundImage: 'radial-gradient(#e5e5e5 1px, transparent 1px)',
         backgroundSize: '40px 40px',
@@ -51,7 +71,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       </motion.div>
       
       <div className="absolute bottom-8 right-8 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest pointer-events-none">
-        Cmd + Scroll to Zoom • Drag to Pan
+        Pinch to Zoom • Drag to Pan
       </div>
     </div>
   );
