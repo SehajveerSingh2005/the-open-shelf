@@ -20,8 +20,8 @@ export default {
     extend: {
       fontFamily: {
         serif: ['"Instrument Serif"', "serif"],
-        sans: ["Inter", "sans-serif"],
-        reading: ["Lora", "serif"],
+        sans: ['"Instrument Sans"', "sans-serif"],
+        reading: ['"Instrument Sans"', "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

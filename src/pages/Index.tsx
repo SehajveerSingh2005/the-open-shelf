@@ -74,7 +74,7 @@ const Index = () => {
             onArticleClick={setSelectedArticle} 
           />
         ) : (
-          <div className="h-full overflow-y-auto">
+          <div className="h-full overflow-y-auto subtle-grid">
             <FeedView 
               articles={MOCK_ARTICLES} 
               onArticleClick={setSelectedArticle} 

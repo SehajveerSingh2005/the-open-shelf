@@ -21,38 +21,26 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Prevent browser zoom on pinch (ctrl + wheel)
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
-        
         const zoomSpeed = 0.01;
         const delta = -e.deltaY;
         const newScale = Math.min(Math.max(scale + delta * zoomSpeed, 0.2), 3);
-        
         setScale(newScale);
       } else {
-        // Regular panning
         x.set(x.get() - e.deltaX);
         y.set(y.get() - e.deltaY);
       }
     };
 
-    // We must use a non-passive listener to be able to preventDefault
     container.addEventListener('wheel', handleWheel, { passive: false });
-    
-    return () => {
-      container.removeEventListener('wheel', handleWheel);
-    };
+    return () => container.removeEventListener('wheel', handleWheel);
   }, [scale, x, y]);
 
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#fafafa] cursor-grab active:cursor-grabbing select-none"
-      style={{
-        backgroundImage: 'radial-gradient(#e5e5e5 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-      }}
+      className="w-full h-full relative overflow-hidden bg-[#fafafa] cursor-grab active:cursor-grabbing select-none subtle-grid"
     >
       <motion.div
         drag
