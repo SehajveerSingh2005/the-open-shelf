@@ -28,7 +28,7 @@ const FloatingCard = ({ delay, x, y, title, source, readingTime, author, excerpt
         </p>
         <h4 className="text-lg font-serif font-medium leading-tight text-gray-900">{title}</h4>
       </div>
-      <p className="text-[11px] text-gray-500 font-serif line-clamp-2 leading-relaxed italic">
+      <p className="text-[11px] text-gray-500 font-serif line-clamp-2 leading-relaxed">
         {excerpt}
       </p>
       <div className="pt-1">
@@ -50,7 +50,7 @@ const Landing = () => {
         }}
       />
 
-      {/* Floating Cards - More visible and detailed */}
+      {/* Floating Cards */}
       <FloatingCard 
         delay={0.2} x="-320px" y="-220px" 
         title="The Architecture of Silence" 
@@ -97,12 +97,12 @@ const Landing = () => {
             <p className="text-[11px] uppercase tracking-[0.6em] text-gray-400 font-sans ml-[0.6em]">
               A Calm Space for Thought
             </p>
-            <h1 className="text-7xl md:text-[10rem] font-serif font-medium tracking-tight text-gray-900 leading-[0.8] italic">
+            <h1 className="text-7xl md:text-[10rem] font-serif font-medium tracking-tight text-gray-900 leading-[0.8]">
               The Open Shelf
             </h1>
           </div>
           
-          <p className="max-w-xl mx-auto text-xl md:text-2xl text-gray-500 font-serif italic leading-relaxed">
+          <p className="max-w-xl mx-auto text-xl md:text-2xl text-gray-500 font-serif leading-relaxed">
             A spatial reading platform for long-form essays, independent blogs, and deep thinkers.
           </p>
         </motion.div>
