@@ -23,16 +23,27 @@ const Index = () => {
     try {
       const { data: feeds } = await supabase.from('feeds').select('url');
       if (feeds && feeds.length > 0) {
-        // Trigger the Edge Function for each feed
+        // Trigger the Edge Function for each feed using the full hardcoded URL
         const promises = feeds.map(feed => 
-          supabase.functions.invoke('fetch-rss', { body: { feedUrl: feed.url } })
+          supabase.functions.invoke('https://uukulcagkypsgguzzaei.supabase.co/functions/v1/fetch-rss', { 
+            body: { feedUrl: feed.url } 
+          })
         );
-        await Promise.all(promises);
-        showSuccess("Shelf updated with latest articles");
+        
+        const results = await Promise.all(promises);
+        const errors = results.filter(r => r.error);
+        
+        if (errors.length > 0) {
+          console.error("Some feeds failed to sync:", errors);
+          showError("Some feeds could not be reached.");
+        } else {
+          showSuccess("Shelf updated with latest articles");
+        }
         refetch();
       }
     } catch (err) {
       console.error("Sync error:", err);
+      showError("Connection lost while syncing feeds.");
     } finally {
       setIsSyncing(false);
     }
