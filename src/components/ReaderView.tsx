@@ -12,13 +12,17 @@ interface ReaderViewProps {
 }
 
 const ReaderView = ({ article, onClose }: ReaderViewProps) => {
+  // Define a shared elegant transition
+  const transition = { duration: 0.6, ease: [0.16, 1, 0.3, 1] };
+
   return (
     <AnimatePresence>
       {article && (
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
           className="fixed inset-0 z-50 bg-white overflow-y-auto"
         >
           <div className="max-w-3xl mx-auto px-6 py-20 relative">
@@ -42,9 +46,9 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
             </div>
 
             <motion.header 
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={transition}
               className="mb-16 space-y-6"
             >
               <div className="space-y-4">
@@ -63,9 +67,9 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
             </motion.header>
 
             <motion.div
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ ...transition, delay: 0.1 }}
               className="prose prose-gray prose-lg max-w-none font-sans leading-relaxed text-gray-800 
                 prose-headings:font-serif prose-headings:font-medium prose-headings:tracking-tight
                 prose-p:mb-8 prose-p:leading-8
