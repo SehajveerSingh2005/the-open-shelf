@@ -90,8 +90,15 @@ serve(async (req) => {
       }
       
       const idx = baseIdx + index;
-      const col = idx % 3;
-      const row = Math.floor(idx / 3);
+      
+      // Organic "scattered" placement using a jittered phyllotaxis/spiral pattern
+      const angle = idx * 137.5; // Golden angle
+      const radius = 400 * Math.sqrt(idx + 1);
+      const jitterX = (Math.random() - 0.5) * 200;
+      const jitterY = (Math.random() - 0.5) * 200;
+
+      const x = Math.cos(angle * Math.PI / 180) * radius + jitterX;
+      const y = Math.sin(angle * Math.PI / 180) * radius + jitterY;
 
       return {
         feed_id: feedData.id,
@@ -103,8 +110,8 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x: (col - 1) * 450 + (Math.random() * 40),
-        y: (row) * 600 + (Math.random() * 40)
+        x,
+        y
       };
     }));
 

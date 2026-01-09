@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
@@ -16,12 +16,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   // World State
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const scale = useMotionValue(0.8);
+  const scale = useMotionValue(0.7);
   
   // Smoothness
-  const smoothX = useSpring(x, { damping: 30, stiffness: 200 });
-  const smoothY = useSpring(y, { damping: 30, stiffness: 200 });
-  const smoothScale = useSpring(scale, { damping: 30, stiffness: 200 });
+  const smoothX = useSpring(x, { damping: 40, stiffness: 250 });
+  const smoothY = useSpring(y, { damping: 40, stiffness: 250 });
+  const smoothScale = useSpring(scale, { damping: 40, stiffness: 250 });
 
   // Centering Logic
   const centerCanvas = useCallback((immediate = false) => {
@@ -44,14 +44,42 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     }
   }, [articles, x, y]);
 
-  // Initial center on first mount with articles
+  // Initial center
   useEffect(() => {
     if (articles.length > 0 && x.get() === 0 && y.get() === 0) {
       centerCanvas(true);
     }
   }, [articles.length, centerCanvas, x, y]);
 
-  // Gesture & Wheel Handlers
+  // Zoom to Mouse Logic
+  const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const currentScale = scale.get();
+    
+    // Calculate new scale
+    const zoomSpeed = 0.003;
+    const newScale = Math.min(Math.max(currentScale - deltaY * zoomSpeed, 0.1), 2.5);
+    
+    if (newScale === currentScale) return;
+
+    // To zoom to a focal point, we need to adjust X and Y:
+    // 1. Find mouse position relative to container center
+    const focalX = mouseX - rect.left - rect.width / 2;
+    const focalY = mouseY - rect.top - rect.height / 2;
+
+    // 2. Project focal point into world coordinates
+    const worldX = (focalX - x.get()) / currentScale;
+    const worldY = (focalY - y.get()) / currentScale;
+
+    // 3. Update scale and adjust X/Y so world coordinates stay at the same focal point
+    scale.set(newScale);
+    x.set(focalX - worldX * newScale);
+    y.set(focalY - worldY * newScale);
+  }, [x, y, scale]);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -63,12 +91,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       e.preventDefault();
       
       if (e.ctrlKey || e.metaKey) {
-        // Zoom
-        const zoomSpeed = 0.005;
-        const newScale = Math.min(Math.max(scale.get() - e.deltaY * zoomSpeed, 0.15), 2.5);
-        scale.set(newScale);
+        handleZoom(e.deltaY, e.clientX, e.clientY);
       } else {
-        // Pan
         x.set(x.get() - e.deltaX);
         y.set(y.get() - e.deltaY);
       }
@@ -76,11 +100,10 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 2) {
-        const d = Math.hypot(
+        initialPinchDistance = Math.hypot(
           e.touches[0].pageX - e.touches[1].pageX,
           e.touches[0].pageY - e.touches[1].pageY
         );
-        initialPinchDistance = d;
         initialScale = scale.get();
       }
     };
@@ -93,7 +116,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           e.touches[0].pageY - e.touches[1].pageY
         );
         const factor = d / initialPinchDistance;
-        scale.set(Math.min(Math.max(initialScale * factor, 0.15), 2.5));
+        const newScale = Math.min(Math.max(initialScale * factor, 0.1), 2.5);
+        scale.set(newScale);
       }
     };
 
@@ -106,7 +130,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       container.removeEventListener('touchstart', handleTouchStart);
       container.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [x, y, scale]);
+  }, [x, y, scale, handleZoom]);
 
   return (
     <div 
@@ -138,17 +162,17 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           x: smoothX, 
           y: smoothY, 
           scale: smoothScale,
-          transformOrigin: 'center center' 
+          transformOrigin: '0 0' // Pivot is handled by X/Y adjustments in handleZoom
         }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        className="absolute left-1/2 top-1/2 pointer-events-none"
       >
         {articles.map((article) => (
           <div 
             key={article.id} 
             className="absolute pointer-events-auto z-10"
             style={{ 
-              left: `calc(50% + ${article.x}px)`, 
-              top: `calc(50% + ${article.y}px)`,
+              left: article.x, 
+              top: article.y,
               transform: 'translate(-50%, -50%)'
             }}
           >
@@ -174,12 +198,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           >
             Reset View
           </button>
-        </div>
-        
-        <div className="hidden lg:block bg-black/5 backdrop-blur-sm px-4 py-2 rounded-full">
-          <p className="text-[9px] uppercase tracking-widest text-gray-400 font-sans">
-            Ctrl + Scroll to Zoom • Two Fingers to Pan
-          </p>
         </div>
       </div>
     </div>
