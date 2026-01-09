@@ -13,44 +13,56 @@ const parser = new Parser({
   }
 });
 
-async function fetchFullContent(url: string, source: string) {
+async function fetchFullContent(url: string, sourceName: string) {
   try {
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
       }
     });
     
     if (!response.ok) return null;
     const html = await response.text();
 
-    if (source.toLowerCase().includes('aeon')) {
-      // Aeon stores article content in several potential containers
-      const selectors = [
-        /<div class="article__body[^"]*">([\s\S]*?)<\/div>\s*<div class="article__footer/i,
-        /<div class="body-content[^"]*">([\s\S]*?)<\/div>/i,
-        /<article[^>]*>([\s\S]*?)<\/article>/i,
-        /<div class="article-body">([\s\S]*?)<\/div>/i
+    // Specific logic for Aeon
+    if (sourceName.toLowerCase().includes('aeon') || url.includes('aeon.co')) {
+      // Aeon usually puts content in article__body or similar
+      const patterns = [
+        /<div class="article__body[^>]*>([\s\S]*?)<\/div>\s*<div class="article__footer/i,
+        /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i,
+        /<div class="article-body[^>]*>([\s\S]*?)<\/div>/i,
+        /<article[^>]*>([\s\S]*?)<\/article>/i
       ];
 
-      for (const selector of selectors) {
-        const match = html.match(selector);
+      for (const pattern of patterns) {
+        const match = html.match(pattern);
         if (match && match[1]) {
-          // Remove ads and sidebars within the match if possible
-          return match[1].replace(/<div class="ad-container">[\s\S]*?<\/div>/gi, '').trim();
+          // Clean up some common junk
+          return match[1]
+            .replace(/<div class="ad-container">[\s\S]*?<\/div>/gi, '')
+            .replace(/<aside[\s\S]*?<\/aside>/gi, '')
+            .trim();
         }
       }
     }
     
+    // Logic for Substacks
     if (url.includes('substack.com')) {
-      const substackMatch = html.match(/<div class="available-content">([\s\S]*?)<\/div>/i) || 
-                           html.match(/<div class="body-content">([\s\S]*?)<\/div>/i);
-      if (substackMatch && substackMatch[1]) return substackMatch[1].trim();
+      const substackPatterns = [
+        /<div class="available-content">([\s\S]*?)<\/div>/i,
+        /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i,
+        /<div class="post-content[^>]*>([\s\S]*?)<\/div>/i
+      ];
+      
+      for (const pattern of substackPatterns) {
+        const match = html.match(pattern);
+        if (match && match[1]) return match[1].trim();
+      }
     }
 
     return null;
   } catch (e) {
-    console.error(`Failed to deep-fetch ${url}:`, e);
+    console.error(`Deep fetch error for ${url}:`, e);
     return null;
   }
 }
@@ -71,7 +83,7 @@ serve(async (req) => {
 
     const response = await fetch(feedUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
       }
     });
 
@@ -86,21 +98,26 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    const { count } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
-    const startIdx = count || 0;
+    // Get current count to calculate initial placement
+    const { count: existingCount } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
+    const startIdx = existingCount || 0;
 
-    // Deep-fetch only the latest 5 to keep the function fast
-    const articles = await Promise.all(feed.items.slice(0, 5).map(async (item, index) => {
-      let fullContent = item.contentEncoded || item.content || item.description || '';
+    // Process top items with deep fetching
+    const articles = await Promise.all(feed.items.slice(0, 6).map(async (item, index) => {
+      let content = item.contentEncoded || item.content || item.description || '';
       
-      const deepContent = await fetchFullContent(item.link || '', feed.title || '');
-      if (deepContent) fullContent = deepContent;
+      // Try to get full content if current is likely a summary
+      if (content.length < 2000 && item.link) {
+        const fullBody = await fetchFullContent(item.link, feed.title || '');
+        if (fullBody) content = fullBody;
+      }
       
       let excerpt = item.contentSnippet || '';
-      if (!excerpt && fullContent) {
-        excerpt = fullContent.replace(/<[^>]*>/g, '').substring(0, 300).trim() + '...';
+      if (!excerpt && content) {
+        excerpt = content.replace(/<[^>]*>/g, '').substring(0, 300).trim() + '...';
       }
 
+      // Placement logic for the canvas
       const globalIndex = startIdx + index;
       const col = globalIndex % 4;
       const row = Math.floor(globalIndex / 4);
@@ -111,23 +128,20 @@ serve(async (req) => {
         author: item.creator || item.author || feed.title || 'Unknown Author',
         source: feed.title || 'Unknown Source',
         url: item.link,
-        content: fullContent,
+        content: content,
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
-        reading_time: `${Math.max(3, Math.ceil(fullContent.split(' ').length / 225))} min read`,
-        x: (col * 400) - 600,
-        y: (row * 550) - 300
+        reading_time: `${Math.max(3, Math.ceil(content.split(' ').length / 225))} min read`,
+        x: (col * 420) - 630, // Adjusted for spacing
+        y: (row * 550) - 275
       };
     }));
 
     if (articles.length > 0) {
-      const { error: upsertError } = await supabaseClient
-        .from('articles')
-        .upsert(articles, { onConflict: 'url' });
-      if (upsertError) throw upsertError;
+      await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
     }
 
-    return new Response(JSON.stringify({ success: true, count: articles.length }), {
+    return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {

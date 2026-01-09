@@ -11,13 +11,14 @@ interface CanvasViewProps {
 }
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
-  const [scale, setScale] = useState(0.8);
+  const [scale, setScale] = useState(0.85);
+  // Start centered at 0,0
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  const springX = useSpring(x, { damping: 45, stiffness: 240 });
-  const springY = useSpring(y, { damping: 45, stiffness: 240 });
-  const springScale = useSpring(scale, { damping: 35, stiffness: 220 });
+  const springX = useSpring(x, { damping: 40, stiffness: 200 });
+  const springY = useSpring(y, { damping: 40, stiffness: 200 });
+  const springScale = useSpring(scale, { damping: 30, stiffness: 150 });
   
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -29,8 +30,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
         const delta = -e.deltaY;
-        setScale(prev => Math.min(Math.max(prev + delta * 0.005, 0.15), 2));
+        setScale(prev => Math.min(Math.max(prev + delta * 0.005, 0.2), 2));
       } else {
+        // Simple panning with wheel
         x.set(x.get() - e.deltaX);
         y.set(y.get() - e.deltaY);
       }
@@ -40,7 +42,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, []);
 
-  const handleDrag = (event: any, info: PanInfo) => {
+  const handleDrag = (_: any, info: PanInfo) => {
     x.set(x.get() + info.delta.x);
     y.set(y.get() + info.delta.y);
   };
@@ -48,27 +50,29 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
+      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
     >
-      {/* Background with infinite grid effect */}
-      <motion.div 
-        style={{ x: springX, y: springY }}
-        className="absolute inset-0 pointer-events-none"
-      >
-        <div 
-          className="absolute inset-[-10000px] subtle-grid" 
-          style={{ opacity: 0.5 }}
-        />
-      </motion.div>
-
+      {/* Draggable Surface - covers the whole area to prevent dead zones */}
       <motion.div
         drag
         dragMomentum={true}
         dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
         onDrag={handleDrag}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
+      {/* Grid Layer */}
+      <motion.div 
+        style={{ x: springX, y: springY }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <div 
+          className="absolute inset-[-20000px] subtle-grid" 
+          style={{ opacity: 0.4 }}
+        />
+      </motion.div>
+
+      {/* Content Layer */}
       <motion.div
         style={{ 
           x: springX, 
@@ -79,9 +83,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
         {articles.map((article, index) => {
-          // Add small organic jitters to the database positions to make it feel less "grid-like"
-          const offsetX = (index % 3 - 1) * 20;
-          const offsetY = (index % 2 === 0 ? 1 : -1) * 30;
+          // Subtle organic offset
+          const offsetX = (index % 5 - 2) * 15;
+          const offsetY = (index % 3 - 1) * 25;
           
           return (
             <div 
@@ -103,9 +107,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         })}
       </motion.div>
       
-      <div className="absolute top-24 right-8 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 border border-gray-100 shadow-sm z-50 rounded-full">
-        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-        <p className="text-[10px] uppercase tracking-widest text-gray-500 font-sans">Live Canvas</p>
+      <div className="absolute bottom-8 right-8 flex flex-col items-end space-y-2 pointer-events-none">
+        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 border border-gray-100 shadow-sm rounded-full flex items-center space-x-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-black" />
+          <p className="text-[9px] uppercase tracking-widest text-gray-500 font-sans">
+            {Math.round(scale * 100)}% View
+          </p>
+        </div>
       </div>
     </div>
   );
