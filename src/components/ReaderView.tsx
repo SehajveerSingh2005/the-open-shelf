@@ -26,7 +26,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="fixed top-8 right-8 text-gray-400 hover:text-gray-900"
+              className="fixed top-8 right-8 text-gray-400 hover:text-gray-900 z-50"
             >
               <X size={24} />
             </Button>
@@ -51,20 +51,19 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
               <div className="h-px w-24 bg-gray-100" />
             </motion.header>
 
-            <motion.article
+            <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="prose prose-gray prose-lg max-w-none font-reading leading-relaxed text-gray-800"
+              className="prose prose-gray prose-lg max-w-none font-sans leading-relaxed text-gray-800 
+                prose-headings:font-serif prose-blockquote:font-serif prose-blockquote:italic prose-blockquote:border-l-gray-200"
             >
-              {article.content.split('\n\n').map((para, i) => (
-                <p key={i} className="mb-6">{para}</p>
-              ))}
-            </motion.article>
+              <div dangerouslySetInnerHTML={{ __html: article.content }} />
+            </motion.div>
             
             <footer className="mt-20 pt-8 border-t border-gray-100 text-center">
               <p className="text-sm text-gray-400 font-sans">
-                Reading time: {article.readingTime}
+                Source: <a href={article.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-900">{article.source}</a> • {article.readingTime}
               </p>
             </footer>
           </div>
