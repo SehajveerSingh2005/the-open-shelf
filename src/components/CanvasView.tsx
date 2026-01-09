@@ -1,8 +1,7 @@
-World' transformation model with native gesture support and improved centering.">
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -87,10 +86,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        // Single finger pan is handled by framer-motion drag if we wanted, 
-        // but we'll stick to a global surface for simplicity.
-      } else if (e.touches.length === 2) {
+      if (e.touches.length === 2) {
         e.preventDefault();
         const d = Math.hypot(
           e.touches[0].pageX - e.touches[1].pageX,
