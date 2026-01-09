@@ -11,9 +11,26 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
+  // Entrance animation variants
+  const variants = {
+    hidden: { opacity: 0, scale: 0.92, y: 10 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.5, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
+    }
+  };
+
   return (
     <motion.div
       layoutId={`card-${article.id}`}
+      initial="hidden"
+      animate="visible"
+      variants={variants}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
