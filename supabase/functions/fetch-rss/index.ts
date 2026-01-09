@@ -12,6 +12,7 @@ const parser = new Parser({
     item: [
       ['content:encoded', 'contentEncoded'],
       ['description', 'description'],
+      ['media:content', 'mediaContent'],
     ],
   }
 });
@@ -48,17 +49,28 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
+    // Use a deterministic grid based on the count of existing articles to prevent overlap
+    const { count: existingCount } = await supabaseClient
+      .from('articles')
+      .select('*', { count: 'exact', head: true });
+    
+    const startIdx = existingCount || 0;
+
     const articles = feed.items.filter(item => item.link).map((item, index) => {
-      // Prioritize full content fields
-      const content = item.contentEncoded || item.content || item.description || item.contentSnippet || '';
+      const content = item.contentEncoded || item.content || item.description || '';
       
       let excerpt = item.contentSnippet || '';
       if (excerpt.length > 250) excerpt = excerpt.substring(0, 247) + '...';
 
-      // Use a much larger coordinate system to avoid overlaps
-      // We'll use a loose grid-like random offset
-      const col = index % 5;
-      const row = Math.floor(index / 5);
+      // Structured grid layout: 400px wide, 500px tall cells
+      const globalIndex = startIdx + index;
+      const cols = 5;
+      const col = globalIndex % cols;
+      const row = Math.floor(globalIndex / cols);
+      
+      // Center the grid around 0,0
+      const x = (col - (cols / 2)) * 350;
+      const y = (row - 5) * 450;
       
       return {
         feed_id: feedData.id,
@@ -69,10 +81,9 @@ serve(async (req) => {
         content: content,
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
-        reading_time: content.length > 500 ? `${Math.ceil(content.split(' ').length / 200)} min read` : '3 min read',
-        // Creating a massive spread (10,000 x 10,000 pixels)
-        x: (col * 800) + Math.floor(Math.random() * 400) - 2000,
-        y: (row * 600) + Math.floor(Math.random() * 300) - 2000
+        reading_time: content.length > 500 ? `${Math.ceil(content.split(' ').length / 250)} min read` : '4 min read',
+        x: x + (Math.random() * 40 - 20), // Subtle jitter
+        y: y + (Math.random() * 40 - 20)
       };
     });
 

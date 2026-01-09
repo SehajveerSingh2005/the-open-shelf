@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -11,27 +11,27 @@ interface CanvasViewProps {
 }
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0.8);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  
+  const springX = useSpring(x, { damping: 30, stiffness: 200 });
+  const springY = useSpring(y, { damping: 30, stiffness: 200 });
+  
   const containerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Start centered
-    x.set(window.innerWidth / 2);
-    y.set(window.innerHeight / 2);
-
     const handleWheel = (e: WheelEvent) => {
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
-        const zoomSpeed = 0.01;
+        const zoomSpeed = 0.005;
         const delta = -e.deltaY;
-        const newScale = Math.min(Math.max(scale + delta * zoomSpeed, 0.1), 3);
-        setScale(newScale);
+        setScale(prev => Math.min(Math.max(prev + delta * zoomSpeed, 0.1), 2));
       } else {
+        // Standard scrolling pans the canvas
         x.set(x.get() - e.deltaX);
         y.set(y.get() - e.deltaY);
       }
@@ -39,7 +39,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => container.removeEventListener('wheel', handleWheel);
-  }, [scale, x, y]);
+  }, []);
 
   return (
     <div 
@@ -49,29 +49,34 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       <motion.div
         drag
         dragMomentum={false}
-        style={{ x, y, scale }}
-        className="w-full h-full absolute flex items-center justify-center"
+        style={{ 
+          x: springX, 
+          y: springY, 
+          scale,
+          transformOrigin: 'center center' 
+        }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
-        {/* Origin marker */}
-        <div className="absolute w-4 h-4 rounded-full bg-gray-200 opacity-20" />
-        
         {articles.map(article => (
-          <ArticleCard 
+          <div 
             key={article.id} 
-            article={article} 
-            isCanvas 
-            onClick={onArticleClick} 
-          />
+            className="absolute pointer-events-auto"
+            style={{ 
+              left: `calc(50% + ${article.x}px)`, 
+              top: `calc(50% + ${article.y}px)`,
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
+            <ArticleCard 
+              article={article} 
+              onClick={onArticleClick} 
+            />
+          </div>
         ))}
       </motion.div>
       
-      <div className="absolute bottom-8 right-8 flex flex-col items-end space-y-2 pointer-events-none">
-        <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest">
-          {Math.round(scale * 100)}% Zoom • {articles.length} Thoughts
-        </div>
-        <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest">
-          Pinch to Zoom • Drag to Pan
-        </div>
+      <div className="absolute bottom-8 left-8 bg-white/80 backdrop-blur-sm px-4 py-2 border border-gray-100 text-[10px] uppercase tracking-widest text-gray-400 font-sans pointer-events-none">
+        Scroll to Pan • Cmd + Scroll to Zoom
       </div>
     </div>
   );
