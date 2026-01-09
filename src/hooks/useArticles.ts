@@ -27,5 +27,7 @@ export function useArticles() {
         y: item.y,
       })) as Article[];
     },
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+    refetchOnWindowFocus: false,
   });
 }

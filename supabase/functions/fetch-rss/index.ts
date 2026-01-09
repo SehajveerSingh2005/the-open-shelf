@@ -9,14 +9,10 @@ const corsHeaders = {
 
 const parser = new Parser({
   customFields: {
-    item: [
-      ['content:encoded', 'contentEncoded'],
-      ['description', 'description'],
-    ],
+    item: [['content:encoded', 'contentEncoded'], ['description', 'description']],
   }
 });
 
-// Helper to extract the "real" content for known truncated sources like Aeon
 async function fetchFullContent(url: string, source: string) {
   try {
     const response = await fetch(url, {
@@ -29,20 +25,26 @@ async function fetchFullContent(url: string, source: string) {
     const html = await response.text();
 
     if (source.toLowerCase().includes('aeon')) {
-      // Aeon stores article content in a specific div
-      const articleMatch = html.match(/<div class="article__body[^"]*">([\s\S]*?)<\/div>\s*<div class="article__footer/i);
-      if (articleMatch && articleMatch[1]) {
-        return articleMatch[1].trim();
+      // Aeon stores article content in several potential containers
+      const selectors = [
+        /<div class="article__body[^"]*">([\s\S]*?)<\/div>\s*<div class="article__footer/i,
+        /<div class="body-content[^"]*">([\s\S]*?)<\/div>/i,
+        /<article[^>]*>([\s\S]*?)<\/article>/i,
+        /<div class="article-body">([\s\S]*?)<\/div>/i
+      ];
+
+      for (const selector of selectors) {
+        const match = html.match(selector);
+        if (match && match[1]) {
+          // Remove ads and sidebars within the match if possible
+          return match[1].replace(/<div class="ad-container">[\s\S]*?<\/div>/gi, '').trim();
+        }
       }
-      
-      // Fallback for different Aeon templates
-      const bodyMatch = html.match(/<div class="body-content[^"]*">([\s\S]*?)<\/div>/i);
-      if (bodyMatch && bodyMatch[1]) return bodyMatch[1].trim();
     }
     
     if (url.includes('substack.com')) {
-      // Substack usually has full content in RSS, but if it doesn't:
-      const substackMatch = html.match(/<div class="available-content">([\s\S]*?)<\/div>/i);
+      const substackMatch = html.match(/<div class="available-content">([\s\S]*?)<\/div>/i) || 
+                           html.match(/<div class="body-content">([\s\S]*?)<\/div>/i);
       if (substackMatch && substackMatch[1]) return substackMatch[1].trim();
     }
 
@@ -70,12 +72,10 @@ serve(async (req) => {
     const response = await fetch(feedUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'application/rss+xml, application/xml, text/xml, */*'
       }
     });
 
     if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-
     const xml = await response.text();
     const feed = await parser.parseString(xml);
     
@@ -89,22 +89,16 @@ serve(async (req) => {
     const { count } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
     const startIdx = count || 0;
 
-    // Process only the top 5 newest articles for deep-fetching to avoid timeouts
-    const itemsToProcess = feed.items.slice(0, 8);
-
-    const articles = await Promise.all(itemsToProcess.filter(item => item.link).map(async (item, index) => {
+    // Deep-fetch only the latest 5 to keep the function fast
+    const articles = await Promise.all(feed.items.slice(0, 5).map(async (item, index) => {
       let fullContent = item.contentEncoded || item.content || item.description || '';
-      const isTeaser = fullContent.length < 1500; // Heuristic: short content is likely a teaser
       
-      // If it's a teaser and it's Aeon or Substack, try to get the real body
-      if (isTeaser && item.link) {
-        const deepContent = await fetchFullContent(item.link, feed.title || '');
-        if (deepContent) fullContent = deepContent;
-      }
+      const deepContent = await fetchFullContent(item.link || '', feed.title || '');
+      if (deepContent) fullContent = deepContent;
       
       let excerpt = item.contentSnippet || '';
       if (!excerpt && fullContent) {
-        excerpt = fullContent.replace(/<[^>]*>/g, '').substring(0, 250).trim() + '...';
+        excerpt = fullContent.replace(/<[^>]*>/g, '').substring(0, 300).trim() + '...';
       }
 
       const globalIndex = startIdx + index;
@@ -121,8 +115,8 @@ serve(async (req) => {
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.max(3, Math.ceil(fullContent.split(' ').length / 225))} min read`,
-        x: (col * 450) - 700,
-        y: (row * 500) - 200
+        x: (col * 400) - 600,
+        y: (row * 550) - 300
       };
     }));
 
@@ -130,14 +124,12 @@ serve(async (req) => {
       const { error: upsertError } = await supabaseClient
         .from('articles')
         .upsert(articles, { onConflict: 'url' });
-      
       if (upsertError) throw upsertError;
     }
 
     return new Response(JSON.stringify({ success: true, count: articles.length }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
