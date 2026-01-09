@@ -16,6 +16,43 @@ const parser = new Parser({
   }
 });
 
+// Helper to extract the "real" content for known truncated sources like Aeon
+async function fetchFullContent(url: string, source: string) {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      }
+    });
+    
+    if (!response.ok) return null;
+    const html = await response.text();
+
+    if (source.toLowerCase().includes('aeon')) {
+      // Aeon stores article content in a specific div
+      const articleMatch = html.match(/<div class="article__body[^"]*">([\s\S]*?)<\/div>\s*<div class="article__footer/i);
+      if (articleMatch && articleMatch[1]) {
+        return articleMatch[1].trim();
+      }
+      
+      // Fallback for different Aeon templates
+      const bodyMatch = html.match(/<div class="body-content[^"]*">([\s\S]*?)<\/div>/i);
+      if (bodyMatch && bodyMatch[1]) return bodyMatch[1].trim();
+    }
+    
+    if (url.includes('substack.com')) {
+      // Substack usually has full content in RSS, but if it doesn't:
+      const substackMatch = html.match(/<div class="available-content">([\s\S]*?)<\/div>/i);
+      if (substackMatch && substackMatch[1]) return substackMatch[1].trim();
+    }
+
+    return null;
+  } catch (e) {
+    console.error(`Failed to deep-fetch ${url}:`, e);
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -37,15 +74,10 @@ serve(async (req) => {
       }
     });
 
-    if (!response.ok) throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
 
     const xml = await response.text();
-    let feed;
-    try {
-      feed = await parser.parseString(xml);
-    } catch (parseErr) {
-      throw new Error(`Failed to parse XML: ${parseErr.message}`);
-    }
+    const feed = await parser.parseString(xml);
     
     const { data: feedData, error: feedError } = await supabaseClient
       .from('feeds')
@@ -54,21 +86,27 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    // Get count for positioning
     const { count } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
     const startIdx = count || 0;
 
-    const articles = feed.items.filter(item => item.link).map((item, index) => {
-      // Robust content extraction for Substacks and Aeon
-      const fullContent = item.contentEncoded || item.content || item.description || '';
+    // Process only the top 5 newest articles for deep-fetching to avoid timeouts
+    const itemsToProcess = feed.items.slice(0, 8);
+
+    const articles = await Promise.all(itemsToProcess.filter(item => item.link).map(async (item, index) => {
+      let fullContent = item.contentEncoded || item.content || item.description || '';
+      const isTeaser = fullContent.length < 1500; // Heuristic: short content is likely a teaser
       
-      // Improve excerpt logic
+      // If it's a teaser and it's Aeon or Substack, try to get the real body
+      if (isTeaser && item.link) {
+        const deepContent = await fetchFullContent(item.link, feed.title || '');
+        if (deepContent) fullContent = deepContent;
+      }
+      
       let excerpt = item.contentSnippet || '';
       if (!excerpt && fullContent) {
         excerpt = fullContent.replace(/<[^>]*>/g, '').substring(0, 250).trim() + '...';
       }
 
-      // Strict grid layout to prevent overlap
       const globalIndex = startIdx + index;
       const col = globalIndex % 4;
       const row = Math.floor(globalIndex / 4);
@@ -82,11 +120,11 @@ serve(async (req) => {
         content: fullContent,
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
-        reading_time: fullContent.length > 1000 ? `${Math.ceil(fullContent.split(' ').length / 225)} min read` : '4 min read',
+        reading_time: `${Math.max(3, Math.ceil(fullContent.split(' ').length / 225))} min read`,
         x: (col * 450) - 700,
         y: (row * 500) - 200
       };
-    });
+    }));
 
     if (articles.length > 0) {
       const { error: upsertError } = await supabaseClient
@@ -101,7 +139,6 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('RSS Fetcher Error:', error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
