@@ -20,12 +20,16 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const container = containerRef.current;
     if (!container) return;
 
+    // Start centered
+    x.set(window.innerWidth / 2);
+    y.set(window.innerHeight / 2);
+
     const handleWheel = (e: WheelEvent) => {
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
         const zoomSpeed = 0.01;
         const delta = -e.deltaY;
-        const newScale = Math.min(Math.max(scale + delta * zoomSpeed, 0.2), 3);
+        const newScale = Math.min(Math.max(scale + delta * zoomSpeed, 0.1), 3);
         setScale(newScale);
       } else {
         x.set(x.get() - e.deltaX);
@@ -46,8 +50,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         drag
         dragMomentum={false}
         style={{ x, y, scale }}
-        className="w-full h-full absolute"
+        className="w-full h-full absolute flex items-center justify-center"
       >
+        {/* Origin marker */}
+        <div className="absolute w-4 h-4 rounded-full bg-gray-200 opacity-20" />
+        
         {articles.map(article => (
           <ArticleCard 
             key={article.id} 
@@ -58,8 +65,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      <div className="absolute bottom-8 right-8 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest pointer-events-none">
-        Pinch to Zoom • Drag to Pan
+      <div className="absolute bottom-8 right-8 flex flex-col items-end space-y-2 pointer-events-none">
+        <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest">
+          {Math.round(scale * 100)}% Zoom • {articles.length} Thoughts
+        </div>
+        <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gray-200 text-[10px] font-sans text-gray-400 uppercase tracking-widest">
+          Pinch to Zoom • Drag to Pan
+        </div>
       </div>
     </div>
   );

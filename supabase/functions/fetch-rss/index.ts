@@ -9,7 +9,10 @@ const corsHeaders = {
 
 const parser = new Parser({
   customFields: {
-    item: [['content:encoded', 'contentEncoded']],
+    item: [
+      ['content:encoded', 'contentEncoded'],
+      ['description', 'description'],
+    ],
   }
 });
 
@@ -30,11 +33,10 @@ serve(async (req) => {
     const response = await fetch(feedUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Accept': 'application/rss+xml, application/xml, text/xml, */*'
       }
     });
 
-    if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
 
     const xml = await response.text();
     const feed = await parser.parseString(xml);
@@ -46,23 +48,31 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    const articles = feed.items.filter(item => item.link).map(item => {
+    const articles = feed.items.filter(item => item.link).map((item, index) => {
+      // Prioritize full content fields
+      const content = item.contentEncoded || item.content || item.description || item.contentSnippet || '';
+      
       let excerpt = item.contentSnippet || '';
       if (excerpt.length > 250) excerpt = excerpt.substring(0, 247) + '...';
 
+      // Use a much larger coordinate system to avoid overlaps
+      // We'll use a loose grid-like random offset
+      const col = index % 5;
+      const row = Math.floor(index / 5);
+      
       return {
         feed_id: feedData.id,
         title: item.title || 'Untitled Article',
         author: item.creator || item.author || feed.title || 'Unknown Author',
         source: feed.title || 'Unknown Source',
         url: item.link,
-        content: item.contentEncoded || item.content || item.contentSnippet || '',
+        content: content,
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
-        reading_time: '5 min read',
-        // Much wider spread to avoid cramming
-        x: Math.floor(Math.random() * 4000) - 2000,
-        y: Math.floor(Math.random() * 4000) - 2000
+        reading_time: content.length > 500 ? `${Math.ceil(content.split(' ').length / 200)} min read` : '3 min read',
+        // Creating a massive spread (10,000 x 10,000 pixels)
+        x: (col * 800) + Math.floor(Math.random() * 400) - 2000,
+        y: (row * 600) + Math.floor(Math.random() * 300) - 2000
       };
     });
 
