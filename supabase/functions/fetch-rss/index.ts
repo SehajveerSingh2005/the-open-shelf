@@ -24,9 +24,9 @@ async function fetchFullContent(url: string, sourceName: string) {
     if (!response.ok) return null;
     const html = await response.text();
 
-    // Specific logic for Aeon
+    // Aggressive Aeon Extraction
     if (sourceName.toLowerCase().includes('aeon') || url.includes('aeon.co')) {
-      // Aeon usually puts content in article__body or similar
+      // Look for the main article body container
       const patterns = [
         /<div class="article__body[^>]*>([\s\S]*?)<\/div>\s*<div class="article__footer/i,
         /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i,
@@ -36,27 +36,28 @@ async function fetchFullContent(url: string, sourceName: string) {
 
       for (const pattern of patterns) {
         const match = html.match(pattern);
-        if (match && match[1]) {
-          // Clean up some common junk
+        if (match && match[1] && match[1].length > 1000) {
           return match[1]
             .replace(/<div class="ad-container">[\s\S]*?<\/div>/gi, '')
             .replace(/<aside[\s\S]*?<\/aside>/gi, '')
+            .replace(/<div class="article__footer">[\s\S]*?<\/div>/gi, '')
             .trim();
         }
       }
     }
     
-    // Logic for Substacks
+    // Substack Extraction
     if (url.includes('substack.com')) {
       const substackPatterns = [
         /<div class="available-content">([\s\S]*?)<\/div>/i,
         /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i,
-        /<div class="post-content[^>]*>([\s\S]*?)<\/div>/i
+        /<div class="post-content[^>]*>([\s\S]*?)<\/div>/i,
+        /<article[^>]*>([\s\S]*?)<\/article>/i
       ];
       
       for (const pattern of substackPatterns) {
         const match = html.match(pattern);
-        if (match && match[1]) return match[1].trim();
+        if (match && match[1] && match[1].length > 500) return match[1].trim();
       }
     }
 
@@ -98,18 +99,20 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    // Get current count to calculate initial placement
-    const { count: existingCount } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
-    const startIdx = existingCount || 0;
+    // Fetch existing articles to check for duplicates and handle layout
+    const { data: existingArticles } = await supabaseClient.from('articles').select('url');
+    const existingUrls = new Set((existingArticles || []).map(a => a.url));
 
+    const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
+    
     // Process top items with deep fetching
-    const articles = await Promise.all(feed.items.slice(0, 6).map(async (item, index) => {
+    const articles = await Promise.all(newItems.slice(0, 10).map(async (item, index) => {
       let content = item.contentEncoded || item.content || item.description || '';
       
-      // Try to get full content if current is likely a summary
-      if (content.length < 2000 && item.link) {
+      // Force deep fetch for summaries
+      if (content.length < 3000 && item.link) {
         const fullBody = await fetchFullContent(item.link, feed.title || '');
-        if (fullBody) content = fullBody;
+        if (fullBody && fullBody.length > content.length) content = fullBody;
       }
       
       let excerpt = item.contentSnippet || '';
@@ -117,10 +120,9 @@ serve(async (req) => {
         excerpt = content.replace(/<[^>]*>/g, '').substring(0, 300).trim() + '...';
       }
 
-      // Placement logic for the canvas
-      const globalIndex = startIdx + index;
-      const col = globalIndex % 4;
-      const row = Math.floor(globalIndex / 4);
+      // Randomized spiral placement for the canvas
+      const angle = index * 0.5 + Math.random();
+      const radius = 400 + (index * 150);
       
       return {
         feed_id: feedData.id,
@@ -132,8 +134,8 @@ serve(async (req) => {
         excerpt: excerpt,
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.max(3, Math.ceil(content.split(' ').length / 225))} min read`,
-        x: (col * 420) - 630, // Adjusted for spacing
-        y: (row * 550) - 275
+        x: Math.cos(angle) * radius,
+        y: Math.sin(angle) * radius
       };
     }));
 
@@ -141,7 +143,7 @@ serve(async (req) => {
       await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, count: articles.length }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
