@@ -1,7 +1,8 @@
+World' transformation model with native gesture support and improved centering.">
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, PanInfo } from 'framer-motion';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -11,89 +12,136 @@ interface CanvasViewProps {
 }
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
-  const [scale, setScale] = useState(0.8);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // World State
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const hasCentered = useRef(false);
+  const scale = useMotionValue(0.8);
   
-  const springX = useSpring(x, { damping: 40, stiffness: 200 });
-  const springY = useSpring(y, { damping: 40, stiffness: 200 });
-  const springScale = useSpring(scale, { damping: 30, stiffness: 150 });
-  
-  const containerRef = useRef<HTMLDivElement>(null);
+  // Smoothness
+  const smoothX = useSpring(x, { damping: 30, stiffness: 200 });
+  const smoothY = useSpring(y, { damping: 30, stiffness: 200 });
+  const smoothScale = useSpring(scale, { damping: 30, stiffness: 200 });
 
-  useEffect(() => {
-    if (articles.length > 0 && !hasCentered.current) {
-      // Find the bounds to calculate the true center
-      const minX = Math.min(...articles.map(a => a.x));
-      const maxX = Math.max(...articles.map(a => a.x));
-      const minY = Math.min(...articles.map(a => a.y));
-      const maxY = Math.max(...articles.map(a => a.y));
-      
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
-      
-      // Jump to center immediately on first load
-      x.jump(-centerX);
-      y.jump(-centerY);
-      hasCentered.current = true;
+  // Centering Logic
+  const centerCanvas = useCallback((immediate = false) => {
+    if (articles.length === 0) return;
+    
+    const minX = Math.min(...articles.map(a => a.x));
+    const maxX = Math.max(...articles.map(a => a.x));
+    const minY = Math.min(...articles.map(a => a.y));
+    const maxY = Math.max(...articles.map(a => a.y));
+    
+    const targetX = -(minX + maxX) / 2;
+    const targetY = -(minY + maxY) / 2;
+    
+    if (immediate) {
+      x.jump(targetX);
+      y.jump(targetY);
+    } else {
+      x.set(targetX);
+      y.set(targetY);
     }
-  }, [articles]);
+  }, [articles, x, y]);
 
+  // Initial center on first mount with articles
+  useEffect(() => {
+    if (articles.length > 0 && x.get() === 0 && y.get() === 0) {
+      centerCanvas(true);
+    }
+  }, [articles.length, centerCanvas, x, y]);
+
+  // Gesture & Wheel Handlers
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    let initialPinchDistance = 0;
+    let initialScale = 1;
+
     const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      
       if (e.ctrlKey || e.metaKey) {
-        e.preventDefault();
-        // Zoom centered on the cursor or center of screen
-        const zoomSpeed = 0.003;
-        setScale(prev => {
-          const newScale = Math.min(Math.max(prev - e.deltaY * zoomSpeed, 0.2), 2);
-          return newScale;
-        });
+        // Zoom
+        const zoomSpeed = 0.005;
+        const newScale = Math.min(Math.max(scale.get() - e.deltaY * zoomSpeed, 0.15), 2.5);
+        scale.set(newScale);
       } else {
-        // Simple panning
+        // Pan
         x.set(x.get() - e.deltaX);
         y.set(y.get() - e.deltaY);
       }
     };
 
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
-  }, []);
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        const d = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        initialPinchDistance = d;
+        initialScale = scale.get();
+      }
+    };
 
-  const handleDrag = (_: any, info: PanInfo) => {
-    x.set(x.get() + info.delta.x);
-    y.set(y.get() + info.delta.y);
-  };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        // Single finger pan is handled by framer-motion drag if we wanted, 
+        // but we'll stick to a global surface for simplicity.
+      } else if (e.touches.length === 2) {
+        e.preventDefault();
+        const d = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        const factor = d / initialPinchDistance;
+        scale.set(Math.min(Math.max(initialScale * factor, 0.15), 2.5));
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    container.addEventListener('touchstart', handleTouchStart);
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [x, y, scale]);
 
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
+      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
     >
-      {/* Global Drag Overlay */}
+      {/* Interaction Surface */}
       <motion.div
         drag
         dragMomentum={true}
-        onDrag={handleDrag}
-        className="absolute inset-[-10000px] z-0"
+        onDrag={(_, info) => {
+          x.set(x.get() + info.delta.x);
+          y.set(y.get() + info.delta.y);
+        }}
+        className="absolute inset-[-10000px] z-0 cursor-grab active:cursor-grabbing"
       />
 
+      {/* Grid Background */}
       <motion.div 
-        style={{ x: springX, y: springY }}
+        style={{ x: smoothX, y: smoothY }}
         className="absolute inset-0 pointer-events-none"
       >
-        <div className="absolute inset-[-20000px] subtle-grid opacity-30" />
+        <div className="absolute inset-[-20000px] subtle-grid opacity-20" />
       </motion.div>
 
+      {/* The World Container */}
       <motion.div
         style={{ 
-          x: springX, 
-          y: springY, 
-          scale: springScale,
+          x: smoothX, 
+          y: smoothY, 
+          scale: smoothScale,
           transformOrigin: 'center center' 
         }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -108,15 +156,33 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               transform: 'translate(-50%, -50%)'
             }}
           >
-            <ArticleCard article={article} onClick={onArticleClick} isCanvas />
+            <ArticleCard 
+              article={article} 
+              onClick={onArticleClick} 
+              isCanvas 
+            />
           </div>
         ))}
       </motion.div>
       
-      <div className="absolute bottom-8 left-8 pointer-events-none">
-        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 border border-gray-100 shadow-sm rounded-full">
+      {/* UI Overlay */}
+      <div className="absolute bottom-8 left-8 pointer-events-none flex items-center space-x-4">
+        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 border border-gray-100 shadow-sm rounded-full flex items-center space-x-3 pointer-events-auto">
           <p className="text-[9px] uppercase tracking-widest text-gray-500 font-sans">
-            Scale: {Math.round(scale * 100)}% • Ctrl+Scroll to Zoom
+            {Math.round(scale.get() * 100)}% Scale
+          </p>
+          <div className="h-3 w-px bg-gray-100" />
+          <button 
+            onClick={() => centerCanvas()}
+            className="text-[9px] uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors"
+          >
+            Reset View
+          </button>
+        </div>
+        
+        <div className="hidden lg:block bg-black/5 backdrop-blur-sm px-4 py-2 rounded-full">
+          <p className="text-[9px] uppercase tracking-widest text-gray-400 font-sans">
+            Ctrl + Scroll to Zoom • Two Fingers to Pan
           </p>
         </div>
       </div>
