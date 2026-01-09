@@ -79,26 +79,19 @@ serve(async (req) => {
     const existingUrls = new Set((existing || []).map(a => a.url));
     const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    const { count: currentTotal } = await supabaseClient.from('articles').select('*', { count: 'exact', head: true });
-    let baseIdx = currentTotal || 0;
-
-    const articles = await Promise.all(newItems.slice(0, 10).map(async (item, index) => {
+    const articles = await Promise.all(newItems.slice(0, 10).map(async (item) => {
       let content = item.contentEncoded || item.content || item.description || '';
       if (content.length < 3000 && item.link) {
         const full = await fetchFullContent(item.link, feed.title || '');
         if (full) content = full;
       }
       
-      const idx = baseIdx + index;
+      // "Cosmic" placement: random angle, non-linear distance, high jitter
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.sqrt(Math.random()) * 2500; // Spread out to 2500px radius
       
-      // Organic "scattered" placement using a jittered phyllotaxis/spiral pattern
-      const angle = idx * 137.5; // Golden angle
-      const radius = 400 * Math.sqrt(idx + 1);
-      const jitterX = (Math.random() - 0.5) * 200;
-      const jitterY = (Math.random() - 0.5) * 200;
-
-      const x = Math.cos(angle * Math.PI / 180) * radius + jitterX;
-      const y = Math.sin(angle * Math.PI / 180) * radius + jitterY;
+      const x = Math.cos(angle) * distance + (Math.random() - 0.5) * 400;
+      const y = Math.sin(angle) * distance + (Math.random() - 0.5) * 400;
 
       return {
         feed_id: feedData.id,

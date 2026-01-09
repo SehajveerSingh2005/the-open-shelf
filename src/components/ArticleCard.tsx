@@ -11,7 +11,6 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
-  // Entrance animation variants
   const variants = {
     hidden: { opacity: 0, scale: 0.92, y: 10 },
     visible: { 
@@ -19,7 +18,7 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
       scale: 1, 
       y: 0,
       transition: { 
-        duration: 0.5, 
+        duration: 0.6, 
         ease: [0.16, 1, 0.3, 1] 
       }
     }
@@ -27,17 +26,15 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
 
   return (
     <motion.div
-      layoutId={`card-${article.id}`}
       initial="hidden"
       animate="visible"
       variants={variants}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      whileHover={{ y: -6, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100 p-7 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group
+        bg-white border border-gray-100 p-7 shadow-sm hover:shadow-2xl transition-all duration-300 cursor-pointer group
         ${isCanvas ? 'w-72' : 'w-full mb-8'}
       `}
-      style={isCanvas ? { position: 'relative' } : {}}
     >
       <div className="space-y-5">
         <div className="space-y-2">

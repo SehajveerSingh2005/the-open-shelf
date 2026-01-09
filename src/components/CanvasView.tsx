@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
@@ -10,18 +10,34 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
+// Persist camera state outside component to survive re-mounts/re-renders
+let persistentX = 0;
+let persistentY = 0;
+let persistentScale = 0.6;
+let hasInitialized = false;
+
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   // World State
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const scale = useMotionValue(0.7);
+  const x = useMotionValue(persistentX);
+  const y = useMotionValue(persistentY);
+  const scale = useMotionValue(persistentScale);
   
   // Smoothness
-  const smoothX = useSpring(x, { damping: 40, stiffness: 250 });
-  const smoothY = useSpring(y, { damping: 40, stiffness: 250 });
-  const smoothScale = useSpring(scale, { damping: 40, stiffness: 250 });
+  const smoothX = useSpring(x, { damping: 45, stiffness: 200 });
+  const smoothY = useSpring(y, { damping: 45, stiffness: 200 });
+  const smoothScale = useSpring(scale, { damping: 45, stiffness: 200 });
+
+  // Sync back to persistent state
+  useEffect(() => {
+    const unsubX = x.on('change', v => persistentX = v);
+    const unsubY = y.on('change', v => persistentY = v);
+    const unsubScale = scale.on('change', v => persistentScale = v);
+    return () => {
+      unsubX(); unsubY(); unsubScale();
+    };
+  }, [x, y, scale]);
 
   // Centering Logic
   const centerCanvas = useCallback((immediate = false) => {
@@ -44,14 +60,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     }
   }, [articles, x, y]);
 
-  // Initial center
+  // Initial center only once
   useEffect(() => {
-    if (articles.length > 0 && x.get() === 0 && y.get() === 0) {
+    if (articles.length > 0 && !hasInitialized) {
       centerCanvas(true);
+      hasInitialized = true;
     }
-  }, [articles.length, centerCanvas, x, y]);
+  }, [articles.length, centerCanvas]);
 
-  // Zoom to Mouse Logic
   const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
     const container = containerRef.current;
     if (!container) return;
@@ -59,22 +75,17 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
     
-    // Calculate new scale
-    const zoomSpeed = 0.003;
-    const newScale = Math.min(Math.max(currentScale - deltaY * zoomSpeed, 0.1), 2.5);
+    const zoomSpeed = 0.004;
+    const newScale = Math.min(Math.max(currentScale - deltaY * zoomSpeed, 0.05), 3);
     
     if (newScale === currentScale) return;
 
-    // To zoom to a focal point, we need to adjust X and Y:
-    // 1. Find mouse position relative to container center
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
 
-    // 2. Project focal point into world coordinates
     const worldX = (focalX - x.get()) / currentScale;
     const worldY = (focalY - y.get()) / currentScale;
 
-    // 3. Update scale and adjust X/Y so world coordinates stay at the same focal point
     scale.set(newScale);
     x.set(focalX - worldX * newScale);
     y.set(focalY - worldY * newScale);
@@ -89,7 +100,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
-      
       if (e.ctrlKey || e.metaKey) {
         handleZoom(e.deltaY, e.clientX, e.clientY);
       } else {
@@ -116,8 +126,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           e.touches[0].pageY - e.touches[1].pageY
         );
         const factor = d / initialPinchDistance;
-        const newScale = Math.min(Math.max(initialScale * factor, 0.1), 2.5);
-        scale.set(newScale);
+        scale.set(Math.min(Math.max(initialScale * factor, 0.05), 3));
       }
     };
 
@@ -135,7 +144,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
+      className="w-full h-full relative overflow-hidden bg-[#050505] touch-none"
     >
       {/* Interaction Surface */}
       <motion.div
@@ -148,12 +157,23 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute inset-[-10000px] z-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* Grid Background */}
+      {/* Cosmic Background (Stars) */}
       <motion.div 
-        style={{ x: smoothX, y: smoothY }}
+        style={{ x: smoothX, y: smoothY, scale: smoothScale }}
         className="absolute inset-0 pointer-events-none"
       >
-        <div className="absolute inset-[-20000px] subtle-grid opacity-20" />
+        <div className="absolute inset-[-10000px] opacity-30" 
+          style={{
+            backgroundImage: 'radial-gradient(circle, #333 1px, transparent 1px)',
+            backgroundSize: '100px 100px'
+          }}
+        />
+        <div className="absolute inset-[-10000px] opacity-10" 
+          style={{
+            backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
+            backgroundSize: '400px 400px'
+          }}
+        />
       </motion.div>
 
       {/* The World Container */}
@@ -162,7 +182,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           x: smoothX, 
           y: smoothY, 
           scale: smoothScale,
-          transformOrigin: '0 0' // Pivot is handled by X/Y adjustments in handleZoom
+          transformOrigin: '0 0'
         }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
@@ -187,14 +207,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       
       {/* UI Overlay */}
       <div className="absolute bottom-8 left-8 pointer-events-none flex items-center space-x-4">
-        <div className="bg-white/90 backdrop-blur-sm px-4 py-2 border border-gray-100 shadow-sm rounded-full flex items-center space-x-3 pointer-events-auto">
-          <p className="text-[9px] uppercase tracking-widest text-gray-500 font-sans">
-            {Math.round(scale.get() * 100)}% Scale
+        <div className="bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 shadow-2xl rounded-full flex items-center space-x-3 pointer-events-auto">
+          <p className="text-[9px] uppercase tracking-widest text-gray-400 font-sans">
+            {Math.round(scale.get() * 100)}% Perspective
           </p>
-          <div className="h-3 w-px bg-gray-100" />
+          <div className="h-3 w-px bg-white/10" />
           <button 
             onClick={() => centerCanvas()}
-            className="text-[9px] uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors"
+            className="text-[9px] uppercase tracking-widest text-gray-300 hover:text-white transition-colors"
           >
             Reset View
           </button>
