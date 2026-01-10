@@ -33,15 +33,15 @@ serve(async (req) => {
     const existingUrls = new Set((existing || []).map(a => a.url));
     const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    const articles = newItems.slice(0, 10).map((item, index) => {
+    const articles = newItems.slice(0, 15).map((item, index) => {
       const content = item.contentEncoded || item.content || item.description || '';
       const n = existingCount + index;
       
-      // Golden Angle Spiral Calculation
-      const angle = n * 2.39996;
-      const radius = Math.sqrt(n) * 450;
-      const x = radius * Math.cos(angle);
-      const y = radius * Math.sin(angle);
+      // Matching the tighter staggered grid logic
+      const col = n % 6;
+      const row = Math.floor(n / 6);
+      const jitterX = (Math.random() * 60) - 30;
+      const jitterY = (Math.random() * 40) - 20;
 
       return {
         title: item.title || 'Untitled',
@@ -52,8 +52,8 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x,
-        y
+        x: (col * 500) + jitterX - 1200,
+        y: (row * 450) + jitterY - 800
       };
     });
 
