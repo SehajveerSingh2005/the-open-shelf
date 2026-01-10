@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -24,34 +24,40 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  const smoothX = useSpring(x, { damping: 50, stiffness: 250 });
-  const smoothY = useSpring(y, { damping: 50, stiffness: 250 });
-  const smoothScale = useSpring(scale, { damping: 50, stiffness: 250 });
+  const smoothX = useSpring(x, { damping: 50, stiffness: 300 });
+  const smoothY = useSpring(y, { damping: 50, stiffness: 300 });
+  const smoothScale = useSpring(scale, { damping: 50, stiffness: 300 });
 
-  // Efficient culling logic with throttling
+  // Optimized culling logic: No complex animations on exit to save memory/CPU
   const updateVisibility = useCallback((force = false) => {
     const now = Date.now();
-    if (!force && now - lastUpdate.current < 100) return; // Limit to 10fps for culling
+    if (!force && now - lastUpdate.current < 50) return; // 20fps for culling checks
     lastUpdate.current = now;
 
     const currentX = -x.get();
     const currentY = -y.get();
-    const currentScale = scale.get();
+    const s = scale.get();
     
-    // Calculate a tighter viewport radius to make the "pop up" effect more noticeable
-    const viewRadius = (window.innerWidth / currentScale) * 1.1;
+    // Viewport bounds in world space
+    const radius = (Math.max(window.innerWidth, window.innerHeight) / s) * 0.8;
+    const rSq = radius * radius;
 
     const nextVisible = new Set<string>();
-    articles.forEach(article => {
-      const dx = article.x - currentX;
-      const dy = article.y - currentY;
-      const distanceSq = dx * dx + dy * dy;
-      if (distanceSq < viewRadius * viewRadius) {
-        nextVisible.add(article.id);
+    for (let i = 0; i < articles.length; i++) {
+      const art = articles[i];
+      const dx = art.x - currentX;
+      const dy = art.y - currentY;
+      if (dx * dx + dy * dy < rSq) {
+        nextVisible.add(art.id);
       }
-    });
+    }
 
-    setVisibleIds(nextVisible);
+    // Only update state if visibility set has changed
+    setVisibleIds(prev => {
+      if (prev.size !== nextVisible.size) return nextVisible;
+      for (const id of nextVisible) if (!prev.has(id)) return nextVisible;
+      return prev;
+    });
   }, [articles, x, y, scale]);
 
   useEffect(() => {
@@ -68,7 +74,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.0015, 0.05), 1.5);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.001, 0.05), 1.5);
     
     if (newScale === currentScale) return;
     const focalX = mouseX - rect.left - rect.width / 2;
@@ -97,8 +103,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [x, y, handleZoom]);
 
-  // Pre-filter articles for the render loop
-  const renderedArticles = articles.filter(a => visibleIds.has(a.id));
+  // Memoize rendered list to prevent unnecessary re-renders
+  const renderedList = useMemo(() => 
+    articles.filter(a => visibleIds.has(a.id)), 
+    [articles, visibleIds]
+  );
 
   return (
     <div 
@@ -106,7 +115,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
       style={{
         backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
-        backgroundSize: '80px 80px',
+        backgroundSize: '100px 100px',
       }}
     >
       <motion.div
@@ -128,26 +137,22 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        <AnimatePresence mode="popLayout">
-          {renderedArticles.map((article) => (
-            <motion.div 
-              key={article.id} 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute pointer-events-auto"
-              style={{ 
-                left: article.x, 
-                top: article.y, 
-                transform: 'translate(-50%, -50%)',
-                willChange: 'transform, opacity'
-              }}
-            >
-              <ArticleCard article={article} onClick={onArticleClick} isCanvas />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        {renderedList.map((article) => (
+          <motion.div 
+            key={article.id} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute pointer-events-auto"
+            style={{ 
+              left: article.x, 
+              top: article.y, 
+              transform: 'translate(-50%, -50%)',
+              willChange: 'transform, opacity'
+            }}
+          >
+            <ArticleCard article={article} onClick={onArticleClick} isCanvas />
+          </motion.div>
+        ))}
       </motion.div>
       
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
@@ -158,7 +163,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           </div>
           <div className="h-6 w-px bg-gray-100" />
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">In View</span>
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Active Shelf</span>
             <span className="text-xs font-medium text-gray-900">{visibleIds.size} / {articles.length}</span>
           </div>
         </div>
