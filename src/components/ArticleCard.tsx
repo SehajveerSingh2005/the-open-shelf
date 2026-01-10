@@ -11,54 +11,37 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
-  const variants = {
-    hidden: { opacity: 0, scale: 0.92, y: 10 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.6, 
-        ease: [0.16, 1, 0.3, 1] 
-      }
-    }
-  };
-
   return (
     <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={variants}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100 p-7 shadow-sm hover:shadow-2xl transition-all duration-300 cursor-pointer group
-        ${isCanvas ? 'w-72' : 'w-full mb-8'}
+        bg-white border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group
+        ${isCanvas ? 'w-[340px]' : 'w-full mb-6'}
       `}
     >
-      <div className="space-y-5">
+      <div className="space-y-4">
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <span className="h-px w-4 bg-gray-200" />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-sans">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] uppercase tracking-[0.2em] text-gray-400 font-sans font-semibold">
               {article.source}
             </p>
+            <p className="text-[9px] text-gray-300 font-sans uppercase tracking-widest">{article.readingTime}</p>
           </div>
-          <h3 className="text-2xl font-serif font-medium leading-tight text-gray-900 group-hover:text-black transition-colors">
+          <h3 className="text-xl font-serif font-medium leading-tight text-gray-900 group-hover:text-black transition-colors">
             {article.title}
           </h3>
         </div>
         
-        <p className="text-sm text-gray-500 line-clamp-4 font-serif italic leading-relaxed">
+        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed">
           {article.excerpt}
         </p>
         
-        <div className="pt-4 flex justify-between items-end">
-          <div className="space-y-0.5">
-            <p className="text-[10px] uppercase tracking-widest text-gray-300 font-sans">Author</p>
-            <p className="text-[11px] text-gray-600 font-sans font-medium">{article.author}</p>
-          </div>
-          <p className="text-[10px] text-gray-400 font-sans uppercase tracking-widest">{article.readingTime}</p>
+        <div className="pt-2 border-t border-gray-50 flex items-center justify-between">
+          <p className="text-[10px] text-gray-400 font-sans italic">by {article.author}</p>
+          <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
         </div>
       </div>
     </motion.div>

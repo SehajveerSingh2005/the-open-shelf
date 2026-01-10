@@ -28,18 +28,46 @@ serve(async (req) => {
       .from('feeds')
       .upsert({ url: feedUrl, title: feed.title || 'Untitled' }, { onConflict: 'url' });
 
-    const { data: existing } = await supabaseClient.from('articles').select('url');
-    const existingCount = (existing || []).length;
+    // Fetch existing articles to find current column heights for masonry packing
+    const { data: existing } = await supabaseClient.from('articles').select('url, x, y, excerpt');
     const existingUrls = new Set((existing || []).map(a => a.url));
+    
+    // Initial column heights based on existing layout
+    const colHeights = [0, 0, 0, 0, 0];
+    const cardWidth = 340;
+    const cardGap = 24;
+
+    if (existing && existing.length > 0) {
+      existing.forEach(art => {
+        const colIdx = Math.round(art.x / (cardWidth + cardGap)) + 2;
+        if (colIdx >= 0 && colIdx < 5) {
+          const estHeight = 240 + (art.excerpt?.length || 0) * 0.4;
+          const bottom = art.y + 500 + (estHeight > 500 ? 500 : estHeight) + cardGap;
+          if (bottom > colHeights[colIdx]) colHeights[colIdx] = bottom;
+        }
+      });
+    }
+
     const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    const articles = newItems.slice(0, 10).map((item, index) => {
+    const articles = newItems.slice(0, 10).map((item) => {
       const content = item.contentEncoded || item.content || item.description || '';
-      const totalIdx = existingCount + index;
       
-      // Fixed Grid Placement
-      const x = (totalIdx % 5) * 340 - 680;
-      const y = Math.floor(totalIdx / 5) * 520 - 1000;
+      // Find shortest column
+      let minH = colHeights[0];
+      let colIdx = 0;
+      for (let i = 1; i < 5; i++) {
+        if (colHeights[i] < minH) {
+          minH = colHeights[i];
+          colIdx = i;
+        }
+      }
+
+      const x = (colIdx - 2) * (cardWidth + cardGap);
+      const y = minH - 500;
+      
+      const estHeight = 240 + (item.contentSnippet || '').length * 0.4;
+      colHeights[colIdx] += (estHeight > 500 ? 500 : estHeight) + cardGap;
 
       return {
         title: item.title || 'Untitled',
