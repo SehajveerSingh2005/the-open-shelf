@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -19,18 +19,17 @@ let isFirstLoad = true;
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Camera State
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  const smoothX = useSpring(x, { damping: 40, stiffness: 200 });
-  const smoothY = useSpring(y, { damping: 40, stiffness: 200 });
-  const smoothScale = useSpring(scale, { damping: 40, stiffness: 200 });
+  // Springs with higher damping for stability
+  const smoothX = useSpring(x, { damping: 50, stiffness: 200, restDelta: 0.001 });
+  const smoothY = useSpring(y, { damping: 50, stiffness: 200, restDelta: 0.001 });
+  const smoothScale = useSpring(scale, { damping: 50, stiffness: 200, restDelta: 0.001 });
 
-  // Subtle dot grid parallax
-  const bgPosX = useTransform(smoothX, (v) => `${v * 0.1}px`);
-  const bgPosY = useTransform(smoothY, (v) => `${v * 0.1}px`);
-
+  // Sync back to persistence
   useEffect(() => {
     const unsubX = x.on('change', (v) => persistentX = v);
     const unsubY = y.on('change', (v) => persistentY = v);
@@ -68,7 +67,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.1), 2);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.05), 2.5);
     
     if (newScale === currentScale) return;
     const focalX = mouseX - rect.left - rect.width / 2;
@@ -100,20 +99,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#f7f7f7] touch-none"
+      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
+      style={{
+        backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
+        backgroundSize: '40px 40px',
+      }}
     >
-      {/* Refined Dot Grid Background */}
-      <motion.div 
-        style={{ backgroundPosition: `${bgPosX.get()} ${bgPosY.get()}` }}
-        className="absolute inset-0 pointer-events-none opacity-[0.4]"
-        style={{ 
-          backgroundImage: 'radial-gradient(#d1d1d1 1px, transparent 1px)', 
-          backgroundSize: '40px 40px',
-          backgroundPosition: `${bgPosX.get()} ${bgPosY.get()}`
-        }}
-      />
-
-      {/* Surface for panning */}
+      {/* Pan Surface */}
       <motion.div
         drag
         dragMomentum={true}
@@ -124,9 +116,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* The Gallery */}
+      {/* World Container */}
       <motion.div
-        style={{ x: smoothX, y: smoothY, scale: smoothScale, transformOrigin: '0 0' }}
+        style={{ 
+          x: smoothX, 
+          y: smoothY, 
+          scale: smoothScale, 
+          transformOrigin: '0 0' 
+        }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
         {articles.map((article) => (
@@ -145,18 +142,19 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* HUD */}
-      <div className="absolute bottom-8 left-8 pointer-events-none flex items-center space-x-4 z-50">
-        <div className="bg-white/90 backdrop-blur-md px-5 py-2.5 border border-gray-200 shadow-xl rounded-full flex items-center space-x-4 pointer-events-auto">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-sans font-medium">
-            Perspective: {Math.round(scale.get() * 100)}%
-          </p>
-          <div className="h-4 w-px bg-gray-200" />
+      {/* Zoom / Viewport Info HUD */}
+      <div className="absolute bottom-10 left-10 pointer-events-none flex items-center z-50">
+        <div className="bg-white/80 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
+          <div className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Zoom</span>
+            <span className="text-xs font-medium text-gray-900">{Math.round(scale.get() * 100)}%</span>
+          </div>
+          <div className="h-6 w-px bg-gray-100" />
           <button 
             onClick={() => centerCanvas()}
-            className="text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-gray-900 transition-colors"
+            className="text-[10px] uppercase tracking-widest font-bold text-gray-500 hover:text-gray-900 transition-all"
           >
-            Reset View
+            Center View
           </button>
         </div>
       </div>
