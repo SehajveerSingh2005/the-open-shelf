@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -13,47 +13,59 @@ interface CanvasViewProps {
 // Persist camera state globally
 let persistentX = 0;
 let persistentY = 0;
-let persistentScale = 0.6;
+let persistentScale = 0.5;
 let isFirstLoad = true;
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleArticles, setVisibleArticles] = useState<Article[]>([]);
   
   // Camera State
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  // Springs with higher damping for stability
-  const smoothX = useSpring(x, { damping: 50, stiffness: 200, restDelta: 0.001 });
-  const smoothY = useSpring(y, { damping: 50, stiffness: 200, restDelta: 0.001 });
-  const smoothScale = useSpring(scale, { damping: 50, stiffness: 200, restDelta: 0.001 });
+  const smoothX = useSpring(x, { damping: 50, stiffness: 250 });
+  const smoothY = useSpring(y, { damping: 50, stiffness: 250 });
+  const smoothScale = useSpring(scale, { damping: 50, stiffness: 250 });
 
-  // Sync back to persistence
+  // Radial Culling Logic: Only render items near the focal point
+  const updateVisibility = useCallback(() => {
+    const currentX = -x.get(); // Camera position is inverted world space
+    const currentY = -y.get();
+    const currentScale = scale.get();
+    
+    // Threshold radius depends on zoom level (further zoom = see more)
+    const viewRadius = (window.innerWidth / currentScale) * 1.5;
+
+    const filtered = articles.filter(article => {
+      const dx = article.x - currentX;
+      const dy = article.y - currentY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      return distance < viewRadius;
+    });
+
+    setVisibleArticles(filtered);
+  }, [articles, x, y, scale]);
+
+  // Sync back to persistence and trigger culling
   useEffect(() => {
-    const unsubX = x.on('change', (v) => persistentX = v);
-    const unsubY = y.on('change', (v) => persistentY = v);
-    const unsubScale = scale.on('change', (v) => persistentScale = v);
+    const unsubX = x.on('change', (v) => { persistentX = v; updateVisibility(); });
+    const unsubY = y.on('change', (v) => { persistentY = v; updateVisibility(); });
+    const unsubScale = scale.on('change', (v) => { persistentScale = v; updateVisibility(); });
+    
+    updateVisibility(); // Initial check
+    
     return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [x, y, scale]);
+  }, [x, y, scale, updateVisibility]);
 
   const centerCanvas = useCallback((immediate = false) => {
-    if (!articles || articles.length === 0) return;
-    const allX = articles.map(a => a.x);
-    const allY = articles.map(a => a.y);
-    const targetX = -(Math.min(...allX) + Math.max(...allX)) / 2;
-    const targetY = -(Math.min(...allY) + Math.max(...allY)) / 2;
-    
     if (immediate) {
-      x.jump(targetX);
-      y.jump(targetY);
-      scale.jump(0.6);
+      x.jump(0); y.jump(0); scale.jump(0.5);
     } else {
-      x.set(targetX);
-      y.set(targetY);
-      scale.set(0.6);
+      x.set(0); y.set(0); scale.set(0.5);
     }
-  }, [articles, x, y, scale]);
+  }, [x, y, scale]);
 
   useEffect(() => {
     if (isFirstLoad && articles.length > 0) {
@@ -67,7 +79,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.05), 2.5);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.0015, 0.05), 2);
     
     if (newScale === currentScale) return;
     const focalX = mouseX - rect.left - rect.width / 2;
@@ -102,7 +114,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
       style={{
         backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
-        backgroundSize: '40px 40px',
+        backgroundSize: '60px 60px',
       }}
     >
       {/* Pan Surface */}
@@ -126,7 +138,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {articles.map((article) => (
+        {visibleArticles.map((article) => (
           <div 
             key={article.id} 
             className="absolute pointer-events-auto"
@@ -142,19 +154,24 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* Zoom / Viewport Info HUD */}
-      <div className="absolute bottom-10 left-10 pointer-events-none flex items-center z-50">
-        <div className="bg-white/80 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
+      {/* HUD */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
+        <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Zoom</span>
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Focal Depth</span>
             <span className="text-xs font-medium text-gray-900">{Math.round(scale.get() * 100)}%</span>
+          </div>
+          <div className="h-6 w-px bg-gray-100" />
+          <div className="flex flex-col">
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Visible</span>
+            <span className="text-xs font-medium text-gray-900">{visibleArticles.length} / {articles.length}</span>
           </div>
           <div className="h-6 w-px bg-gray-100" />
           <button 
             onClick={() => centerCanvas()}
             className="text-[10px] uppercase tracking-widest font-bold text-gray-500 hover:text-gray-900 transition-all"
           >
-            Center View
+            Reset
           </button>
         </div>
       </div>
