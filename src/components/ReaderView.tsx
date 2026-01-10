@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { X, ExternalLink, Type, Moon, Sun, Minus, Plus, AlignLeft } from 'lucide-react';
 import { Article } from '@/types/article';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,18 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   const [lineHeight, setLineHeight] = useState(1.6);
   const [fontType, setFontType] = useState<FontType>('sans');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    container: containerRef,
+  });
+
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   // Prevent background scroll when reader is open
   useEffect(() => {
@@ -36,6 +48,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
     <AnimatePresence>
       {article && (
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -52,6 +65,12 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
               ? 'bg-white/80 border-gray-100' 
               : 'bg-[#121212]/80 border-gray-800'
           )}>
+            {/* Scroll Progress Bar */}
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-900 dark:bg-gray-100 origin-left"
+              style={{ scaleX }}
+            />
+
             <div className="flex items-center space-x-2">
               <p className={cn(
                 "text-[10px] uppercase tracking-widest truncate max-w-[200px] md:max-w-md",
@@ -212,8 +231,8 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
                 fontType === 'serif' ? 'font-serif' : fontType === 'mono' ? 'font-mono' : 'font-sans',
                 theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray',
                 // Content spacing and formatting
-                "prose-img:rounded-none prose-img:mx-auto prose-img:mt-16 prose-img:mb-4 prose-img:shadow-sm",
-                "prose-figcaption:text-center prose-figcaption:text-xs prose-figcaption:mt-2 prose-figcaption:mb-16 prose-figcaption:italic",
+                "prose-img:rounded-none prose-img:mx-auto prose-img:mt-16 prose-img:mb-4 prose-img:shadow-sm prose-img:block",
+                "prose-figcaption:text-center prose-figcaption:text-[13px] prose-figcaption:mt-4 prose-figcaption:mb-16 prose-figcaption:italic prose-figcaption:opacity-60",
                 "prose-blockquote:border-l-gray-300 prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif prose-blockquote:py-2",
                 "prose-a:decoration-gray-300 hover:prose-a:decoration-gray-900 prose-a:underline-offset-4 transition-colors"
               )}
