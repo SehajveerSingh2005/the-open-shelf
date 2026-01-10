@@ -50,8 +50,8 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x: 420 * radius * Math.cos(angle),
-        y: 350 * radius * Math.sin(angle)
+        x: 320 * radius * Math.cos(angle),
+        y: 280 * radius * Math.sin(angle)
       };
     });
 
