@@ -29,17 +29,11 @@ serve(async (req) => {
       .upsert({ url: feedUrl, title: feed.title || 'Untitled' }, { onConflict: 'url' });
 
     const { data: existing } = await supabaseClient.from('articles').select('url');
-    const existingCount = (existing || []).length;
     const existingUrls = new Set((existing || []).map(a => a.url));
     const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    const articles = newItems.slice(0, 15).map((item, index) => {
+    const articles = newItems.slice(0, 15).map((item) => {
       const content = item.contentEncoded || item.content || item.description || '';
-      const n = existingCount + index;
-      
-      // Fermat's Spiral / Golden Angle logic for organic growth
-      const angle = n * 2.39996; // 137.5 degrees in radians
-      const radius = Math.sqrt(n + 1);
 
       return {
         title: item.title || 'Untitled',
@@ -50,8 +44,9 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x: 320 * radius * Math.cos(angle),
-        y: 280 * radius * Math.sin(angle)
+        // Coordinates are now handled by the frontend
+        x: 0,
+        y: 0
       };
     });
 
