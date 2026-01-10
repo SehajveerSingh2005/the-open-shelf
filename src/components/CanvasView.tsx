@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
@@ -10,7 +10,6 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-// Persist camera state globally
 let persistentX = 0;
 let persistentY = 0;
 let persistentScale = 0.5;
@@ -18,9 +17,9 @@ let isFirstLoad = true;
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [visibleArticles, setVisibleArticles] = useState<Article[]>([]);
+  const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
+  const lastUpdate = useRef(0);
   
-  // Camera State
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
@@ -29,57 +28,47 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const smoothY = useSpring(y, { damping: 50, stiffness: 250 });
   const smoothScale = useSpring(scale, { damping: 50, stiffness: 250 });
 
-  // Radial Culling Logic: Only render items near the focal point
-  const updateVisibility = useCallback(() => {
-    const currentX = -x.get(); // Camera position is inverted world space
+  // Efficient culling logic with throttling
+  const updateVisibility = useCallback((force = false) => {
+    const now = Date.now();
+    if (!force && now - lastUpdate.current < 100) return; // Limit to 10fps for culling
+    lastUpdate.current = now;
+
+    const currentX = -x.get();
     const currentY = -y.get();
     const currentScale = scale.get();
     
-    // Threshold radius depends on zoom level (further zoom = see more)
-    const viewRadius = (window.innerWidth / currentScale) * 1.5;
+    // Calculate a tighter viewport radius to make the "pop up" effect more noticeable
+    const viewRadius = (window.innerWidth / currentScale) * 1.1;
 
-    const filtered = articles.filter(article => {
+    const nextVisible = new Set<string>();
+    articles.forEach(article => {
       const dx = article.x - currentX;
       const dy = article.y - currentY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      return distance < viewRadius;
+      const distanceSq = dx * dx + dy * dy;
+      if (distanceSq < viewRadius * viewRadius) {
+        nextVisible.add(article.id);
+      }
     });
 
-    setVisibleArticles(filtered);
+    setVisibleIds(nextVisible);
   }, [articles, x, y, scale]);
 
-  // Sync back to persistence and trigger culling
   useEffect(() => {
-    const unsubX = x.on('change', (v) => { persistentX = v; updateVisibility(); });
-    const unsubY = y.on('change', (v) => { persistentY = v; updateVisibility(); });
-    const unsubScale = scale.on('change', (v) => { persistentScale = v; updateVisibility(); });
+    const unsubX = x.on('change', () => updateVisibility());
+    const unsubY = y.on('change', () => updateVisibility());
+    const unsubScale = scale.on('change', () => updateVisibility());
     
-    updateVisibility(); // Initial check
-    
+    updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [x, y, scale, updateVisibility]);
-
-  const centerCanvas = useCallback((immediate = false) => {
-    if (immediate) {
-      x.jump(0); y.jump(0); scale.jump(0.5);
-    } else {
-      x.set(0); y.set(0); scale.set(0.5);
-    }
-  }, [x, y, scale]);
-
-  useEffect(() => {
-    if (isFirstLoad && articles.length > 0) {
-      centerCanvas(true);
-      isFirstLoad = false;
-    }
-  }, [articles.length, centerCanvas]);
 
   const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.0015, 0.05), 2);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.0015, 0.05), 1.5);
     
     if (newScale === currentScale) return;
     const focalX = mouseX - rect.left - rect.width / 2;
@@ -108,16 +97,18 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [x, y, handleZoom]);
 
+  // Pre-filter articles for the render loop
+  const renderedArticles = articles.filter(a => visibleIds.has(a.id));
+
   return (
     <div 
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
       style={{
         backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
-        backgroundSize: '60px 60px',
+        backgroundSize: '80px 80px',
       }}
     >
-      {/* Pan Surface */}
       <motion.div
         drag
         dragMomentum={true}
@@ -128,7 +119,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* World Container */}
       <motion.div
         style={{ 
           x: smoothX, 
@@ -138,23 +128,28 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {visibleArticles.map((article) => (
-          <div 
-            key={article.id} 
-            className="absolute pointer-events-auto"
-            style={{ 
-              left: article.x, 
-              top: article.y, 
-              transform: 'translate(-50%, -50%)',
-              willChange: 'transform'
-            }}
-          >
-            <ArticleCard article={article} onClick={onArticleClick} isCanvas />
-          </div>
-        ))}
+        <AnimatePresence mode="popLayout">
+          {renderedArticles.map((article) => (
+            <motion.div 
+              key={article.id} 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute pointer-events-auto"
+              style={{ 
+                left: article.x, 
+                top: article.y, 
+                transform: 'translate(-50%, -50%)',
+                willChange: 'transform, opacity'
+              }}
+            >
+              <ArticleCard article={article} onClick={onArticleClick} isCanvas />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </motion.div>
       
-      {/* HUD */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
         <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
           <div className="flex flex-col">
@@ -163,16 +158,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           </div>
           <div className="h-6 w-px bg-gray-100" />
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Visible</span>
-            <span className="text-xs font-medium text-gray-900">{visibleArticles.length} / {articles.length}</span>
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">In View</span>
+            <span className="text-xs font-medium text-gray-900">{visibleIds.size} / {articles.length}</span>
           </div>
-          <div className="h-6 w-px bg-gray-100" />
-          <button 
-            onClick={() => centerCanvas()}
-            className="text-[10px] uppercase tracking-widest font-bold text-gray-500 hover:text-gray-900 transition-all"
-          >
-            Reset
-          </button>
         </div>
       </div>
     </div>
