@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
@@ -13,26 +13,27 @@ interface CanvasViewProps {
 // Persist camera state globally
 let persistentX = 0;
 let persistentY = 0;
-let persistentScale = 0.4;
+let persistentScale = 0.5;
 let isFirstLoad = true;
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [hasCentered, setHasCentered] = useState(false);
   
   // Camera State
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  // High-performance smooth motion
-  const smoothX = useSpring(x, { damping: 40, stiffness: 150 });
-  const smoothY = useSpring(y, { damping: 40, stiffness: 150 });
-  const smoothScale = useSpring(scale, { damping: 40, stiffness: 150 });
+  // Balanced springs for responsiveness and performance
+  const smoothX = useSpring(x, { damping: 30, stiffness: 120 });
+  const smoothY = useSpring(y, { damping: 30, stiffness: 120 });
+  const smoothScale = useSpring(scale, { damping: 30, stiffness: 120 });
 
-  // Background Parallax
-  const bgX = useTransform(smoothX, (v) => v * 0.1);
-  const bgY = useTransform(smoothY, (v) => v * 0.1);
+  // Optimized Background Parallax (using position instead of moving massive elements)
+  const bgPosX = useTransform(smoothX, (v) => `${v * 0.05}px`);
+  const bgPosY = useTransform(smoothY, (v) => `${v * 0.05}px`);
+  const bgPosXFar = useTransform(smoothX, (v) => `${v * 0.02}px`);
+  const bgPosYFar = useTransform(smoothY, (v) => `${v * 0.02}px`);
 
   // Sync back to persistence
   useEffect(() => {
@@ -44,48 +45,37 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
   const centerCanvas = useCallback((immediate = false) => {
     if (!articles || articles.length === 0) return;
-
     const allX = articles.map(a => a.x);
     const allY = articles.map(a => a.y);
-    
-    const minX = Math.min(...allX);
-    const maxX = Math.max(...allX);
-    const minY = Math.min(...allY);
-    const maxY = Math.max(...allY);
-
-    const targetX = -(minX + maxX) / 2;
-    const targetY = -(minY + maxY) / 2;
+    const targetX = -(Math.min(...allX) + Math.max(...allX)) / 2;
+    const targetY = -(Math.min(...allY) + Math.max(...allY)) / 2;
     
     if (immediate) {
       x.jump(targetX);
       y.jump(targetY);
-      scale.jump(0.4);
+      scale.jump(0.5);
     } else {
       x.set(targetX);
       y.set(targetY);
-      scale.set(0.4);
+      scale.set(0.5);
     }
   }, [articles, x, y, scale]);
 
-  // Handle Initial Center
   useEffect(() => {
     if (isFirstLoad && articles.length > 0) {
       centerCanvas(true);
       isFirstLoad = false;
-      setHasCentered(true);
     }
-  }, [articles, centerCanvas]);
+  }, [articles.length, centerCanvas]);
 
   const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
     const container = containerRef.current;
     if (!container) return;
-
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.003, 0.02), 3);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.05), 2);
     
     if (newScale === currentScale) return;
-
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
     const worldX = (focalX - x.get()) / currentScale;
@@ -99,7 +89,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (e.ctrlKey || e.metaKey) {
@@ -109,7 +98,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         y.set(y.get() - e.deltaY);
       }
     };
-
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => container.removeEventListener('wheel', handleWheel);
   }, [x, y, handleZoom]);
@@ -119,35 +107,48 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#050505] touch-none"
     >
-      {/* Background Layer: Multi-layered Starfield */}
-      <motion.div style={{ x: bgX, y: bgY }} className="absolute inset-0 pointer-events-none">
-        {/* Layer 1: Dim stars */}
-        <div 
-          className="absolute inset-[-10000px] opacity-20" 
-          style={{ 
-            backgroundImage: 'radial-gradient(circle, #444 1px, transparent 1px)', 
-            backgroundSize: '200px 200px' 
-          }} 
-        />
-        {/* Layer 2: Bright stars */}
-        <div 
-          className="absolute inset-[-10000px] opacity-10" 
-          style={{ 
-            backgroundImage: 'radial-gradient(circle, #fff 1.2px, transparent 1.2px)', 
-            backgroundSize: '500px 500px' 
-          }} 
-        />
-        {/* Layer 3: Nebula Glow */}
-        <div 
-          className="absolute inset-[-10000px] opacity-[0.05]" 
-          style={{ 
-            background: 'radial-gradient(circle at 50% 50%, #1e3a8a 0%, transparent 70%)',
-            backgroundSize: '2000px 2000px'
-          }} 
-        />
-      </motion.div>
+      {/* High-Performance Parallax Backgrounds */}
+      <motion.div 
+        style={{ backgroundPosition: `${bgPosXFar} ${bgPosYFar}` }}
+        className="absolute inset-0 pointer-events-none opacity-20"
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{ 
+          backgroundImage: 'radial-gradient(circle, #444 1px, transparent 1px)', 
+          backgroundSize: '150px 150px',
+          backgroundRepeat: 'repeat',
+          backgroundPosition: `${bgPosXFar.get()} ${bgPosYFar.get()}` // initial
+        }}
+        // Using direct style object for parallax background-position
+      />
+      
+      {/* Far Layer */}
+      <motion.div 
+        style={{ backgroundPositionX: bgPosXFar, backgroundPositionY: bgPosYFar }}
+        className="absolute inset-0 pointer-events-none opacity-10"
+        style={{ 
+          backgroundImage: 'radial-gradient(circle, #666 1px, transparent 1px)', 
+          backgroundSize: '300px 300px',
+          backgroundPositionX: bgPosXFar,
+          backgroundPositionY: bgPosYFar
+        }}
+      />
 
-      {/* Invisible Drag Surface */}
+      {/* Near Layer */}
+      <motion.div 
+        style={{ backgroundPositionX: bgPosX, backgroundPositionY: bgPosY }}
+        className="absolute inset-0 pointer-events-none opacity-10"
+        style={{ 
+          backgroundImage: 'radial-gradient(circle, #fff 1.2px, transparent 1.2px)', 
+          backgroundSize: '500px 500px',
+          backgroundPositionX: bgPosX,
+          backgroundPositionY: bgPosY
+        }}
+      />
+
+      {/* Nebula Glow (Fixed) */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(circle_at_center,_#1e3a8a_0%,transparent_70%)]" />
+
+      {/* Interaction Surface */}
       <motion.div
         drag
         dragMomentum={true}
@@ -155,7 +156,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           x.set(x.get() + info.delta.x);
           y.set(y.get() + info.delta.y);
         }}
-        className="absolute inset-[-10000px] z-0 cursor-grab active:cursor-grabbing"
+        className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
       {/* World Content */}
@@ -175,7 +176,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
             style={{ 
               left: article.x, 
               top: article.y, 
-              transform: 'translate(-50%, -50%)' 
+              transform: 'translate(-50%, -50%)',
+              willChange: 'transform'
             }}
           >
             <ArticleCard article={article} onClick={onArticleClick} isCanvas />
