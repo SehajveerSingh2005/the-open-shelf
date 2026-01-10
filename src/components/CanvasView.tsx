@@ -4,43 +4,54 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
+import { Maximize2 } from 'lucide-react';
 
 interface CanvasViewProps {
   articles: Article[];
   onArticleClick: (article: Article) => void;
 }
 
-// Higher default zoom for immediate readability
-let persistentX = 0;
-let persistentY = 0;
-let persistentScale = 0.85; 
+// Persist camera state across refreshes using localStorage
+const STORAGE_KEY = 'open-shelf-camera';
+const getStoredState = () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.85 };
+  } catch {
+    return { x: 0, y: 0, scale: 0.85 };
+  }
+};
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const initialState = useMemo(() => getStoredState(), []);
+  
+  const x = useMotionValue(initialState.x);
+  const y = useMotionValue(initialState.y);
+  const scale = useMotionValue(initialState.scale);
+  
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const ticking = useRef(false);
-  
-  const bounds = useMemo(() => {
-    if (articles.length === 0) return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
-    const xs = articles.map(a => a.x);
-    const ys = articles.map(a => a.y);
-    return {
-      minX: Math.min(...xs) - 600,
-      maxX: Math.max(...xs) + 600,
-      minY: Math.min(...ys) - 600,
-      maxY: Math.max(...ys) + 600
-    };
-  }, [articles]);
 
-  const x = useMotionValue(persistentX);
-  const y = useMotionValue(persistentY);
-  const scale = useMotionValue(persistentScale);
-  
   const smoothX = useSpring(x, { damping: 50, stiffness: 250 });
   const smoothY = useSpring(y, { damping: 50, stiffness: 250 });
   const smoothScale = useSpring(scale, { damping: 50, stiffness: 250 });
 
-  // Pure Viewport-Based Visibility (No arbitrary caps)
+  // Save state to localStorage on changes
+  useEffect(() => {
+    const save = () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        x: x.get(),
+        y: y.get(),
+        scale: scale.get()
+      }));
+    };
+    const unsubX = x.on('change', save);
+    const unsubY = y.on('change', save);
+    const unsubScale = scale.on('change', save);
+    return () => { unsubX(); unsubY(); unsubScale(); };
+  }, [x, y, scale]);
+
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
     ticking.current = true;
@@ -49,57 +60,46 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const curX = -x.get();
       const curY = -y.get();
       const s = scale.get();
-      
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      // Calculate viewport in world space
-      const left = curX - width / 2 - 400; // 400px buffer
-      const right = curX + width / 2 + 400;
-      const top = curY - height / 2 - 400;
-      const bottom = curY + height / 2 + 400;
+      const left = curX - width / 2 - 500;
+      const right = curX + width / 2 + 500;
+      const top = curY - height / 2 - 500;
+      const bottom = curY + height / 2 + 500;
 
       const nextVisible = new Set<string>();
-      for (let i = 0; i < articles.length; i++) {
-        const art = articles[i];
+      for (const art of articles) {
         if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
           nextVisible.add(art.id);
         }
       }
-
-      setVisibleIds(prev => {
-        if (prev.size === nextVisible.size) {
-          let hasChanged = false;
-          for (const id of nextVisible) {
-            if (!prev.has(id)) { hasChanged = true; break; }
-          }
-          if (!hasChanged) return prev;
-        }
-        return nextVisible;
-      });
-      
+      setVisibleIds(nextVisible);
       ticking.current = false;
     });
   }, [articles, x, y, scale]);
 
   useEffect(() => {
-    const unsubX = x.on('change', (v) => { persistentX = v; updateVisibility(); });
-    const unsubY = y.on('change', (v) => { persistentY = v; updateVisibility(); });
-    const unsubScale = scale.on('change', (v) => { persistentScale = v; updateVisibility(); });
-    
+    const unsubX = x.on('change', updateVisibility);
+    const unsubY = y.on('change', updateVisibility);
+    const unsubScale = scale.on('change', updateVisibility);
     updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [x, y, scale, updateVisibility]);
+
+  const resetView = () => {
+    x.set(0);
+    y.set(0);
+    scale.set(0.85);
+  };
 
   const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    
-    // Smooth zoom transition
     const zoomFactor = deltaY > 0 ? 0.95 : 1.05;
-    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.15), 1.5);
+    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.1), 1.5);
     
     if (newScale === currentScale) return;
 
@@ -140,21 +140,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
       <motion.div
-        style={{ 
-          x: smoothX, 
-          y: smoothY, 
-          scale: smoothScale, 
-          transformOrigin: '0 0' 
-        }}
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, transformOrigin: '0 0' }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
+        {/* Infinite Grid Background */}
         <div 
-          className="absolute"
+          className="absolute inset-[-10000%]"
           style={{
-            left: bounds.minX,
-            top: bounds.minY,
-            width: bounds.maxX - bounds.minX,
-            height: bounds.maxY - bounds.minY,
             backgroundImage: 'radial-gradient(#e2e2e2 1.5px, transparent 1.5px)',
             backgroundSize: '80px 80px',
             opacity: 0.5
@@ -183,11 +175,16 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
             <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Focal Depth</span>
             <span className="text-xs font-medium text-gray-900">{Math.round(scale.get() * 100)}%</span>
           </div>
+          
           <div className="h-6 w-px bg-gray-100" />
-          <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Visible</span>
-            <span className="text-xs font-medium text-gray-900">{visibleIds.size} articles</span>
-          </div>
+          
+          <button 
+            onClick={resetView}
+            className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-900 transition-colors"
+          >
+            <Maximize2 size={14} />
+            <span>Reset View</span>
+          </button>
         </div>
       </div>
     </div>
