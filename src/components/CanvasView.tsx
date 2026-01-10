@@ -10,62 +10,77 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
+// Persist camera state to avoid jumps on view switch
 let persistentX = 0;
 let persistentY = 0;
 let persistentScale = 0.5;
-let isFirstLoad = true;
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
-  const lastUpdate = useRef(0);
+  const ticking = useRef(false);
   
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  const smoothX = useSpring(x, { damping: 50, stiffness: 300 });
-  const smoothY = useSpring(y, { damping: 50, stiffness: 300 });
-  const smoothScale = useSpring(scale, { damping: 50, stiffness: 300 });
+  // High-performance springs
+  const smoothX = useSpring(x, { damping: 40, stiffness: 200 });
+  const smoothY = useSpring(y, { damping: 40, stiffness: 200 });
+  const smoothScale = useSpring(scale, { damping: 40, stiffness: 200 });
 
-  // Optimized culling logic: No complex animations on exit to save memory/CPU
-  const updateVisibility = useCallback((force = false) => {
-    const now = Date.now();
-    if (!force && now - lastUpdate.current < 50) return; // 20fps for culling checks
-    lastUpdate.current = now;
+  // Aggressive Culling Logic
+  const updateVisibility = useCallback(() => {
+    if (ticking.current) return;
+    ticking.current = true;
 
-    const currentX = -x.get();
-    const currentY = -y.get();
-    const s = scale.get();
-    
-    // Viewport bounds in world space
-    const radius = (Math.max(window.innerWidth, window.innerHeight) / s) * 0.8;
-    const rSq = radius * radius;
+    requestAnimationFrame(() => {
+      const curX = -x.get();
+      const curY = -y.get();
+      const s = scale.get();
+      
+      // Viewport bounds calculation
+      const width = window.innerWidth / s;
+      const height = window.innerHeight / s;
+      const margin = 500; // Buffer for smooth entry
+      
+      const left = curX - width / 2 - margin;
+      const right = curX + width / 2 + margin;
+      const top = curY - height / 2 - margin;
+      const bottom = curY + height / 2 + margin;
 
-    const nextVisible = new Set<string>();
-    for (let i = 0; i < articles.length; i++) {
-      const art = articles[i];
-      const dx = art.x - currentX;
-      const dy = art.y - currentY;
-      if (dx * dx + dy * dy < rSq) {
-        nextVisible.add(art.id);
+      const nextVisible = new Set<string>();
+      let count = 0;
+      const MAX_VISIBLE = 40; // Hard cap on rendered components for performance
+
+      for (let i = 0; i < articles.length; i++) {
+        const art = articles[i];
+        if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
+          nextVisible.add(art.id);
+          count++;
+          if (count >= MAX_VISIBLE) break; // Don't overwhelm the DOM
+        }
       }
-    }
 
-    // Only update state if visibility set has changed
-    setVisibleIds(prev => {
-      if (prev.size !== nextVisible.size) return nextVisible;
-      for (const id of nextVisible) if (!prev.has(id)) return nextVisible;
-      return prev;
+      setVisibleIds(prev => {
+        if (prev.size === nextVisible.size) {
+          let identical = true;
+          for (const id of nextVisible) if (!prev.has(id)) { identical = false; break; }
+          if (identical) return prev;
+        }
+        return nextVisible;
+      });
+      
+      ticking.current = false;
     });
   }, [articles, x, y, scale]);
 
   useEffect(() => {
-    const unsubX = x.on('change', () => updateVisibility());
-    const unsubY = y.on('change', () => updateVisibility());
-    const unsubScale = scale.on('change', () => updateVisibility());
+    const unsubX = x.on('change', (v) => { persistentX = v; updateVisibility(); });
+    const unsubY = y.on('change', (v) => { persistentY = v; updateVisibility(); });
+    const unsubScale = scale.on('change', (v) => { persistentScale = v; updateVisibility(); });
     
-    updateVisibility(true);
+    updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [x, y, scale, updateVisibility]);
 
@@ -74,11 +89,16 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.001, 0.05), 1.5);
+    
+    // Snappier zoom steps
+    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
+    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.05), 1.2);
     
     if (newScale === currentScale) return;
+
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
+    
     const worldX = (focalX - x.get()) / currentScale;
     const worldY = (focalY - y.get()) / currentScale;
 
@@ -103,7 +123,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [x, y, handleZoom]);
 
-  // Memoize rendered list to prevent unnecessary re-renders
   const renderedList = useMemo(() => 
     articles.filter(a => visibleIds.has(a.id)), 
     [articles, visibleIds]
@@ -112,22 +131,21 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none"
-      style={{
-        backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
-        backgroundSize: '100px 100px',
-      }}
+      className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
-      <motion.div
-        drag
-        dragMomentum={true}
-        onDrag={(_, info) => {
-          x.set(x.get() + info.delta.x);
-          y.set(y.get() + info.delta.y);
+      {/* Grid Layer */}
+      <motion.div 
+        className="absolute inset-[-200%] pointer-events-none"
+        style={{ 
+          x: smoothX, 
+          y: smoothY, 
+          scale: smoothScale,
+          backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
+          backgroundSize: '100px 100px',
         }}
-        className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
+      {/* World Layer */}
       <motion.div
         style={{ 
           x: smoothX, 
@@ -138,23 +156,22 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
         {renderedList.map((article) => (
-          <motion.div 
+          <div 
             key={article.id} 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
             className="absolute pointer-events-auto"
             style={{ 
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
-              willChange: 'transform, opacity'
+              willChange: 'transform' // Hardware acceleration
             }}
           >
             <ArticleCard article={article} onClick={onArticleClick} isCanvas />
-          </motion.div>
+          </div>
         ))}
       </motion.div>
       
+      {/* HUD */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
         <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
           <div className="flex flex-col">
