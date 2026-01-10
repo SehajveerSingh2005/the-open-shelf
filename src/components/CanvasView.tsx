@@ -10,7 +10,6 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-// Persist camera state to avoid jumps on view switch
 let persistentX = 0;
 let persistentY = 0;
 let persistentScale = 0.5;
@@ -20,16 +19,27 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const ticking = useRef(false);
   
+  // Calculate content bounds
+  const bounds = useMemo(() => {
+    if (articles.length === 0) return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    const xs = articles.map(a => a.x);
+    const ys = articles.map(a => a.y);
+    return {
+      minX: Math.min(...xs) - 400,
+      maxX: Math.max(...xs) + 400,
+      minY: Math.min(...ys) - 400,
+      maxY: Math.max(...ys) + 400
+    };
+  }, [articles]);
+
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  // High-performance springs
-  const smoothX = useSpring(x, { damping: 40, stiffness: 200 });
-  const smoothY = useSpring(y, { damping: 40, stiffness: 200 });
-  const smoothScale = useSpring(scale, { damping: 40, stiffness: 200 });
+  const smoothX = useSpring(x, { damping: 45, stiffness: 220 });
+  const smoothY = useSpring(y, { damping: 45, stiffness: 220 });
+  const smoothScale = useSpring(scale, { damping: 45, stiffness: 220 });
 
-  // Aggressive Culling Logic
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
     ticking.current = true;
@@ -39,10 +49,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const curY = -y.get();
       const s = scale.get();
       
-      // Viewport bounds calculation
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
-      const margin = 500; // Buffer for smooth entry
+      const margin = 300; 
       
       const left = curX - width / 2 - margin;
       const right = curX + width / 2 + margin;
@@ -51,22 +60,27 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
       const nextVisible = new Set<string>();
       let count = 0;
-      const MAX_VISIBLE = 40; // Hard cap on rendered components for performance
+      const MAX_VISIBLE = 30; // Further reduced for stability during zoom spikes
 
-      for (let i = 0; i < articles.length; i++) {
-        const art = articles[i];
+      // Prioritize items closer to center of view
+      const sortedByDistance = [...articles].sort((a, b) => {
+        const da = Math.pow(a.x - curX, 2) + Math.pow(a.y - curY, 2);
+        const db = Math.pow(b.x - curX, 2) + Math.pow(b.y - curY, 2);
+        return da - db;
+      });
+
+      for (const art of sortedByDistance) {
         if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
           nextVisible.add(art.id);
           count++;
-          if (count >= MAX_VISIBLE) break; // Don't overwhelm the DOM
+          if (count >= MAX_VISIBLE) break;
         }
       }
 
       setVisibleIds(prev => {
         if (prev.size === nextVisible.size) {
-          let identical = true;
-          for (const id of nextVisible) if (!prev.has(id)) { identical = false; break; }
-          if (identical) return prev;
+          for (const id of nextVisible) if (!prev.has(id)) return nextVisible;
+          return prev;
         }
         return nextVisible;
       });
@@ -90,9 +104,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
     
-    // Snappier zoom steps
-    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
-    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.05), 1.2);
+    const zoomFactor = deltaY > 0 ? 0.94 : 1.06;
+    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.08), 1.1);
     
     if (newScale === currentScale) return;
 
@@ -133,19 +146,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
-      {/* Grid Layer */}
-      <motion.div 
-        className="absolute inset-[-200%] pointer-events-none"
-        style={{ 
-          x: smoothX, 
-          y: smoothY, 
-          scale: smoothScale,
-          backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
-          backgroundSize: '100px 100px',
-        }}
-      />
-
-      {/* World Layer */}
       <motion.div
         style={{ 
           x: smoothX, 
@@ -155,6 +155,20 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
+        {/* Dynamic Bounded Grid */}
+        <div 
+          className="absolute"
+          style={{
+            left: bounds.minX,
+            top: bounds.minY,
+            width: bounds.maxX - bounds.minX,
+            height: bounds.maxY - bounds.minY,
+            backgroundImage: 'radial-gradient(#e5e5e5 1.5px, transparent 1.5px)',
+            backgroundSize: '100px 100px',
+            opacity: 0.6
+          }}
+        />
+
         {renderedList.map((article) => (
           <div 
             key={article.id} 
@@ -162,8 +176,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
             style={{ 
               left: article.x, 
               top: article.y, 
-              transform: 'translate(-50%, -50%)',
-              willChange: 'transform' // Hardware acceleration
+              transform: 'translate(-50%, -50%) translate3d(0,0,0)',
+              willChange: 'transform'
             }}
           >
             <ArticleCard article={article} onClick={onArticleClick} isCanvas />
@@ -171,16 +185,15 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* HUD */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
         <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Focal Depth</span>
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Zoom</span>
             <span className="text-xs font-medium text-gray-900">{Math.round(scale.get() * 100)}%</span>
           </div>
           <div className="h-6 w-px bg-gray-100" />
           <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Active Shelf</span>
+            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Visible</span>
             <span className="text-xs font-medium text-gray-900">{visibleIds.size} / {articles.length}</span>
           </div>
         </div>
