@@ -14,12 +14,12 @@ interface ReaderViewProps {
   onClose: () => void;
 }
 
-type FontType = 'serif' | 'sans';
+type FontType = 'serif' | 'sans' | 'mono';
 
 const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   const [fontSize, setFontSize] = useState(18);
   const [lineHeight, setLineHeight] = useState(1.6);
-  const [fontType, setFontType] = useState<FontType>('serif');
+  const [fontType, setFontType] = useState<FontType>('sans');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   // Prevent background scroll when reader is open
@@ -42,7 +42,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
           transition={{ duration: 0.2 }}
           className={cn(
             "fixed inset-0 z-50 overflow-y-auto transition-colors duration-300",
-            theme === 'light' ? 'bg-white' : 'bg-[#121212]'
+            theme === 'light' ? 'bg-white text-gray-900' : 'bg-[#121212] text-gray-100'
           )}
         >
           {/* Header Controls */}
@@ -64,7 +64,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
             <div className="flex items-center space-x-2 md:space-x-4">
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon" className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
+                  <Button variant="ghost" size="icon" className={theme === 'dark' ? 'text-gray-400 hover:text-white' : 'text-gray-500'}>
                     <Type size={18} />
                   </Button>
                 </PopoverTrigger>
@@ -90,22 +90,30 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
 
                     <div className="space-y-2">
                       <span className="text-xs font-medium text-gray-500">Font Type</span>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-3 gap-1">
+                        <Button 
+                          variant={fontType === 'sans' ? 'secondary' : 'outline'} 
+                          size="sm" 
+                          className="rounded-none text-[10px]"
+                          onClick={() => setFontType('sans')}
+                        >
+                          Sans
+                        </Button>
                         <Button 
                           variant={fontType === 'serif' ? 'secondary' : 'outline'} 
                           size="sm" 
-                          className="rounded-none text-xs"
+                          className="rounded-none text-[10px]"
                           onClick={() => setFontType('serif')}
                         >
                           Serif
                         </Button>
                         <Button 
-                          variant={fontType === 'sans' ? 'secondary' : 'outline'} 
+                          variant={fontType === 'mono' ? 'secondary' : 'outline'} 
                           size="sm" 
-                          className="rounded-none text-xs"
-                          onClick={() => setFontType('sans')}
+                          className="rounded-none text-[10px]"
+                          onClick={() => setFontType('mono')}
                         >
-                          Sans
+                          Mono
                         </Button>
                       </div>
                     </div>
@@ -120,7 +128,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
                         <Slider 
                           value={[fontSize]} 
                           onValueChange={(v) => setFontSize(v[0])} 
-                          min={14} max={24} step={1} 
+                          min={14} max={32} step={1} 
                         />
                         <Plus size={14} className="text-gray-400" />
                       </div>
@@ -171,28 +179,28 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.4 }}
-            className="max-w-2xl mx-auto px-6 py-32"
+            className="max-w-4xl mx-auto px-8 md:px-12 py-32"
           >
-            <header className="mb-20 space-y-6">
+            <header className="mb-24 space-y-6">
               <div className="space-y-6">
                 <p className={cn(
-                  "text-[11px] uppercase tracking-[0.4em] font-sans",
+                  "text-[11px] uppercase tracking-[0.4em] font-sans font-medium",
                   theme === 'light' ? 'text-gray-400' : 'text-gray-500'
                 )}>
                   {article.source} • {article.publishedAt}
                 </p>
                 <h1 className={cn(
-                  "text-5xl md:text-6xl font-serif font-medium leading-[1.1] tracking-tight",
+                  "text-5xl md:text-7xl font-serif font-medium leading-[1.05] tracking-tight",
                   theme === 'light' ? 'text-gray-900' : 'text-gray-100'
                 )}>
                   {article.title}
                 </h1>
                 <div className={cn(
-                  "flex items-center space-x-4 text-xl font-serif italic",
+                  "flex items-center space-x-4 text-xl md:text-2xl font-serif italic",
                   theme === 'light' ? 'text-gray-500' : 'text-gray-400'
                 )}>
                   <span>by {article.author}</span>
-                  <span className="w-1 h-1 rounded-full opacity-30" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-current opacity-20" />
                   <span>{article.readingTime}</span>
                 </div>
               </div>
@@ -200,13 +208,14 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
 
             <div
               className={cn(
-                "prose max-w-none transition-all duration-300",
-                fontType === 'serif' ? 'font-serif' : 'font-sans',
-                theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray opacity-90',
-                // Custom overrides for specific content elements
-                "prose-img:rounded-none prose-img:mx-auto prose-img:my-12 prose-img:shadow-sm",
-                "prose-blockquote:border-l-gray-300 prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif",
-                "prose-a:decoration-gray-300 hover:prose-a:decoration-gray-900 prose-a:underline-offset-4"
+                "prose prose-lg max-w-none transition-all duration-300",
+                fontType === 'serif' ? 'font-serif' : fontType === 'mono' ? 'font-mono' : 'font-sans',
+                theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray',
+                // Content spacing and formatting
+                "prose-img:rounded-none prose-img:mx-auto prose-img:mt-16 prose-img:mb-4 prose-img:shadow-sm",
+                "prose-figcaption:text-center prose-figcaption:text-xs prose-figcaption:mt-2 prose-figcaption:mb-16 prose-figcaption:italic",
+                "prose-blockquote:border-l-gray-300 prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif prose-blockquote:py-2",
+                "prose-a:decoration-gray-300 hover:prose-a:decoration-gray-900 prose-a:underline-offset-4 transition-colors"
               )}
               style={{ 
                 fontSize: `${fontSize}px`, 
@@ -215,19 +224,19 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
             
-            <footer className="mt-40 pt-16 border-t border-gray-100/10 text-center">
+            <footer className="mt-40 pt-20 border-t border-gray-100/10 text-center">
               <Button 
                 variant="outline" 
                 asChild
                 className={cn(
-                  "rounded-none px-8 py-6 text-[10px] uppercase tracking-widest transition-all",
+                  "rounded-none px-12 py-8 text-[11px] uppercase tracking-[0.3em] transition-all",
                   theme === 'light' 
                     ? 'border-gray-200 hover:bg-gray-900 hover:text-white' 
                     : 'border-gray-800 text-gray-400 hover:bg-white hover:text-black'
                 )}
               >
                 <a href={article.url} target="_blank" rel="noopener noreferrer">
-                  Continue Reading on Source
+                  Read Original Source
                 </a>
               </Button>
             </footer>
