@@ -13,29 +13,24 @@ interface CanvasViewProps {
 // Persist camera state globally
 let persistentX = 0;
 let persistentY = 0;
-let persistentScale = 0.5;
+let persistentScale = 0.6;
 let isFirstLoad = true;
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Camera State
   const x = useMotionValue(persistentX);
   const y = useMotionValue(persistentY);
   const scale = useMotionValue(persistentScale);
   
-  // Balanced springs for responsiveness and performance
-  const smoothX = useSpring(x, { damping: 30, stiffness: 120 });
-  const smoothY = useSpring(y, { damping: 30, stiffness: 120 });
-  const smoothScale = useSpring(scale, { damping: 30, stiffness: 120 });
+  const smoothX = useSpring(x, { damping: 40, stiffness: 200 });
+  const smoothY = useSpring(y, { damping: 40, stiffness: 200 });
+  const smoothScale = useSpring(scale, { damping: 40, stiffness: 200 });
 
-  // Optimized Background Parallax (using position instead of moving massive elements)
-  const bgPosX = useTransform(smoothX, (v) => `${v * 0.05}px`);
-  const bgPosY = useTransform(smoothY, (v) => `${v * 0.05}px`);
-  const bgPosXFar = useTransform(smoothX, (v) => `${v * 0.02}px`);
-  const bgPosYFar = useTransform(smoothY, (v) => `${v * 0.02}px`);
+  // Subtle dot grid parallax
+  const bgPosX = useTransform(smoothX, (v) => `${v * 0.1}px`);
+  const bgPosY = useTransform(smoothY, (v) => `${v * 0.1}px`);
 
-  // Sync back to persistence
   useEffect(() => {
     const unsubX = x.on('change', (v) => persistentX = v);
     const unsubY = y.on('change', (v) => persistentY = v);
@@ -53,11 +48,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (immediate) {
       x.jump(targetX);
       y.jump(targetY);
-      scale.jump(0.5);
+      scale.jump(0.6);
     } else {
       x.set(targetX);
       y.set(targetY);
-      scale.set(0.5);
+      scale.set(0.6);
     }
   }, [articles, x, y, scale]);
 
@@ -73,7 +68,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.05), 2);
+    const newScale = Math.min(Math.max(currentScale - deltaY * 0.002, 0.1), 2);
     
     if (newScale === currentScale) return;
     const focalX = mouseX - rect.left - rect.width / 2;
@@ -105,50 +100,20 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-[#050505] touch-none"
+      className="w-full h-full relative overflow-hidden bg-[#f7f7f7] touch-none"
     >
-      {/* High-Performance Parallax Backgrounds */}
+      {/* Refined Dot Grid Background */}
       <motion.div 
-        style={{ backgroundPosition: `${bgPosXFar} ${bgPosYFar}` }}
-        className="absolute inset-0 pointer-events-none opacity-20"
-        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{ backgroundPosition: `${bgPosX.get()} ${bgPosY.get()}` }}
+        className="absolute inset-0 pointer-events-none opacity-[0.4]"
         style={{ 
-          backgroundImage: 'radial-gradient(circle, #444 1px, transparent 1px)', 
-          backgroundSize: '150px 150px',
-          backgroundRepeat: 'repeat',
-          backgroundPosition: `${bgPosXFar.get()} ${bgPosYFar.get()}` // initial
-        }}
-        // Using direct style object for parallax background-position
-      />
-      
-      {/* Far Layer */}
-      <motion.div 
-        style={{ backgroundPositionX: bgPosXFar, backgroundPositionY: bgPosYFar }}
-        className="absolute inset-0 pointer-events-none opacity-10"
-        style={{ 
-          backgroundImage: 'radial-gradient(circle, #666 1px, transparent 1px)', 
-          backgroundSize: '300px 300px',
-          backgroundPositionX: bgPosXFar,
-          backgroundPositionY: bgPosYFar
+          backgroundImage: 'radial-gradient(#d1d1d1 1px, transparent 1px)', 
+          backgroundSize: '40px 40px',
+          backgroundPosition: `${bgPosX.get()} ${bgPosY.get()}`
         }}
       />
 
-      {/* Near Layer */}
-      <motion.div 
-        style={{ backgroundPositionX: bgPosX, backgroundPositionY: bgPosY }}
-        className="absolute inset-0 pointer-events-none opacity-10"
-        style={{ 
-          backgroundImage: 'radial-gradient(circle, #fff 1.2px, transparent 1.2px)', 
-          backgroundSize: '500px 500px',
-          backgroundPositionX: bgPosX,
-          backgroundPositionY: bgPosY
-        }}
-      />
-
-      {/* Nebula Glow (Fixed) */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(circle_at_center,_#1e3a8a_0%,transparent_70%)]" />
-
-      {/* Interaction Surface */}
+      {/* Surface for panning */}
       <motion.div
         drag
         dragMomentum={true}
@@ -159,14 +124,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* World Content */}
+      {/* The Gallery */}
       <motion.div
-        style={{ 
-          x: smoothX, 
-          y: smoothY, 
-          scale: smoothScale, 
-          transformOrigin: '0 0' 
-        }}
+        style={{ x: smoothX, y: smoothY, scale: smoothScale, transformOrigin: '0 0' }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
         {articles.map((article) => (
@@ -185,18 +145,18 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* HUD Controls */}
+      {/* HUD */}
       <div className="absolute bottom-8 left-8 pointer-events-none flex items-center space-x-4 z-50">
-        <div className="bg-black/80 backdrop-blur-md px-5 py-2.5 border border-white/10 shadow-2xl rounded-full flex items-center space-x-4 pointer-events-auto">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-sans font-medium">
-            Zoom: {Math.round(scale.get() * 100)}%
+        <div className="bg-white/90 backdrop-blur-md px-5 py-2.5 border border-gray-200 shadow-xl rounded-full flex items-center space-x-4 pointer-events-auto">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-sans font-medium">
+            Perspective: {Math.round(scale.get() * 100)}%
           </p>
-          <div className="h-4 w-px bg-white/10" />
+          <div className="h-4 w-px bg-gray-200" />
           <button 
             onClick={() => centerCanvas()}
-            className="text-[10px] uppercase tracking-[0.2em] text-gray-300 hover:text-white transition-colors"
+            className="text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-gray-900 transition-colors"
           >
-            Reset Center
+            Reset View
           </button>
         </div>
       </div>

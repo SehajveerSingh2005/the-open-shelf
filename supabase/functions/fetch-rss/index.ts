@@ -13,52 +13,6 @@ const parser = new Parser({
   }
 });
 
-async function fetchFullContent(url: string, sourceName: string) {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-      }
-    });
-    
-    if (!response.ok) return null;
-    const html = await response.text();
-
-    if (sourceName.toLowerCase().includes('aeon') || url.includes('aeon.co')) {
-      const patterns = [
-        /<div class="article__body[^>]*>([\s\S]*?)<\/div>\s*<div class="article__footer/i,
-        /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i,
-        /<article[^>]*>([\s\S]*?)<\/article>/i
-      ];
-
-      for (const pattern of patterns) {
-        const match = html.match(pattern);
-        if (match && match[1] && match[1].length > 1000) {
-          return match[1]
-            .replace(/<div class="ad-container">[\s\S]*?<\/div>/gi, '')
-            .replace(/<aside[\s\S]*?<\/aside>/gi, '')
-            .trim();
-        }
-      }
-    }
-    
-    if (url.includes('substack.com')) {
-      const patterns = [
-        /<div class="available-content">([\s\S]*?)<\/div>/i,
-        /<div class="body-content[^>]*>([\s\S]*?)<\/div>/i
-      ];
-      for (const pattern of patterns) {
-        const match = html.match(pattern);
-        if (match && match[1]) return match[1].trim();
-      }
-    }
-
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
@@ -70,31 +24,24 @@ serve(async (req) => {
     const xml = await response.text();
     const feed = await parser.parseString(xml);
     
-    const { data: feedData } = await supabaseClient
+    await supabaseClient
       .from('feeds')
-      .upsert({ url: feedUrl, title: feed.title || 'Untitled' }, { onConflict: 'url' })
-      .select().single();
+      .upsert({ url: feedUrl, title: feed.title || 'Untitled' }, { onConflict: 'url' });
 
     const { data: existing } = await supabaseClient.from('articles').select('url');
+    const existingCount = (existing || []).length;
     const existingUrls = new Set((existing || []).map(a => a.url));
     const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    const articles = await Promise.all(newItems.slice(0, 10).map(async (item) => {
-      let content = item.contentEncoded || item.content || item.description || '';
-      if (content.length < 3000 && item.link) {
-        const full = await fetchFullContent(item.link, feed.title || '');
-        if (full) content = full;
-      }
+    const articles = newItems.slice(0, 10).map((item, index) => {
+      const content = item.contentEncoded || item.content || item.description || '';
+      const totalIdx = existingCount + index;
       
-      // "Cosmic" placement: random angle, non-linear distance, high jitter
-      const angle = Math.random() * Math.PI * 2;
-      const distance = Math.sqrt(Math.random()) * 2500; // Spread out to 2500px radius
-      
-      const x = Math.cos(angle) * distance + (Math.random() - 0.5) * 400;
-      const y = Math.sin(angle) * distance + (Math.random() - 0.5) * 400;
+      // Fixed Grid Placement
+      const x = (totalIdx % 5) * 340 - 680;
+      const y = Math.floor(totalIdx / 5) * 520 - 1000;
 
       return {
-        feed_id: feedData.id,
         title: item.title || 'Untitled',
         author: item.creator || item.author || feed.title || 'Unknown',
         source: feed.title || 'Source',
@@ -106,7 +53,7 @@ serve(async (req) => {
         x,
         y
       };
-    }));
+    });
 
     if (articles.length > 0) await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
 
