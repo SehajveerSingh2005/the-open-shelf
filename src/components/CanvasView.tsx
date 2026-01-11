@@ -12,22 +12,14 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v4';
-
+const STORAGE_KEY = 'open-shelf-camera';
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      const x = parseFloat(parsed.x);
-      const y = parseFloat(parsed.y);
-      const scale = parseFloat(parsed.scale);
-      if (!isNaN(x) && !isNaN(y) && !isNaN(scale)) {
-        return { x, y, scale };
-      }
-    }
-  } catch (e) {}
-  return { x: 0, y: 0, scale: 0.85 };
+    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.85 };
+  } catch {
+    return { x: 0, y: 0, scale: 0.85 };
+  }
 };
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
@@ -38,33 +30,55 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Smooth springs for camera movement
-  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
-  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
-  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
+  const x = useSpring(rawX, { damping: 45, stiffness: 300 });
+  const y = useSpring(rawY, { damping: 45, stiffness: 300 });
+  const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
   
+  const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
+  const ticking = useRef(false);
 
   const bgX = useTransform(x, (v) => `${v}px`);
   const bgY = useTransform(y, (v) => `${v}px`);
 
-  const saveState = useCallback(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      x: rawX.get(),
-      y: rawY.get(),
-      scale: rawScale.get()
-    }));
-  }, [rawX, rawY, rawScale]);
+  const updateVisibility = useCallback(() => {
+    if (ticking.current) return;
+    ticking.current = true;
+
+    requestAnimationFrame(() => {
+      const s = rawScale.get();
+      const curX = -rawX.get();
+      const curY = -rawY.get();
+      setCurrentScale(s);
+      
+      const width = window.innerWidth / s;
+      const height = window.innerHeight / s;
+      
+      const padding = 800;
+      const left = curX - width / 2 - padding;
+      const right = curX + width / 2 + padding;
+      const top = curY - height / 2 - padding;
+      const bottom = curY + height / 2 + padding;
+
+      const nextVisible = new Set<string>();
+      for (const art of articles) {
+        if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
+          nextVisible.add(art.id);
+        }
+      }
+      
+      setVisibleIds(nextVisible);
+      ticking.current = false;
+    });
+  }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', saveState);
-    const unsubY = rawY.on('change', saveState);
-    const unsubScale = rawScale.on('change', (s) => {
-      setCurrentScale(s);
-      saveState();
-    });
+    const unsubX = rawX.on('change', updateVisibility);
+    const unsubY = rawY.on('change', updateVisibility);
+    const unsubScale = rawScale.on('change', updateVisibility);
+    updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [rawX, rawY, rawScale, saveState]);
+  }, [rawX, rawY, rawScale, updateVisibility]);
 
   const resetView = () => {
     rawX.set(0);
@@ -78,8 +92,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.15), 3);
+    const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
+    // New zoom range: 0.3 to 2.0 for better perspective
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.3), 2.0);
     
     if (newScale === s) return;
 
@@ -111,6 +126,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [rawX, rawY, handleZoom]);
 
+  const renderedList = useMemo(() => 
+    articles.filter(a => visibleIds.has(a.id)), 
+    [articles, visibleIds]
+  );
+
   return (
     <div 
       ref={containerRef}
@@ -125,13 +145,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
       />
 
-      {/* The shelf container */}
       <motion.div
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {/* We now render all articles without visibility-based unmounting to prevent glitches */}
-        {articles.map((article) => (
+        {renderedList.map((article) => (
           <div 
             key={article.id} 
             className="absolute pointer-events-auto"
@@ -139,7 +157,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
-              willChange: 'transform' // Helps GPU acceleration for stable panning
+              willChange: 'transform'
             }}
           >
             <div className={cn(currentScale < 0.5 ? "scale-reduced" : "")}>

@@ -13,18 +13,13 @@ interface ArticleCardProps {
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      // We disable layoutId and layout projection on the canvas to ensure total stability.
-      // The glitching was caused by Framer Motion trying to project layout states 
-      // while the parent container was panned and scaled.
-      layoutId={isCanvas ? undefined : `card-${article.id}`}
-      layout={isCanvas ? false : "position"}
-      // We remove the 'initial' fade-in to prevent flickering when articles render
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer group
-        ${isCanvas ? 'w-[340px]' : 'w-full'}
+        bg-white border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group
+        ${isCanvas ? 'w-[340px]' : 'w-full mb-6'}
       `}
     >
       <div className="space-y-4">
@@ -40,11 +35,12 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed group-[.scale-reduced]:hidden">
+        {/* Only render excerpt if it's not a tiny canvas card to save Firefox resources */}
+        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed [.scale-reduced_&]:hidden">
           {article.excerpt}
         </p>
         
-        <div className="pt-2 border-t border-gray-50 flex items-center justify-between group-[.scale-reduced]:hidden">
+        <div className="pt-2 border-t border-gray-50 flex items-center justify-between [.scale-reduced_&]:hidden">
           <p className="text-[10px] text-gray-400 font-sans italic">by {article.author}</p>
           <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
         </div>
