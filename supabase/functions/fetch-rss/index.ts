@@ -18,18 +18,28 @@ const parser = new Parser({
 });
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
 
   try {
     const { feedUrl } = await req.json();
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '', 
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
+    console.log("[fetch-rss] Starting fetch for URL:", feedUrl);
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    
+    const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
 
     const response = await fetch(feedUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch feed: ${response.statusText}`);
+    }
+
     const xml = await response.text();
     const feed = await parser.parseString(xml);
+    console.log("[fetch-rss] Successfully parsed feed:", feed.title);
     
     // Upsert the feed and get its ID
     const { data: feedData, error: feedError } = await supabaseClient
@@ -38,16 +48,18 @@ serve(async (req) => {
       .select('id')
       .single();
 
-    if (feedError) throw feedError;
+    if (feedError) {
+      console.error("[fetch-rss] Feed upsert error:", feedError);
+      throw feedError;
+    }
 
     const { data: existing } = await supabaseClient.from('articles').select('url');
     const existingUrls = new Set((existing || []).map(a => a.url));
     
-    // Filtering logic
+    // Filtering logic: exclude duplicates and video content
     const newItems = feed.items.filter(item => {
       const url = item.link || '';
       const isAlreadySaved = existingUrls.has(url);
-      // Filter out video content (common in Aeon)
       const isVideo = url.toLowerCase().includes('/video/') || 
                       item.title?.toLowerCase().includes('video:') ||
                       item.categories?.some(c => c.toLowerCase().includes('video'));
@@ -55,10 +67,10 @@ serve(async (req) => {
       return !isAlreadySaved && !isVideo;
     });
     
+    console.log(`[fetch-rss] Found ${newItems.length} new articles to process`);
+
     const articles = newItems.slice(0, 20).map((item) => {
-      // Prioritize full content encoded fields over simple descriptions
       const content = item.contentEncoded || item.content || item.description || '';
-      
       return {
         feed_id: feedData.id,
         title: item.title || 'Untitled',
@@ -69,23 +81,27 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || item.description || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x: 0,
-        y: 0
+        x: Math.floor(Math.random() * 2000) - 1000, // Randomish start for layout
+        y: Math.floor(Math.random() * 2000) - 1000
       };
     });
 
     if (articles.length > 0) {
-      await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
+      const { error: insertError } = await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
+      if (insertError) {
+        console.error("[fetch-rss] Article insert error:", insertError);
+        throw insertError;
+      }
     }
 
     return new Response(JSON.stringify({ success: true, count: articles.length }), { 
       headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     });
   } catch (error) {
-    console.error('[fetch-rss] Error:', error.message);
+    console.error('[fetch-rss] Execution error:', error.message);
     return new Response(JSON.stringify({ error: error.message }), { 
       status: 400, 
-      headers: corsHeaders 
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
   }
 })
