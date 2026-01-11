@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 import { Maximize2 } from 'lucide-react';
@@ -11,7 +11,6 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-// Persist camera state across refreshes using localStorage
 const STORAGE_KEY = 'open-shelf-camera';
 const getStoredState = () => {
   try {
@@ -33,23 +32,34 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const ticking = useRef(false);
 
-  const smoothX = useSpring(x, { damping: 50, stiffness: 250 });
-  const smoothY = useSpring(y, { damping: 50, stiffness: 250 });
-  const smoothScale = useSpring(scale, { damping: 50, stiffness: 250 });
+  const smoothX = useSpring(x, { damping: 50, stiffness: 300 });
+  const smoothY = useSpring(y, { damping: 50, stiffness: 300 });
+  const smoothScale = useSpring(scale, { damping: 50, stiffness: 300 });
 
-  // Save state to localStorage on changes
+  // Performance-friendly background positions
+  const bgX = useTransform(smoothX, (v) => `${v}px`);
+  const bgY = useTransform(smoothY, (v) => `${v}px`);
+
+  // Debounced save to localStorage
   useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
     const save = () => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        x: x.get(),
-        y: y.get(),
-        scale: scale.get()
-      }));
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          x: x.get(),
+          y: y.get(),
+          scale: scale.get()
+        }));
+      }, 500);
     };
     const unsubX = x.on('change', save);
     const unsubY = y.on('change', save);
     const unsubScale = scale.on('change', save);
-    return () => { unsubX(); unsubY(); unsubScale(); };
+    return () => { 
+      unsubX(); unsubY(); unsubScale(); 
+      clearTimeout(timeout);
+    };
   }, [x, y, scale]);
 
   const updateVisibility = useCallback(() => {
@@ -63,10 +73,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const left = curX - width / 2 - 500;
-      const right = curX + width / 2 + 500;
-      const top = curY - height / 2 - 500;
-      const bottom = curY + height / 2 + 500;
+      const padding = 1000;
+      const left = curX - width / 2 - padding;
+      const right = curX + width / 2 + padding;
+      const top = curY - height / 2 - padding;
+      const bottom = curY + height / 2 + padding;
 
       const nextVisible = new Set<string>();
       for (const art of articles) {
@@ -98,7 +109,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const currentScale = scale.get();
-    const zoomFactor = deltaY > 0 ? 0.95 : 1.05;
+    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
     const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.1), 1.5);
     
     if (newScale === currentScale) return;
@@ -139,20 +150,24 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
+      {/* 
+          Performant Background Grid 
+          Using background-position instead of a massive inset layer for Firefox stability
+      */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(#e2e2e2 1.5px, transparent 1.5px)',
+          backgroundSize: useTransform(smoothScale, s => `${80 * s}px ${80 * s}px`),
+          backgroundPosition: useTransform([bgX, bgY], ([bx, by]) => `calc(50% + ${bx}) calc(50% + ${by})`),
+          opacity: 0.5
+        }}
+      />
+
       <motion.div
         style={{ x: smoothX, y: smoothY, scale: smoothScale, transformOrigin: '0 0' }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {/* Infinite Grid Background */}
-        <div 
-          className="absolute inset-[-10000%]"
-          style={{
-            backgroundImage: 'radial-gradient(#e2e2e2 1.5px, transparent 1.5px)',
-            backgroundSize: '80px 80px',
-            opacity: 0.5
-          }}
-        />
-
         {renderedList.map((article) => (
           <div 
             key={article.id} 
