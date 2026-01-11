@@ -55,15 +55,17 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     ticking.current = true;
 
     requestAnimationFrame(() => {
-      const s = rawScale.get();
-      const curX = -rawX.get();
-      const curY = -rawY.get();
+      // Use the spring values for smoother visibility transitions
+      const s = scale.get();
+      const curX = -x.get();
+      const curY = -y.get();
       setCurrentScale(s);
       
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 1000;
+      // Increased padding to prevent flickering at the edges
+      const padding = 1500;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -79,15 +81,26 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       setVisibleIds(nextVisible);
       ticking.current = false;
     });
-  }, [articles, rawX, rawY, rawScale]);
+  }, [articles, x, y, scale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', () => { updateVisibility(); saveState(); });
-    const unsubY = rawY.on('change', () => { updateVisibility(); saveState(); });
-    const unsubScale = rawScale.on('change', () => { updateVisibility(); saveState(); });
+    const unsubX = x.on('change', updateVisibility);
+    const unsubY = y.on('change', updateVisibility);
+    const unsubScale = scale.on('change', () => { 
+      updateVisibility(); 
+      saveState(); 
+    });
+    
+    // Also save raw values when they change
+    const unsubRawX = rawX.on('change', saveState);
+    const unsubRawY = rawY.on('change', saveState);
+
     updateVisibility();
-    return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [rawX, rawY, rawScale, updateVisibility, saveState]);
+    return () => { 
+      unsubX(); unsubY(); unsubScale(); 
+      unsubRawX(); unsubRawY(); 
+    };
+  }, [x, y, scale, rawX, rawY, updateVisibility, saveState]);
 
   const resetView = () => {
     rawX.set(0);

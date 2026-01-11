@@ -14,6 +14,7 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
   return (
     <motion.div
       layoutId={`card-${article.id}`}
+      layout="position" // Only animate position changes for the shared transition
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -37,11 +38,12 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed [.scale-reduced_&]:hidden">
+        {/* We use CSS visibility instead of conditional rendering to keep the layout stable for Framer Motion */}
+        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed group-[.scale-reduced]:hidden">
           {article.excerpt}
         </p>
         
-        <div className="pt-2 border-t border-gray-50 flex items-center justify-between [.scale-reduced_&]:hidden">
+        <div className="pt-2 border-t border-gray-50 flex items-center justify-between group-[.scale-reduced]:hidden">
           <p className="text-[10px] text-gray-400 font-sans italic">by {article.author}</p>
           <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
         </div>
