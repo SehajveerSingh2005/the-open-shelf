@@ -13,16 +13,17 @@ export function useArticles() {
 
       if (error) throw error;
 
-      const COL_WIDTH = 400;
-      const ROW_HEIGHT = 320;
-      const COLS = 5;
+      // Tightened dimensions for a denser feel
+      const COL_WIDTH = 360; 
+      const ROW_HEIGHT = 300;
+      // Increased columns so it spreads out sideways
+      const COLS = 12; 
 
       return (data || []).map((item: any, index: number) => {
-        // Arrange in a grid starting from center
         const col = index % COLS;
         const row = Math.floor(index / COLS);
         
-        // Center the grid by offsetting based on total columns/rows
+        // Horizontal-first layout that centers the mass
         const xOffset = (col - (COLS - 1) / 2) * COL_WIDTH;
         const yOffset = (row - 1) * ROW_HEIGHT;
 

@@ -30,16 +30,15 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Smooth springs for that "liquid" feel
-  const x = useSpring(rawX, { damping: 40, stiffness: 250, mass: 0.5 });
-  const y = useSpring(rawY, { damping: 40, stiffness: 250, mass: 0.5 });
+  // Responsive springs for fluid movement
+  const x = useSpring(rawX, { damping: 40, stiffness: 250 });
+  const y = useSpring(rawY, { damping: 40, stiffness: 250 });
   const scale = useSpring(rawScale, { damping: 30, stiffness: 200 });
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
   const ticking = useRef(false);
 
-  // Background pattern that moves with the canvas
   const bgX = useTransform(x, (v) => `${v}px`);
   const bgY = useTransform(y, (v) => `${v}px`);
 
@@ -56,7 +55,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 600;
+      const padding = 500;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -82,22 +81,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
 
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    const save = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-          x: rawX.get(),
-          y: rawY.get(),
-          scale: rawScale.get()
-        }));
-      }, 500);
-    };
-    const unsub = rawScale.on('change', save);
-    return () => { unsub(); clearTimeout(timeout); };
-  }, [rawX, rawY, rawScale]);
-
   const resetView = () => {
     rawX.set(0);
     rawY.set(0);
@@ -111,7 +94,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.1), 1.5);
+    // Constrained zoom range: 0.45 to 1.1
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.45), 1.1);
     
     if (newScale === s) return;
 
@@ -153,7 +137,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
-      {/* Dynamic grid background that moves with the world */}
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
@@ -178,7 +161,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.35 ? "scale-reduced" : "")}>
+            <div className={cn(currentScale < 0.6 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
                 onClick={onArticleClick} 
