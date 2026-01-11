@@ -13,6 +13,7 @@ interface CanvasViewProps {
 }
 
 const STORAGE_KEY = 'open-shelf-camera';
+
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -40,6 +41,15 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
   const bgX = useTransform(x, (v) => `${v}px`);
   const bgY = useTransform(y, (v) => `${v}px`);
+
+  // Persist camera state to localStorage
+  const saveState = useCallback(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      x: rawX.get(),
+      y: rawY.get(),
+      scale: rawScale.get()
+    }));
+  }, [rawX, rawY, rawScale]);
 
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
@@ -73,12 +83,22 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', updateVisibility);
-    const unsubY = rawY.on('change', updateVisibility);
-    const unsubScale = rawScale.on('change', updateVisibility);
+    const unsubX = rawX.on('change', () => {
+      updateVisibility();
+      saveState();
+    });
+    const unsubY = rawY.on('change', () => {
+      updateVisibility();
+      saveState();
+    });
+    const unsubScale = rawScale.on('change', () => {
+      updateVisibility();
+      saveState();
+    });
+    
     updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [rawX, rawY, rawScale, updateVisibility]);
+  }, [rawX, rawY, rawScale, updateVisibility, saveState]);
 
   const resetView = () => {
     rawX.set(0);
@@ -93,7 +113,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
-    // New zoom range: 0.3 to 2.0 for better perspective
     const newScale = Math.min(Math.max(s * zoomFactor, 0.3), 2.0);
     
     if (newScale === s) return;
