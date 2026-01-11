@@ -30,8 +30,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 45, stiffness: 280 });
-  const y = useSpring(rawY, { damping: 45, stiffness: 280 });
+  const x = useSpring(rawX, { damping: 45, stiffness: 300 });
+  const y = useSpring(rawY, { damping: 45, stiffness: 300 });
   const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
@@ -54,7 +54,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 600;
+      const padding = 800;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -93,8 +93,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
-    // Expanded range: 0.35 to 1.6 for closer inspection
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.35), 1.6);
+    // New zoom range: 0.3 to 2.0 for better perspective
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.3), 2.0);
     
     if (newScale === s) return;
 
@@ -160,7 +160,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.55 ? "scale-reduced" : "")}>
+            <div className={cn(currentScale < 0.5 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
                 onClick={onArticleClick} 

@@ -13,33 +13,46 @@ export function useArticles() {
 
       if (error) throw error;
 
-      const COL_WIDTH = 360;
-      const NUM_COLS = 16;
-      const RADIUS = 2000; // The bounding radius for the circular cluster
+      const items = data || [];
+      const COL_WIDTH = 350; // Tighter width
+      const GAP = 24; // Smaller gap for "interlocked" look
+      const RADIUS = 1400; // Smaller, denser circle
       
-      // Initialize column heights and starting Y positions to form a circle
+      // Calculate how many columns fit in our circle
+      const NUM_COLS = Math.floor((RADIUS * 2) / COL_WIDTH);
+      
+      // Initialize column heights and start Y positions
       const colHeights = new Array(NUM_COLS).fill(0);
       const colStarts = new Array(NUM_COLS).fill(0).map((_, i) => {
         const x = (i - (NUM_COLS - 1) / 2) * COL_WIDTH;
-        // Circle equation: y = sqrt(R^2 - x^2)
-        // We start the column at the "top" of the circle
-        const offset = Math.sqrt(Math.max(0, Math.pow(RADIUS, 2) - Math.pow(x, 2)));
-        return -offset / 2;
+        // Circle formula: y = sqrt(R^2 - x^2)
+        // This gives us the top arc of the circle
+        const halfHeight = Math.sqrt(Math.max(0, Math.pow(RADIUS, 2) - Math.pow(x, 2)));
+        return -halfHeight;
       });
 
-      return (data || []).map((item: any, index: number) => {
-        // Find the column that currently has the lowest bottom edge (masonry)
-        // but within a "natural" flow
-        const colIndex = index % NUM_COLS;
+      return items.map((item: any, index: number) => {
+        // Balance columns by finding the one with the least height added so far
+        // but weight it by the starting offset to keep the circular shape
+        let colIndex = 0;
+        let minBottom = Infinity;
+        
+        for (let i = 0; i < NUM_COLS; i++) {
+          const bottom = colStarts[i] + colHeights[i];
+          if (bottom < minBottom) {
+            minBottom = bottom;
+            colIndex = i;
+          }
+        }
         
         const x = (colIndex - (NUM_COLS - 1) / 2) * COL_WIDTH;
-        
-        // Randomize height slightly to simulate varying content length impact on layout
-        const estimatedHeight = 280 + (Math.random() * 100);
         const y = colStarts[colIndex] + colHeights[colIndex];
         
-        // Update height for next item in this column
-        colHeights[colIndex] += estimatedHeight + 40; // 40px gap
+        // Estimated height based on content length + padding
+        const textLength = (item.excerpt || '').length + (item.title || '').length;
+        const estimatedHeight = 180 + Math.min(textLength / 1.5, 250);
+        
+        colHeights[colIndex] += estimatedHeight + GAP;
 
         return {
           id: item.id,
