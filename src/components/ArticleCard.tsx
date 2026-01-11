@@ -14,7 +14,9 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
   return (
     <motion.div
       layoutId={`card-${article.id}`}
-      layout="position" // Only animate position changes for the shared transition
+      // We disable 'layout' on the canvas to prevent the "contracting" glitch during panning.
+      // layoutId still handles the shared transition when switching views (mounting/unmounting).
+      layout={isCanvas ? false : "position"}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -38,7 +40,6 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        {/* We use CSS visibility instead of conditional rendering to keep the layout stable for Framer Motion */}
         <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed group-[.scale-reduced]:hidden">
           {article.excerpt}
         </p>

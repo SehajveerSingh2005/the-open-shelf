@@ -17,23 +17,34 @@ const STORAGE_KEY = 'open-shelf-camera-v2';
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.85 };
-  } catch {
-    return { x: 0, y: 0, scale: 0.85 };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return {
+        x: Number(parsed.x) || 0,
+        y: Number(parsed.y) || 0,
+        scale: Number(parsed.scale) || 0.85
+      };
+    }
+  } catch (e) {
+    console.error("Failed to load camera state", e);
   }
+  return { x: 0, y: 0, scale: 0.85 };
 };
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Memoize initial state to ensure it doesn't change on re-renders
   const initialState = useMemo(() => getStoredState(), []);
   
   const rawX = useMotionValue(initialState.x);
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 45, stiffness: 300 });
-  const y = useSpring(rawY, { damping: 45, stiffness: 300 });
-  const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
+  // Springs for smooth movement
+  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
+  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
+  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
@@ -55,17 +66,16 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     ticking.current = true;
 
     requestAnimationFrame(() => {
-      // Use the spring values for smoother visibility transitions
-      const s = scale.get();
-      const curX = -x.get();
-      const curY = -y.get();
+      // Use raw values for visibility to avoid lag/jitter during spring settling
+      const s = rawScale.get();
+      const curX = -rawX.get();
+      const curY = -rawY.get();
       setCurrentScale(s);
       
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      // Increased padding to prevent flickering at the edges
-      const padding = 1500;
+      const padding = 1200; // Large buffer for smooth panning
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -81,26 +91,19 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       setVisibleIds(nextVisible);
       ticking.current = false;
     });
-  }, [articles, x, y, scale]);
+  }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = x.on('change', updateVisibility);
-    const unsubY = y.on('change', updateVisibility);
-    const unsubScale = scale.on('change', () => { 
-      updateVisibility(); 
-      saveState(); 
-    });
+    // Sync UI state and localStorage on every camera change
+    const unsubX = rawX.on('change', () => { updateVisibility(); saveState(); });
+    const unsubY = rawY.on('change', () => { updateVisibility(); saveState(); });
+    const unsubScale = rawScale.on('change', () => { updateVisibility(); saveState(); });
     
-    // Also save raw values when they change
-    const unsubRawX = rawX.on('change', saveState);
-    const unsubRawY = rawY.on('change', saveState);
-
+    // Initial check
     updateVisibility();
-    return () => { 
-      unsubX(); unsubY(); unsubScale(); 
-      unsubRawX(); unsubRawY(); 
-    };
-  }, [x, y, scale, rawX, rawY, updateVisibility, saveState]);
+    
+    return () => { unsubX(); unsubY(); unsubScale(); };
+  }, [rawX, rawY, rawScale, updateVisibility, saveState]);
 
   const resetView = () => {
     rawX.set(0);
@@ -114,11 +117,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.2), 2.5);
+    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.15), 3);
     
     if (newScale === s) return;
 
+    // Zoom towards cursor
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
     const worldX = (focalX - rawX.get()) / s;
@@ -173,7 +177,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
-              willChange: 'transform'
             }}
           >
             <div className={cn(currentScale < 0.5 ? "scale-reduced" : "")}>
