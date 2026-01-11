@@ -12,25 +12,21 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v3';
+const STORAGE_KEY = 'open-shelf-camera-v4';
 
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Ensure we have valid numbers
       const x = parseFloat(parsed.x);
       const y = parseFloat(parsed.y);
       const scale = parseFloat(parsed.scale);
-      
       if (!isNaN(x) && !isNaN(y) && !isNaN(scale)) {
         return { x, y, scale };
       }
     }
-  } catch (e) {
-    console.error("Failed to load camera state", e);
-  }
+  } catch (e) {}
   return { x: 0, y: 0, scale: 0.85 };
 };
 
@@ -42,14 +38,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Stiffer springs for more immediate feedback and less "overshoot" during visibility checks
-  const x = useSpring(rawX, { damping: 50, stiffness: 500 });
-  const y = useSpring(rawY, { damping: 50, stiffness: 500 });
-  const scale = useSpring(rawScale, { damping: 40, stiffness: 400 });
+  // Smooth springs for camera movement
+  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
+  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
+  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
   
-  const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
-  const ticking = useRef(false);
 
   const bgX = useTransform(x, (v) => `${v}px`);
   const bgY = useTransform(y, (v) => `${v}px`);
@@ -62,46 +56,15 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     }));
   }, [rawX, rawY, rawScale]);
 
-  const updateVisibility = useCallback(() => {
-    if (ticking.current) return;
-    ticking.current = true;
-
-    requestAnimationFrame(() => {
-      // Use raw values for visibility to avoid jitter while the spring is still settling
-      const s = rawScale.get();
-      const curX = -rawX.get();
-      const curY = -rawY.get();
-      setCurrentScale(s);
-      
-      const width = window.innerWidth / s;
-      const height = window.innerHeight / s;
-      
-      const padding = 1200; // Large buffer for smooth panning
-      const left = curX - width / 2 - padding;
-      const right = curX + width / 2 + padding;
-      const top = curY - height / 2 - padding;
-      const bottom = curY + height / 2 + padding;
-
-      const nextVisible = new Set<string>();
-      for (const art of articles) {
-        if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
-          nextVisible.add(art.id);
-        }
-      }
-      
-      setVisibleIds(nextVisible);
-      ticking.current = false;
-    });
-  }, [articles, rawX, rawY, rawScale]);
-
   useEffect(() => {
-    const unsubX = rawX.on('change', () => { updateVisibility(); saveState(); });
-    const unsubY = rawY.on('change', () => { updateVisibility(); saveState(); });
-    const unsubScale = rawScale.on('change', () => { updateVisibility(); saveState(); });
-    
-    updateVisibility();
+    const unsubX = rawX.on('change', saveState);
+    const unsubY = rawY.on('change', saveState);
+    const unsubScale = rawScale.on('change', (s) => {
+      setCurrentScale(s);
+      saveState();
+    });
     return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [rawX, rawY, rawScale, updateVisibility, saveState]);
+  }, [rawX, rawY, rawScale, saveState]);
 
   const resetView = () => {
     rawX.set(0);
@@ -162,11 +125,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         }}
       />
 
+      {/* The shelf container */}
       <motion.div
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {articles.filter(a => visibleIds.has(a.id)).map((article) => (
+        {/* We now render all articles without visibility-based unmounting to prevent glitches */}
+        {articles.map((article) => (
           <div 
             key={article.id} 
             className="absolute pointer-events-auto"
@@ -174,7 +139,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
-              willChange: 'transform'
+              willChange: 'transform' // Helps GPU acceleration for stable panning
             }}
           >
             <div className={cn(currentScale < 0.5 ? "scale-reduced" : "")}>

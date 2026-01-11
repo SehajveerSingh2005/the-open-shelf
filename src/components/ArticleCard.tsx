@@ -13,17 +13,13 @@ interface ArticleCardProps {
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      layoutId={`card-${article.id}`}
-      // We explicitly disable layout projection on the canvas to prevent the "breathing" glitch.
-      // layoutId still facilitates the smooth transition when switching to the Feed view.
+      // We disable layoutId and layout projection on the canvas to ensure total stability.
+      // The glitching was caused by Framer Motion trying to project layout states 
+      // while the parent container was panned and scaled.
+      layoutId={isCanvas ? undefined : `card-${article.id}`}
       layout={isCanvas ? false : "position"}
-      initial={false}
-      animate={{ 
-        opacity: 1, 
-        scale: 1, // Force scale 1 to prevent layout projection from trying to 'contract' the card
-        transition: { duration: 0.2 } 
-      }}
-      exit={{ opacity: 0 }}
+      // We remove the 'initial' fade-in to prevent flickering when articles render
+      animate={{ opacity: 1 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
