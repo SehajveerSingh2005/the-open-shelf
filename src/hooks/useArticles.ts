@@ -13,13 +13,19 @@ export function useArticles() {
 
       if (error) throw error;
 
+      const COL_WIDTH = 400;
+      const ROW_HEIGHT = 320;
+      const COLS = 5;
+
       return (data || []).map((item: any, index: number) => {
-        // Calculate spiral positions dynamically on the client
-        // This makes the layout 'live' and responsive to code changes
-        const n = index;
-        const angle = n * 2.39996; // Golden Angle
-        const radius = Math.sqrt(n + 1);
+        // Arrange in a grid starting from center
+        const col = index % COLS;
+        const row = Math.floor(index / COLS);
         
+        // Center the grid by offsetting based on total columns/rows
+        const xOffset = (col - (COLS - 1) / 2) * COL_WIDTH;
+        const yOffset = (row - 1) * ROW_HEIGHT;
+
         return {
           id: item.id,
           title: item.title,
@@ -30,9 +36,8 @@ export function useArticles() {
           content: item.content,
           publishedAt: item.published_at ? new Date(item.published_at).toLocaleDateString() : 'Recently',
           url: item.url,
-          // Tightened multipliers for better visibility
-          x: 320 * radius * Math.cos(angle),
-          y: 280 * radius * Math.sin(angle),
+          x: xOffset,
+          y: yOffset,
         };
       }) as Article[];
     },
