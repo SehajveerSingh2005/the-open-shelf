@@ -6,22 +6,18 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
 import ReaderView from '@/components/ReaderView';
+import FeedManager from '@/components/FeedManager';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2, RefreshCw, Plus } from 'lucide-react';
+import { Loader2, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showSuccess, showError } from '@/utils/toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 const Index = () => {
   const navigate = useNavigate();
   const { articleId } = useParams();
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
-  const [newFeedUrl, setNewFeedUrl] = useState('');
-  const [isAddingFeed, setIsAddingFeed] = useState(false);
   
   const { data: articles, isLoading, error, refetch } = useArticles();
 
@@ -60,25 +56,6 @@ const Index = () => {
     }
   };
 
-  const handleAddFeed = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newFeedUrl) return;
-    setIsAddingFeed(true);
-    try {
-      const { error } = await supabase.functions.invoke('fetch-rss', {
-        body: { feedUrl: newFeedUrl }
-      });
-      if (error) throw error;
-      showSuccess("Feed added");
-      setNewFeedUrl('');
-      refetch();
-    } catch (err: any) {
-      showError("Failed to add feed.");
-    } finally {
-      setIsAddingFeed(false);
-    }
-  };
-
   useEffect(() => {
     if (!isLoading && (!articles || articles.length === 0)) {
       syncFeeds();
@@ -88,7 +65,7 @@ const Index = () => {
   if (isLoading && !isSyncing) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
-        <Loader2 className="animate-spin text-gray-400" size={32} />
+        <Loader2 className="animate-spin text-gray-200" size={32} />
         <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">Opening the shelf...</p>
       </div>
     );
@@ -102,32 +79,7 @@ const Index = () => {
         </h1>
         
         <div className="flex items-center space-x-6">
-          <Dialog>
-            <DialogTrigger asChild>
-              <button className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
-                <Plus size={14} />
-                <span>Add Feed</span>
-              </button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="font-serif text-2xl">Add RSS Feed</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleAddFeed} className="space-y-4 pt-4">
-                <div className="flex space-x-2">
-                  <Input 
-                    placeholder="https://example.com/feed" 
-                    value={newFeedUrl}
-                    onChange={(e) => setNewFeedUrl(e.target.value)}
-                    className="rounded-none border-gray-200"
-                  />
-                  <Button type="submit" disabled={isAddingFeed} className="rounded-none bg-gray-900">
-                    {isAddingFeed ? <Loader2 className="animate-spin" size={16} /> : "Add"}
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
+          <FeedManager onUpdate={refetch} />
 
           <button onClick={syncFeeds} disabled={isSyncing} className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
             <RefreshCw className={isSyncing ? "animate-spin" : ""} size={14} />
