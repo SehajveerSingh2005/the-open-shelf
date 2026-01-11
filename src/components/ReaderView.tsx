@@ -24,6 +24,7 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Adding container ref to useScroll
   const { scrollYProgress } = useScroll({
     container: containerRef,
   });
@@ -38,6 +39,10 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   useEffect(() => {
     if (article) {
       document.body.style.overflow = 'hidden';
+      // Reset scroll position when article changes
+      if (containerRef.current) {
+        containerRef.current.scrollTop = 0;
+      }
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -45,9 +50,10 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   }, [article]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {article && (
         <motion.div
+          key={article.id} // Key ensures the entire component resets when article changes
           ref={containerRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -233,6 +239,9 @@ const ReaderView = ({ article, onClose }: ReaderViewProps) => {
                 // Content spacing and formatting
                 "prose-img:rounded-none prose-img:mx-auto prose-img:mt-16 prose-img:mb-4 prose-img:shadow-sm prose-img:block",
                 "prose-figcaption:text-center prose-figcaption:text-[13px] prose-figcaption:mt-4 prose-figcaption:mb-16 prose-figcaption:italic prose-figcaption:opacity-60",
+                // Catch-all for other caption-like elements often found in RSS
+                "[&_figcaption]:text-center [&_figcaption]:text-xs [&_figcaption]:mt-2 [&_figcaption]:mb-12 [&_figcaption]:opacity-50",
+                "[&_.wp-caption-text]:text-center [&_.wp-caption-text]:text-xs [&_.wp-caption-text]:mt-2 [&_.wp-caption-text]:mb-12 [&_.wp-caption-text]:opacity-50",
                 "prose-blockquote:border-l-gray-300 prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif prose-blockquote:py-2",
                 "prose-a:decoration-gray-300 hover:prose-a:decoration-gray-900 prose-a:underline-offset-4 transition-colors"
               )}
