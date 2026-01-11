@@ -11,10 +11,10 @@ interface FeedViewProps {
 
 const FeedView = ({ articles, onArticleClick }: FeedViewProps) => {
   return (
-    <div className="w-full max-w-[2000px] mx-auto px-6 py-12">
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 gap-8 space-y-8">
+    <div className="w-full max-w-5xl mx-auto px-6 py-24">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {articles.map(article => (
-          <div key={article.id} className="break-inside-avoid">
+          <div key={article.id} className="w-full">
             <ArticleCard 
               article={article} 
               onClick={onArticleClick} 

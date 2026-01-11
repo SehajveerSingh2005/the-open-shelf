@@ -13,13 +13,15 @@ interface ArticleCardProps {
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      layoutId={`card-${article.id}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group
-        ${isCanvas ? 'w-[340px]' : 'w-full mb-6'}
+        bg-white border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-shadow duration-300 cursor-pointer group
+        ${isCanvas ? 'w-[340px]' : 'w-full'}
       `}
     >
       <div className="space-y-4">
@@ -35,7 +37,6 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        {/* Only render excerpt if it's not a tiny canvas card to save Firefox resources */}
         <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed [.scale-reduced_&]:hidden">
           {article.excerpt}
         </p>

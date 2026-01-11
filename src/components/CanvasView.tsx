@@ -12,7 +12,8 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera';
+const STORAGE_KEY = 'open-shelf-camera-v2';
+
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -41,6 +42,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const bgX = useTransform(x, (v) => `${v}px`);
   const bgY = useTransform(y, (v) => `${v}px`);
 
+  const saveState = useCallback(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      x: rawX.get(),
+      y: rawY.get(),
+      scale: rawScale.get()
+    }));
+  }, [rawX, rawY, rawScale]);
+
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
     ticking.current = true;
@@ -54,7 +63,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 800;
+      const padding = 1000;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -73,12 +82,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', updateVisibility);
-    const unsubY = rawY.on('change', updateVisibility);
-    const unsubScale = rawScale.on('change', updateVisibility);
+    const unsubX = rawX.on('change', () => { updateVisibility(); saveState(); });
+    const unsubY = rawY.on('change', () => { updateVisibility(); saveState(); });
+    const unsubScale = rawScale.on('change', () => { updateVisibility(); saveState(); });
     updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
-  }, [rawX, rawY, rawScale, updateVisibility]);
+  }, [rawX, rawY, rawScale, updateVisibility, saveState]);
 
   const resetView = () => {
     rawX.set(0);
@@ -92,9 +101,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
-    // New zoom range: 0.3 to 2.0 for better perspective
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.3), 2.0);
+    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.2), 2.5);
     
     if (newScale === s) return;
 
@@ -126,11 +134,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [rawX, rawY, handleZoom]);
 
-  const renderedList = useMemo(() => 
-    articles.filter(a => visibleIds.has(a.id)), 
-    [articles, visibleIds]
-  );
-
   return (
     <div 
       ref={containerRef}
@@ -149,7 +152,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {renderedList.map((article) => (
+        {articles.filter(a => visibleIds.has(a.id)).map((article) => (
           <div 
             key={article.id} 
             className="absolute pointer-events-auto"
