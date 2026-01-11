@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 import { Maximize2 } from 'lucide-react';
@@ -12,6 +12,8 @@ interface CanvasViewProps {
 }
 
 const STORAGE_KEY = 'open-shelf-camera';
+const MAX_VISIBLE_ITEMS = 40; // Hard limit for Firefox stability
+
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -30,61 +32,41 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const scale = useMotionValue(initialState.scale);
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
+  const [currentScale, setCurrentScale] = useState(initialState.scale);
   const ticking = useRef(false);
 
-  const smoothX = useSpring(x, { damping: 50, stiffness: 300 });
-  const smoothY = useSpring(y, { damping: 50, stiffness: 300 });
-  const smoothScale = useSpring(scale, { damping: 50, stiffness: 300 });
-
-  // Performance-friendly background positions
-  const bgX = useTransform(smoothX, (v) => `${v}px`);
-  const bgY = useTransform(smoothY, (v) => `${v}px`);
-
-  // Debounced save to localStorage
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    const save = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-          x: x.get(),
-          y: y.get(),
-          scale: scale.get()
-        }));
-      }, 500);
-    };
-    const unsubX = x.on('change', save);
-    const unsubY = y.on('change', save);
-    const unsubScale = scale.on('change', save);
-    return () => { 
-      unsubX(); unsubY(); unsubScale(); 
-      clearTimeout(timeout);
-    };
-  }, [x, y, scale]);
-
+  // Throttled visibility check
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
     ticking.current = true;
 
     requestAnimationFrame(() => {
+      const s = scale.get();
       const curX = -x.get();
       const curY = -y.get();
-      const s = scale.get();
+      setCurrentScale(s);
+      
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 1000;
+      // Viewing frustum with some padding
+      const padding = 500;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
       const bottom = curY + height / 2 + padding;
 
       const nextVisible = new Set<string>();
+      let count = 0;
+
       for (const art of articles) {
+        if (count >= MAX_VISIBLE_ITEMS) break;
         if (art.x > left && art.x < right && art.y > top && art.y < bottom) {
           nextVisible.add(art.id);
+          count++;
         }
       }
+      
       setVisibleIds(nextVisible);
       ticking.current = false;
     });
@@ -98,6 +80,23 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [x, y, scale, updateVisibility]);
 
+  // Persist state with debounce
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    const save = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          x: x.get(),
+          y: y.get(),
+          scale: scale.get()
+        }));
+      }, 1000);
+    };
+    const unsub = scale.on('change', save);
+    return () => { unsub(); clearTimeout(timeout); };
+  }, [x, y, scale]);
+
   const resetView = () => {
     x.set(0);
     y.set(0);
@@ -108,25 +107,28 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
-    const currentScale = scale.get();
-    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
-    const newScale = Math.min(Math.max(currentScale * zoomFactor, 0.1), 1.5);
+    const s = scale.get();
     
-    if (newScale === currentScale) return;
+    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.15), 1.2);
+    
+    if (newScale === s) return;
 
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
-    const worldX = (focalX - x.get()) / currentScale;
-    const worldY = (focalY - y.get()) / currentScale;
+    
+    const worldX = (focalX - x.get()) / s;
+    const worldY = (focalY - y.get()) / s;
 
-    scale.set(newScale);
     x.set(focalX - worldX * newScale);
     y.set(focalY - worldY * newScale);
+    scale.set(newScale);
   }, [x, y, scale]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (e.ctrlKey || e.metaKey) {
@@ -136,6 +138,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         y.set(y.get() - e.deltaY);
       }
     };
+
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => container.removeEventListener('wheel', handleWheel);
   }, [x, y, handleZoom]);
@@ -150,22 +153,17 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
-      {/* 
-          Performant Background Grid 
-          Using background-position instead of a massive inset layer for Firefox stability
-      */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none"
+      {/* Static grid background - No motion values here for Firefox stability */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: 'radial-gradient(#e2e2e2 1.5px, transparent 1.5px)',
-          backgroundSize: useTransform(smoothScale, s => `${80 * s}px ${80 * s}px`),
-          backgroundPosition: useTransform([bgX, bgY], ([bx, by]) => `calc(50% + ${bx}) calc(50% + ${by})`),
-          opacity: 0.5
+          backgroundImage: `radial-gradient(#000 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
         }}
       />
 
       <motion.div
-        style={{ x: smoothX, y: smoothY, scale: smoothScale, transformOrigin: '0 0' }}
+        style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
         {renderedList.map((article) => (
@@ -176,23 +174,30 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
+              // Simplified card visibility at low zoom
+              opacity: currentScale < 0.2 ? 0.5 : 1,
               willChange: 'transform'
             }}
           >
-            <ArticleCard article={article} onClick={onArticleClick} isCanvas />
+            {/* Pass current scale to implement Level of Detail in Card */}
+            <div className={cn(currentScale < 0.3 ? "scale-reduced" : "")}>
+              <ArticleCard 
+                article={article} 
+                onClick={onArticleClick} 
+                isCanvas 
+              />
+            </div>
           </div>
         ))}
       </motion.div>
       
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
-        <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-200 shadow-2xl rounded-full flex items-center space-x-6 pointer-events-auto">
+        <div className="bg-white/95 backdrop-blur-md px-6 py-3 border border-gray-200 shadow-xl rounded-full flex items-center space-x-6 pointer-events-auto">
           <div className="flex flex-col">
             <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Focal Depth</span>
-            <span className="text-xs font-medium text-gray-900">{Math.round(scale.get() * 100)}%</span>
+            <span className="text-xs font-medium text-gray-900">{Math.round(currentScale * 100)}%</span>
           </div>
-          
           <div className="h-6 w-px bg-gray-100" />
-          
           <button 
             onClick={resetView}
             className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-900 transition-colors"

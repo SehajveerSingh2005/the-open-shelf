@@ -13,7 +13,7 @@ interface ArticleCardProps {
 const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
@@ -35,11 +35,12 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
           </h3>
         </div>
         
-        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed">
+        {/* Only render excerpt if it's not a tiny canvas card to save Firefox resources */}
+        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed [.scale-reduced_&]:hidden">
           {article.excerpt}
         </p>
         
-        <div className="pt-2 border-t border-gray-50 flex items-center justify-between">
+        <div className="pt-2 border-t border-gray-50 flex items-center justify-between [.scale-reduced_&]:hidden">
           <p className="text-[10px] text-gray-400 font-sans italic">by {article.author}</p>
           <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
         </div>
