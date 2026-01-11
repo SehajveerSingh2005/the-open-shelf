@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 import { Maximize2 } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 interface CanvasViewProps {
   articles: Article[];
@@ -12,7 +13,7 @@ interface CanvasViewProps {
 }
 
 const STORAGE_KEY = 'open-shelf-camera';
-const MAX_VISIBLE_ITEMS = 40; // Hard limit for Firefox stability
+const MAX_VISIBLE_ITEMS = 40; 
 
 const getStoredState = () => {
   try {
@@ -35,7 +36,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const [currentScale, setCurrentScale] = useState(initialState.scale);
   const ticking = useRef(false);
 
-  // Throttled visibility check
   const updateVisibility = useCallback(() => {
     if (ticking.current) return;
     ticking.current = true;
@@ -49,8 +49,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      // Viewing frustum with some padding
-      const padding = 500;
+      const padding = 800;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -80,7 +79,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [x, y, scale, updateVisibility]);
 
-  // Persist state with debounce
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
     const save = () => {
@@ -153,7 +151,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-[#fafafa] touch-none cursor-grab active:cursor-grabbing"
     >
-      {/* Static grid background - No motion values here for Firefox stability */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -174,12 +171,10 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
-              // Simplified card visibility at low zoom
               opacity: currentScale < 0.2 ? 0.5 : 1,
               willChange: 'transform'
             }}
           >
-            {/* Pass current scale to implement Level of Detail in Card */}
             <div className={cn(currentScale < 0.3 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
