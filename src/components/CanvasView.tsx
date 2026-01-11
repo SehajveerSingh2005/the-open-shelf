@@ -12,18 +12,21 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v2';
+const STORAGE_KEY = 'open-shelf-camera-v3';
 
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      return {
-        x: Number(parsed.x) || 0,
-        y: Number(parsed.y) || 0,
-        scale: Number(parsed.scale) || 0.85
-      };
+      // Ensure we have valid numbers
+      const x = parseFloat(parsed.x);
+      const y = parseFloat(parsed.y);
+      const scale = parseFloat(parsed.scale);
+      
+      if (!isNaN(x) && !isNaN(y) && !isNaN(scale)) {
+        return { x, y, scale };
+      }
     }
   } catch (e) {
     console.error("Failed to load camera state", e);
@@ -33,18 +36,16 @@ const getStoredState = () => {
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Memoize initial state to ensure it doesn't change on re-renders
   const initialState = useMemo(() => getStoredState(), []);
   
   const rawX = useMotionValue(initialState.x);
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Springs for smooth movement
-  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
-  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
-  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
+  // Stiffer springs for more immediate feedback and less "overshoot" during visibility checks
+  const x = useSpring(rawX, { damping: 50, stiffness: 500 });
+  const y = useSpring(rawY, { damping: 50, stiffness: 500 });
+  const scale = useSpring(rawScale, { damping: 40, stiffness: 400 });
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
@@ -66,7 +67,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     ticking.current = true;
 
     requestAnimationFrame(() => {
-      // Use raw values for visibility to avoid lag/jitter during spring settling
+      // Use raw values for visibility to avoid jitter while the spring is still settling
       const s = rawScale.get();
       const curX = -rawX.get();
       const curY = -rawY.get();
@@ -94,14 +95,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    // Sync UI state and localStorage on every camera change
     const unsubX = rawX.on('change', () => { updateVisibility(); saveState(); });
     const unsubY = rawY.on('change', () => { updateVisibility(); saveState(); });
     const unsubScale = rawScale.on('change', () => { updateVisibility(); saveState(); });
     
-    // Initial check
     updateVisibility();
-    
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility, saveState]);
 
@@ -122,7 +120,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     
     if (newScale === s) return;
 
-    // Zoom towards cursor
     const focalX = mouseX - rect.left - rect.width / 2;
     const focalY = mouseY - rect.top - rect.height / 2;
     const worldX = (focalX - rawX.get()) / s;
@@ -177,6 +174,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               left: article.x, 
               top: article.y, 
               transform: 'translate(-50%, -50%)',
+              willChange: 'transform'
             }}
           >
             <div className={cn(currentScale < 0.5 ? "scale-reduced" : "")}>

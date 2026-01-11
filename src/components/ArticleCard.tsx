@@ -14,11 +14,15 @@ const ArticleCard = ({ article, onClick, isCanvas = false }: ArticleCardProps) =
   return (
     <motion.div
       layoutId={`card-${article.id}`}
-      // We disable 'layout' on the canvas to prevent the "contracting" glitch during panning.
-      // layoutId still handles the shared transition when switching views (mounting/unmounting).
+      // We explicitly disable layout projection on the canvas to prevent the "breathing" glitch.
+      // layoutId still facilitates the smooth transition when switching to the Feed view.
       layout={isCanvas ? false : "position"}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={false}
+      animate={{ 
+        opacity: 1, 
+        scale: 1, // Force scale 1 to prevent layout projection from trying to 'contract' the card
+        transition: { duration: 0.2 } 
+      }}
       exit={{ opacity: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
