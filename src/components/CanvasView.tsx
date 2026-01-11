@@ -30,10 +30,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Responsive springs for fluid movement
-  const x = useSpring(rawX, { damping: 40, stiffness: 250 });
-  const y = useSpring(rawY, { damping: 40, stiffness: 250 });
-  const scale = useSpring(rawScale, { damping: 30, stiffness: 200 });
+  const x = useSpring(rawX, { damping: 45, stiffness: 280 });
+  const y = useSpring(rawY, { damping: 45, stiffness: 280 });
+  const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
   
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
   const [currentScale, setCurrentScale] = useState(initialState.scale);
@@ -55,7 +54,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const width = window.innerWidth / s;
       const height = window.innerHeight / s;
       
-      const padding = 500;
+      const padding = 600;
       const left = curX - width / 2 - padding;
       const right = curX + width / 2 + padding;
       const top = curY - height / 2 - padding;
@@ -93,9 +92,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
-    // Constrained zoom range: 0.45 to 1.1
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.45), 1.1);
+    const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
+    // Expanded range: 0.35 to 1.6 for closer inspection
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.35), 1.6);
     
     if (newScale === s) return;
 
@@ -161,7 +160,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.6 ? "scale-reduced" : "")}>
+            <div className={cn(currentScale < 0.55 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
                 onClick={onArticleClick} 

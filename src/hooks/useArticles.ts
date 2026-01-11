@@ -13,19 +13,33 @@ export function useArticles() {
 
       if (error) throw error;
 
-      // Tightened dimensions for a denser feel
-      const COL_WIDTH = 360; 
-      const ROW_HEIGHT = 300;
-      // Increased columns so it spreads out sideways
-      const COLS = 12; 
+      const COL_WIDTH = 360;
+      const NUM_COLS = 16;
+      const RADIUS = 2000; // The bounding radius for the circular cluster
+      
+      // Initialize column heights and starting Y positions to form a circle
+      const colHeights = new Array(NUM_COLS).fill(0);
+      const colStarts = new Array(NUM_COLS).fill(0).map((_, i) => {
+        const x = (i - (NUM_COLS - 1) / 2) * COL_WIDTH;
+        // Circle equation: y = sqrt(R^2 - x^2)
+        // We start the column at the "top" of the circle
+        const offset = Math.sqrt(Math.max(0, Math.pow(RADIUS, 2) - Math.pow(x, 2)));
+        return -offset / 2;
+      });
 
       return (data || []).map((item: any, index: number) => {
-        const col = index % COLS;
-        const row = Math.floor(index / COLS);
+        // Find the column that currently has the lowest bottom edge (masonry)
+        // but within a "natural" flow
+        const colIndex = index % NUM_COLS;
         
-        // Horizontal-first layout that centers the mass
-        const xOffset = (col - (COLS - 1) / 2) * COL_WIDTH;
-        const yOffset = (row - 1) * ROW_HEIGHT;
+        const x = (colIndex - (NUM_COLS - 1) / 2) * COL_WIDTH;
+        
+        // Randomize height slightly to simulate varying content length impact on layout
+        const estimatedHeight = 280 + (Math.random() * 100);
+        const y = colStarts[colIndex] + colHeights[colIndex];
+        
+        // Update height for next item in this column
+        colHeights[colIndex] += estimatedHeight + 40; // 40px gap
 
         return {
           id: item.id,
@@ -37,8 +51,8 @@ export function useArticles() {
           content: item.content,
           publishedAt: item.published_at ? new Date(item.published_at).toLocaleDateString() : 'Recently',
           url: item.url,
-          x: xOffset,
-          y: yOffset,
+          x: x,
+          y: y,
         };
       }) as Article[];
     },
