@@ -18,8 +18,8 @@ type FontType = 'serif' | 'sans' | 'mono';
 
 const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => void }) => {
   const [fontSize, setFontSize] = useState(20);
-  const [lineHeight, setLineHeight] = useState(1.75); // Increased for better legibility
-  const [fontType, setFontType] = useState<FontType>('serif'); // Default to serif for editorial feel
+  const [lineHeight, setLineHeight] = useState(1.75);
+  const [fontType, setFontType] = useState<FontType>('sans'); // Defaulting back to sans
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,6 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
         theme === 'light' ? 'bg-[#fff] text-gray-900' : 'bg-[#0a0a0a] text-gray-100'
       )}
     >
-      {/* Editorial Header - Solid and Minimal */}
       <div className={cn(
         "fixed top-0 left-0 right-0 h-14 z-50 flex items-center justify-between px-6 transition-all duration-300",
         theme === 'light' 
@@ -212,9 +211,7 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
             "prose prose-lg max-w-none transition-all duration-300 selection:bg-gray-100 selection:text-black",
             fontType === 'serif' ? 'font-serif' : fontType === 'mono' ? 'font-mono' : 'font-sans',
             theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray',
-            // Clean Image Styling
             "[&_img]:mx-auto [&_img]:block [&_img]:rounded-none [&_img]:mt-16 [&_img]:mb-8 [&_img]:max-w-full",
-            // Typography refinement
             "[&_p]:mb-8 [&_p]:leading-relaxed",
             "[&_h2]:font-serif [&_h2]:text-3xl [&_h2]:mt-16 [&_h2]:mb-8",
             "[&_blockquote]:border-l-[1px] [&_blockquote]:border-gray-200 [&_blockquote]:italic [&_blockquote]:text-2xl [&_blockquote]:font-serif [&_blockquote]:pl-10 [&_blockquote]:my-16",
@@ -223,7 +220,7 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
           style={{ 
             fontSize: `${fontSize}px`, 
             lineHeight: lineHeight,
-            textTransform: 'none' // Ensure no unexpected lowercasing
+            textTransform: 'none'
           }}
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
