@@ -7,6 +7,8 @@ export interface Article {
   excerpt: string;
   content: string;
   publishedAt: string;
+  url: string;
+  imageUrl?: string;
   x: number;
   y: number;
 }

@@ -12,13 +12,31 @@ const parser = new Parser({
     item: [
       ['content:encoded', 'contentEncoded'], 
       ['description', 'description'],
-      ['media:content', 'mediaContent']
+      ['media:content', 'mediaContent'],
+      ['enclosure', 'enclosure']
     ],
   }
 });
 
+const extractImageUrl = (item: any): string | null => {
+  // 1. Check media:content
+  if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
+    return item.mediaContent.$.url;
+  }
+  // 2. Check enclosure
+  if (item.enclosure && item.enclosure.url) {
+    return item.enclosure.url;
+  }
+  // 3. Parse HTML content for first img tag
+  const content = item.contentEncoded || item.content || item.description || '';
+  const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+  if (imgMatch && imgMatch[1]) {
+    return imgMatch[1];
+  }
+  return null;
+};
+
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -29,47 +47,26 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-    
     const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
 
     const response = await fetch(feedUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch feed: ${response.statusText}`);
-    }
-
     const xml = await response.text();
     const feed = await parser.parseString(xml);
-    console.log("[fetch-rss] Successfully parsed feed:", feed.title);
     
-    // Upsert the feed and get its ID
     const { data: feedData, error: feedError } = await supabaseClient
       .from('feeds')
       .upsert({ url: feedUrl, title: feed.title || 'Untitled' }, { onConflict: 'url' })
       .select('id')
       .single();
 
-    if (feedError) {
-      console.error("[fetch-rss] Feed upsert error:", feedError);
-      throw feedError;
-    }
+    if (feedError) throw feedError;
 
     const { data: existing } = await supabaseClient.from('articles').select('url');
     const existingUrls = new Set((existing || []).map(a => a.url));
     
-    // Filtering logic: exclude duplicates and video content
-    const newItems = feed.items.filter(item => {
-      const url = item.link || '';
-      const isAlreadySaved = existingUrls.has(url);
-      const isVideo = url.toLowerCase().includes('/video/') || 
-                      item.title?.toLowerCase().includes('video:') ||
-                      item.categories?.some(c => c.toLowerCase().includes('video'));
-      
-      return !isAlreadySaved && !isVideo;
-    });
+    const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
     
-    console.log(`[fetch-rss] Found ${newItems.length} new articles to process`);
-
-    const articles = newItems.slice(0, 20).map((item) => {
+    const articles = newItems.slice(0, 15).map((item) => {
       const content = item.contentEncoded || item.content || item.description || '';
       return {
         feed_id: feedData.id,
@@ -81,24 +78,21 @@ serve(async (req) => {
         excerpt: (item.contentSnippet || item.description || '').substring(0, 300) + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        x: Math.floor(Math.random() * 2000) - 1000, // Randomish start for layout
-        y: Math.floor(Math.random() * 2000) - 1000
+        image_url: extractImageUrl(item),
+        x: Math.floor(Math.random() * 4000) - 2000,
+        y: Math.floor(Math.random() * 4000) - 2000
       };
     });
 
     if (articles.length > 0) {
       const { error: insertError } = await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
-      if (insertError) {
-        console.error("[fetch-rss] Article insert error:", insertError);
-        throw insertError;
-      }
+      if (insertError) throw insertError;
     }
 
     return new Response(JSON.stringify({ success: true, count: articles.length }), { 
       headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     });
   } catch (error) {
-    console.error('[fetch-rss] Execution error:', error.message);
     return new Response(JSON.stringify({ error: error.message }), { 
       status: 400, 
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

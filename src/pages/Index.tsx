@@ -19,12 +19,12 @@ const Index = () => {
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
   
-  const { data: articles, isLoading, error, refetch } = useArticles();
+  const { data: articlesData, isLoading, error, refetch } = useArticles();
 
   const selectedArticle = useMemo(() => {
-    if (!articles || !articleId) return null;
-    return articles.find(a => a.id === articleId) || null;
-  }, [articles, articleId]);
+    if (!articlesData?.items || !articleId) return null;
+    return articlesData.items.find(a => a.id === articleId) || null;
+  }, [articlesData, articleId]);
 
   const handleArticleClick = (article: Article) => {
     navigate(`/app/article/${article.id}`);
@@ -57,10 +57,10 @@ const Index = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && (!articles || articles.length === 0)) {
+    if (!isLoading && (!articlesData?.items || articlesData.items.length === 0)) {
       syncFeeds();
     }
-  }, [isLoading, articles?.length]);
+  }, [isLoading, articlesData?.items?.length]);
 
   if (isLoading && !isSyncing) {
     return (
@@ -72,7 +72,7 @@ const Index = () => {
   }
 
   return (
-    <div className="h-screen w-screen bg-[#fafafa] flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
         <div className="flex flex-col items-start cursor-pointer group" onClick={() => navigate('/')}>
           <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 group-hover:text-gray-900 transition-colors">The</span>
@@ -99,12 +99,12 @@ const Index = () => {
       </header>
 
       <main className="flex-1 mt-[73px] relative overflow-hidden">
-        {articles && articles.length > 0 ? (
+        {articlesData?.items && articlesData.items.length > 0 ? (
           view === 'canvas' ? (
-            <CanvasView articles={articles} onArticleClick={handleArticleClick} />
+            <CanvasView articles={articlesData} onArticleClick={handleArticleClick} />
           ) : (
             <div className="h-full overflow-y-auto subtle-grid">
-              <FeedView articles={articles} onArticleClick={handleArticleClick} />
+              <FeedView articles={articlesData.items} onArticleClick={handleArticleClick} />
             </div>
           )
         ) : (
