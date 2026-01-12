@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v7';
+const STORAGE_KEY = 'open-shelf-camera-v8';
 
 const getStoredState = () => {
   try {
@@ -34,7 +34,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Smoother, less bouncy physics settings
   const x = useSpring(rawX, { damping: 60, stiffness: 450, mass: 1 });
   const y = useSpring(rawY, { damping: 60, stiffness: 450, mass: 1 });
   const scale = useSpring(rawScale, { damping: 45, stiffness: 350 });
@@ -50,9 +49,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Only update DOM if we've moved more than 200px to reduce lag
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
-    if (!force && dist < 200 && Math.abs(s - currentScale) < 0.05) {
+    if (!force && dist < 250 && Math.abs(s - currentScale) < 0.05) {
       return;
     }
 
@@ -64,7 +62,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Render a larger 5x5 grid buffer to ensure cards are pre-rendered far ahead
+    // 5x5 grid buffer to ensure smooth panning
     for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
       for (let by = blockY - 2; by <= blockY + 2; by++) {
         const offsetX = bx * width;
@@ -98,7 +96,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.94 : 1.06;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.2);
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.65), 1.15);
     
     if (newScale === s) return;
 
@@ -161,7 +159,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
             style={{ 
               left: article.x + offset.x, 
               top: article.y + offset.y, 
-              transform: 'translate(-50%, -50%)',
+              // Changed from translate(-50%, -50%) to top-align (translate(-50%, 0))
+              transform: 'translateX(-50%)',
               willChange: 'transform'
             }}
           >
@@ -183,19 +182,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           className="bg-white/90 backdrop-blur-xl px-6 py-4 border border-gray-100/50 shadow-[0_10px_40px_rgba(0,0,0,0.08)] rounded-full flex items-center space-x-8 pointer-events-auto"
         >
           <div className="flex items-center space-x-3">
-            <button 
-              onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)}
-              className="p-1 text-gray-400 hover:text-gray-900 transition-colors"
-            >
+            <button onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)} className="p-1 text-gray-400 hover:text-gray-900 transition-colors">
               <ZoomOut size={16} />
             </button>
             <div className="flex flex-col items-center min-w-[40px]">
               <span className="text-[10px] font-sans font-bold text-gray-900">{Math.round(currentScale * 100)}%</span>
             </div>
-            <button 
-              onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)}
-              className="p-1 text-gray-400 hover:text-gray-900 transition-colors"
-            >
+            <button onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)} className="p-1 text-gray-400 hover:text-gray-900 transition-colors">
               <ZoomIn size={16} />
             </button>
           </div>

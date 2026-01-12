@@ -14,8 +14,8 @@ export function useArticles() {
       if (error) throw error;
 
       const items = data || [];
-      const COL_WIDTH = 360; // Slightly wider for better spacing
-      const GAP = 48; // Increased gap to prevent any visual crowding
+      const COL_WIDTH = 360; 
+      const GAP = 40; 
       
       const NUM_COLS = 4;
       const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
@@ -28,19 +28,17 @@ export function useArticles() {
         const y = colHeights[colIndex];
         
         const hasImage = !!item.image_url;
-        const textLength = (item.excerpt || '').length;
-        const titleLength = (item.title || '').length;
         
-        // Very conservative height estimation to guarantee no overlaps
-        // Base padding and metadata: 100px
-        // Title: ~30px per line (max 3 lines assumed)
-        // Excerpt: ~20px per line (max 4 lines assumed)
-        // Image: 176px + border
-        const titleHeight = Math.ceil(titleLength / 30) * 32;
-        const excerptHeight = Math.ceil(textLength / 45) * 24;
-        const imagePadding = hasImage ? 200 : 0;
-        
-        const estimatedHeight = 120 + titleHeight + excerptHeight + imagePadding;
+        // Fixed height estimation based on exact CSS values:
+        // Image: 176px
+        // Padding: 48px (top + bottom)
+        // Header: ~20px
+        // Title (2 lines max): 48px
+        // Excerpt (3 lines max): 60px
+        // Footer: ~20px
+        // Space-y-4 gaps: ~40px
+        const maxContentHeight = 240; 
+        const estimatedHeight = (hasImage ? 176 : 0) + maxContentHeight;
         
         colHeights[colIndex] += estimatedHeight + GAP;
 
