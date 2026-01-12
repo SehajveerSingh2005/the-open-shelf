@@ -85,9 +85,9 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
               placeholder="https://example.com/feed" 
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
-              className="rounded-none border-gray-200 focus-visible:ring-gray-900 h-12 flex-1"
+              className="rounded-none border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-900 h-11 flex-1 transition-colors"
             />
-            <Button type="submit" disabled={adding} className="rounded-none bg-gray-900 hover:bg-black px-6 h-12">
+            <Button type="submit" disabled={adding} className="rounded-none bg-gray-900 hover:bg-black px-6 h-11">
               {adding ? <Loader2 className="animate-spin" size={16} /> : <Plus size={16} />}
             </Button>
           </form>
