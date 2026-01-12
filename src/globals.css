@@ -8,35 +8,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Parchment & Ink Palette */
+    --background: 38 28% 97%;    /* #FDFBF7 - Soft Parchment */
+    --foreground: 0 0% 11%;      /* #1C1C1C - Deep Ink */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 38 28% 99%;          /* Slightly lighter than background */
+    --card-foreground: 0 0% 11%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 38 28% 99%;
+    --popover-foreground: 0 0% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 11%;
+    --primary-foreground: 38 28% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 38 12% 92%;     /* Muted Stone */
+    --secondary-foreground: 0 0% 11%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 38 12% 92%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 38 12% 92%;
+    --accent-foreground: 0 0% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 38 10% 88%;        /* Subtle aged border */
+    --input: 38 10% 88%;
+    --ring: 0 0% 11%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;              /* Sharp edges for editorial look */
   }
 }
 
@@ -61,8 +62,8 @@
 
   .subtle-grid {
     background-image: 
-      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 }
