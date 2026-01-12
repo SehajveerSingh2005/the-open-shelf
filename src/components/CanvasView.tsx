@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v6';
+const STORAGE_KEY = 'open-shelf-camera-v7';
 
 const getStoredState = () => {
   try {
@@ -34,13 +34,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
-  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
-  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
+  // Smoother, less bouncy physics settings
+  const x = useSpring(rawX, { damping: 60, stiffness: 450, mass: 1 });
+  const y = useSpring(rawY, { damping: 60, stiffness: 450, mass: 1 });
+  const scale = useSpring(rawScale, { damping: 45, stiffness: 350 });
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
-  const lastUpdateBlock = useRef({ x: -999, y: -999 });
+  const lastUpdatePos = useRef({ x: -9999, y: -9999 });
 
   const updateVisibility = useCallback((force = false) => {
     const s = rawScale.get();
@@ -49,22 +50,23 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    const blockX = Math.floor(-curX / width);
-    const blockY = Math.floor(-curY / height);
-
-    // Update if crossed a block boundary or on initial mount
-    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y) {
+    // Only update DOM if we've moved more than 200px to reduce lag
+    const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
+    if (!force && dist < 200 && Math.abs(s - currentScale) < 0.05) {
       return;
     }
 
-    lastUpdateBlock.current = { x: blockX, y: blockY };
+    lastUpdatePos.current = { x: curX, y: curY };
     setCurrentScale(s);
     
-    // Wider buffer (3 blocks wide) to ensure smooth horizontal panning
+    const blockX = Math.floor(-curX / width);
+    const blockY = Math.floor(-curY / height);
+
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
-      for (let by = blockY - 1; by <= blockY + 1; by++) {
+    // Render a larger 5x5 grid buffer to ensure cards are pre-rendered far ahead
+    for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
+      for (let by = blockY - 2; by <= blockY + 2; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
         for (const art of articles.items) {
@@ -75,7 +77,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles, rawX, rawY, rawScale]);
+  }, [articles, rawX, rawY, rawScale, currentScale]);
 
   useEffect(() => {
     const unsubX = rawX.on('change', () => updateVisibility());
@@ -95,7 +97,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.95 : 1.05;
+    const zoomFactor = deltaY > 0 ? 0.94 : 1.06;
     const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.2);
     
     if (newScale === s) return;
@@ -174,7 +176,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* Zoom Toolbar Styled like Landing Hero */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 pointer-events-none z-50">
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
