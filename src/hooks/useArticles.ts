@@ -14,8 +14,8 @@ export function useArticles() {
       if (error) throw error;
 
       const items = data || [];
-      const COL_WIDTH = 340; // Matches ArticleCard exactly
-      const GAP = 24;
+      const COL_WIDTH = 340; 
+      const GAP = 32; // Increased gap for better spacing
       
       const NUM_COLS = 4;
       const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
@@ -28,9 +28,17 @@ export function useArticles() {
         const y = colHeights[colIndex];
         
         const hasImage = !!item.image_url;
-        const textLength = (item.excerpt || '').length + (item.title || '').length;
-        // Tighter height estimation
-        const estimatedHeight = (hasImage ? 190 : 0) + 140 + Math.min(textLength / 2.5, 180);
+        const textLength = (item.excerpt || '').length;
+        const titleLength = (item.title || '').length;
+        
+        // Refined height estimation to prevent overlaps
+        // Header (source/time) ~ 24px
+        // Title (2 lines) ~ 48px
+        // Excerpt (3 lines) ~ 60px
+        // Footer (author/date) ~ 24px
+        // Padding ~ 40px
+        const contentHeight = 160 + (titleLength > 40 ? 24 : 0) + (textLength > 100 ? 40 : 0);
+        const estimatedHeight = (hasImage ? 176 : 0) + contentHeight;
         
         colHeights[colIndex] += estimatedHeight + GAP;
 

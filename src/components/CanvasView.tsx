@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
-import { Maximize2 } from 'lucide-react';
+import { Maximize2, ZoomIn, ZoomOut } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface CanvasViewProps {
@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v5';
+const STORAGE_KEY = 'open-shelf-camera-v6';
 
 const getStoredState = () => {
   try {
@@ -34,9 +34,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 45, stiffness: 300 });
-  const y = useSpring(rawY, { damping: 45, stiffness: 300 });
-  const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
+  const x = useSpring(rawX, { damping: 50, stiffness: 400 });
+  const y = useSpring(rawY, { damping: 50, stiffness: 400 });
+  const scale = useSpring(rawScale, { damping: 40, stiffness: 300 });
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
@@ -49,55 +49,41 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Determine current block
     const blockX = Math.floor(-curX / width);
     const blockY = Math.floor(-curY / height);
 
-    // Only update if we've moved significantly between blocks or zoom changed
-    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y && Math.abs(s - currentScale) < 0.01) {
+    // Update if crossed a block boundary or on initial mount
+    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y) {
       return;
     }
 
     lastUpdateBlock.current = { x: blockX, y: blockY };
     setCurrentScale(s);
     
-    const vWidth = window.innerWidth / s;
-    const vHeight = window.innerHeight / s;
-    
-    // Viewport bounds in world space
-    const left = -curX - vWidth / 2 - 400;
-    const right = -curX + vWidth / 2 + 400;
-    const top = -curY - vHeight / 2 - 400;
-    const bottom = -curY + vHeight / 2 + 400;
-
+    // Wider buffer (3 blocks wide) to ensure smooth horizontal panning
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Check current block and its immediate neighbors (3x3 grid)
     for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
       for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
-
         for (const art of articles.items) {
-          const worldX = art.x + offsetX;
-          const worldY = art.y + offsetY;
-          
-          // Only render if it's actually near the viewport
-          if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
-            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
-          }
+          nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
         }
       }
     }
     
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles, rawX, rawY, rawScale, currentScale]);
+  }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
     const unsubX = rawX.on('change', () => updateVisibility());
     const unsubY = rawY.on('change', () => updateVisibility());
-    const unsubScale = rawScale.on('change', () => updateVisibility());
+    const unsubScale = rawScale.on('change', () => {
+      setCurrentScale(rawScale.get());
+      updateVisibility();
+    });
     
     updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
@@ -110,7 +96,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.95 : 1.05;
-    // Restricted zoom range for better performance and reading
     const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.2);
     
     if (newScale === s) return;
@@ -143,6 +128,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [rawX, rawY, handleZoom]);
 
+  const resetView = () => {
+    rawX.set(0);
+    rawY.set(0);
+    rawScale.set(0.9);
+  };
+
   return (
     <div 
       ref={containerRef}
@@ -172,7 +163,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.7 ? "scale-reduced" : "")}>
+            <div className={cn(currentScale < 0.75 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
                 onClick={onArticleClick} 
@@ -183,21 +174,39 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none z-50">
-        <div className="bg-white/90 backdrop-blur-xl px-6 py-3 border border-gray-100 shadow-2xl rounded-none flex items-center space-x-6 pointer-events-auto">
-          <div className="flex flex-col">
-            <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Zoom</span>
-            <span className="text-xs font-medium text-gray-900">{Math.round(currentScale * 100)}%</span>
+      {/* Zoom Toolbar Styled like Landing Hero */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 pointer-events-none z-50">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-white/90 backdrop-blur-xl px-6 py-4 border border-gray-100/50 shadow-[0_10px_40px_rgba(0,0,0,0.08)] rounded-full flex items-center space-x-8 pointer-events-auto"
+        >
+          <div className="flex items-center space-x-3">
+            <button 
+              onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)}
+              className="p-1 text-gray-400 hover:text-gray-900 transition-colors"
+            >
+              <ZoomOut size={16} />
+            </button>
+            <div className="flex flex-col items-center min-w-[40px]">
+              <span className="text-[10px] font-sans font-bold text-gray-900">{Math.round(currentScale * 100)}%</span>
+            </div>
+            <button 
+              onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)}
+              className="p-1 text-gray-400 hover:text-gray-900 transition-colors"
+            >
+              <ZoomIn size={16} />
+            </button>
           </div>
-          <div className="h-6 w-px bg-gray-100" />
+          <div className="h-4 w-px bg-gray-200/50" />
           <button 
-            onClick={() => { rawX.set(0); rawY.set(0); rawScale.set(0.9); }}
-            className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-900 transition-colors"
+            onClick={resetView}
+            className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-gray-400 hover:text-gray-900 transition-colors"
           >
             <Maximize2 size={14} />
-            <span>Reset View</span>
+            <span>Reset</span>
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
