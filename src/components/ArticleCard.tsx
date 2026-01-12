@@ -13,8 +13,6 @@ interface ArticleCardProps {
 const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       onClick={() => onClick(article)}
       className={`

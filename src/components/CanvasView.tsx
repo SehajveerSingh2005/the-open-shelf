@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v3';
+const STORAGE_KEY = 'open-shelf-camera-v4';
 
 const getStoredState = () => {
   try {
@@ -40,44 +40,38 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
+  const lastUpdateBlock = useRef({ x: -999, y: -999 });
 
-  const updateVisibility = useCallback(() => {
+  const updateVisibility = useCallback((force = false) => {
     const s = rawScale.get();
     const curX = rawX.get();
     const curY = rawY.get();
-    setCurrentScale(s);
-    
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Determine which "block" the viewport center is currently in
-    const centerBlockX = Math.round(-curX / width);
-    const centerBlockY = Math.round(-curY / height);
+    // Calculate which "block" the viewport center is in
+    const blockX = Math.floor(-curX / width);
+    const blockY = Math.floor(-curY / height);
 
-    const vWidth = window.innerWidth / s;
-    const vHeight = window.innerHeight / s;
+    // Only update the state if we've crossed a block boundary or changed zoom significantly
+    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y) {
+      return;
+    }
+
+    lastUpdateBlock.current = { x: blockX, y: blockY };
+    setCurrentScale(s);
     
-    // Viewport bounds in world space
-    const left = -curX - vWidth / 2 - 200;
-    const right = -curX + vWidth / 2 + 200;
-    const top = -curY - vHeight / 2 - 200;
-    const bottom = -curY + vHeight / 2 + 200;
-
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Check the 3x3 grid around the current block
-    for (let bx = centerBlockX - 1; bx <= centerBlockX + 1; bx++) {
-      for (let by = centerBlockY - 1; by <= centerBlockY + 1; by++) {
+    // Render a 3x3 grid of blocks around the current center block
+    // This provides a massive buffer so cards never "pop in" while in view
+    for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
+      for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
 
         for (const art of articles.items) {
-          const worldX = art.x + offsetX;
-          const worldY = art.y + offsetY;
-          
-          if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
-            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
-          }
+          nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
         }
       }
     }
@@ -87,11 +81,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', updateVisibility);
-    const unsubY = rawY.on('change', updateVisibility);
-    const unsubScale = rawScale.on('change', updateVisibility);
+    const unsubX = rawX.on('change', () => updateVisibility());
+    const unsubY = rawY.on('change', () => updateVisibility());
+    const unsubScale = rawScale.on('change', () => updateVisibility());
     
-    updateVisibility();
+    updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
 
