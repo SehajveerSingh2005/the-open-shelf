@@ -34,17 +34,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Springs for smooth movement
   const x = useSpring(rawX, { damping: 45, stiffness: 300 });
   const y = useSpring(rawY, { damping: 45, stiffness: 300 });
   const scale = useSpring(rawScale, { damping: 35, stiffness: 220 });
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
-  const ticking = useRef(false);
+  const lastUpdate = useRef({ x: 0, y: 0, s: 0 });
 
-  // Wrap coordinates for infinite scrolling
-  // When the user moves past half the block size, we "teleport" them back
   const wrapCoordinates = useCallback(() => {
     const curX = rawX.get();
     const curY = rawY.get();
@@ -59,72 +56,62 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (curY < -height / 2) nextY += height;
 
     if (nextX !== curX || nextY !== curY) {
-      // Direct jump (no spring)
       rawX.jump(nextX);
       rawY.jump(nextY);
     }
   }, [articles.dimensions, rawX, rawY]);
 
-  const updateVisibility = useCallback(() => {
-    if (ticking.current) return;
-    ticking.current = true;
+  const updateVisibility = useCallback((force = false) => {
+    const s = rawScale.get();
+    const curX = rawX.get();
+    const curY = rawY.get();
+    
+    // Only update visible set if moved significantly or forced
+    const dist = Math.sqrt(Math.pow(curX - lastUpdate.current.x, 2) + Math.pow(curY - lastUpdate.current.y, 2));
+    if (!force && dist < 100 && Math.abs(s - lastUpdate.current.s) < 0.05) return;
 
-    requestAnimationFrame(() => {
-      wrapCoordinates();
-      
-      const s = rawScale.get();
-      const curX = rawX.get();
-      const curY = rawY.get();
-      setCurrentScale(s);
-      
-      const vWidth = window.innerWidth / s;
-      const vHeight = window.innerHeight / s;
-      
-      // Viewport bounds in world space
-      const left = -curX - vWidth / 2 - 400;
-      const right = -curX + vWidth / 2 + 400;
-      const top = -curY - vHeight / 2 - 400;
-      const bottom = -curY + vHeight / 2 + 400;
+    wrapCoordinates();
+    setCurrentScale(s);
+    lastUpdate.current = { x: curX, y: curY, s };
+    
+    const vWidth = window.innerWidth / s;
+    const vHeight = window.innerHeight / s;
+    
+    const left = -curX - vWidth / 2 - 600;
+    const right = -curX + vWidth / 2 + 600;
+    const top = -curY - vHeight / 2 - 600;
+    const bottom = -curY + vHeight / 2 + 600;
 
-      const { width, height } = articles.dimensions;
-      const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
+    const { width, height } = articles.dimensions;
+    const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-      // Check 3x3 grids for visible items
-      const offsets = [
-        { x: -width, y: -height }, { x: 0, y: -height }, { x: width, y: -height },
-        { x: -width, y: 0 },       { x: 0, y: 0 },       { x: width, y: 0 },
-        { x: -width, y: height },  { x: 0, y: height },  { x: width, y: height }
-      ];
+    const offsets = [
+      { x: -width, y: -height }, { x: 0, y: -height }, { x: width, y: -height },
+      { x: -width, y: 0 },       { x: 0, y: 0 },       { x: width, y: 0 },
+      { x: -width, y: height },  { x: 0, y: height },  { x: width, y: height }
+    ];
 
-      for (const offset of offsets) {
-        for (const art of articles.items) {
-          const worldX = art.x + offset.x;
-          const worldY = art.y + offset.y;
-          
-          if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
-            nextVisible.push({ article: art, offset });
-          }
+    for (const offset of offsets) {
+      for (const art of articles.items) {
+        const worldX = art.x + offset.x;
+        const worldY = art.y + offset.y;
+        
+        if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
+          nextVisible.push({ article: art, offset });
         }
       }
-      
-      setVisibleItems(nextVisible);
-      ticking.current = false;
-      
-      // Save state
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        x: rawX.get(),
-        y: rawY.get(),
-        scale: rawScale.get()
-      }));
-    });
+    }
+    
+    setVisibleItems(nextVisible);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
   }, [articles, rawX, rawY, rawScale, wrapCoordinates]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', updateVisibility);
-    const unsubY = rawY.on('change', updateVisibility);
-    const unsubScale = rawScale.on('change', updateVisibility);
+    const unsubX = rawX.on('change', () => updateVisibility());
+    const unsubY = rawY.on('change', () => updateVisibility());
+    const unsubScale = rawScale.on('change', () => updateVisibility());
     
-    updateVisibility();
+    updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
 
@@ -134,8 +121,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.85 : 1.15;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.2), 2.0);
+    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.15), 2.0);
     
     if (newScale === s) return;
 
@@ -187,7 +174,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       >
         {visibleItems.map(({ article, offset }, idx) => (
           <div 
-            key={`${article.id}-${idx}`} 
+            key={`${article.id}-${offset.x}-${offset.y}`} 
             className="absolute pointer-events-auto"
             style={{ 
               left: article.x + offset.x, 
