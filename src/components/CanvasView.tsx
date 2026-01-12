@@ -15,14 +15,14 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v4';
+const STORAGE_KEY = 'open-shelf-camera-v5';
 
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.85 };
+    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.9 };
   } catch {
-    return { x: 0, y: 0, scale: 0.85 };
+    return { x: 0, y: 0, scale: 0.9 };
   }
 };
 
@@ -49,36 +49,50 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Calculate which "block" the viewport center is in
+    // Determine current block
     const blockX = Math.floor(-curX / width);
     const blockY = Math.floor(-curY / height);
 
-    // Only update the state if we've crossed a block boundary or changed zoom significantly
-    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y) {
+    // Only update if we've moved significantly between blocks or zoom changed
+    if (!force && blockX === lastUpdateBlock.current.x && blockY === lastUpdateBlock.current.y && Math.abs(s - currentScale) < 0.01) {
       return;
     }
 
     lastUpdateBlock.current = { x: blockX, y: blockY };
     setCurrentScale(s);
     
+    const vWidth = window.innerWidth / s;
+    const vHeight = window.innerHeight / s;
+    
+    // Viewport bounds in world space
+    const left = -curX - vWidth / 2 - 400;
+    const right = -curX + vWidth / 2 + 400;
+    const top = -curY - vHeight / 2 - 400;
+    const bottom = -curY + vHeight / 2 + 400;
+
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Render a 3x3 grid of blocks around the current center block
-    // This provides a massive buffer so cards never "pop in" while in view
+    // Check current block and its immediate neighbors (3x3 grid)
     for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
       for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
 
         for (const art of articles.items) {
-          nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+          const worldX = art.x + offsetX;
+          const worldY = art.y + offsetY;
+          
+          // Only render if it's actually near the viewport
+          if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
+            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+          }
         }
       }
     }
     
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles, rawX, rawY, rawScale]);
+  }, [articles, rawX, rawY, rawScale, currentScale]);
 
   useEffect(() => {
     const unsubX = rawX.on('change', () => updateVisibility());
@@ -95,8 +109,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.9 : 1.1;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.15), 2.0);
+    const zoomFactor = deltaY > 0 ? 0.95 : 1.05;
+    // Restricted zoom range for better performance and reading
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.2);
     
     if (newScale === s) return;
 
@@ -146,7 +161,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {visibleItems.map(({ article, offset }, idx) => (
+        {visibleItems.map(({ article, offset }) => (
           <div 
             key={`${article.id}-${offset.x}-${offset.y}`} 
             className="absolute pointer-events-auto"
@@ -157,7 +172,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.4 ? "scale-reduced" : "")}>
+            <div className={cn(currentScale < 0.7 ? "scale-reduced" : "")}>
               <ArticleCard 
                 article={article} 
                 onClick={onArticleClick} 
@@ -176,11 +191,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           </div>
           <div className="h-6 w-px bg-gray-100" />
           <button 
-            onClick={() => { rawX.set(0); rawY.set(0); rawScale.set(0.85); }}
+            onClick={() => { rawX.set(0); rawY.set(0); rawScale.set(0.9); }}
             className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500 hover:text-gray-900 transition-colors"
           >
             <Maximize2 size={14} />
-            <span>Reset</span>
+            <span>Reset View</span>
           </button>
         </div>
       </div>
