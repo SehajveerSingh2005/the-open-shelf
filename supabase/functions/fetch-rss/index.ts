@@ -27,11 +27,12 @@ const extractImageUrl = (item: any): string | null => {
   if (item.enclosure && item.enclosure.url) {
     return item.enclosure.url;
   }
-  // 3. Parse HTML content for first img tag
+  // 3. Parse HTML content for first img tag (Critical for Substack/Marginalian)
   const content = item.contentEncoded || item.content || item.description || '';
   const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
   if (imgMatch && imgMatch[1]) {
-    return imgMatch[1];
+    // Basic cleanup of the URL
+    return imgMatch[1].split('?')[0];
   }
   return null;
 };

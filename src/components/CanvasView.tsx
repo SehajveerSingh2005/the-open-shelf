@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v8';
+const STORAGE_KEY = 'open-shelf-camera-v10';
 
 const getStoredState = () => {
   try {
@@ -34,9 +34,10 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 60, stiffness: 450, mass: 1 });
-  const y = useSpring(rawY, { damping: 60, stiffness: 450, mass: 1 });
-  const scale = useSpring(rawScale, { damping: 45, stiffness: 350 });
+  // Faster physics for snappier response
+  const x = useSpring(rawX, { damping: 40, stiffness: 400, mass: 0.5 });
+  const y = useSpring(rawY, { damping: 40, stiffness: 400, mass: 0.5 });
+  const scale = useSpring(rawScale, { damping: 30, stiffness: 300 });
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
@@ -49,8 +50,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
+    // Throttle React state updates during fast panning
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
-    if (!force && dist < 250 && Math.abs(s - currentScale) < 0.05) {
+    if (!force && dist < 300 && Math.abs(s - currentScale) < 0.05) {
       return;
     }
 
@@ -62,9 +64,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // 5x5 grid buffer to ensure smooth panning
-    for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
-      for (let by = blockY - 2; by <= blockY + 2; by++) {
+    // Tighter render loop for performance
+    for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
+      for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
         for (const art of articles.items) {
@@ -95,8 +97,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const rect = container.getBoundingClientRect();
     const s = rawScale.get();
     
-    const zoomFactor = deltaY > 0 ? 0.94 : 1.06;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.65), 1.15);
+    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.1);
     
     if (newScale === s) return;
 
@@ -139,11 +141,15 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-background touch-none cursor-grab active:cursor-grabbing"
     >
+      {/* Restored Parchment Grid Background */}
       <motion.div 
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
-          backgroundImage: `radial-gradient(#000 1.5px, transparent 1.5px)`,
-          backgroundSize: '60px 60px',
+          backgroundImage: `
+            linear-gradient(to right, #000 1px, transparent 1px),
+            linear-gradient(to bottom, #000 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
           backgroundPosition: useTransform([x, y], ([bx, by]) => `calc(50% + ${bx}px) calc(50% + ${by}px)`)
         }}
       />
@@ -159,7 +165,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
             style={{ 
               left: article.x + offset.x, 
               top: article.y + offset.y, 
-              // Changed from translate(-50%, -50%) to top-align (translate(-50%, 0))
               transform: 'translateX(-50%)',
               willChange: 'transform'
             }}

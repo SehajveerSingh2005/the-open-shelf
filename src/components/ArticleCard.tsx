@@ -13,10 +13,11 @@ interface ArticleCardProps {
 const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   return (
     <motion.div
-      whileHover={{ y: -8, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
+      whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+      whileTap={{ scale: 0.98 }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100/80 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 cursor-pointer group overflow-hidden
+        bg-white border border-gray-100/80 rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.06)] transition-all duration-200 cursor-pointer group overflow-hidden
         ${isCanvas ? 'w-[320px]' : 'w-full mb-6'}
       `}
     >
@@ -25,7 +26,7 @@ const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleC
           <img 
             src={article.imageUrl} 
             alt={article.title}
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
