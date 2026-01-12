@@ -74,9 +74,12 @@ const Index = () => {
   return (
     <div className="h-screen w-screen bg-[#fafafa] flex flex-col overflow-hidden">
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900 cursor-pointer" onClick={() => navigate('/')}>
-          The Open Shelf
-        </h1>
+        <div className="flex flex-col items-start cursor-pointer group" onClick={() => navigate('/')}>
+          <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 group-hover:text-gray-900 transition-colors">The</span>
+          <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900">
+            Open Shelf
+          </h1>
+        </div>
         
         <div className="flex items-center space-x-6">
           <FeedManager onUpdate={refetch} />

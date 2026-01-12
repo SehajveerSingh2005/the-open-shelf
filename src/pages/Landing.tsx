@@ -59,12 +59,14 @@ const ConnectionLines = () => (
 );
 
 const Feature = ({ icon: Icon, title, description }: any) => (
-  <div className="space-y-4 text-center p-8">
+  <div className="space-y-4 text-center p-8 relative">
     <div className="flex justify-center">
-      <Icon size={32} strokeWidth={1} className="text-gray-400" />
+      <div className="w-12 h-12 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm mb-4">
+        <Icon size={20} strokeWidth={1.5} className="text-gray-900" />
+      </div>
     </div>
     <h3 className="text-2xl font-serif font-medium text-gray-900">{title}</h3>
-    <p className="text-gray-500 font-serif leading-relaxed italic max-w-xs mx-auto">
+    <p className="text-gray-500 font-serif leading-relaxed italic max-w-xs mx-auto text-lg">
       {description}
     </p>
   </div>
@@ -73,20 +75,20 @@ const Feature = ({ icon: Icon, title, description }: any) => (
 const Landing = () => {
   return (
     <div className="min-h-screen w-full bg-white flex flex-col relative overflow-x-hidden">
+      {/* Universal Grid Overlay */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #000 1px, transparent 1px),
+            linear-gradient(to bottom, #000 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+        }}
+      />
+
       {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center relative shrink-0">
-        {/* Graph Paper Grid */}
-        <div 
-          className="absolute inset-0 pointer-events-none opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #000 1px, transparent 1px),
-              linear-gradient(to bottom, #000 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
-          }}
-        />
-        
+      <section className="h-screen flex flex-col items-center justify-center relative shrink-0 z-10">
         <ConnectionLines />
 
         <FloatingCard 
@@ -122,27 +124,21 @@ const Landing = () => {
           readingTime="8 min"
           excerpt="They encourage deep thinking, observation, and reflection. The spatial layout is a container for thought."
         />
-        <FloatingCard 
-          delay={1.4} x="0px" y="320px" 
-          title="Haunting Memories" 
-          author="GALEN STRALSON"
-          source="AEON" 
-          readingTime="10 min"
-          excerpt="The landscape of the past is not a flat plane, but a series of interconnected nodes waiting to be explored."
-          opacity={0.8}
-        />
 
-        <main className="relative z-10 text-center space-y-12 px-6">
+        <main className="text-center space-y-12 px-6">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-8"
           >
-            <h1 className="text-6xl md:text-8xl font-serif font-medium tracking-tight text-gray-900 leading-[0.9]">
-              A place to think <br />
-              <span className="italic">with what you read.</span>
-            </h1>
+            <div className="flex flex-col items-center space-y-4">
+              <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-400">The Open Shelf</span>
+              <h1 className="text-6xl md:text-8xl font-serif font-medium tracking-tight text-gray-900 leading-[0.95]">
+                A place to think <br />
+                <span className="italic">with what you read.</span>
+              </h1>
+            </div>
             
             <p className="max-w-xl mx-auto text-lg md:text-xl text-gray-400 font-serif leading-relaxed italic">
               Escape the vertical stream. Organize your digital life on an infinite spatial canvas designed for slow media.
@@ -157,7 +153,7 @@ const Landing = () => {
             <Link to="/app">
               <Button 
                 variant="outline" 
-                className="group relative rounded-none border-gray-100 bg-white/50 backdrop-blur-sm px-12 py-8 text-[11px] uppercase tracking-[0.4em] hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-500 shadow-sm"
+                className="group relative rounded-none border-gray-900/10 bg-white/50 backdrop-blur-sm px-12 py-8 text-[11px] uppercase tracking-[0.4em] hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-500 shadow-sm"
               >
                 <span className="relative z-10 flex items-center space-x-4">
                   <span>Enter the Shelf</span>
@@ -170,9 +166,9 @@ const Landing = () => {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-40 border-t border-gray-50 bg-[#fafafa] relative z-10">
+      <section className="py-60 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid md:grid-cols-3 gap-16 md:gap-8">
             <Feature 
               icon={Map}
               title="Spatial Layout"
@@ -190,25 +186,42 @@ const Landing = () => {
             />
           </div>
 
-          <div className="mt-48 text-center max-w-3xl mx-auto space-y-10">
-            <p className="text-[10px] uppercase tracking-[0.5em] text-gray-400 font-sans font-bold">The Manifesto</p>
-            <h2 className="text-4xl md:text-6xl font-serif font-medium text-gray-900 leading-tight">
-              The scroll is the enemy <br />
-              of deep thought.
-            </h2>
-            <p className="text-xl text-gray-500 font-serif leading-relaxed italic max-w-2xl mx-auto">
+          <div className="mt-60 text-center max-w-4xl mx-auto space-y-12">
+            <div className="space-y-4">
+              <span className="text-[10px] uppercase tracking-[0.5em] text-gray-400 font-sans font-bold">The Manifesto</span>
+              <h2 className="text-5xl md:text-7xl font-serif font-medium text-gray-900 leading-[1.1]">
+                The scroll is the enemy <br />
+                of deep thought.
+              </h2>
+            </div>
+            <p className="text-xl md:text-2xl text-gray-500 font-serif leading-relaxed italic max-w-2xl mx-auto">
               "We believe that how you organize your digital consumption changes how you think. The Open Shelf is a horizontal expanse for the slow, the long-form, and the profound."
             </p>
           </div>
         </div>
       </section>
 
+      {/* Final CTA */}
+      <section className="py-40 relative z-10 border-t border-gray-50">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
+           <h3 className="text-4xl font-serif font-medium text-gray-900 italic">Ready to slow down?</h3>
+           <Link to="/app">
+            <Button 
+              variant="outline" 
+              className="rounded-none border-gray-900/10 bg-white/50 backdrop-blur-sm px-16 py-8 text-[11px] uppercase tracking-[0.4em] hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-500"
+            >
+              Start Curating
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-white pt-32 pb-16 border-t border-gray-50">
+      <footer className="bg-white pt-32 pb-16 border-t border-gray-100 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-32">
             <div className="col-span-1 lg:col-span-2 space-y-8">
-              <h3 className="text-3xl font-serif font-medium text-gray-900">The Open Shelf</h3>
+              <h3 className="text-3xl font-serif font-medium text-gray-900 tracking-tight">The Open Shelf</h3>
               <p className="text-gray-400 font-serif italic max-w-sm leading-relaxed text-lg">
                 A non-linear repository for ideas, essays, and slow media. Built for those who find depth in the details.
               </p>
