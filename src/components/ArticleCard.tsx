@@ -17,12 +17,12 @@ const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleC
       whileTap={{ scale: 0.98 }}
       onClick={() => onClick(article)}
       className={`
-        bg-white border border-gray-100/80 rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgb(0,0,0,0.06)] transition-all duration-200 cursor-pointer group overflow-hidden
+        bg-white border border-gray-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-200 cursor-pointer group overflow-hidden
         ${isCanvas ? 'w-[320px]' : 'w-full mb-6'}
       `}
     >
       {article.imageUrl && (
-        <div className="w-full h-44 overflow-hidden bg-gray-50 border-b border-gray-50/50">
+        <div className="w-full h-44 overflow-hidden bg-gray-50 border-b border-gray-100/50">
           <img 
             src={article.imageUrl} 
             alt={article.title}
@@ -47,11 +47,11 @@ const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleC
           </h3>
         </div>
         
-        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed [.scale-reduced_&]:hidden">
+        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed">
           {article.excerpt}
         </p>
         
-        <div className="pt-3 border-t border-gray-50 flex items-center justify-between [.scale-reduced_&]:hidden">
+        <div className="pt-3 border-t border-gray-50 flex items-center justify-between">
           <p className="text-[10px] text-gray-400 font-sans font-medium">by {article.author}</p>
           <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
         </div>

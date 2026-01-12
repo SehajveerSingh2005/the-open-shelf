@@ -5,7 +5,6 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 import { Maximize2, ZoomIn, ZoomOut } from 'lucide-react';
-import { cn } from "@/lib/utils";
 
 interface CanvasViewProps {
   articles: {
@@ -34,7 +33,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  // Faster physics for snappier response
   const x = useSpring(rawX, { damping: 40, stiffness: 400, mass: 0.5 });
   const y = useSpring(rawY, { damping: 40, stiffness: 400, mass: 0.5 });
   const scale = useSpring(rawScale, { damping: 30, stiffness: 300 });
@@ -50,7 +48,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Throttle React state updates during fast panning
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
     if (!force && dist < 300 && Math.abs(s - currentScale) < 0.05) {
       return;
@@ -64,7 +61,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Tighter render loop for performance
     for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
       for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
@@ -141,7 +137,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       ref={containerRef}
       className="w-full h-full relative overflow-hidden bg-background touch-none cursor-grab active:cursor-grabbing"
     >
-      {/* Restored Parchment Grid Background */}
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
@@ -169,13 +164,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
               willChange: 'transform'
             }}
           >
-            <div className={cn(currentScale < 0.75 ? "scale-reduced" : "")}>
-              <ArticleCard 
-                article={article} 
-                onClick={onArticleClick} 
-                isCanvas 
-              />
-            </div>
+            <ArticleCard 
+              article={article} 
+              onClick={onArticleClick} 
+              isCanvas 
+            />
           </div>
         ))}
       </motion.div>
