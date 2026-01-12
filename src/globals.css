@@ -8,36 +8,36 @@
 
 @layer base {
   :root {
-    /* Parchment & Ink Palette */
-    --background: 38 28% 97%;    /* #FDFBF7 - Soft Parchment */
+    /* Pure White Editorial Palette */
+    --background: 0 0% 100%;    /* Pure White */
     --foreground: 0 0% 11%;      /* #1C1C1C - Deep Ink */
 
-    --card: 38 28% 99%;          /* Slightly lighter than background */
+    --card: 0 0% 100%;
     --card-foreground: 0 0% 11%;
 
-    --popover: 38 28% 99%;
+    --popover: 0 0% 100%;
     --popover-foreground: 0 0% 11%;
 
     --primary: 0 0% 11%;
-    --primary-foreground: 38 28% 97%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 12% 92%;     /* Muted Stone */
+    --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 11%;
 
-    --muted: 38 12% 92%;
+    --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 38 12% 92%;
+    --accent: 0 0% 96%;
     --accent-foreground: 0 0% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 38 10% 88%;        /* Subtle aged border */
-    --input: 38 10% 88%;
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
     --ring: 0 0% 11%;
 
-    --radius: 0rem;              /* Sharp edges for editorial look */
+    --radius: 0rem;
   }
 }
 

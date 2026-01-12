@@ -13,27 +13,46 @@ const parser = new Parser({
       ['content:encoded', 'contentEncoded'], 
       ['description', 'description'],
       ['media:content', 'mediaContent'],
-      ['enclosure', 'enclosure']
+      ['enclosure', 'enclosure'],
+      ['media:thumbnail', 'mediaThumbnail']
     ],
   }
 });
 
 const extractImageUrl = (item: any): string | null => {
-  // 1. Check media:content
+  // 1. Check media:content (standard for many high-quality feeds)
   if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
     return item.mediaContent.$.url;
   }
-  // 2. Check enclosure
+  // 2. Check enclosure (standard for podcasts and some blogs)
   if (item.enclosure && item.enclosure.url) {
     return item.enclosure.url;
   }
-  // 3. Parse HTML content for first img tag (Critical for Substack/Marginalian)
-  const content = item.contentEncoded || item.content || item.description || '';
-  const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
-  if (imgMatch && imgMatch[1]) {
-    // Basic cleanup of the URL
-    return imgMatch[1].split('?')[0];
+  // 3. Check media:thumbnail
+  if (item.mediaThumbnail && item.mediaThumbnail.$ && item.mediaThumbnail.$.url) {
+    return item.mediaThumbnail.$.url;
   }
+  
+  // 4. Parse HTML content for img tag (Critical for Substack/Marginalian/Ghost)
+  const content = item.contentEncoded || item.content || item.description || '';
+  
+  // Look for standard src but also common data attributes used by lazy loaders
+  const imgRegex = /<img[^>]+(?:src|data-src|data-full-url)="([^">]+)"/i;
+  const match = content.match(imgRegex);
+  
+  if (match && match[1]) {
+    let url = match[1];
+    // Strip common tracker/resizer query params that might break direct loading
+    if (url.includes('?')) {
+      // Keep width/height params if they look like resizer instructions, else strip
+      const cleanUrl = url.split('?')[0];
+      if (cleanUrl.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
+        return cleanUrl;
+      }
+    }
+    return url;
+  }
+  
   return null;
 };
 
@@ -76,7 +95,7 @@ serve(async (req) => {
         source: feed.title || 'Source',
         url: item.link,
         content,
-        excerpt: (item.contentSnippet || item.description || '').substring(0, 300) + '...',
+        excerpt: (item.contentSnippet || item.description || '').substring(0, 300).replace(/<[^>]*>?/gm, '') + '...',
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
         image_url: extractImageUrl(item),
