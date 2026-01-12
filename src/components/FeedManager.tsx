@@ -80,14 +80,14 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
         </DialogHeader>
         
         <div className="space-y-6 pt-6">
-          <form onSubmit={handleAdd} className="flex space-x-2">
+          <form onSubmit={handleAdd} className="flex items-stretch space-x-2">
             <Input 
               placeholder="https://example.com/feed" 
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
-              className="rounded-none border-gray-200 focus-visible:ring-gray-900"
+              className="rounded-none border-gray-200 focus-visible:ring-gray-900 h-12 flex-1"
             />
-            <Button type="submit" disabled={adding} className="rounded-none bg-gray-900 hover:bg-black px-6">
+            <Button type="submit" disabled={adding} className="rounded-none bg-gray-900 hover:bg-black px-6 h-12">
               {adding ? <Loader2 className="animate-spin" size={16} /> : <Plus size={16} />}
             </Button>
           </form>
@@ -99,9 +99,9 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
               <p className="text-center text-sm text-gray-400 font-serif italic py-4">No sources yet.</p>
             ) : (
               feeds.map((feed) => (
-                <div key={feed.id} className="flex items-center justify-between p-3 border border-gray-50 group hover:border-gray-200 transition-colors">
+                <div key={feed.id} className="flex items-center justify-between p-4 border border-gray-50 group hover:border-gray-200 transition-colors">
                   <div className="overflow-hidden">
-                    <p className="font-serif font-medium truncate">{feed.title}</p>
+                    <p className="font-serif font-medium truncate text-lg">{feed.title}</p>
                     <p className="text-[9px] text-gray-400 truncate uppercase tracking-widest">{feed.url}</p>
                   </div>
                   <Button 
