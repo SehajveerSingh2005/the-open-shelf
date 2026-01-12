@@ -14,10 +14,10 @@ export function useArticles() {
       if (error) throw error;
 
       const items = data || [];
-      const COL_WIDTH = 360; // Reduced from 400
-      const GAP = 24;       // Reduced from 40
+      const COL_WIDTH = 340; // Matches ArticleCard exactly
+      const GAP = 24;
       
-      const NUM_COLS = 5;    // Increased columns for a denser feel
+      const NUM_COLS = 4;
       const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
       const colHeights = new Array(NUM_COLS).fill(0);
 
@@ -29,7 +29,8 @@ export function useArticles() {
         
         const hasImage = !!item.image_url;
         const textLength = (item.excerpt || '').length + (item.title || '').length;
-        const estimatedHeight = (hasImage ? 180 : 0) + 140 + Math.min(textLength / 2, 200);
+        // Tighter height estimation
+        const estimatedHeight = (hasImage ? 190 : 0) + 140 + Math.min(textLength / 2.5, 180);
         
         colHeights[colIndex] += estimatedHeight + GAP;
 

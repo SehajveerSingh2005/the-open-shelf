@@ -15,7 +15,7 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v2';
+const STORAGE_KEY = 'open-shelf-camera-v3';
 
 const getStoredState = () => {
   try {
@@ -40,78 +40,58 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
-  const lastUpdate = useRef({ x: 0, y: 0, s: 0 });
 
-  const wrapCoordinates = useCallback(() => {
-    const curX = rawX.get();
-    const curY = rawY.get();
-    const { width, height } = articles.dimensions;
-
-    let nextX = curX;
-    let nextY = curY;
-
-    if (curX > width / 2) nextX -= width;
-    if (curX < -width / 2) nextX += width;
-    if (curY > height / 2) nextY -= height;
-    if (curY < -height / 2) nextY += height;
-
-    if (nextX !== curX || nextY !== curY) {
-      rawX.jump(nextX);
-      rawY.jump(nextY);
-    }
-  }, [articles.dimensions, rawX, rawY]);
-
-  const updateVisibility = useCallback((force = false) => {
+  const updateVisibility = useCallback(() => {
     const s = rawScale.get();
     const curX = rawX.get();
     const curY = rawY.get();
-    
-    // Only update visible set if moved significantly or forced
-    const dist = Math.sqrt(Math.pow(curX - lastUpdate.current.x, 2) + Math.pow(curY - lastUpdate.current.y, 2));
-    if (!force && dist < 100 && Math.abs(s - lastUpdate.current.s) < 0.05) return;
-
-    wrapCoordinates();
     setCurrentScale(s);
-    lastUpdate.current = { x: curX, y: curY, s };
     
+    const { width, height } = articles.dimensions;
+    if (width === 0 || height === 0) return;
+
+    // Determine which "block" the viewport center is currently in
+    const centerBlockX = Math.round(-curX / width);
+    const centerBlockY = Math.round(-curY / height);
+
     const vWidth = window.innerWidth / s;
     const vHeight = window.innerHeight / s;
     
-    const left = -curX - vWidth / 2 - 600;
-    const right = -curX + vWidth / 2 + 600;
-    const top = -curY - vHeight / 2 - 600;
-    const bottom = -curY + vHeight / 2 + 600;
+    // Viewport bounds in world space
+    const left = -curX - vWidth / 2 - 200;
+    const right = -curX + vWidth / 2 + 200;
+    const top = -curY - vHeight / 2 - 200;
+    const bottom = -curY + vHeight / 2 + 200;
 
-    const { width, height } = articles.dimensions;
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    const offsets = [
-      { x: -width, y: -height }, { x: 0, y: -height }, { x: width, y: -height },
-      { x: -width, y: 0 },       { x: 0, y: 0 },       { x: width, y: 0 },
-      { x: -width, y: height },  { x: 0, y: height },  { x: width, y: height }
-    ];
+    // Check the 3x3 grid around the current block
+    for (let bx = centerBlockX - 1; bx <= centerBlockX + 1; bx++) {
+      for (let by = centerBlockY - 1; by <= centerBlockY + 1; by++) {
+        const offsetX = bx * width;
+        const offsetY = by * height;
 
-    for (const offset of offsets) {
-      for (const art of articles.items) {
-        const worldX = art.x + offset.x;
-        const worldY = art.y + offset.y;
-        
-        if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
-          nextVisible.push({ article: art, offset });
+        for (const art of articles.items) {
+          const worldX = art.x + offsetX;
+          const worldY = art.y + offsetY;
+          
+          if (worldX > left && worldX < right && worldY > top && worldY < bottom) {
+            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+          }
         }
       }
     }
     
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles, rawX, rawY, rawScale, wrapCoordinates]);
+  }, [articles, rawX, rawY, rawScale]);
 
   useEffect(() => {
-    const unsubX = rawX.on('change', () => updateVisibility());
-    const unsubY = rawY.on('change', () => updateVisibility());
-    const unsubScale = rawScale.on('change', () => updateVisibility());
+    const unsubX = rawX.on('change', updateVisibility);
+    const unsubY = rawY.on('change', updateVisibility);
+    const unsubScale = rawScale.on('change', updateVisibility);
     
-    updateVisibility(true);
+    updateVisibility();
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
 
