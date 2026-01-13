@@ -46,6 +46,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const dragDistance = useRef(0);
 
   const updateVisibility = useCallback((force = false) => {
+    const container = containerRef.current;
+    if (!container) return;
+
     const s = rawScale.get();
     const curX = rawX.get();
     const curY = rawY.get();
@@ -53,24 +56,43 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (width === 0 || height === 0) return;
 
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
-    if (!force && dist < 300 && Math.abs(s - currentScale) < 0.05) {
+    if (!force && dist < 200 && Math.abs(s - currentScale) < 0.05) {
       return;
     }
 
     lastUpdatePos.current = { x: curX, y: curY };
     setCurrentScale(s);
     
+    // Viewport bounds in world coordinates
+    const viewW = container.offsetWidth / s;
+    const viewH = container.offsetHeight / s;
+    const margin = 500; // Extra padding around viewport
+
+    const worldViewLeft = (-curX - container.offsetWidth / 2) / s - margin;
+    const worldViewRight = (-curX + container.offsetWidth / 2) / s + margin;
+    const worldViewTop = (-curY - container.offsetHeight / 2) / s - margin;
+    const worldViewBottom = (-curY + container.offsetHeight / 2) / s + margin;
+
     const blockX = Math.floor(-curX / width);
     const blockY = Math.floor(-curY / height);
 
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
+    // Only check current and adjacent blocks
     for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
       for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
+        
         for (const art of articles.items) {
-          nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+          const absX = art.x + offsetX;
+          const absY = art.y + offsetY;
+          
+          // Spatial culling: Only add to DOM if within viewport+margin
+          if (absX >= worldViewLeft && absX <= worldViewRight &&
+              absY >= worldViewTop && absY <= worldViewBottom) {
+            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+          }
         }
       }
     }
@@ -163,7 +185,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   }, [rawX, rawY, handleZoom]);
 
   const onArticleClickWrapper = (article: Article) => {
-    // Only trigger click if we didn't drag much
     if (dragDistance.current < 10) {
       onArticleClick(article);
     }

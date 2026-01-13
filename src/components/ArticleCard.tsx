@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Article } from '@/types/article';
+import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {
   article: Article;
@@ -10,23 +11,46 @@ interface ArticleCardProps {
   isCanvas?: boolean;
 }
 
+const optimizeImageUrl = (url: string) => {
+  if (!url) return url;
+  // Substack image optimization
+  if (url.includes('substack-post-media.s3.amazonaws.com') || url.includes('images.substack.com')) {
+    return `${url}${url.includes('?') ? '&' : '?'}w=600&auto=format&q=75`;
+  }
+  // Unsplash image optimization
+  if (url.includes('images.unsplash.com')) {
+    return `${url}${url.includes('?') ? '&' : '?'}w=600&q=75&auto=format`;
+  }
+  return url;
+};
+
 const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <motion.div
       whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
       whileTap={{ scale: 0.98 }}
       onClick={() => onClick(article)}
-      className={`
-        bg-white border border-gray-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-200 cursor-pointer group overflow-hidden
-        ${isCanvas ? 'w-[320px]' : 'w-full mb-6'}
-      `}
+      className={cn(
+        "bg-white border border-gray-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all duration-200 cursor-pointer group overflow-hidden",
+        isCanvas ? 'w-[320px]' : 'w-full mb-6'
+      )}
     >
       {article.imageUrl && (
-        <div className="w-full h-44 overflow-hidden bg-gray-50 border-b border-gray-100/50">
-          <img 
-            src={article.imageUrl} 
+        <div className="w-full h-44 overflow-hidden bg-gray-50 border-b border-gray-100/50 relative">
+          <div className={cn(
+            "absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse transition-opacity duration-500",
+            imageLoaded ? "opacity-0" : "opacity-100"
+          )} />
+          <motion.img 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: imageLoaded ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+            src={optimizeImageUrl(article.imageUrl)} 
             alt={article.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onLoad={() => setImageLoaded(true)}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
