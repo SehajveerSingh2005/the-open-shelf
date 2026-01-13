@@ -36,8 +36,10 @@ const Index = () => {
   };
 
   const syncFeeds = async (isAuto = false) => {
-    // If it's an auto-sync and we've already tried, or if we're already syncing, skip
     if (isSyncing) return;
+    
+    // Mark as attempted immediately to prevent race conditions during auto-sync
+    if (isAuto) hasAttemptedInitialSync.current = true;
     
     setIsSyncing(true);
     try {
@@ -58,7 +60,6 @@ const Index = () => {
       if (!isAuto) showError("Connection lost.");
     } finally {
       setIsSyncing(false);
-      if (isAuto) hasAttemptedInitialSync.current = true;
     }
   };
 
@@ -128,7 +129,12 @@ const Index = () => {
               </p>
             </div>
             {!isSyncing && (
-              <FeedManager onUpdate={refetch} />
+              <FeedManager onUpdate={refetch} trigger={
+                <button className="flex items-center space-x-2 px-8 py-4 border border-gray-100 hover:border-gray-900 transition-all text-[10px] uppercase tracking-[0.3em] font-bold">
+                  <PlusCircle size={16} />
+                  <span>Add First Source</span>
+                </button>
+              } />
             )}
             {isSyncing && <Loader2 className="animate-spin text-gray-100" size={24} />}
           </div>

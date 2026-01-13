@@ -17,9 +17,10 @@ interface Feed {
 
 interface FeedManagerProps {
   onUpdate: () => void;
+  trigger?: React.ReactNode;
 }
 
-const FeedManager = ({ onUpdate }: FeedManagerProps) => {
+const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
   const [feeds, setFeeds] = useState<Feed[]>([]);
   const [loading, setLoading] = useState(true);
   const [newUrl, setNewUrl] = useState('');
@@ -84,10 +85,12 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
-          <Settings2 size={14} />
-          <span>Manage Feeds</span>
-        </button>
+        {trigger || (
+          <button className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
+            <Settings2 size={14} />
+            <span>Manage Feeds</span>
+          </button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md rounded-none border-gray-100">
         <DialogHeader>
