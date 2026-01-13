@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Article } from '@/types/article';
 
 export function useArticles() {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
-      // Fetch articles and their associated feed visibility
-      // Using explicit join syntax to resolve ambiguous relationship error PGRST201
+      // Fetch articles with their associated feed visibility
       const { data, error } = await supabase
         .from('articles')
         .select(`
@@ -40,10 +39,7 @@ export function useArticles() {
         const y = colHeights[colIndex];
         
         const hasImage = !!item.image_url;
-        
-        // Dynamic height estimation based on content and image
-        const maxContentHeight = 240; 
-        const estimatedHeight = (hasImage ? 176 : 0) + maxContentHeight;
+        const estimatedHeight = (hasImage ? 176 : 0) + 240; // Base card height
         
         colHeights[colIndex] += estimatedHeight + GAP;
 
@@ -72,5 +68,6 @@ export function useArticles() {
     },
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
+    retry: 1,
   });
 }

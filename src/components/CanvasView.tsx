@@ -37,8 +37,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const scale = useSpring(rawScale, { damping: 30, stiffness: 300 });
   
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
-  const [currentScale, setCurrentScale] = useState(initialState.scale);
-  const lastUpdatePos = useRef({ x: -9999, y: -9999 });
+  const lastUpdatePos = useRef({ x: -9999, y: -9999, scale: -1 });
 
   // Dragging state
   const isDragging = useRef(false);
@@ -55,19 +54,17 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
+    // Significantly reduce update frequency to prevent component "fluttering"
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
-    if (!force && dist < 200 && Math.abs(s - currentScale) < 0.05) {
+    const scaleDiff = Math.abs(s - lastUpdatePos.current.scale);
+    
+    if (!force && dist < 400 && scaleDiff < 0.1) {
       return;
     }
 
-    lastUpdatePos.current = { x: curX, y: curY };
-    setCurrentScale(s);
+    lastUpdatePos.current = { x: curX, y: curY, scale: s };
     
-    // Viewport bounds in world coordinates
-    const viewW = container.offsetWidth / s;
-    const viewH = container.offsetHeight / s;
-    const margin = 500; // Extra padding around viewport
-
+    const margin = 1000; // Large margin to keep items mounted longer
     const worldViewLeft = (-curX - container.offsetWidth / 2) / s - margin;
     const worldViewRight = (-curX + container.offsetWidth / 2) / s + margin;
     const worldViewTop = (-curY - container.offsetHeight / 2) / s - margin;
@@ -78,7 +75,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
 
-    // Only check current and adjacent blocks
     for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
       for (let by = blockY - 1; by <= blockY + 1; by++) {
         const offsetX = bx * width;
@@ -88,7 +84,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           const absX = art.x + offsetX;
           const absY = art.y + offsetY;
           
-          // Spatial culling: Only add to DOM if within viewport+margin
           if (absX >= worldViewLeft && absX <= worldViewRight &&
               absY >= worldViewTop && absY <= worldViewBottom) {
             nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
@@ -97,42 +92,28 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       }
     }
     
-    setVisibleItems(nextVisible);
+    // Check if the set of items actually changed to avoid redundant state updates
+    setVisibleItems(prev => {
+      if (prev.length === nextVisible.length && 
+          prev.every((p, i) => p.article.id === nextVisible[i].article.id && 
+                              p.offset.x === nextVisible[i].offset.x && 
+                              p.offset.y === nextVisible[i].offset.y)) {
+        return prev;
+      }
+      return nextVisible;
+    });
+    
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles, rawX, rawY, rawScale, currentScale]);
+  }, [articles]);
 
   useEffect(() => {
     const unsubX = rawX.on('change', () => updateVisibility());
     const unsubY = rawY.on('change', () => updateVisibility());
-    const unsubScale = rawScale.on('change', () => {
-      setCurrentScale(rawScale.get());
-      updateVisibility();
-    });
+    const unsubScale = rawScale.on('change', () => updateVisibility());
     
     updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
-
-  const handleZoom = useCallback((deltaY: number, mouseX: number, mouseY: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const s = rawScale.get();
-    
-    const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.4), 1.2);
-    
-    if (newScale === s) return;
-
-    const focalX = mouseX - rect.left - rect.width / 2;
-    const focalY = mouseY - rect.top - rect.height / 2;
-    const worldX = (focalX - rawX.get()) / s;
-    const worldY = (focalY - rawY.get()) / s;
-
-    rawX.set(focalX - worldX * newScale);
-    rawY.set(focalY - worldY * newScale);
-    rawScale.set(newScale);
-  }, [rawX, rawY, rawScale]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -141,7 +122,20 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (e.ctrlKey || e.metaKey) {
-        handleZoom(e.deltaY, e.clientX, e.clientY);
+        const rect = container.getBoundingClientRect();
+        const s = rawScale.get();
+        const zoomFactor = e.deltaY > 0 ? 0.92 : 1.08;
+        const newScale = Math.min(Math.max(s * zoomFactor, 0.4), 1.2);
+        
+        if (newScale !== s) {
+          const focalX = e.clientX - rect.left - rect.width / 2;
+          const focalY = e.clientY - rect.top - rect.height / 2;
+          const worldX = (focalX - rawX.get()) / s;
+          const worldY = (focalY - rawY.get()) / s;
+          rawX.set(focalX - worldX * newScale);
+          rawY.set(focalY - worldY * newScale);
+          rawScale.set(newScale);
+        }
       } else {
         rawX.set(rawX.get() - e.deltaX);
         rawY.set(rawY.get() - e.deltaY);
@@ -149,7 +143,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     };
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return; // Left click only
+      if (e.button !== 0) return;
       isDragging.current = true;
       lastMousePos.current = { x: e.clientX, y: e.clientY };
       dragDistance.current = 0;
@@ -159,17 +153,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       if (!isDragging.current) return;
       const dx = e.clientX - lastMousePos.current.x;
       const dy = e.clientY - lastMousePos.current.y;
-      
       dragDistance.current += Math.sqrt(dx * dx + dy * dy);
-      
       rawX.set(rawX.get() + dx);
       rawY.set(rawY.get() + dy);
       lastMousePos.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleMouseUp = () => {
-      isDragging.current = false;
-    };
+    const handleMouseUp = () => { isDragging.current = false; };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('mousedown', handleMouseDown);
@@ -182,13 +172,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [rawX, rawY, handleZoom]);
-
-  const onArticleClickWrapper = (article: Article) => {
-    if (dragDistance.current < 10) {
-      onArticleClick(article);
-    }
-  };
+  }, [rawX, rawY, rawScale]);
 
   return (
     <div 
@@ -198,10 +182,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, #000 1px, transparent 1px),
-            linear-gradient(to bottom, #000 1px, transparent 1px)
-          `,
+          backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
           backgroundPosition: useTransform([x, y], ([bx, by]) => `calc(50% + ${bx}px) calc(50% + ${by}px)`)
         }}
@@ -224,7 +205,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           >
             <ArticleCard 
               article={article} 
-              onClick={onArticleClickWrapper} 
+              onClick={(a) => dragDistance.current < 10 && onArticleClick(a)} 
               isCanvas 
             />
           </div>
