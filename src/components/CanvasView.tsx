@@ -172,7 +172,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full relative overflow-hidden bg-background touch-none cursor-grab active:cursor-grabbing"
+      className="w-full h-full relative overflow-hidden bg-background touch-none cursor-grab active:cursor-grabbing select-none"
     >
       <motion.div 
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
