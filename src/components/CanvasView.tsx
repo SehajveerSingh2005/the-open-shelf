@@ -173,30 +173,41 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 pointer-events-none z-50">
+      {/* Editorial Side Toolbar */}
+      <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none z-50">
         <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="bg-white/90 backdrop-blur-xl px-6 py-4 border border-gray-100/50 shadow-[0_10px_40px_rgba(0,0,0,0.08)] rounded-full flex items-center space-x-8 pointer-events-auto"
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="bg-white/80 backdrop-blur-md border border-gray-100 flex flex-col items-center pointer-events-auto shadow-sm"
         >
-          <div className="flex items-center space-x-3">
-            <button onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)} className="p-1 text-gray-400 hover:text-gray-900 transition-colors">
-              <ZoomOut size={16} />
-            </button>
-            <div className="flex flex-col items-center min-w-[40px]">
-              <span className="text-[10px] font-sans font-bold text-gray-900">{Math.round(currentScale * 100)}%</span>
-            </div>
-            <button onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)} className="p-1 text-gray-400 hover:text-gray-900 transition-colors">
-              <ZoomIn size={16} />
-            </button>
+          <button 
+            onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)} 
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-b border-gray-100 w-full flex justify-center"
+            title="Zoom In"
+          >
+            <ZoomIn size={14} strokeWidth={1.5} />
+          </button>
+          
+          <div className="py-4 flex flex-col items-center border-b border-gray-100 w-full">
+            <span className="text-[9px] font-sans font-bold text-gray-900 tracking-tighter">
+              {Math.round(currentScale * 100)}%
+            </span>
           </div>
-          <div className="h-4 w-px bg-gray-200/50" />
+
+          <button 
+            onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)} 
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-b border-gray-100 w-full flex justify-center"
+            title="Zoom Out"
+          >
+            <ZoomOut size={14} strokeWidth={1.5} />
+          </button>
+
           <button 
             onClick={resetView}
-            className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-gray-400 hover:text-gray-900 transition-colors"
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all w-full flex justify-center"
+            title="Reset View"
           >
-            <Maximize2 size={14} />
-            <span>Reset</span>
+            <Maximize2 size={14} strokeWidth={1.5} />
           </button>
         </motion.div>
       </div>
