@@ -7,11 +7,12 @@ export function useArticles() {
     queryKey: ['articles'],
     queryFn: async () => {
       // Fetch articles and their associated feed visibility
+      // Using explicit join syntax to resolve ambiguous relationship error PGRST201
       const { data, error } = await supabase
         .from('articles')
         .select(`
           *,
-          feeds (
+          feeds:feeds!articles_feed_id_fkey (
             is_hidden
           )
         `)
@@ -22,7 +23,7 @@ export function useArticles() {
         throw error;
       }
 
-      // Filter out articles from hidden feeds manually to be safe with the join
+      // Filter out articles from hidden feeds manually
       const items = (data || []).filter(item => !item.feeds?.is_hidden);
       
       const COL_WIDTH = 360; 
