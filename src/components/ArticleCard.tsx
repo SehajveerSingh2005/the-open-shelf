@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Article } from '@/types/article';
 import { cn } from '@/lib/utils';
+
+// Global cache to track which images have finished loading
+// This prevents "blinking" when the same article mounts in a new position on the infinite canvas
+const LOADED_IMAGES = new Set<string>();
 
 interface ArticleCardProps {
   article: Article;
@@ -13,11 +17,9 @@ interface ArticleCardProps {
 
 const optimizeImageUrl = (url: string) => {
   if (!url) return url;
-  // Substack image optimization
   if (url.includes('substack-post-media.s3.amazonaws.com') || url.includes('images.substack.com')) {
     return `${url}${url.includes('?') ? '&' : '?'}w=600&auto=format&q=75`;
   }
-  // Unsplash image optimization
   if (url.includes('images.unsplash.com')) {
     return `${url}${url.includes('?') ? '&' : '?'}w=600&q=75&auto=format`;
   }
@@ -25,7 +27,15 @@ const optimizeImageUrl = (url: string) => {
 };
 
 const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const imageUrl = article.imageUrl ? optimizeImageUrl(article.imageUrl) : null;
+  const [imageLoaded, setImageLoaded] = useState(() => imageUrl ? LOADED_IMAGES.has(imageUrl) : false);
+
+  const handleLoad = () => {
+    if (imageUrl) {
+      LOADED_IMAGES.add(imageUrl);
+      setImageLoaded(true);
+    }
+  };
 
   return (
     <motion.div
@@ -37,19 +47,19 @@ const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleC
         isCanvas ? 'w-[320px]' : 'w-full mb-6'
       )}
     >
-      {article.imageUrl && (
+      {imageUrl && (
         <div className="w-full h-44 overflow-hidden bg-gray-50 border-b border-gray-100/50 relative">
           <div className={cn(
             "absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse transition-opacity duration-500",
             imageLoaded ? "opacity-0" : "opacity-100"
           )} />
           <motion.img 
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
-            transition={{ duration: 0.4 }}
-            src={optimizeImageUrl(article.imageUrl)} 
+            transition={{ duration: 0.3 }}
+            src={imageUrl} 
             alt={article.title}
-            onLoad={() => setImageLoaded(true)}
+            onLoad={handleLoad}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
