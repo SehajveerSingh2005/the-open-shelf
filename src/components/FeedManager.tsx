@@ -5,13 +5,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Trash2, Plus, Settings2 } from 'lucide-react';
+import { Loader2, Trash2, Plus, Settings2, Eye, EyeOff } from 'lucide-react';
 import { showSuccess, showError } from '@/utils/toast';
 
 interface Feed {
   id: string;
   url: string;
   title: string;
+  is_hidden: boolean;
 }
 
 interface FeedManagerProps {
@@ -48,6 +49,20 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
       showError("Could not connect to feed.");
     } finally {
       setAdding(false);
+    }
+  };
+
+  const toggleVisibility = async (id: string, currentHidden: boolean) => {
+    const { error } = await supabase
+      .from('feeds')
+      .update({ is_hidden: !currentHidden })
+      .eq('id', id);
+
+    if (error) {
+      showError("Could not update visibility.");
+    } else {
+      fetchFeeds();
+      onUpdate();
     }
   };
 
@@ -99,19 +114,29 @@ const FeedManager = ({ onUpdate }: FeedManagerProps) => {
               <p className="text-center text-sm text-gray-400 font-serif italic py-4">No sources yet.</p>
             ) : (
               feeds.map((feed) => (
-                <div key={feed.id} className="flex items-center justify-between p-4 border border-gray-50 group hover:border-gray-200 transition-colors">
+                <div key={feed.id} className={`flex items-center justify-between p-4 border group transition-colors ${feed.is_hidden ? 'border-gray-50 opacity-60' : 'border-gray-50 hover:border-gray-200'}`}>
                   <div className="overflow-hidden">
-                    <p className="font-serif font-medium truncate text-lg">{feed.title}</p>
+                    <p className={`font-serif font-medium truncate text-lg ${feed.is_hidden ? 'text-gray-400 line-through decoration-1' : ''}`}>{feed.title}</p>
                     <p className="text-[9px] text-gray-400 truncate uppercase tracking-widest">{feed.url}</p>
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={() => handleDelete(feed.id)}
-                    className="text-gray-300 hover:text-red-500 transition-colors shrink-0"
-                  >
-                    <Trash2 size={14} />
-                  </Button>
+                  <div className="flex items-center space-x-1">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => toggleVisibility(feed.id, feed.is_hidden)}
+                      className="text-gray-300 hover:text-gray-900 transition-colors shrink-0"
+                    >
+                      {feed.is_hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => handleDelete(feed.id)}
+                      className="text-gray-300 hover:text-red-500 transition-colors shrink-0"
+                    >
+                      <Trash2 size={14} />
+                    </Button>
+                  </div>
                 </div>
               ))
             )}

@@ -6,9 +6,11 @@ export function useArticles() {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
+      // We join with feeds and filter for those that are not hidden
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('*, feeds!inner(is_hidden)')
+        .eq('feeds.is_hidden', false)
         .order('published_at', { ascending: false });
 
       if (error) throw error;
@@ -29,14 +31,6 @@ export function useArticles() {
         
         const hasImage = !!item.image_url;
         
-        // Fixed height estimation based on exact CSS values:
-        // Image: 176px
-        // Padding: 48px (top + bottom)
-        // Header: ~20px
-        // Title (2 lines max): 48px
-        // Excerpt (3 lines max): 60px
-        // Footer: ~20px
-        // Space-y-4 gaps: ~40px
         const maxContentHeight = 240; 
         const estimatedHeight = (hasImage ? 176 : 0) + maxContentHeight;
         
