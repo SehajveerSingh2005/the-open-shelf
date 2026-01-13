@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
-import { Maximize2, ZoomIn, ZoomOut } from 'lucide-react';
 
 interface CanvasViewProps {
   articles: {
@@ -40,6 +39,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
   const [currentScale, setCurrentScale] = useState(initialState.scale);
   const lastUpdatePos = useRef({ x: -9999, y: -9999 });
+
+  // Dragging state
+  const isDragging = useRef(false);
+  const lastMousePos = useRef({ x: 0, y: 0 });
+  const dragDistance = useRef(0);
 
   const updateVisibility = useCallback((force = false) => {
     const s = rawScale.get();
@@ -94,7 +98,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     
     const zoomFactor = deltaY > 0 ? 0.92 : 1.08;
-    const newScale = Math.min(Math.max(s * zoomFactor, 0.6), 1.1);
+    const newScale = Math.min(Math.max(s * zoomFactor, 0.4), 1.2);
     
     if (newScale === s) return;
 
@@ -122,14 +126,47 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       }
     };
 
+    const handleMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return; // Left click only
+      isDragging.current = true;
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+      dragDistance.current = 0;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const dx = e.clientX - lastMousePos.current.x;
+      const dy = e.clientY - lastMousePos.current.y;
+      
+      dragDistance.current += Math.sqrt(dx * dx + dy * dy);
+      
+      rawX.set(rawX.get() + dx);
+      rawY.set(rawY.get() + dy);
+      lastMousePos.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
     container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
   }, [rawX, rawY, handleZoom]);
 
-  const resetView = () => {
-    rawX.set(0);
-    rawY.set(0);
-    rawScale.set(0.9);
+  const onArticleClickWrapper = (article: Article) => {
+    // Only trigger click if we didn't drag much
+    if (dragDistance.current < 10) {
+      onArticleClick(article);
+    }
   };
 
   return (
@@ -166,51 +203,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           >
             <ArticleCard 
               article={article} 
-              onClick={onArticleClick} 
+              onClick={onArticleClickWrapper} 
               isCanvas 
             />
           </div>
         ))}
       </motion.div>
-      
-      {/* Editorial Canvas Toolbar */}
-      <div className="absolute left-8 bottom-8 pointer-events-none z-50">
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="bg-white border border-gray-100 flex flex-row items-center pointer-events-auto shadow-sm"
-        >
-          <button 
-            onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)} 
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-r border-gray-100"
-            title="Zoom In"
-          >
-            <ZoomIn size={14} strokeWidth={1.5} />
-          </button>
-          
-          <div className="px-5 py-4 border-r border-gray-100">
-            <span className="text-[9px] font-sans font-bold text-gray-900 tracking-tighter">
-              {Math.round(currentScale * 100)}%
-            </span>
-          </div>
-
-          <button 
-            onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)} 
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-r border-gray-100"
-            title="Zoom Out"
-          >
-            <ZoomOut size={14} strokeWidth={1.5} />
-          </button>
-
-          <button 
-            onClick={resetView}
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all"
-            title="Reset View"
-          >
-            <Maximize2 size={14} strokeWidth={1.5} />
-          </button>
-        </motion.div>
-      </div>
     </div>
   );
 };
