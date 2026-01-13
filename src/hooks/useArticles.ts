@@ -6,16 +6,25 @@ export function useArticles() {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
-      // We join with feeds and filter for those that are not hidden
+      // Fetch articles and their associated feed visibility
       const { data, error } = await supabase
         .from('articles')
-        .select('*, feeds!inner(is_hidden)')
-        .eq('feeds.is_hidden', false)
+        .select(`
+          *,
+          feeds (
+            is_hidden
+          )
+        `)
         .order('published_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching articles:", error);
+        throw error;
+      }
 
-      const items = data || [];
+      // Filter out articles from hidden feeds manually to be safe with the join
+      const items = (data || []).filter(item => !item.feeds?.is_hidden);
+      
       const COL_WIDTH = 360; 
       const GAP = 40; 
       
@@ -31,6 +40,7 @@ export function useArticles() {
         
         const hasImage = !!item.image_url;
         
+        // Dynamic height estimation based on content and image
         const maxContentHeight = 240; 
         const estimatedHeight = (hasImage ? 176 : 0) + maxContentHeight;
         

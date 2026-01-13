@@ -9,7 +9,7 @@ import ReaderView from '@/components/ReaderView';
 import FeedManager from '@/components/FeedManager';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { Loader2, RefreshCw, PlusCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { showSuccess, showError } from '@/utils/toast';
 
@@ -108,8 +108,19 @@ const Index = () => {
             </div>
           )
         ) : (
-          <div className="h-full flex items-center justify-center text-gray-400 font-serif italic">
-            Your shelf is empty.
+          <div className="h-full flex flex-col items-center justify-center text-center px-6 space-y-6">
+            <div className="space-y-2">
+              <p className="text-gray-400 font-serif italic text-xl">Your shelf is empty.</p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-300 font-sans max-w-xs">
+                Add an RSS feed via "Manage Feeds" to start your collection.
+              </p>
+            </div>
+            <FeedManager onUpdate={refetch} trigger={
+              <button className="flex items-center space-x-2 px-8 py-4 border border-gray-100 hover:border-gray-900 transition-all text-[10px] uppercase tracking-[0.3em] font-bold">
+                <PlusCircle size={16} />
+                <span>Add First Source</span>
+              </button>
+            } />
           </div>
         )}
       </main>
