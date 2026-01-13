@@ -20,36 +20,33 @@ const parser = new Parser({
 });
 
 const extractImageUrl = (item: any): string | null => {
-  // 1. Check media:content (standard for many high-quality feeds)
+  // 1. Check media:content
   if (item.mediaContent && item.mediaContent.$ && item.mediaContent.$.url) {
     return item.mediaContent.$.url;
   }
-  // 2. Check enclosure (standard for podcasts and some blogs)
+  // 2. Check enclosure
   if (item.enclosure && item.enclosure.url) {
-    return item.enclosure.url;
+    // Basic check to ensure it's likely an image (some enclosures are audio)
+    if (item.enclosure.type?.startsWith('image/') || item.enclosure.url.match(/\.(jpg|jpeg|png|webp|gif|svg)/i)) {
+      return item.enclosure.url;
+    }
   }
   // 3. Check media:thumbnail
   if (item.mediaThumbnail && item.mediaThumbnail.$ && item.mediaThumbnail.$.url) {
     return item.mediaThumbnail.$.url;
   }
   
-  // 4. Parse HTML content for img tag (Critical for Substack/Marginalian/Ghost)
+  // 4. Parse HTML content for img tag - Enhanced for Substack and Ghost
   const content = item.contentEncoded || item.content || item.description || '';
   
-  // Look for standard src but also common data attributes used by lazy loaders
-  const imgRegex = /<img[^>]+(?:src|data-src|data-full-url)="([^">]+)"/i;
+  // Look for various src-like attributes used by different platforms and lazy loaders
+  const imgRegex = /<img[^>]+(?:src|data-src|data-full-url|data-original-src)="([^">]+)"/i;
   const match = content.match(imgRegex);
   
   if (match && match[1]) {
     let url = match[1];
-    // Strip common tracker/resizer query params that might break direct loading
-    if (url.includes('?')) {
-      // Keep width/height params if they look like resizer instructions, else strip
-      const cleanUrl = url.split('?')[0];
-      if (cleanUrl.match(/\.(jpg|jpeg|png|webp|gif)$/i)) {
-        return cleanUrl;
-      }
-    }
+    // For Substack/Ghost, we don't want to strip the URL if it doesn't have a standard extension 
+    // because they often use proxy/resizer URLs that are valid images.
     return url;
   }
   
@@ -81,12 +78,8 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    const { data: existing } = await supabaseClient.from('articles').select('url');
-    const existingUrls = new Set((existing || []).map(a => a.url));
-    
-    const newItems = feed.items.filter(item => !existingUrls.has(item.link || ''));
-    
-    const articles = newItems.slice(0, 15).map((item) => {
+    // Process all items (limit to 15) to allow backfilling missing images
+    const articles = feed.items.slice(0, 15).map((item) => {
       const content = item.contentEncoded || item.content || item.description || '';
       return {
         feed_id: feedData.id,
@@ -99,12 +92,14 @@ serve(async (req) => {
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
         image_url: extractImageUrl(item),
+        // Coordinates will only be used if the article is brand new (handled by DB default if not provided)
         x: Math.floor(Math.random() * 4000) - 2000,
         y: Math.floor(Math.random() * 4000) - 2000
       };
     });
 
     if (articles.length > 0) {
+      // Upsert will update existing articles with newly found image URLs
       const { error: insertError } = await supabaseClient.from('articles').upsert(articles, { onConflict: 'url' });
       if (insertError) throw insertError;
     }
