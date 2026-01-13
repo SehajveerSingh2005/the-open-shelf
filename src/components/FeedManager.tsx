@@ -26,11 +26,15 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
   const [newUrl, setNewUrl] = useState('');
   const [adding, setAdding] = useState(false);
 
-  const fetchFeeds = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('feeds').select('*').order('created_at', { ascending: false });
+  const fetchFeeds = async (showLoading = true) => {
+    if (showLoading) setLoading(true);
+    const { data, error } = await supabase
+      .from('feeds')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
     if (!error && data) setFeeds(data);
-    setLoading(false);
+    if (showLoading) setLoading(false);
   };
 
   const handleAdd = async (e: React.FormEvent) => {
@@ -44,7 +48,7 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
       if (error) throw error;
       showSuccess("Source added to shelf");
       setNewUrl('');
-      fetchFeeds();
+      await fetchFeeds(false);
       onUpdate();
     } catch (err: any) {
       showError("Could not connect to feed.");
@@ -54,6 +58,9 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
   };
 
   const toggleVisibility = async (id: string, currentHidden: boolean) => {
+    // Optimistic UI update
+    setFeeds(prev => prev.map(f => f.id === id ? { ...f, is_hidden: !currentHidden } : f));
+
     const { error } = await supabase
       .from('feeds')
       .update({ is_hidden: !currentHidden })
@@ -61,19 +68,24 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
 
     if (error) {
       showError("Could not update visibility.");
+      // Rollback on error
+      fetchFeeds(false);
     } else {
-      fetchFeeds();
       onUpdate();
     }
   };
 
   const handleDelete = async (id: string) => {
+    // Optimistic UI update
+    const previousFeeds = [...feeds];
+    setFeeds(prev => prev.filter(f => f.id !== id));
+
     const { error } = await supabase.from('feeds').delete().eq('id', id);
     if (error) {
       showError("Could not remove source.");
+      setFeeds(previousFeeds);
     } else {
       showSuccess("Source removed");
-      fetchFeeds();
       onUpdate();
     }
   };
@@ -110,34 +122,34 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
             </Button>
           </form>
 
-          <div className="max-h-[300px] overflow-y-auto space-y-3 pr-2">
-            {loading ? (
-              <div className="flex justify-center py-4"><Loader2 className="animate-spin text-gray-200" /></div>
+          <div className="max-h-[400px] overflow-y-auto space-y-3 pr-2 scrollbar-thin">
+            {loading && feeds.length === 0 ? (
+              <div className="flex justify-center py-12"><Loader2 className="animate-spin text-gray-200" /></div>
             ) : feeds.length === 0 ? (
-              <p className="text-center text-sm text-gray-400 font-serif italic py-4">No sources yet.</p>
+              <p className="text-center text-sm text-gray-400 font-serif italic py-8">No sources yet.</p>
             ) : (
               feeds.map((feed) => (
-                <div key={feed.id} className={`flex items-center justify-between p-4 border group transition-colors ${feed.is_hidden ? 'border-gray-50 opacity-60' : 'border-gray-50 hover:border-gray-200'}`}>
-                  <div className="overflow-hidden">
-                    <p className={`font-serif font-medium truncate text-lg ${feed.is_hidden ? 'text-gray-400 line-through decoration-1' : ''}`}>{feed.title}</p>
+                <div key={feed.id} className={`flex items-center justify-between p-4 border transition-all duration-300 ${feed.is_hidden ? 'bg-gray-50/50 border-gray-100 opacity-60' : 'bg-white border-gray-100 hover:border-gray-300'}`}>
+                  <div className="overflow-hidden pr-4">
+                    <p className={`font-serif font-medium truncate text-lg transition-all ${feed.is_hidden ? 'text-gray-400 line-through' : 'text-gray-900'}`}>{feed.title}</p>
                     <p className="text-[9px] text-gray-400 truncate uppercase tracking-widest">{feed.url}</p>
                   </div>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-1 shrink-0">
                     <Button 
                       variant="ghost" 
                       size="icon" 
                       onClick={() => toggleVisibility(feed.id, feed.is_hidden)}
-                      className="text-gray-300 hover:text-gray-900 transition-colors shrink-0"
+                      className="text-gray-300 hover:text-gray-900 transition-colors h-9 w-9"
                     >
-                      {feed.is_hidden ? <EyeOff size={14} /> : <Eye size={14} />}
+                      {feed.is_hidden ? <EyeOff size={16} /> : <Eye size={16} />}
                     </Button>
                     <Button 
                       variant="ghost" 
                       size="icon" 
                       onClick={() => handleDelete(feed.id)}
-                      className="text-gray-300 hover:text-red-500 transition-colors shrink-0"
+                      className="text-gray-300 hover:text-red-500 transition-colors h-9 w-9"
                     >
-                      <Trash2 size={14} />
+                      <Trash2 size={16} />
                     </Button>
                   </div>
                 </div>
