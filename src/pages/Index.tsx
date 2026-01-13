@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
@@ -18,6 +18,7 @@ const Index = () => {
   const { articleId } = useParams();
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
+  const hasAttemptedInitialSync = useRef(false);
   
   const { data: articlesData, isLoading, error, refetch } = useArticles();
 
@@ -34,10 +35,14 @@ const Index = () => {
     navigate('/app');
   };
 
-  const syncFeeds = async () => {
+  const syncFeeds = async (isAuto = false) => {
+    // If it's an auto-sync and we've already tried, or if we're already syncing, skip
+    if (isSyncing) return;
+    
     setIsSyncing(true);
     try {
       const { data: feeds } = await supabase.from('feeds').select('url');
+      
       if (feeds && feeds.length > 0) {
         const promises = feeds.map(feed => 
           supabase.functions.invoke('fetch-rss', { 
@@ -46,23 +51,26 @@ const Index = () => {
         );
         
         await Promise.all(promises);
-        showSuccess("Shelf updated");
+        if (!isAuto) showSuccess("Shelf updated");
         refetch();
       }
     } catch (err) {
-      showError("Connection lost.");
+      if (!isAuto) showError("Connection lost.");
     } finally {
       setIsSyncing(false);
+      if (isAuto) hasAttemptedInitialSync.current = true;
     }
   };
 
   useEffect(() => {
-    if (!isLoading && (!articlesData?.items || articlesData.items.length === 0)) {
-      syncFeeds();
+    // Only attempt auto-sync once if the shelf is empty and we haven't tried yet
+    if (!isLoading && !hasAttemptedInitialSync.current && (!articlesData?.items || articlesData.items.length === 0)) {
+      syncFeeds(true);
     }
   }, [isLoading, articlesData?.items?.length]);
 
-  if (isLoading && !isSyncing) {
+  // Only show the full-screen loader on the very first load
+  if (isLoading && !articlesData?.items && !isSyncing) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
         <Loader2 className="animate-spin text-gray-200" size={32} />
@@ -84,7 +92,7 @@ const Index = () => {
         <div className="flex items-center space-x-6">
           <FeedManager onUpdate={refetch} />
 
-          <button onClick={syncFeeds} disabled={isSyncing} className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
+          <button onClick={() => syncFeeds(false)} disabled={isSyncing} className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
             <RefreshCw className={isSyncing ? "animate-spin" : ""} size={14} />
             <span>Sync</span>
           </button>
@@ -110,17 +118,19 @@ const Index = () => {
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center px-6 space-y-6">
             <div className="space-y-2">
-              <p className="text-gray-400 font-serif italic text-xl">Your shelf is empty.</p>
-              <p className="text-[10px] uppercase tracking-widest text-gray-300 font-sans max-w-xs">
-                Add an RSS feed via "Manage Feeds" to start your collection.
+              <p className="text-gray-400 font-serif italic text-xl">
+                {isSyncing ? "Syncing your sources..." : "Your shelf is empty."}
+              </p>
+              <p className="text-[10px] uppercase tracking-widest text-gray-300 font-sans max-w-xs mx-auto">
+                {isSyncing 
+                  ? "We're fetching the latest articles for you." 
+                  : "Add an RSS feed via 'Manage Feeds' to start your collection."}
               </p>
             </div>
-            <FeedManager onUpdate={refetch} trigger={
-              <button className="flex items-center space-x-2 px-8 py-4 border border-gray-100 hover:border-gray-900 transition-all text-[10px] uppercase tracking-[0.3em] font-bold">
-                <PlusCircle size={16} />
-                <span>Add First Source</span>
-              </button>
-            } />
+            {!isSyncing && (
+              <FeedManager onUpdate={refetch} />
+            )}
+            {isSyncing && <Loader2 className="animate-spin text-gray-100" size={24} />}
           </div>
         )}
       </main>
