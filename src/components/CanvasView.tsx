@@ -173,22 +173,22 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         ))}
       </motion.div>
       
-      {/* Editorial Side Toolbar */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none z-50">
+      {/* Editorial Canvas Toolbar */}
+      <div className="absolute left-8 bottom-8 pointer-events-none z-50">
         <motion.div 
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          className="bg-white/80 backdrop-blur-md border border-gray-100 flex flex-col items-center pointer-events-auto shadow-sm"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="bg-white border border-gray-100 flex flex-row items-center pointer-events-auto shadow-sm"
         >
           <button 
             onClick={() => handleZoom(-1, window.innerWidth/2, window.innerHeight/2)} 
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-b border-gray-100 w-full flex justify-center"
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-r border-gray-100"
             title="Zoom In"
           >
             <ZoomIn size={14} strokeWidth={1.5} />
           </button>
           
-          <div className="py-4 flex flex-col items-center border-b border-gray-100 w-full">
+          <div className="px-5 py-4 border-r border-gray-100">
             <span className="text-[9px] font-sans font-bold text-gray-900 tracking-tighter">
               {Math.round(currentScale * 100)}%
             </span>
@@ -196,7 +196,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
           <button 
             onClick={() => handleZoom(1, window.innerWidth/2, window.innerHeight/2)} 
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-b border-gray-100 w-full flex justify-center"
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all border-r border-gray-100"
             title="Zoom Out"
           >
             <ZoomOut size={14} strokeWidth={1.5} />
@@ -204,7 +204,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
           <button 
             onClick={resetView}
-            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all w-full flex justify-center"
+            className="p-4 text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all"
             title="Reset View"
           >
             <Maximize2 size={14} strokeWidth={1.5} />
