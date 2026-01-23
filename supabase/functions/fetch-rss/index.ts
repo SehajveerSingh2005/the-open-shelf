@@ -35,21 +35,24 @@ serve(async (req) => {
 
   try {
     const { feedUrl } = await req.json();
-    console.log("[fetch-rss] Fetching:", feedUrl);
+    console.log("[fetch-rss] Processing:", feedUrl);
 
-    // Get Auth Context from request headers
     const authHeader = req.headers.get('Authorization');
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
     
-    // Create client with service role to bypass RLS and get user ID from JWT if needed
     const supabaseClient = createClient(supabaseUrl, supabaseServiceKey);
     
-    // Get user from JWT
     const { data: { user } } = await supabaseClient.auth.getUser(authHeader?.replace('Bearer ', '') ?? '');
     if (!user) throw new Error("Unauthorized");
 
-    const response = await fetch(feedUrl);
+    // Fetch with timeout to prevent hung processes
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    
+    const response = await fetch(feedUrl, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
     const xml = await response.text();
     const feed = await parser.parseString(xml);
     
@@ -65,7 +68,8 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    const articles = feed.items.slice(0, 15).map((item) => {
+    // Increased to 40 articles for more variety in the infinite canvas
+    const articles = feed.items.slice(0, 40).map((item) => {
       const content = item.contentEncoded || item.content || item.description || '';
       return {
         feed_id: feedData.id,
@@ -79,6 +83,7 @@ serve(async (req) => {
         published_at: item.isoDate || new Date().toISOString(),
         reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
         image_url: extractImageUrl(item),
+        // Random initial coordinates
         x: Math.floor(Math.random() * 4000) - 2000,
         y: Math.floor(Math.random() * 4000) - 2000
       };
@@ -93,7 +98,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
     });
   } catch (error) {
-    console.error("[fetch-rss] Error:", error.message);
+    console.error("[fetch-rss] Error detail:", error.message);
     return new Response(JSON.stringify({ error: error.message }), { 
       status: 400, 
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

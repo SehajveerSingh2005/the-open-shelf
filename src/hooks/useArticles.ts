@@ -6,7 +6,6 @@ export function useArticles() {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
-      // Fetch articles with their associated feed visibility
       const { data, error } = await supabase
         .from('articles')
         .select(`
@@ -17,29 +16,33 @@ export function useArticles() {
         `)
         .order('published_at', { ascending: false });
 
-      if (error) {
-        console.error("Error fetching articles:", error);
-        throw error;
-      }
+      if (error) throw error;
 
-      // Filter out articles from hidden feeds manually
       const items = (data || []).filter(item => !item.feeds?.is_hidden);
       
-      const COL_WIDTH = 360; 
-      const GAP = 40; 
-      
-      const NUM_COLS = 4;
+      const COL_WIDTH = 380; 
+      const GAP = 60; 
+      const NUM_COLS = 5; // Wider base block
       const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
-      const colHeights = new Array(NUM_COLS).fill(0);
+      
+      // Use a seedable pseudo-random for layout consistency but visual variety
+      const colHeights = new Array(NUM_COLS).fill(0).map((_, i) => (i % 2 === 0 ? 0 : 40));
 
-      const positioned = items.map((item: any) => {
+      const positioned = items.map((item: any, idx: number) => {
         const colIndex = colHeights.indexOf(Math.min(...colHeights));
         
-        const x = (colIndex * COL_WIDTH) - (BLOCK_WIDTH / 2) + (COL_WIDTH / 2);
-        const y = colHeights[colIndex];
+        // Add random horizontal jitter to break the vertical lines
+        const jitterX = (Math.sin(idx * 1.5) * 30);
+        const x = (colIndex * COL_WIDTH) - (BLOCK_WIDTH / 2) + (COL_WIDTH / 2) + jitterX;
+        
+        // Vertical shift based on index to create more gaps
+        const y = colHeights[colIndex] + (Math.cos(idx * 0.8) * 20);
         
         const hasImage = !!item.image_url;
-        const estimatedHeight = (hasImage ? 176 : 0) + 240; // Base card height
+        // Vary the heights more aggressively for a better masonry effect
+        const baseHeight = hasImage ? 380 : 260;
+        const variableHeight = (Math.abs(Math.sin(idx)) * 120);
+        const estimatedHeight = baseHeight + variableHeight;
         
         colHeights[colIndex] += estimatedHeight + GAP;
 
@@ -59,11 +62,12 @@ export function useArticles() {
         };
       });
 
-      const blockHeight = Math.max(...colHeights);
-
       return {
         items: positioned as Article[],
-        dimensions: { width: BLOCK_WIDTH, height: blockHeight }
+        dimensions: { 
+          width: BLOCK_WIDTH, 
+          height: Math.max(...colHeights) 
+        }
       };
     },
     staleTime: 1000 * 60 * 5,

@@ -13,14 +13,14 @@ interface CanvasViewProps {
   onArticleClick: (article: Article) => void;
 }
 
-const STORAGE_KEY = 'open-shelf-camera-v10';
+const STORAGE_KEY = 'open-shelf-camera-v11';
 
 const getStoredState = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.9 };
+    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.8 };
   } catch {
-    return { x: 0, y: 0, scale: 0.9 };
+    return { x: 0, y: 0, scale: 0.8 };
   }
 };
 
@@ -32,14 +32,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const rawY = useMotionValue(initialState.y);
   const rawScale = useMotionValue(initialState.scale);
 
-  const x = useSpring(rawX, { damping: 40, stiffness: 400, mass: 0.5 });
-  const y = useSpring(rawY, { damping: 40, stiffness: 400, mass: 0.5 });
+  const x = useSpring(rawX, { damping: 45, stiffness: 350, mass: 0.6 });
+  const y = useSpring(rawY, { damping: 45, stiffness: 350, mass: 0.6 });
   const scale = useSpring(rawScale, { damping: 30, stiffness: 300 });
   
-  const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number } }[]>([]);
+  const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number }; key: string }[]>([]);
   const lastUpdatePos = useRef({ x: -9999, y: -9999, scale: -1 });
 
-  // Dragging state
   const isDragging = useRef(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
   const dragDistance = useRef(0);
@@ -54,17 +53,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const { width, height } = articles.dimensions;
     if (width === 0 || height === 0) return;
 
-    // Significantly reduce update frequency to prevent component "fluttering"
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
     const scaleDiff = Math.abs(s - lastUpdatePos.current.scale);
     
-    if (!force && dist < 400 && scaleDiff < 0.1) {
-      return;
-    }
+    if (!force && dist < 300 && scaleDiff < 0.05) return;
 
     lastUpdatePos.current = { x: curX, y: curY, scale: s };
     
-    const margin = 1000; // Large margin to keep items mounted longer
+    const margin = 1200; 
     const worldViewLeft = (-curX - container.offsetWidth / 2) / s - margin;
     const worldViewRight = (-curX + container.offsetWidth / 2) / s + margin;
     const worldViewTop = (-curY - container.offsetHeight / 2) / s - margin;
@@ -73,36 +69,38 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const blockX = Math.floor(-curX / width);
     const blockY = Math.floor(-curY / height);
 
-    const nextVisible: { article: Article; offset: { x: number; y: number } }[] = [];
+    const nextVisible: { article: Article; offset: { x: number; y: number }; key: string }[] = [];
 
-    for (let bx = blockX - 1; bx <= blockX + 1; bx++) {
-      for (let by = blockY - 1; by <= blockY + 1; by++) {
+    // Increase search range slightly to ensure smooth infinite scroll
+    for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
+      for (let by = blockY - 2; by <= blockY + 2; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
         
-        for (const art of articles.items) {
+        // Add deterministic "shuffling" per block based on bx/by to break patterns
+        const seed = Math.abs((bx * 31 + by * 17) % articles.items.length);
+        
+        for (let i = 0; i < articles.items.length; i++) {
+          // Shuffle indices deterministically for this specific block
+          const index = (i + seed) % articles.items.length;
+          const art = articles.items[index];
+          
           const absX = art.x + offsetX;
           const absY = art.y + offsetY;
           
           if (absX >= worldViewLeft && absX <= worldViewRight &&
               absY >= worldViewTop && absY <= worldViewBottom) {
-            nextVisible.push({ article: art, offset: { x: offsetX, y: offsetY } });
+            nextVisible.push({ 
+              article: art, 
+              offset: { x: offsetX, y: offsetY },
+              key: `${art.id}-${bx}-${by}`
+            });
           }
         }
       }
     }
     
-    // Check if the set of items actually changed to avoid redundant state updates
-    setVisibleItems(prev => {
-      if (prev.length === nextVisible.length && 
-          prev.every((p, i) => p.article.id === nextVisible[i].article.id && 
-                              p.offset.x === nextVisible[i].offset.x && 
-                              p.offset.y === nextVisible[i].offset.y)) {
-        return prev;
-      }
-      return nextVisible;
-    });
-    
+    setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
   }, [articles]);
 
@@ -110,7 +108,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const unsubX = rawX.on('change', () => updateVisibility());
     const unsubY = rawY.on('change', () => updateVisibility());
     const unsubScale = rawScale.on('change', () => updateVisibility());
-    
     updateVisibility(true);
     return () => { unsubX(); unsubY(); unsubScale(); };
   }, [rawX, rawY, rawScale, updateVisibility]);
@@ -120,12 +117,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     if (!container) return;
     
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
       if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
         const rect = container.getBoundingClientRect();
         const s = rawScale.get();
-        const zoomFactor = e.deltaY > 0 ? 0.92 : 1.08;
-        const newScale = Math.min(Math.max(s * zoomFactor, 0.4), 1.2);
+        const zoomFactor = e.deltaY > 0 ? 0.94 : 1.06;
+        const newScale = Math.min(Math.max(s * zoomFactor, 0.3), 1.2);
         
         if (newScale !== s) {
           const focalX = e.clientX - rect.left - rect.width / 2;
@@ -137,6 +134,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           rawScale.set(newScale);
         }
       } else {
+        // Only prevent if scrolling horizontally or explicitly scrolling the canvas
         rawX.set(rawX.get() - e.deltaX);
         rawY.set(rawY.get() - e.deltaY);
       }
@@ -180,7 +178,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       className="w-full h-full relative overflow-hidden bg-background touch-none cursor-grab active:cursor-grabbing select-none"
     >
       <motion.div 
-        className="absolute inset-0 pointer-events-none opacity-[0.05]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
@@ -192,9 +190,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {visibleItems.map(({ article, offset }) => (
+        {visibleItems.map(({ article, offset, key }) => (
           <div 
-            key={`${article.id}-${offset.x}-${offset.y}`} 
+            key={key} 
             className="absolute pointer-events-auto"
             style={{ 
               left: article.x + offset.x, 
