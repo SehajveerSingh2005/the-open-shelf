@@ -22,13 +22,13 @@ const Login = () => {
       <div className="w-full max-w-sm space-y-12">
         <div className="text-center space-y-4">
           <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-400">The Open Shelf</span>
-          <h1 className="text-4xl font-serif font-medium tracking-tight text-gray-900 italic">Welcome back.</h1>
+          <h1 className="text-4xl font-serif font-medium tracking-tight text-gray-900 italic">Enter the workspace.</h1>
         </div>
 
         <div className="border border-gray-100 p-8">
           <Auth
             supabaseClient={supabase}
-            providers={[]}
+            providers={['google']}
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -45,11 +45,23 @@ const Login = () => {
               },
             }}
             theme="light"
+            localization={{
+              variables: {
+                sign_in: {
+                  email_label: 'Email address',
+                  password_label: 'Password',
+                },
+                sign_up: {
+                  email_label: 'Email address',
+                  password_label: 'Create a password',
+                },
+              },
+            }}
           />
         </div>
 
         <p className="text-center text-[11px] text-gray-400 font-serif italic">
-          Sign in to access your curated digital library.
+          Sign in or create an account to begin your collection.
         </p>
       </div>
     </div>
