@@ -51,7 +51,12 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const curX = rawX.get();
     const curY = rawY.get();
     const { width, height } = articles.dimensions;
-    if (width === 0 || height === 0) return;
+    
+    // If dimensions are zero (e.g., no articles), skip
+    if (width === 0 || height === 0 || articles.items.length === 0) {
+      setVisibleItems([]);
+      return;
+    }
 
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
     const scaleDiff = Math.abs(s - lastUpdatePos.current.scale);
@@ -61,39 +66,38 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     lastUpdatePos.current = { x: curX, y: curY, scale: s };
     
     const margin = 1200; 
+    
+    // Calculate the world coordinates of the viewport edges
     const worldViewLeft = (-curX - container.offsetWidth / 2) / s - margin;
     const worldViewRight = (-curX + container.offsetWidth / 2) / s + margin;
     const worldViewTop = (-curY - container.offsetHeight / 2) / s - margin;
     const worldViewBottom = (-curY + container.offsetHeight / 2) / s + margin;
 
-    const blockX = Math.floor(-curX / width);
-    const blockY = Math.floor(-curY / height);
+    // Determine the range of repeating blocks (bx, by) that intersect the viewport
+    const blockXStart = Math.floor(worldViewLeft / width);
+    const blockXEnd = Math.ceil(worldViewRight / width);
+    const blockYStart = Math.floor(worldViewTop / height);
+    const blockYEnd = Math.ceil(worldViewBottom / height);
 
     const nextVisible: { article: Article; offset: { x: number; y: number }; key: string }[] = [];
 
-    // Increase search range slightly to ensure smooth infinite scroll
-    for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
-      for (let by = blockY - 2; by <= blockY + 2; by++) {
+    for (let bx = blockXStart; bx < blockXEnd; bx++) {
+      for (let by = blockYStart; by < blockYEnd; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
         
-        // Add deterministic "shuffling" per block based on bx/by to break patterns
-        const seed = Math.abs((bx * 31 + by * 17) % articles.items.length);
-        
-        for (let i = 0; i < articles.items.length; i++) {
-          // Shuffle indices deterministically for this specific block
-          const index = (i + seed) % articles.items.length;
-          const art = articles.items[index];
-          
+        // Iterate over the single set of articles (the origin block)
+        for (const art of articles.items) {
           const absX = art.x + offsetX;
           const absY = art.y + offsetY;
           
+          // Check if the article in this specific block is visible
           if (absX >= worldViewLeft && absX <= worldViewRight &&
               absY >= worldViewTop && absY <= worldViewBottom) {
             nextVisible.push({ 
               article: art, 
               offset: { x: offsetX, y: offsetY },
-              key: `${art.id}-${bx}-${by}`
+              key: `${art.id}-${bx}-${by}` // Unique key for React
             });
           }
         }

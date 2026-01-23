@@ -20,31 +20,30 @@ export function useArticles() {
 
       const items = (data || []).filter(item => !item.feeds?.is_hidden);
       
-      const COL_WIDTH = 380; 
+      const CARD_WIDTH = 320;
+      const CARD_HEIGHT_EST = 380; // Average height for spacing
       const GAP = 60; 
-      const NUM_COLS = 5; // Wider base block
-      const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
+      const COLS = 5;
       
-      // Use a seedable pseudo-random for layout consistency but visual variety
-      const colHeights = new Array(NUM_COLS).fill(0).map((_, i) => (i % 2 === 0 ? 0 : 40));
+      const BLOCK_WIDTH = COLS * (CARD_WIDTH + GAP);
+      
+      let maxRowHeight = 0;
+      let colIndex = 0;
+      let rowIndex = 0;
 
       const positioned = items.map((item: any, idx: number) => {
-        const colIndex = colHeights.indexOf(Math.min(...colHeights));
+        // Calculate position based on a simple grid
+        const x = colIndex * (CARD_WIDTH + GAP);
+        const y = rowIndex * (CARD_HEIGHT_EST + GAP);
         
-        // Add random horizontal jitter to break the vertical lines
-        const jitterX = (Math.sin(idx * 1.5) * 30);
-        const x = (colIndex * COL_WIDTH) - (BLOCK_WIDTH / 2) + (COL_WIDTH / 2) + jitterX;
+        // Update grid indices
+        colIndex++;
+        if (colIndex >= COLS) {
+          colIndex = 0;
+          rowIndex++;
+        }
         
-        // Vertical shift based on index to create more gaps
-        const y = colHeights[colIndex] + (Math.cos(idx * 0.8) * 20);
-        
-        const hasImage = !!item.image_url;
-        // Vary the heights more aggressively for a better masonry effect
-        const baseHeight = hasImage ? 380 : 260;
-        const variableHeight = (Math.abs(Math.sin(idx)) * 120);
-        const estimatedHeight = baseHeight + variableHeight;
-        
-        colHeights[colIndex] += estimatedHeight + GAP;
+        maxRowHeight = Math.max(maxRowHeight, y + CARD_HEIGHT_EST);
 
         return {
           id: item.id,
@@ -57,8 +56,9 @@ export function useArticles() {
           imageUrl: item.image_url,
           publishedAt: item.published_at ? new Date(item.published_at).toLocaleDateString() : 'Recently',
           url: item.url,
-          x: x,
-          y: y,
+          // Center the block around (0, 0)
+          x: x - BLOCK_WIDTH / 2 + CARD_WIDTH / 2,
+          y: y - maxRowHeight / 2,
         };
       });
 
@@ -66,7 +66,7 @@ export function useArticles() {
         items: positioned as Article[],
         dimensions: { 
           width: BLOCK_WIDTH, 
-          height: Math.max(...colHeights) 
+          height: maxRowHeight + GAP 
         }
       };
     },
