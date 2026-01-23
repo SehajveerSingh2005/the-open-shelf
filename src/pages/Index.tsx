@@ -25,17 +25,35 @@ const Index = () => {
   
   const { data: articlesData, isLoading, error, refetch } = useArticles();
 
-  // Check onboarding status
+  // Check onboarding status and feed count
   useEffect(() => {
     const checkOnboarding = async () => {
       if (!user) return;
-      const { data } = await supabase
+      
+      // 1. Check profile status
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('onboarding_completed')
         .eq('id', user.id)
         .single();
-      
-      if (data && !data.onboarding_completed) {
+        
+      const onboardingCompleted = profileData?.onboarding_completed;
+
+      // 2. Check if user has any feeds
+      const { count: feedCount } = await supabase
+        .from('feeds')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      // If onboarding is not completed OR if they have no feeds, redirect to onboarding
+      if (!onboardingCompleted || (feedCount === 0 && onboardingCompleted)) {
+        // Force onboarding_completed to false if they have no feeds, so they can re-run the flow
+        if (onboardingCompleted) {
+           await supabase
+            .from('profiles')
+            .update({ onboarding_completed: false })
+            .eq('id', user.id);
+        }
         navigate('/onboarding');
       } else {
         setOnboardingChecked(true);
