@@ -22,29 +22,28 @@ const Login = () => {
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
-      <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden text-white">
-        {/* Background Images with Slow Editorial Crossfade */}
-        <div className="absolute inset-0 z-0 bg-black">
-          <AnimatePresence mode="popLayout">
+      <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden bg-[#f4f4f4]">
+        {/* Background Images with Frame Transition */}
+        <div className="absolute inset-0 z-0 flex items-center justify-center">
+          <AnimatePresence mode="wait">
             <motion.div
               key={view}
-              initial={{ opacity: 0, scale: 1.1 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              exit={{ opacity: 0, scale: 0.92 }}
               transition={{ 
-                duration: 1.8, 
-                ease: [0.16, 1, 0.3, 1],
-                opacity: { duration: 1.2 }
+                duration: 0.4, 
+                ease: [0.22, 1, 0.36, 1] 
               }}
               className="absolute inset-0"
             >
               <img 
                 src={view === 'sign_in' ? '/login.jpg' : '/signup.jpg'} 
                 alt="Background" 
-                className="w-full h-full object-cover grayscale-[20%]"
+                className="w-full h-full object-cover grayscale-[10%]"
               />
-              {/* Refined Overlay */}
-              <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+              {/* Refined subtle overlay */}
+              <div className="absolute inset-0 bg-black/30" />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -52,56 +51,40 @@ const Login = () => {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
           className="relative z-10"
         >
-          <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-white/70">The Open Shelf</span>
+          <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-white/90">The Open Shelf</span>
         </motion.div>
 
-        <div className="relative z-10 max-w-md">
+        <div className="relative z-10 max-w-md text-white">
           <AnimatePresence mode="wait">
-            {view === 'sign_in' ? (
-              <motion.div
-                key="signin-text"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-8"
-              >
-                <h1 className="text-7xl font-serif font-medium tracking-tight leading-[0.95]">
-                  Welcome back <br />
-                  <span className="italic text-white/60">to the shelf.</span>
-                </h1>
-                <p className="text-xl text-white/80 font-serif leading-relaxed italic">
-                  Your curated repository of ideas and slow media is waiting for your return.
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="signup-text"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-8"
-              >
-                <h1 className="text-7xl font-serif font-medium tracking-tight leading-[0.95]">
-                  Begin your <br />
-                  <span className="italic text-white/60">collection.</span>
-                </h1>
-                <p className="text-xl text-white/80 font-serif leading-relaxed italic">
-                  Create a space designed for depth, away from the noise of the vertical stream.
-                </p>
-              </motion.div>
-            )}
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="space-y-6"
+            >
+              <h1 className="text-7xl font-serif font-medium tracking-tight leading-[0.95]">
+                {view === 'sign_in' ? (
+                  <>Welcome back <br /><span className="italic text-white/60">to the shelf.</span></>
+                ) : (
+                  <>Begin your <br /><span className="italic text-white/60">collection.</span></>
+                )}
+              </h1>
+              <p className="text-xl text-white/80 font-serif leading-relaxed italic">
+                {view === 'sign_in' 
+                  ? "Your curated repository of ideas and slow media is waiting."
+                  : "Create a space designed for depth, away from the noise."}
+              </p>
+            </motion.div>
           </AnimatePresence>
         </div>
 
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 1 }}
           className="relative z-10"
         >
           <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-sans font-medium">
@@ -116,22 +99,17 @@ const Login = () => {
            <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-300">The Open Shelf</span>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="w-full max-w-sm mx-auto space-y-12"
-        >
+        <div className="w-full max-w-sm mx-auto space-y-12">
           <div className="flex justify-center lg:justify-start space-x-10 border-b border-gray-50 pb-4">
             <button 
               onClick={() => setView('sign_in')}
-              className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${view === 'sign_in' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
+              className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all ${view === 'sign_in' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
             >
               Sign In
             </button>
             <button 
               onClick={() => setView('sign_up')}
-              className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-500 ${view === 'sign_up' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
+              className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all ${view === 'sign_up' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
             >
               Create Account
             </button>
@@ -170,7 +148,7 @@ const Login = () => {
                 },
                 className: {
                   container: 'space-y-6',
-                  button: 'uppercase tracking-[0.3em] font-bold h-14 transition-all duration-500 border-gray-100 hover:border-gray-900 shadow-none mt-4',
+                  button: 'uppercase tracking-[0.3em] font-bold h-14 transition-all duration-300 border-gray-100 hover:border-gray-900 shadow-none mt-4',
                   input: 'h-14 border-gray-100 focus:ring-0 focus:border-gray-900 transition-colors bg-white',
                   label: 'text-sm font-medium text-gray-700 mb-2 block',
                   anchor: 'text-gray-400 hover:text-gray-900 font-serif italic text-sm transition-colors decoration-gray-200 underline-offset-4',
@@ -181,7 +159,7 @@ const Login = () => {
               theme="light"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
