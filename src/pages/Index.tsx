@@ -9,7 +9,7 @@ import ReaderView from '@/components/ReaderView';
 import FeedManager from '@/components/FeedManager';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2, RefreshCw, PlusCircle, LogOut } from 'lucide-react';
+import { Loader2, RefreshCw, PlusCircle, User } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { showSuccess, showError } from '@/utils/toast';
@@ -127,11 +127,11 @@ const Index = () => {
           </Tabs>
 
           <button 
-            onClick={signOut} 
-            className="p-2 text-gray-300 hover:text-red-500 transition-colors"
-            title="Sign Out"
+            onClick={() => navigate('/profile')} 
+            className="p-2 text-gray-300 hover:text-gray-900 transition-colors"
+            title="Profile & Stacks"
           >
-            <LogOut size={16} />
+            <User size={16} />
           </button>
         </div>
       </header>
