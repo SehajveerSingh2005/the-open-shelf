@@ -144,7 +144,8 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
             "[&_p]:mb-8 [&_p]:leading-relaxed",
             "[&_h2]:font-serif [&_h2]:text-3xl [&_h2]:mt-16 [&_h2]:mb-8",
             "[&_blockquote]:border-l-[1px] [&_blockquote]:border-gray-200 [&_blockquote]:italic [&_blockquote]:text-2xl [&_blockquote]:font-serif [&_blockquote]:pl-10 [&_blockquote]:my-16",
-            "prose-a:underline prose-a:underline-offset-4 prose-a:decoration-gray-200 hover:prose-a:decoration-gray-900 transition-colors"
+            // Link styling: subtle underline and color change
+            "prose-a:underline prose-a:underline-offset-4 prose-a:decoration-gray-200 hover:prose-a:decoration-gray-900 prose-a:text-gray-900 dark:prose-a:text-gray-100 transition-colors"
           )}
           style={{ fontSize: `${settings.fontSize}px`, lineHeight: settings.lineHeight }}
           dangerouslySetInnerHTML={{ __html: article.content }}
