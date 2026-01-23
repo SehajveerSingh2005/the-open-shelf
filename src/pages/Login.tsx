@@ -87,7 +87,7 @@ const Login = () => {
           className="relative z-10"
         >
           <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-sans font-medium">
-            © 2024 • A Spatial Repository
+            © 2026 • A Spatial Repository
           </p>
         </motion.div>
       </div>

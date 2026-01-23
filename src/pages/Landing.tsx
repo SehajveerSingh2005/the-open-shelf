@@ -248,7 +248,7 @@ const Landing = () => {
 
           <div className="pt-16 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             <p className="text-[10px] uppercase tracking-[0.3em] text-gray-300 font-sans font-medium">
-              © 2024 The Open Shelf • A Spatial Repository
+              © 2026 • A Spatial Repository
             </p>
             <div className="flex items-center space-x-8">
               <a href="#" className="text-gray-300 hover:text-gray-900 transition-colors">
