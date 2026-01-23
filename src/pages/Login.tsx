@@ -22,17 +22,27 @@ const Login = () => {
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
-      <div className="hidden lg:flex flex-col justify-between p-20 bg-white border-r border-gray-50 relative overflow-hidden">
-        {/* Minimal Background Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]" 
-            style={{
-              backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-              backgroundSize: '80px 80px',
-            }} 
-          />
-          <div className="absolute top-[15%] left-12 w-[1px] h-24 bg-gray-100" />
-          <div className="absolute bottom-[15%] right-12 w-[1px] h-24 bg-gray-100" />
+      <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden text-white">
+        {/* Background Images with Crossfade */}
+        <div className="absolute inset-0 z-0">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={view}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <img 
+                src={view === 'sign_in' ? '/login.jpg' : '/signup.jpg'} 
+                alt="Background" 
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay for legibility */}
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         <motion.div 
@@ -40,7 +50,7 @@ const Login = () => {
           animate={{ opacity: 1 }}
           className="relative z-10"
         >
-          <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-gray-300">The Open Shelf</span>
+          <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-white/80">The Open Shelf</span>
         </motion.div>
 
         <div className="relative z-10 max-w-md">
@@ -54,11 +64,11 @@ const Login = () => {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-8"
               >
-                <h1 className="text-7xl font-serif font-medium tracking-tight text-gray-900 leading-[0.95]">
+                <h1 className="text-7xl font-serif font-medium tracking-tight leading-[0.95]">
                   Welcome back <br />
-                  <span className="italic text-gray-400">to the shelf.</span>
+                  <span className="italic text-white/60">to the shelf.</span>
                 </h1>
-                <p className="text-xl text-gray-500 font-serif leading-relaxed italic">
+                <p className="text-xl text-white/80 font-serif leading-relaxed italic">
                   Your curated repository of ideas and slow media is waiting for your return.
                 </p>
               </motion.div>
@@ -71,11 +81,11 @@ const Login = () => {
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-8"
               >
-                <h1 className="text-7xl font-serif font-medium tracking-tight text-gray-900 leading-[0.95]">
+                <h1 className="text-7xl font-serif font-medium tracking-tight leading-[0.95]">
                   Begin your <br />
-                  <span className="italic text-gray-400">collection.</span>
+                  <span className="italic text-white/60">collection.</span>
                 </h1>
-                <p className="text-xl text-gray-500 font-serif leading-relaxed italic">
+                <p className="text-xl text-white/80 font-serif leading-relaxed italic">
                   Create a space designed for depth, away from the noise of the vertical stream.
                 </p>
               </motion.div>
@@ -88,7 +98,7 @@ const Login = () => {
           animate={{ opacity: 1 }}
           className="relative z-10"
         >
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gray-300 font-sans font-medium">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-white/60 font-sans font-medium">
             © 2024 • A Spatial Repository
           </p>
         </motion.div>
