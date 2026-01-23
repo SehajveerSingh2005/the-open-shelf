@@ -9,18 +9,40 @@ import ReaderView from '@/components/ReaderView';
 import FeedManager from '@/components/FeedManager';
 import { Article } from '@/types/article';
 import { useArticles } from '@/hooks/useArticles';
-import { Loader2, RefreshCw, PlusCircle } from 'lucide-react';
+import { Loader2, RefreshCw, PlusCircle, LogOut } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { showSuccess, showError } from '@/utils/toast';
 
 const Index = () => {
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { articleId } = useParams();
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
+  const [onboardingChecked, setOnboardingChecked] = useState(false);
   const hasAttemptedInitialSync = useRef(false);
   
   const { data: articlesData, isLoading, error, refetch } = useArticles();
+
+  // Check onboarding status
+  useEffect(() => {
+    const checkOnboarding = async () => {
+      if (!user) return;
+      const { data } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', user.id)
+        .single();
+      
+      if (data && !data.onboarding_completed) {
+        navigate('/onboarding');
+      } else {
+        setOnboardingChecked(true);
+      }
+    };
+    checkOnboarding();
+  }, [user, navigate]);
 
   const selectedArticle = useMemo(() => {
     if (!articlesData?.items || !articleId) return null;
@@ -36,14 +58,15 @@ const Index = () => {
   };
 
   const syncFeeds = async (isAuto = false) => {
-    if (isSyncing) return;
-    
-    // Mark as attempted immediately to prevent race conditions during auto-sync
+    if (isSyncing || !user) return;
     if (isAuto) hasAttemptedInitialSync.current = true;
     
     setIsSyncing(true);
     try {
-      const { data: feeds } = await supabase.from('feeds').select('url');
+      const { data: feeds } = await supabase
+        .from('feeds')
+        .select('url')
+        .eq('user_id', user.id);
       
       if (feeds && feeds.length > 0) {
         const promises = feeds.map(feed => 
@@ -64,14 +87,12 @@ const Index = () => {
   };
 
   useEffect(() => {
-    // Only attempt auto-sync once if the shelf is empty and we haven't tried yet
-    if (!isLoading && !hasAttemptedInitialSync.current && (!articlesData?.items || articlesData.items.length === 0)) {
+    if (onboardingChecked && !isLoading && !hasAttemptedInitialSync.current && (!articlesData?.items || articlesData.items.length === 0)) {
       syncFeeds(true);
     }
-  }, [isLoading, articlesData?.items?.length]);
+  }, [isLoading, onboardingChecked, articlesData?.items?.length]);
 
-  // Only show the full-screen loader on the very first load
-  if (isLoading && !articlesData?.items && !isSyncing) {
+  if (!onboardingChecked || (isLoading && !articlesData?.items && !isSyncing)) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
         <Loader2 className="animate-spin text-gray-200" size={32} />
@@ -104,6 +125,14 @@ const Index = () => {
               <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4">Feed</TabsTrigger>
             </TabsList>
           </Tabs>
+
+          <button 
+            onClick={signOut} 
+            className="p-2 text-gray-300 hover:text-red-500 transition-colors"
+            title="Sign Out"
+          >
+            <LogOut size={16} />
+          </button>
         </div>
       </header>
 
