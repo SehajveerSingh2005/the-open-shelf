@@ -52,10 +52,10 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   return (
     <motion.div
       ref={containerRef}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
+      initial={{ y: '100vh' }}
+      animate={{ y: 0 }}
+      exit={{ y: '100vh' }}
+      transition={{ type: 'spring', damping: 30, stiffness: 300, mass: 0.8 }}
       className={cn(
         "fixed inset-0 z-50 overflow-y-auto transition-colors duration-500",
         settings.theme === 'light' ? 'bg-[#fff] text-gray-900' : 'bg-[#0a0a0a] text-gray-100'
