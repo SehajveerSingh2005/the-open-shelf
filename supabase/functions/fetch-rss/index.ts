@@ -30,6 +30,32 @@ const extractImageUrl = (item: any): string | null => {
   return match && match[1] ? match[1] : null;
 };
 
+// Filtering logic to exclude promotional or very short content
+const isSubstantialArticle = (item: any, content: string): boolean => {
+  const title = item.title || '';
+  const excerpt = (item.contentSnippet || item.description || '').substring(0, 300);
+  
+  // 1. Filter promotional keywords
+  const promoKeywords = ['promo code', 'discount', 'coupon', 'off', 'sale', 'deal'];
+  const isPromo = promoKeywords.some(keyword => 
+    title.toLowerCase().includes(keyword) || excerpt.toLowerCase().includes(keyword)
+  );
+  if (isPromo) {
+    console.log(`[fetch-rss] Filtering out promotional content: ${title}`);
+    return false;
+  }
+
+  // 2. Filter by estimated reading time (less than 2 minutes read)
+  const wordCount = content.split(/\s+/).length;
+  const estimatedReadingTimeMinutes = Math.ceil(wordCount / 225);
+  if (estimatedReadingTimeMinutes < 2) {
+    console.log(`[fetch-rss] Filtering out very short article (${estimatedReadingTimeMinutes} min): ${title}`);
+    return false;
+  }
+
+  return true;
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
 
@@ -68,26 +94,35 @@ serve(async (req) => {
 
     if (feedError) throw feedError;
 
-    // Increased to 40 articles for more variety in the infinite canvas
-    const articles = feed.items.slice(0, 40).map((item) => {
-      const content = item.contentEncoded || item.content || item.description || '';
-      return {
-        feed_id: feedData.id,
-        user_id: user.id,
-        title: item.title || 'Untitled',
-        author: item.creator || item.author || feed.title || 'Unknown',
-        source: feed.title || 'Source',
-        url: item.link,
-        content,
-        excerpt: (item.contentSnippet || item.description || '').substring(0, 300).replace(/<[^>]*>?/gm, '') + '...',
-        published_at: item.isoDate || new Date().toISOString(),
-        reading_time: `${Math.ceil(content.split(' ').length / 225)} min read`,
-        image_url: extractImageUrl(item),
-        // Random initial coordinates
-        x: Math.floor(Math.random() * 4000) - 2000,
-        y: Math.floor(Math.random() * 4000) - 2000
-      };
-    });
+    const articles = feed.items
+      .map((item) => {
+        const content = item.contentEncoded || item.content || item.description || '';
+        const wordCount = content.split(/\s+/).length;
+        const readingTime = `${Math.ceil(wordCount / 225)} min read`;
+
+        if (!isSubstantialArticle(item, content)) {
+          return null; // Filter out non-substantial articles
+        }
+
+        return {
+          feed_id: feedData.id,
+          user_id: user.id,
+          title: item.title || 'Untitled',
+          author: item.creator || item.author || feed.title || 'Unknown',
+          source: feed.title || 'Source',
+          url: item.link,
+          content,
+          excerpt: (item.contentSnippet || item.description || '').substring(0, 300).replace(/<[^>]*>?/gm, '') + '...',
+          published_at: item.isoDate || new Date().toISOString(),
+          reading_time: readingTime,
+          image_url: extractImageUrl(item),
+          // Random initial coordinates
+          x: Math.floor(Math.random() * 4000) - 2000,
+          y: Math.floor(Math.random() * 4000) - 2000
+        };
+      })
+      .filter(item => item !== null) // Remove filtered items
+      .slice(0, 40); // Limit to 40 articles
 
     if (articles.length > 0) {
       const { error: insertError } = await supabaseClient.from('articles').upsert(articles, { onConflict: 'url,user_id' });
