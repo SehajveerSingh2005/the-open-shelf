@@ -23,7 +23,7 @@ const Login = () => {
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
       <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden bg-[#0a0a0a] text-white">
-        {/* Background Images with Simple, Elegant Crossfade */}
+        {/* Background Images with Snappy Editorial Crossfade */}
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
             <motion.div
@@ -32,8 +32,8 @@ const Login = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ 
-                duration: 0.8, 
-                ease: "easeInOut" 
+                duration: 0.4, 
+                ease: "easeOut" 
               }}
               className="absolute inset-0"
             >
@@ -42,7 +42,6 @@ const Login = () => {
                 alt="Background" 
                 className="w-full h-full object-cover grayscale-[10%]"
               />
-              {/* Refined subtle overlay */}
               <div className="absolute inset-0 bg-black/40" />
             </motion.div>
           </AnimatePresence>
@@ -115,7 +114,8 @@ const Login = () => {
             </button>
           </div>
 
-          <div className="auth-container">
+          {/* Added a min-height and overflow-hidden to keep the layout stable during transitions */}
+          <div className="auth-container min-h-[420px]">
             <Auth
               supabaseClient={supabase}
               providers={['google']}
