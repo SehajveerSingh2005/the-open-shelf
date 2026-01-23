@@ -114,12 +114,12 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Added a min-height and overflow-hidden to keep the layout stable during transitions */}
           <div className="auth-container min-h-[420px]">
             <Auth
               supabaseClient={supabase}
               providers={['google']}
               view={view}
+              redirectTo={window.location.origin + '/app'}
               appearance={{
                 theme: ThemeSupa,
                 variables: {
