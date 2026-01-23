@@ -22,18 +22,18 @@ const Login = () => {
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
-      <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden bg-[#f4f4f4]">
-        {/* Background Images with Frame Transition */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center">
+      <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden bg-[#0a0a0a] text-white">
+        {/* Background Images with Simple, Elegant Crossfade */}
+        <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={view}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ 
-                duration: 0.4, 
-                ease: [0.22, 1, 0.36, 1] 
+                duration: 0.8, 
+                ease: "easeInOut" 
               }}
               className="absolute inset-0"
             >
@@ -43,7 +43,7 @@ const Login = () => {
                 className="w-full h-full object-cover grayscale-[10%]"
               />
               {/* Refined subtle overlay */}
-              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute inset-0 bg-black/40" />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -99,8 +99,8 @@ const Login = () => {
            <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-300">The Open Shelf</span>
         </div>
 
-        <div className="w-full max-w-sm mx-auto space-y-12">
-          <div className="flex justify-center lg:justify-start space-x-10 border-b border-gray-50 pb-4">
+        <div className="w-full max-w-sm mx-auto space-y-8">
+          <div className="flex justify-center lg:justify-start space-x-10 border-b border-gray-100 pb-4">
             <button 
               onClick={() => setView('sign_in')}
               className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all ${view === 'sign_in' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
@@ -130,9 +130,9 @@ const Login = () => {
                       inputBackground: 'transparent',
                       inputText: '#111827',
                       inputPlaceholder: '#9ca3af',
-                      inputBorder: '#f3f4f6',
+                      inputBorder: '#d1d5db',
                       inputBorderFocus: '#111827',
-                      inputBorderHover: '#e5e7eb',
+                      inputBorderHover: '#9ca3af',
                     },
                     radii: {
                       buttonRadius: '0px',
@@ -147,12 +147,12 @@ const Login = () => {
                   },
                 },
                 className: {
-                  container: 'space-y-6',
-                  button: 'uppercase tracking-[0.3em] font-bold h-14 transition-all duration-300 border-gray-100 hover:border-gray-900 shadow-none mt-4',
-                  input: 'h-14 border-gray-100 focus:ring-0 focus:border-gray-900 transition-colors bg-white',
+                  container: 'space-y-4',
+                  button: 'uppercase tracking-[0.3em] font-bold h-14 transition-all duration-300 border-gray-200 hover:border-gray-900 shadow-none mt-4',
+                  input: 'h-14 border-gray-200 focus:ring-0 focus:border-gray-900 transition-colors bg-white',
                   label: 'text-sm font-medium text-gray-700 mb-2 block',
                   anchor: 'text-gray-400 hover:text-gray-900 font-serif italic text-sm transition-colors decoration-gray-200 underline-offset-4',
-                  divider: 'bg-gray-50 my-10',
+                  divider: 'bg-gray-100 my-8',
                   message: 'text-[12px] font-serif italic text-red-500 mt-2',
                 }
               }}
