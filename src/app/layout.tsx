@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Instrument_Sans } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
