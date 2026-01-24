@@ -25,11 +25,12 @@ export function useArticles() {
       const NUM_COLS = 5; // Wider base block
       const BLOCK_WIDTH = NUM_COLS * COL_WIDTH;
       
-      // Use a seedable pseudo-random for layout consistency but visual variety
-      const colHeights = new Array(NUM_COLS).fill(0).map((_, i) => (i % 2 === 0 ? 0 : 40));
+      // Explicitly type as number[] to avoid strict inference of (0 | 40)[]
+      const colHeights: number[] = new Array(NUM_COLS).fill(0).map((_, i) => (i % 2 === 0 ? 0 : 40));
 
       const positioned = items.map((item: any, idx: number) => {
-        const colIndex = colHeights.indexOf(Math.min(...colHeights));
+        const minHeight = Math.min(...colHeights);
+        const colIndex = colHeights.indexOf(minHeight);
         
         // Add random horizontal jitter to break the vertical lines
         const jitterX = (Math.sin(idx * 1.5) * 30);
