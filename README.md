@@ -1,21 +1,49 @@
 # The Open Shelf | A Spatial Reading Platform
 
-The Open Shelf is a spatial reading platform designed for slow media consumption. It allows users to curate articles from RSS feeds and organize them on an infinite canvas, fostering deep thought and connection between ideas.
+**[View Live Website](https://the-open-shelf.vercel.app)**
+
+The Open Shelf is a non-linear repository for ideas, essays, and slow media. Designed for those who find depth in the details, it escapes the vertical "stream" of traditional social media and RSS readers, providing an infinite spatial canvas to think with what you read.
+
+![Hero Showcase - A bird's eye view of the spatial canvas](path/to/hero-image.gif)
+
+## Core Philosophy
+
+Traditional reading platforms are built on the "scroll"—a vertical, chronological feed that prioritizes the new over the profound. The Open Shelf replaces the scroll with a **Spatial Canvas**. By arranging articles in two dimensions, users can see connections between disparate ideas, creating a mental map of their intellectual journey.
+
+## Key Features
+
+### 1. The Infinite Spatial Canvas
+Break free from lists. Drag, zoom, and arrange your library on a 2D plane. The canvas remembers your layout, allowing you to cluster topics and visualize your reading history.
+
+![Canvas Interaction Showcase](path/to/canvas-demo.gif)
+
+### 2. Minimalist Editorial Reader
+A focused reading environment that puts typography first. No distractions, just the text. Customize your font size, line height, and theme for the perfect reading experience.
+
+![Reader View Showcase](path/to/reader-demo.png)
+
+### 3. Integrated RSS Sync
+Connect your favorite Substack newsletters, blogs, and news sources. The shelf automatically fetches and formats substantial long-form content, filtering out the noise.
+
+### 4. Personal Stacks
+Organize your findings into thematic collections. Stacks allow you to categorize your saved articles for easy retrieval and long-term storage.
+
+![Stacks Management Showcase](path/to/stacks-demo.png)
 
 ## Tech Stack
 
-This application is built using:
-*   **Frontend:** React, TypeScript, Vite
-*   **Styling:** Tailwind CSS, shadcn/ui
-*   **Routing:** React Router
-*   **Backend/Database/Auth:** Supabase (PostgreSQL, Auth, Edge Functions)
-*   **State Management:** React Query
+This application is built with a focus on speed, responsiveness, and clean architecture:
+
+*   **Frontend:** React 18, TypeScript, Vite
+*   **Animations:** Framer Motion (for the spatial interactions)
+*   **Styling:** Tailwind CSS + shadcn/ui
+*   **Database & Auth:** Supabase (PostgreSQL)
+*   **Server Logic:** Supabase Edge Functions (Deno) for RSS parsing
+*   **State Management:** TanStack Query (React Query)
 
 ## Getting Started
 
 ### 1. Installation
-
-Clone the repository and install dependencies:
 
 ```bash
 npm install
@@ -23,16 +51,14 @@ npm install
 
 ### 2. Supabase Configuration
 
-This application uses Supabase for all backend services. The client configuration is located in `src/integrations/supabase/client.ts`.
+This application uses Supabase for backend services. The client configuration is located in `src/integrations/supabase/client.ts`.
 
-**Important for Deployment:** If you are deploying this application, ensure your deployed domain (e.g., `https://your-app.vercel.app`) is added to the **Allowed Redirect URLs** in your Supabase project's Authentication settings to prevent sign-in issues.
+**Important for Deployment:** Ensure your deployed domain (e.g., `https://the-open-shelf.vercel.app`) is added to the **Allowed Redirect URLs** in your Supabase project's Authentication settings.
 
 ### 3. Running Locally
-
-Start the development server:
 
 ```bash
 npm run dev
 ```
 
-The application will typically be available at `http://localhost:8080`.
+The application will be available at `http://localhost:8080`.
