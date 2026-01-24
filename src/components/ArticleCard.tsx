@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Article } from '@/types/article';
 import { cn } from '@/lib/utils';
@@ -13,7 +13,7 @@ interface ArticleCardProps {
   isCanvas?: boolean;
 }
 
-const ArticleCard = React.memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
+const ArticleCard = memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   const imageUrl = article.imageUrl ? `${article.imageUrl}${article.imageUrl.includes('?') ? '&' : '?'}w=600&auto=format&q=75` : null;
   const [imageLoaded, setImageLoaded] = useState(() => imageUrl ? LOADED_IMAGES.has(imageUrl) : false);
 

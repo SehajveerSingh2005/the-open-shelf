@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef, Suspense } from 'react';
+import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
@@ -19,7 +19,6 @@ const ShelfContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Explicit check for compiler stability
   const articleId = searchParams ? searchParams.get('article') : null;
   
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
@@ -29,10 +28,8 @@ const ShelfContent = () => {
   
   const { data: articlesData, isLoading, refetch } = useArticles();
   
-  // Stable reference to items to avoid 'never' narrowing
   const articles: Article[] = articlesData?.items || [];
 
-  // Check onboarding status
   useEffect(() => {
     const checkOnboarding = async () => {
       if (!user) return;
