@@ -85,12 +85,15 @@ const Index = () => {
         .eq('user_id', user.id);
       
       if (feeds && feeds.length > 0) {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
         const promises = feeds.map(feed => 
           fetch('/api/sync', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+              'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ feedUrl: feed.url })
           })
