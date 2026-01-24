@@ -8,9 +8,11 @@ export default function ArticleRedirectPage() {
   const params = useParams();
   
   useEffect(() => {
-    // Adding a null check to fix the TypeScript compilation error
-    if (params && params.articleId) {
-      router.replace(`/shelf?article=${params.articleId}`);
+    // useParams returns an object with string values or string arrays
+    const articleId = params?.articleId;
+    
+    if (articleId && typeof articleId === 'string') {
+      router.replace(`/shelf?article=${articleId}`);
     } else {
       router.replace('/shelf');
     }
