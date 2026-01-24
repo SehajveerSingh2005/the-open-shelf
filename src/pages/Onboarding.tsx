@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
@@ -112,7 +112,7 @@ const Onboarding = () => {
     }
   };
 
-  const handleAddCustom = async (e: React.FormEvent) => {
+  const handleAddCustom = async (e: FormEvent) => {
     e.preventDefault();
     if (!customUrl) return;
     setLoading(true);

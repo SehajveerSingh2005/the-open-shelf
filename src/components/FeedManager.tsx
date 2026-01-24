@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ interface Feed {
 
 interface FeedManagerProps {
   onUpdate: () => void;
-  trigger?: React.ReactNode;
+  trigger?: ReactNode;
 }
 
 const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
@@ -37,7 +37,7 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
     if (showLoading) setLoading(false);
   };
 
-  const handleAdd = async (e: React.FormEvent) => {
+  const handleAdd = async (e: FormEvent) => {
     e.preventDefault();
     if (!newUrl) return;
     setAdding(true);

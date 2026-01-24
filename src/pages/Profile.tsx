@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -90,7 +90,7 @@ const Profile = () => {
     }
   }, [selectedStack, user]);
 
-  const handleCreateStack = async (e: React.FormEvent) => {
+  const handleCreateStack = async (e: FormEvent) => {
     e.preventDefault();
     if (!newStackName.trim()) return;
     setIsCreatingStack(true);

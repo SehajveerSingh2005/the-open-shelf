@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { X, ExternalLink, Type, Moon, Sun } from 'lucide-react';
 import { Article } from '@/types/article';
@@ -90,7 +90,7 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
                   <span className="text-[10px] uppercase tracking-widest font-semibold text-gray-400">Typeface</span>
                   <div className="grid grid-cols-3 gap-1">
                     {['serif', 'sans', 'mono'].map((f) => (
-                      <Button key={f} variant={settings.fontType === f ? 'secondary' : 'outline'} size="sm" className="rounded-none text-[10px] h-7 capitalize" onClick={() => updateSetting('fontType', f)}>{f}</Button>
+                      <Button key={f} variant={settings.fontType === f ? 'secondary' : 'outline'} size="sm" className="rounded-none text-[10px] h-7 capitalize" onClick={() => updateSetting('fontType', (f as FontType))} >{f}</Button>
                     ))}
                   </div>
                 </div>

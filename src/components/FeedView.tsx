@@ -1,6 +1,5 @@
 "use client";
 
-import React from 'react';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
 
