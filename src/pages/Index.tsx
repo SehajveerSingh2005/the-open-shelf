@@ -18,8 +18,9 @@ const ShelfContent = () => {
   const { user } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  // Fixed: Added null check for searchParams
-  const articleId = searchParams?.get('article');
+  
+  // Using an explicit null check to satisfy the TypeScript compiler
+  const articleId = searchParams ? searchParams.get('article') : null;
   
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
@@ -192,7 +193,6 @@ const ShelfContent = () => {
   );
 };
 
-// Added Suspense wrapper for the hook that uses searchParams
 export default function Index() {
   return (
     <Suspense fallback={
