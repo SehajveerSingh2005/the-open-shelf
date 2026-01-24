@@ -1,3 +1,0 @@
-module.exports=[55015,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(97728);a.n(d("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},68058,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(97728);a.n(d("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/client/components/builtin/global-error.js"))},81669,a=>{"use strict";a.i(55015);var b=a.i(68058);a.n(b)}];
-
-//# sourceMappingURL=307f1_next_dist_client_components_builtin_global-error_02849f0f.js.map
