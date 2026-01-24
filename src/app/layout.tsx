@@ -22,6 +22,9 @@ const instrumentSans = Instrument_Sans({
 export const metadata: Metadata = {
   title: "The Open Shelf | A Spatial Reading Platform",
   description: "A non-linear repository for ideas, essays, and slow media.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
