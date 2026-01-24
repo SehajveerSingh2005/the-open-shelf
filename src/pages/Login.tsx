@@ -4,30 +4,27 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Login = () => {
   const { session } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [view, setView] = useState<'sign_in' | 'sign_up'>('sign_in');
 
   useEffect(() => {
     if (session) {
-      navigate('/app');
+      router.push('/shelf');
     }
-  }, [session, navigate]);
+  }, [session, router]);
 
-  // Determine the base URL for redirection dynamically.
-  // Using protocol + host ensures we capture the correct environment (local or deployed).
-  const redirectUrl = window.location.protocol + '//' + window.location.host + '/app';
+  const redirectUrl = typeof window !== 'undefined' ? window.location.protocol + '//' + window.location.host + '/shelf' : '';
 
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
       <div className="hidden lg:flex flex-col justify-between p-20 relative overflow-hidden bg-[#0a0a0a] text-white">
-        {/* Background Images with Snappy Editorial Crossfade */}
         <div className="absolute inset-0 z-0">
           <AnimatePresence mode="wait">
             <motion.div

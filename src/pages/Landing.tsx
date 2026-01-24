@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Map, Zap, Mail, ArrowRight } from 'lucide-react';
 
@@ -150,7 +150,7 @@ const Landing = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
           >
-            <Link to="/app">
+            <Link href="/shelf">
               <Button 
                 variant="outline" 
                 className="group relative rounded-none border-gray-900/10 bg-white/50 backdrop-blur-sm px-12 py-8 text-[11px] uppercase tracking-[0.4em] hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-500 shadow-sm"
@@ -205,7 +205,7 @@ const Landing = () => {
       <section className="py-40 relative z-10 border-t border-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
            <h3 className="text-4xl font-serif font-medium text-gray-900 italic">Ready to slow down?</h3>
-           <Link to="/app">
+           <Link href="/shelf">
             <Button 
               variant="outline" 
               className="rounded-none border-gray-900/10 bg-white/50 backdrop-blur-sm px-16 py-8 text-[11px] uppercase tracking-[0.4em] hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-500"
@@ -230,8 +230,8 @@ const Landing = () => {
             <div className="space-y-6">
               <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans font-bold">Explore</p>
               <ul className="space-y-3 font-serif text-gray-600 text-lg italic">
-                <li><Link to="/app" className="hover:text-gray-900 transition-colors">The Canvas</Link></li>
-                <li><Link to="/app" className="hover:text-gray-900 transition-colors">The Feed</Link></li>
+                <li><Link href="/shelf" className="hover:text-gray-900 transition-colors">The Canvas</Link></li>
+                <li><Link href="/shelf" className="hover:text-gray-900 transition-colors">The Feed</Link></li>
                 <li><a href="#" className="hover:text-gray-900 transition-colors">Manifesto</a></li>
               </ul>
             </div>

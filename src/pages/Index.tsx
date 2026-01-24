@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useRouter, useParams } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
@@ -15,22 +15,23 @@ import { useAuth } from '@/hooks/useAuth';
 import { showSuccess, showError } from '@/utils/toast';
 
 const Index = () => {
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
-  const { articleId } = useParams();
+  const { user } = useAuth();
+  const router = useRouter();
+  const params = useParams();
+  const articleId = params?.articleId as string;
+  
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
   const [onboardingChecked, setOnboardingChecked] = useState(false);
   const hasAttemptedInitialSync = useRef(false);
   
-  const { data: articlesData, isLoading, error, refetch } = useArticles();
+  const { data: articlesData, isLoading, refetch } = useArticles();
 
   // Check onboarding status and feed count
   useEffect(() => {
     const checkOnboarding = async () => {
       if (!user) return;
       
-      // 1. Check profile status
       const { data: profileData } = await supabase
         .from('profiles')
         .select('onboarding_completed')
@@ -39,28 +40,25 @@ const Index = () => {
         
       const onboardingCompleted = profileData?.onboarding_completed;
 
-      // 2. Check if user has any feeds
       const { count: feedCount } = await supabase
         .from('feeds')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', user.id);
 
-      // If onboarding is not completed OR if they have no feeds, redirect to onboarding
       if (!onboardingCompleted || (feedCount === 0 && onboardingCompleted)) {
-        // Force onboarding_completed to false if they have no feeds, so they can re-run the flow
         if (onboardingCompleted) {
            await supabase
             .from('profiles')
             .update({ onboarding_completed: false })
             .eq('id', user.id);
         }
-        navigate('/onboarding');
+        router.push('/onboarding');
       } else {
         setOnboardingChecked(true);
       }
     };
     checkOnboarding();
-  }, [user, navigate]);
+  }, [user, router]);
 
   const selectedArticle = useMemo(() => {
     if (!articlesData?.items || !articleId) return null;
@@ -68,11 +66,11 @@ const Index = () => {
   }, [articlesData, articleId]);
 
   const handleArticleClick = (article: Article) => {
-    navigate(`/app/article/${article.id}`);
+    router.push(`/shelf/article/${article.id}`);
   };
 
   const handleCloseReader = () => {
-    navigate('/app');
+    router.push('/shelf');
   };
 
   const syncFeeds = async (isAuto = false) => {
@@ -88,8 +86,13 @@ const Index = () => {
       
       if (feeds && feeds.length > 0) {
         const promises = feeds.map(feed => 
-          supabase.functions.invoke('fetch-rss', { 
-            body: { feedUrl: feed.url } 
+          fetch('/api/sync', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+            },
+            body: JSON.stringify({ feedUrl: feed.url })
           })
         );
         
@@ -122,7 +125,7 @@ const Index = () => {
   return (
     <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-        <div className="flex flex-col items-start cursor-pointer group" onClick={() => navigate('/')}>
+        <div className="flex flex-col items-start cursor-pointer group" onClick={() => router.push('/')}>
           <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 group-hover:text-gray-900 transition-colors">The</span>
           <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900">
             Open Shelf
@@ -145,7 +148,7 @@ const Index = () => {
           </Tabs>
 
           <button 
-            onClick={() => navigate('/profile')} 
+            onClick={() => router.push('/profile')} 
             className="p-2 text-gray-300 hover:text-gray-900 transition-colors"
             title="Profile & Stacks"
           >
