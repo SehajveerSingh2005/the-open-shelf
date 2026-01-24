@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
 import FeedView from '@/components/FeedView';
@@ -17,8 +17,8 @@ import { showSuccess, showError } from '@/utils/toast';
 const Index = () => {
   const { user } = useAuth();
   const router = useRouter();
-  const params = useParams();
-  const articleId = params?.articleId as string;
+  const searchParams = useSearchParams();
+  const articleId = searchParams.get('article');
   
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
@@ -55,8 +55,8 @@ const Index = () => {
   }, [articlesData, articleId]);
 
   const handleArticleClick = (article: Article) => {
-    // Navigate without scrolling to top to keep canvas stable
-    router.push(`/shelf/article/${article.id}`, { scroll: false });
+    // Using search params keeps the Index component mounted
+    router.push(`/shelf?article=${article.id}`, { scroll: false });
   };
 
   const handleCloseReader = () => {
