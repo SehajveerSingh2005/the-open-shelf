@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CanvasView from '@/components/CanvasView';
@@ -14,11 +14,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { showSuccess, showError } from '@/utils/toast';
 
-const Index = () => {
+const ShelfContent = () => {
   const { user } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const articleId = searchParams.get('article');
+  // Fixed: Added null check for searchParams
+  const articleId = searchParams?.get('article');
   
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
   const [isSyncing, setIsSyncing] = useState(false);
@@ -55,7 +56,6 @@ const Index = () => {
   }, [articlesData, articleId]);
 
   const handleArticleClick = (article: Article) => {
-    // Using search params keeps the Index component mounted
     router.push(`/shelf?article=${article.id}`, { scroll: false });
   };
 
@@ -192,4 +192,15 @@ const Index = () => {
   );
 };
 
-export default Index;
+// Added Suspense wrapper for the hook that uses searchParams
+export default function Index() {
+  return (
+    <Suspense fallback={
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa]">
+        <Loader2 className="animate-spin text-gray-200" size={32} />
+      </div>
+    }>
+      <ShelfContent />
+    </Suspense>
+  );
+}
