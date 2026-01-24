@@ -1,0 +1,10 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/sync/route.js")
+R.c("server/chunks/307f1_next_78880d2e._.js")
+R.c("server/chunks/5cc58_@supabase_realtime-js_dist_module_d6326f0b._.js")
+R.c("server/chunks/d073d_@supabase_auth-js_dist_module_c44cc889._.js")
+R.c("server/chunks/8f718_xmlbuilder_lib_378e93e1._.js")
+R.c("server/chunks/c7722__pnpm_385396a7._.js")
+R.c("server/chunks/[root-of-the-server]__9d3b20a7._.js")
+R.c("server/chunks/d9102_the-open-shelf__next-internal_server_app_api_sync_route_actions_f961dfbc.js")
+R.m("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/dyad-apps/the-open-shelf/src/app/api/sync/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/dyad-apps/the-open-shelf/src/app/api/sync/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

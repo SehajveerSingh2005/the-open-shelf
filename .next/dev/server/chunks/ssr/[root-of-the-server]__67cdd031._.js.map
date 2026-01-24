@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 20, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sehaj/dyad-apps/the-open-shelf/src/app/shelf/page.tsx"],"sourcesContent":["import Index from \"@/pages/Index\";\n\nexport default function ShelfPage() {\n  return <Index />;\n}"],"names":[],"mappings":";;;;;AAAA;;;AAEe,SAAS;IACtB,qBAAO,qZAAC,yKAAK;;;;;AACf"}}]
+}

@@ -1,0 +1,16723 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/cjs/react-jsx-dev-runtime.development.js [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
+"use strict";
+
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+/**
+ * @license React
+ * react-jsx-dev-runtime.development.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ "use strict";
+"production" !== ("TURBOPACK compile-time value", "development") && function() {
+    function getComponentNameFromType(type) {
+        if (null == type) return null;
+        if ("function" === typeof type) return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+        if ("string" === typeof type) return type;
+        switch(type){
+            case REACT_FRAGMENT_TYPE:
+                return "Fragment";
+            case REACT_PROFILER_TYPE:
+                return "Profiler";
+            case REACT_STRICT_MODE_TYPE:
+                return "StrictMode";
+            case REACT_SUSPENSE_TYPE:
+                return "Suspense";
+            case REACT_SUSPENSE_LIST_TYPE:
+                return "SuspenseList";
+            case REACT_ACTIVITY_TYPE:
+                return "Activity";
+            case REACT_VIEW_TRANSITION_TYPE:
+                return "ViewTransition";
+        }
+        if ("object" === typeof type) switch("number" === typeof type.tag && console.error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), type.$$typeof){
+            case REACT_PORTAL_TYPE:
+                return "Portal";
+            case REACT_CONTEXT_TYPE:
+                return type.displayName || "Context";
+            case REACT_CONSUMER_TYPE:
+                return (type._context.displayName || "Context") + ".Consumer";
+            case REACT_FORWARD_REF_TYPE:
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
+            case REACT_MEMO_TYPE:
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
+            case REACT_LAZY_TYPE:
+                innerType = type._payload;
+                type = type._init;
+                try {
+                    return getComponentNameFromType(type(innerType));
+                } catch (x) {}
+        }
+        return null;
+    }
+    function testStringCoercion(value) {
+        return "" + value;
+    }
+    function checkKeyStringCoercion(value) {
+        try {
+            testStringCoercion(value);
+            var JSCompiler_inline_result = !1;
+        } catch (e) {
+            JSCompiler_inline_result = !0;
+        }
+        if (JSCompiler_inline_result) {
+            JSCompiler_inline_result = console;
+            var JSCompiler_temp_const = JSCompiler_inline_result.error;
+            var JSCompiler_inline_result$jscomp$0 = "function" === typeof Symbol && Symbol.toStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+            JSCompiler_temp_const.call(JSCompiler_inline_result, "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.", JSCompiler_inline_result$jscomp$0);
+            return testStringCoercion(value);
+        }
+    }
+    function getTaskName(type) {
+        if (type === REACT_FRAGMENT_TYPE) return "<>";
+        if ("object" === typeof type && null !== type && type.$$typeof === REACT_LAZY_TYPE) return "<...>";
+        try {
+            var name = getComponentNameFromType(type);
+            return name ? "<" + name + ">" : "<...>";
+        } catch (x) {
+            return "<...>";
+        }
+    }
+    function getOwner() {
+        var dispatcher = ReactSharedInternals.A;
+        return null === dispatcher ? null : dispatcher.getOwner();
+    }
+    function UnknownOwner() {
+        return Error("react-stack-top-frame");
+    }
+    function hasValidKey(config) {
+        if (hasOwnProperty.call(config, "key")) {
+            var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+            if (getter && getter.isReactWarning) return !1;
+        }
+        return void 0 !== config.key;
+    }
+    function defineKeyPropWarningGetter(props, displayName) {
+        function warnAboutAccessingKey() {
+            specialPropKeyWarningShown || (specialPropKeyWarningShown = !0, console.error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)", displayName));
+        }
+        warnAboutAccessingKey.isReactWarning = !0;
+        Object.defineProperty(props, "key", {
+            get: warnAboutAccessingKey,
+            configurable: !0
+        });
+    }
+    function elementRefGetterWithDeprecationWarning() {
+        var componentName = getComponentNameFromType(this.type);
+        didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = !0, console.error("Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."));
+        componentName = this.props.ref;
+        return void 0 !== componentName ? componentName : null;
+    }
+    function ReactElement(type, key, props, owner, debugStack, debugTask) {
+        var refProp = props.ref;
+        type = {
+            $$typeof: REACT_ELEMENT_TYPE,
+            type: type,
+            key: key,
+            props: props,
+            _owner: owner
+        };
+        null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type, "ref", {
+            enumerable: !1,
+            get: elementRefGetterWithDeprecationWarning
+        }) : Object.defineProperty(type, "ref", {
+            enumerable: !1,
+            value: null
+        });
+        type._store = {};
+        Object.defineProperty(type._store, "validated", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: 0
+        });
+        Object.defineProperty(type, "_debugInfo", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: null
+        });
+        Object.defineProperty(type, "_debugStack", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: debugStack
+        });
+        Object.defineProperty(type, "_debugTask", {
+            configurable: !1,
+            enumerable: !1,
+            writable: !0,
+            value: debugTask
+        });
+        Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+        return type;
+    }
+    function jsxDEVImpl(type, config, maybeKey, isStaticChildren, debugStack, debugTask) {
+        var children = config.children;
+        if (void 0 !== children) if (isStaticChildren) if (isArrayImpl(children)) {
+            for(isStaticChildren = 0; isStaticChildren < children.length; isStaticChildren++)validateChildKeys(children[isStaticChildren]);
+            Object.freeze && Object.freeze(children);
+        } else console.error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+        else validateChildKeys(children);
+        if (hasOwnProperty.call(config, "key")) {
+            children = getComponentNameFromType(type);
+            var keys = Object.keys(config).filter(function(k) {
+                return "key" !== k;
+            });
+            isStaticChildren = 0 < keys.length ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
+            didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error('A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />', isStaticChildren, children, keys, children), didWarnAboutKeySpread[children + isStaticChildren] = !0);
+        }
+        children = null;
+        void 0 !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
+        hasValidKey(config) && (checkKeyStringCoercion(config.key), children = "" + config.key);
+        if ("key" in config) {
+            maybeKey = {};
+            for(var propName in config)"key" !== propName && (maybeKey[propName] = config[propName]);
+        } else maybeKey = config;
+        children && defineKeyPropWarningGetter(maybeKey, "function" === typeof type ? type.displayName || type.name || "Unknown" : type);
+        return ReactElement(type, children, maybeKey, getOwner(), debugStack, debugTask);
+    }
+    function validateChildKeys(node) {
+        isValidElement(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
+    }
+    function isValidElement(object) {
+        return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    var React = __turbopack_context__.r("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)"), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_VIEW_TRANSITION_TYPE = Symbol.for("react.view_transition"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        return null;
+    };
+    React = {
+        react_stack_bottom_frame: function(callStackForError) {
+            return callStackForError();
+        }
+    };
+    var specialPropKeyWarningShown;
+    var didWarnAboutElementRef = {};
+    var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(React, UnknownOwner)();
+    var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
+    var didWarnAboutKeySpread = {};
+    exports.Fragment = REACT_FRAGMENT_TYPE;
+    exports.jsxDEV = function(type, config, maybeKey, isStaticChildren) {
+        var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
+        if (trackActualOwner) {
+            var previousStackTraceLimit = Error.stackTraceLimit;
+            Error.stackTraceLimit = 10;
+            var debugStackDEV = Error("react-stack-top-frame");
+            Error.stackTraceLimit = previousStackTraceLimit;
+        } else debugStackDEV = unknownOwnerDebugStack;
+        return jsxDEVImpl(type, config, maybeKey, isStaticChildren, debugStackDEV, trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask);
+    };
+}();
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
+"use strict";
+
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+'use strict';
+if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+;
+else {
+    module.exports = __turbopack_context__.r("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/cjs/react-jsx-dev-runtime.development.js [app-client] (ecmascript)");
+}
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/buffer/index.js [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
+
+(function() {
+    var e = {
+        675: function(e, r) {
+            "use strict";
+            r.byteLength = byteLength;
+            r.toByteArray = toByteArray;
+            r.fromByteArray = fromByteArray;
+            var t = [];
+            var f = [];
+            var n = typeof Uint8Array !== "undefined" ? Uint8Array : Array;
+            var i = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            for(var o = 0, u = i.length; o < u; ++o){
+                t[o] = i[o];
+                f[i.charCodeAt(o)] = o;
+            }
+            f["-".charCodeAt(0)] = 62;
+            f["_".charCodeAt(0)] = 63;
+            function getLens(e) {
+                var r = e.length;
+                if (r % 4 > 0) {
+                    throw new Error("Invalid string. Length must be a multiple of 4");
+                }
+                var t = e.indexOf("=");
+                if (t === -1) t = r;
+                var f = t === r ? 0 : 4 - t % 4;
+                return [
+                    t,
+                    f
+                ];
+            }
+            function byteLength(e) {
+                var r = getLens(e);
+                var t = r[0];
+                var f = r[1];
+                return (t + f) * 3 / 4 - f;
+            }
+            function _byteLength(e, r, t) {
+                return (r + t) * 3 / 4 - t;
+            }
+            function toByteArray(e) {
+                var r;
+                var t = getLens(e);
+                var i = t[0];
+                var o = t[1];
+                var u = new n(_byteLength(e, i, o));
+                var a = 0;
+                var s = o > 0 ? i - 4 : i;
+                var h;
+                for(h = 0; h < s; h += 4){
+                    r = f[e.charCodeAt(h)] << 18 | f[e.charCodeAt(h + 1)] << 12 | f[e.charCodeAt(h + 2)] << 6 | f[e.charCodeAt(h + 3)];
+                    u[a++] = r >> 16 & 255;
+                    u[a++] = r >> 8 & 255;
+                    u[a++] = r & 255;
+                }
+                if (o === 2) {
+                    r = f[e.charCodeAt(h)] << 2 | f[e.charCodeAt(h + 1)] >> 4;
+                    u[a++] = r & 255;
+                }
+                if (o === 1) {
+                    r = f[e.charCodeAt(h)] << 10 | f[e.charCodeAt(h + 1)] << 4 | f[e.charCodeAt(h + 2)] >> 2;
+                    u[a++] = r >> 8 & 255;
+                    u[a++] = r & 255;
+                }
+                return u;
+            }
+            function tripletToBase64(e) {
+                return t[e >> 18 & 63] + t[e >> 12 & 63] + t[e >> 6 & 63] + t[e & 63];
+            }
+            function encodeChunk(e, r, t) {
+                var f;
+                var n = [];
+                for(var i = r; i < t; i += 3){
+                    f = (e[i] << 16 & 16711680) + (e[i + 1] << 8 & 65280) + (e[i + 2] & 255);
+                    n.push(tripletToBase64(f));
+                }
+                return n.join("");
+            }
+            function fromByteArray(e) {
+                var r;
+                var f = e.length;
+                var n = f % 3;
+                var i = [];
+                var o = 16383;
+                for(var u = 0, a = f - n; u < a; u += o){
+                    i.push(encodeChunk(e, u, u + o > a ? a : u + o));
+                }
+                if (n === 1) {
+                    r = e[f - 1];
+                    i.push(t[r >> 2] + t[r << 4 & 63] + "==");
+                } else if (n === 2) {
+                    r = (e[f - 2] << 8) + e[f - 1];
+                    i.push(t[r >> 10] + t[r >> 4 & 63] + t[r << 2 & 63] + "=");
+                }
+                return i.join("");
+            }
+        },
+        72: function(e, r, t) {
+            "use strict";
+            /*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */ var f = t(675);
+            var n = t(783);
+            var i = typeof Symbol === "function" && typeof Symbol.for === "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
+            r.Buffer = Buffer;
+            r.SlowBuffer = SlowBuffer;
+            r.INSPECT_MAX_BYTES = 50;
+            var o = 2147483647;
+            r.kMaxLength = o;
+            Buffer.TYPED_ARRAY_SUPPORT = typedArraySupport();
+            if (!Buffer.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+                console.error("This browser lacks typed array (Uint8Array) support which is required by " + "`buffer` v5.x. Use `buffer` v4.x if you require old browser support.");
+            }
+            function typedArraySupport() {
+                try {
+                    var e = new Uint8Array(1);
+                    var r = {
+                        foo: function() {
+                            return 42;
+                        }
+                    };
+                    Object.setPrototypeOf(r, Uint8Array.prototype);
+                    Object.setPrototypeOf(e, r);
+                    return e.foo() === 42;
+                } catch (e) {
+                    return false;
+                }
+            }
+            Object.defineProperty(Buffer.prototype, "parent", {
+                enumerable: true,
+                get: function() {
+                    if (!Buffer.isBuffer(this)) return undefined;
+                    return this.buffer;
+                }
+            });
+            Object.defineProperty(Buffer.prototype, "offset", {
+                enumerable: true,
+                get: function() {
+                    if (!Buffer.isBuffer(this)) return undefined;
+                    return this.byteOffset;
+                }
+            });
+            function createBuffer(e) {
+                if (e > o) {
+                    throw new RangeError('The value "' + e + '" is invalid for option "size"');
+                }
+                var r = new Uint8Array(e);
+                Object.setPrototypeOf(r, Buffer.prototype);
+                return r;
+            }
+            function Buffer(e, r, t) {
+                if (typeof e === "number") {
+                    if (typeof r === "string") {
+                        throw new TypeError('The "string" argument must be of type string. Received type number');
+                    }
+                    return allocUnsafe(e);
+                }
+                return from(e, r, t);
+            }
+            Buffer.poolSize = 8192;
+            function from(e, r, t) {
+                if (typeof e === "string") {
+                    return fromString(e, r);
+                }
+                if (ArrayBuffer.isView(e)) {
+                    return fromArrayLike(e);
+                }
+                if (e == null) {
+                    throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, " + "or Array-like Object. Received type " + typeof e);
+                }
+                if (isInstance(e, ArrayBuffer) || e && isInstance(e.buffer, ArrayBuffer)) {
+                    return fromArrayBuffer(e, r, t);
+                }
+                if (typeof SharedArrayBuffer !== "undefined" && (isInstance(e, SharedArrayBuffer) || e && isInstance(e.buffer, SharedArrayBuffer))) {
+                    return fromArrayBuffer(e, r, t);
+                }
+                if (typeof e === "number") {
+                    throw new TypeError('The "value" argument must not be of type number. Received type number');
+                }
+                var f = e.valueOf && e.valueOf();
+                if (f != null && f !== e) {
+                    return Buffer.from(f, r, t);
+                }
+                var n = fromObject(e);
+                if (n) return n;
+                if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof e[Symbol.toPrimitive] === "function") {
+                    return Buffer.from(e[Symbol.toPrimitive]("string"), r, t);
+                }
+                throw new TypeError("The first argument must be one of type string, Buffer, ArrayBuffer, Array, " + "or Array-like Object. Received type " + typeof e);
+            }
+            Buffer.from = function(e, r, t) {
+                return from(e, r, t);
+            };
+            Object.setPrototypeOf(Buffer.prototype, Uint8Array.prototype);
+            Object.setPrototypeOf(Buffer, Uint8Array);
+            function assertSize(e) {
+                if (typeof e !== "number") {
+                    throw new TypeError('"size" argument must be of type number');
+                } else if (e < 0) {
+                    throw new RangeError('The value "' + e + '" is invalid for option "size"');
+                }
+            }
+            function alloc(e, r, t) {
+                assertSize(e);
+                if (e <= 0) {
+                    return createBuffer(e);
+                }
+                if (r !== undefined) {
+                    return typeof t === "string" ? createBuffer(e).fill(r, t) : createBuffer(e).fill(r);
+                }
+                return createBuffer(e);
+            }
+            Buffer.alloc = function(e, r, t) {
+                return alloc(e, r, t);
+            };
+            function allocUnsafe(e) {
+                assertSize(e);
+                return createBuffer(e < 0 ? 0 : checked(e) | 0);
+            }
+            Buffer.allocUnsafe = function(e) {
+                return allocUnsafe(e);
+            };
+            Buffer.allocUnsafeSlow = function(e) {
+                return allocUnsafe(e);
+            };
+            function fromString(e, r) {
+                if (typeof r !== "string" || r === "") {
+                    r = "utf8";
+                }
+                if (!Buffer.isEncoding(r)) {
+                    throw new TypeError("Unknown encoding: " + r);
+                }
+                var t = byteLength(e, r) | 0;
+                var f = createBuffer(t);
+                var n = f.write(e, r);
+                if (n !== t) {
+                    f = f.slice(0, n);
+                }
+                return f;
+            }
+            function fromArrayLike(e) {
+                var r = e.length < 0 ? 0 : checked(e.length) | 0;
+                var t = createBuffer(r);
+                for(var f = 0; f < r; f += 1){
+                    t[f] = e[f] & 255;
+                }
+                return t;
+            }
+            function fromArrayBuffer(e, r, t) {
+                if (r < 0 || e.byteLength < r) {
+                    throw new RangeError('"offset" is outside of buffer bounds');
+                }
+                if (e.byteLength < r + (t || 0)) {
+                    throw new RangeError('"length" is outside of buffer bounds');
+                }
+                var f;
+                if (r === undefined && t === undefined) {
+                    f = new Uint8Array(e);
+                } else if (t === undefined) {
+                    f = new Uint8Array(e, r);
+                } else {
+                    f = new Uint8Array(e, r, t);
+                }
+                Object.setPrototypeOf(f, Buffer.prototype);
+                return f;
+            }
+            function fromObject(e) {
+                if (Buffer.isBuffer(e)) {
+                    var r = checked(e.length) | 0;
+                    var t = createBuffer(r);
+                    if (t.length === 0) {
+                        return t;
+                    }
+                    e.copy(t, 0, 0, r);
+                    return t;
+                }
+                if (e.length !== undefined) {
+                    if (typeof e.length !== "number" || numberIsNaN(e.length)) {
+                        return createBuffer(0);
+                    }
+                    return fromArrayLike(e);
+                }
+                if (e.type === "Buffer" && Array.isArray(e.data)) {
+                    return fromArrayLike(e.data);
+                }
+            }
+            function checked(e) {
+                if (e >= o) {
+                    throw new RangeError("Attempt to allocate Buffer larger than maximum " + "size: 0x" + o.toString(16) + " bytes");
+                }
+                return e | 0;
+            }
+            function SlowBuffer(e) {
+                if (+e != e) {
+                    e = 0;
+                }
+                return Buffer.alloc(+e);
+            }
+            Buffer.isBuffer = function isBuffer(e) {
+                return e != null && e._isBuffer === true && e !== Buffer.prototype;
+            };
+            Buffer.compare = function compare(e, r) {
+                if (isInstance(e, Uint8Array)) e = Buffer.from(e, e.offset, e.byteLength);
+                if (isInstance(r, Uint8Array)) r = Buffer.from(r, r.offset, r.byteLength);
+                if (!Buffer.isBuffer(e) || !Buffer.isBuffer(r)) {
+                    throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');
+                }
+                if (e === r) return 0;
+                var t = e.length;
+                var f = r.length;
+                for(var n = 0, i = Math.min(t, f); n < i; ++n){
+                    if (e[n] !== r[n]) {
+                        t = e[n];
+                        f = r[n];
+                        break;
+                    }
+                }
+                if (t < f) return -1;
+                if (f < t) return 1;
+                return 0;
+            };
+            Buffer.isEncoding = function isEncoding(e) {
+                switch(String(e).toLowerCase()){
+                    case "hex":
+                    case "utf8":
+                    case "utf-8":
+                    case "ascii":
+                    case "latin1":
+                    case "binary":
+                    case "base64":
+                    case "ucs2":
+                    case "ucs-2":
+                    case "utf16le":
+                    case "utf-16le":
+                        return true;
+                    default:
+                        return false;
+                }
+            };
+            Buffer.concat = function concat(e, r) {
+                if (!Array.isArray(e)) {
+                    throw new TypeError('"list" argument must be an Array of Buffers');
+                }
+                if (e.length === 0) {
+                    return Buffer.alloc(0);
+                }
+                var t;
+                if (r === undefined) {
+                    r = 0;
+                    for(t = 0; t < e.length; ++t){
+                        r += e[t].length;
+                    }
+                }
+                var f = Buffer.allocUnsafe(r);
+                var n = 0;
+                for(t = 0; t < e.length; ++t){
+                    var i = e[t];
+                    if (isInstance(i, Uint8Array)) {
+                        i = Buffer.from(i);
+                    }
+                    if (!Buffer.isBuffer(i)) {
+                        throw new TypeError('"list" argument must be an Array of Buffers');
+                    }
+                    i.copy(f, n);
+                    n += i.length;
+                }
+                return f;
+            };
+            function byteLength(e, r) {
+                if (Buffer.isBuffer(e)) {
+                    return e.length;
+                }
+                if (ArrayBuffer.isView(e) || isInstance(e, ArrayBuffer)) {
+                    return e.byteLength;
+                }
+                if (typeof e !== "string") {
+                    throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. ' + "Received type " + typeof e);
+                }
+                var t = e.length;
+                var f = arguments.length > 2 && arguments[2] === true;
+                if (!f && t === 0) return 0;
+                var n = false;
+                for(;;){
+                    switch(r){
+                        case "ascii":
+                        case "latin1":
+                        case "binary":
+                            return t;
+                        case "utf8":
+                        case "utf-8":
+                            return utf8ToBytes(e).length;
+                        case "ucs2":
+                        case "ucs-2":
+                        case "utf16le":
+                        case "utf-16le":
+                            return t * 2;
+                        case "hex":
+                            return t >>> 1;
+                        case "base64":
+                            return base64ToBytes(e).length;
+                        default:
+                            if (n) {
+                                return f ? -1 : utf8ToBytes(e).length;
+                            }
+                            r = ("" + r).toLowerCase();
+                            n = true;
+                    }
+                }
+            }
+            Buffer.byteLength = byteLength;
+            function slowToString(e, r, t) {
+                var f = false;
+                if (r === undefined || r < 0) {
+                    r = 0;
+                }
+                if (r > this.length) {
+                    return "";
+                }
+                if (t === undefined || t > this.length) {
+                    t = this.length;
+                }
+                if (t <= 0) {
+                    return "";
+                }
+                t >>>= 0;
+                r >>>= 0;
+                if (t <= r) {
+                    return "";
+                }
+                if (!e) e = "utf8";
+                while(true){
+                    switch(e){
+                        case "hex":
+                            return hexSlice(this, r, t);
+                        case "utf8":
+                        case "utf-8":
+                            return utf8Slice(this, r, t);
+                        case "ascii":
+                            return asciiSlice(this, r, t);
+                        case "latin1":
+                        case "binary":
+                            return latin1Slice(this, r, t);
+                        case "base64":
+                            return base64Slice(this, r, t);
+                        case "ucs2":
+                        case "ucs-2":
+                        case "utf16le":
+                        case "utf-16le":
+                            return utf16leSlice(this, r, t);
+                        default:
+                            if (f) throw new TypeError("Unknown encoding: " + e);
+                            e = (e + "").toLowerCase();
+                            f = true;
+                    }
+                }
+            }
+            Buffer.prototype._isBuffer = true;
+            function swap(e, r, t) {
+                var f = e[r];
+                e[r] = e[t];
+                e[t] = f;
+            }
+            Buffer.prototype.swap16 = function swap16() {
+                var e = this.length;
+                if (e % 2 !== 0) {
+                    throw new RangeError("Buffer size must be a multiple of 16-bits");
+                }
+                for(var r = 0; r < e; r += 2){
+                    swap(this, r, r + 1);
+                }
+                return this;
+            };
+            Buffer.prototype.swap32 = function swap32() {
+                var e = this.length;
+                if (e % 4 !== 0) {
+                    throw new RangeError("Buffer size must be a multiple of 32-bits");
+                }
+                for(var r = 0; r < e; r += 4){
+                    swap(this, r, r + 3);
+                    swap(this, r + 1, r + 2);
+                }
+                return this;
+            };
+            Buffer.prototype.swap64 = function swap64() {
+                var e = this.length;
+                if (e % 8 !== 0) {
+                    throw new RangeError("Buffer size must be a multiple of 64-bits");
+                }
+                for(var r = 0; r < e; r += 8){
+                    swap(this, r, r + 7);
+                    swap(this, r + 1, r + 6);
+                    swap(this, r + 2, r + 5);
+                    swap(this, r + 3, r + 4);
+                }
+                return this;
+            };
+            Buffer.prototype.toString = function toString() {
+                var e = this.length;
+                if (e === 0) return "";
+                if (arguments.length === 0) return utf8Slice(this, 0, e);
+                return slowToString.apply(this, arguments);
+            };
+            Buffer.prototype.toLocaleString = Buffer.prototype.toString;
+            Buffer.prototype.equals = function equals(e) {
+                if (!Buffer.isBuffer(e)) throw new TypeError("Argument must be a Buffer");
+                if (this === e) return true;
+                return Buffer.compare(this, e) === 0;
+            };
+            Buffer.prototype.inspect = function inspect() {
+                var e = "";
+                var t = r.INSPECT_MAX_BYTES;
+                e = this.toString("hex", 0, t).replace(/(.{2})/g, "$1 ").trim();
+                if (this.length > t) e += " ... ";
+                return "<Buffer " + e + ">";
+            };
+            if (i) {
+                Buffer.prototype[i] = Buffer.prototype.inspect;
+            }
+            Buffer.prototype.compare = function compare(e, r, t, f, n) {
+                if (isInstance(e, Uint8Array)) {
+                    e = Buffer.from(e, e.offset, e.byteLength);
+                }
+                if (!Buffer.isBuffer(e)) {
+                    throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. ' + "Received type " + typeof e);
+                }
+                if (r === undefined) {
+                    r = 0;
+                }
+                if (t === undefined) {
+                    t = e ? e.length : 0;
+                }
+                if (f === undefined) {
+                    f = 0;
+                }
+                if (n === undefined) {
+                    n = this.length;
+                }
+                if (r < 0 || t > e.length || f < 0 || n > this.length) {
+                    throw new RangeError("out of range index");
+                }
+                if (f >= n && r >= t) {
+                    return 0;
+                }
+                if (f >= n) {
+                    return -1;
+                }
+                if (r >= t) {
+                    return 1;
+                }
+                r >>>= 0;
+                t >>>= 0;
+                f >>>= 0;
+                n >>>= 0;
+                if (this === e) return 0;
+                var i = n - f;
+                var o = t - r;
+                var u = Math.min(i, o);
+                var a = this.slice(f, n);
+                var s = e.slice(r, t);
+                for(var h = 0; h < u; ++h){
+                    if (a[h] !== s[h]) {
+                        i = a[h];
+                        o = s[h];
+                        break;
+                    }
+                }
+                if (i < o) return -1;
+                if (o < i) return 1;
+                return 0;
+            };
+            function bidirectionalIndexOf(e, r, t, f, n) {
+                if (e.length === 0) return -1;
+                if (typeof t === "string") {
+                    f = t;
+                    t = 0;
+                } else if (t > 2147483647) {
+                    t = 2147483647;
+                } else if (t < -2147483648) {
+                    t = -2147483648;
+                }
+                t = +t;
+                if (numberIsNaN(t)) {
+                    t = n ? 0 : e.length - 1;
+                }
+                if (t < 0) t = e.length + t;
+                if (t >= e.length) {
+                    if (n) return -1;
+                    else t = e.length - 1;
+                } else if (t < 0) {
+                    if (n) t = 0;
+                    else return -1;
+                }
+                if (typeof r === "string") {
+                    r = Buffer.from(r, f);
+                }
+                if (Buffer.isBuffer(r)) {
+                    if (r.length === 0) {
+                        return -1;
+                    }
+                    return arrayIndexOf(e, r, t, f, n);
+                } else if (typeof r === "number") {
+                    r = r & 255;
+                    if (typeof Uint8Array.prototype.indexOf === "function") {
+                        if (n) {
+                            return Uint8Array.prototype.indexOf.call(e, r, t);
+                        } else {
+                            return Uint8Array.prototype.lastIndexOf.call(e, r, t);
+                        }
+                    }
+                    return arrayIndexOf(e, [
+                        r
+                    ], t, f, n);
+                }
+                throw new TypeError("val must be string, number or Buffer");
+            }
+            function arrayIndexOf(e, r, t, f, n) {
+                var i = 1;
+                var o = e.length;
+                var u = r.length;
+                if (f !== undefined) {
+                    f = String(f).toLowerCase();
+                    if (f === "ucs2" || f === "ucs-2" || f === "utf16le" || f === "utf-16le") {
+                        if (e.length < 2 || r.length < 2) {
+                            return -1;
+                        }
+                        i = 2;
+                        o /= 2;
+                        u /= 2;
+                        t /= 2;
+                    }
+                }
+                function read(e, r) {
+                    if (i === 1) {
+                        return e[r];
+                    } else {
+                        return e.readUInt16BE(r * i);
+                    }
+                }
+                var a;
+                if (n) {
+                    var s = -1;
+                    for(a = t; a < o; a++){
+                        if (read(e, a) === read(r, s === -1 ? 0 : a - s)) {
+                            if (s === -1) s = a;
+                            if (a - s + 1 === u) return s * i;
+                        } else {
+                            if (s !== -1) a -= a - s;
+                            s = -1;
+                        }
+                    }
+                } else {
+                    if (t + u > o) t = o - u;
+                    for(a = t; a >= 0; a--){
+                        var h = true;
+                        for(var c = 0; c < u; c++){
+                            if (read(e, a + c) !== read(r, c)) {
+                                h = false;
+                                break;
+                            }
+                        }
+                        if (h) return a;
+                    }
+                }
+                return -1;
+            }
+            Buffer.prototype.includes = function includes(e, r, t) {
+                return this.indexOf(e, r, t) !== -1;
+            };
+            Buffer.prototype.indexOf = function indexOf(e, r, t) {
+                return bidirectionalIndexOf(this, e, r, t, true);
+            };
+            Buffer.prototype.lastIndexOf = function lastIndexOf(e, r, t) {
+                return bidirectionalIndexOf(this, e, r, t, false);
+            };
+            function hexWrite(e, r, t, f) {
+                t = Number(t) || 0;
+                var n = e.length - t;
+                if (!f) {
+                    f = n;
+                } else {
+                    f = Number(f);
+                    if (f > n) {
+                        f = n;
+                    }
+                }
+                var i = r.length;
+                if (f > i / 2) {
+                    f = i / 2;
+                }
+                for(var o = 0; o < f; ++o){
+                    var u = parseInt(r.substr(o * 2, 2), 16);
+                    if (numberIsNaN(u)) return o;
+                    e[t + o] = u;
+                }
+                return o;
+            }
+            function utf8Write(e, r, t, f) {
+                return blitBuffer(utf8ToBytes(r, e.length - t), e, t, f);
+            }
+            function asciiWrite(e, r, t, f) {
+                return blitBuffer(asciiToBytes(r), e, t, f);
+            }
+            function latin1Write(e, r, t, f) {
+                return asciiWrite(e, r, t, f);
+            }
+            function base64Write(e, r, t, f) {
+                return blitBuffer(base64ToBytes(r), e, t, f);
+            }
+            function ucs2Write(e, r, t, f) {
+                return blitBuffer(utf16leToBytes(r, e.length - t), e, t, f);
+            }
+            Buffer.prototype.write = function write(e, r, t, f) {
+                if (r === undefined) {
+                    f = "utf8";
+                    t = this.length;
+                    r = 0;
+                } else if (t === undefined && typeof r === "string") {
+                    f = r;
+                    t = this.length;
+                    r = 0;
+                } else if (isFinite(r)) {
+                    r = r >>> 0;
+                    if (isFinite(t)) {
+                        t = t >>> 0;
+                        if (f === undefined) f = "utf8";
+                    } else {
+                        f = t;
+                        t = undefined;
+                    }
+                } else {
+                    throw new Error("Buffer.write(string, encoding, offset[, length]) is no longer supported");
+                }
+                var n = this.length - r;
+                if (t === undefined || t > n) t = n;
+                if (e.length > 0 && (t < 0 || r < 0) || r > this.length) {
+                    throw new RangeError("Attempt to write outside buffer bounds");
+                }
+                if (!f) f = "utf8";
+                var i = false;
+                for(;;){
+                    switch(f){
+                        case "hex":
+                            return hexWrite(this, e, r, t);
+                        case "utf8":
+                        case "utf-8":
+                            return utf8Write(this, e, r, t);
+                        case "ascii":
+                            return asciiWrite(this, e, r, t);
+                        case "latin1":
+                        case "binary":
+                            return latin1Write(this, e, r, t);
+                        case "base64":
+                            return base64Write(this, e, r, t);
+                        case "ucs2":
+                        case "ucs-2":
+                        case "utf16le":
+                        case "utf-16le":
+                            return ucs2Write(this, e, r, t);
+                        default:
+                            if (i) throw new TypeError("Unknown encoding: " + f);
+                            f = ("" + f).toLowerCase();
+                            i = true;
+                    }
+                }
+            };
+            Buffer.prototype.toJSON = function toJSON() {
+                return {
+                    type: "Buffer",
+                    data: Array.prototype.slice.call(this._arr || this, 0)
+                };
+            };
+            function base64Slice(e, r, t) {
+                if (r === 0 && t === e.length) {
+                    return f.fromByteArray(e);
+                } else {
+                    return f.fromByteArray(e.slice(r, t));
+                }
+            }
+            function utf8Slice(e, r, t) {
+                t = Math.min(e.length, t);
+                var f = [];
+                var n = r;
+                while(n < t){
+                    var i = e[n];
+                    var o = null;
+                    var u = i > 239 ? 4 : i > 223 ? 3 : i > 191 ? 2 : 1;
+                    if (n + u <= t) {
+                        var a, s, h, c;
+                        switch(u){
+                            case 1:
+                                if (i < 128) {
+                                    o = i;
+                                }
+                                break;
+                            case 2:
+                                a = e[n + 1];
+                                if ((a & 192) === 128) {
+                                    c = (i & 31) << 6 | a & 63;
+                                    if (c > 127) {
+                                        o = c;
+                                    }
+                                }
+                                break;
+                            case 3:
+                                a = e[n + 1];
+                                s = e[n + 2];
+                                if ((a & 192) === 128 && (s & 192) === 128) {
+                                    c = (i & 15) << 12 | (a & 63) << 6 | s & 63;
+                                    if (c > 2047 && (c < 55296 || c > 57343)) {
+                                        o = c;
+                                    }
+                                }
+                                break;
+                            case 4:
+                                a = e[n + 1];
+                                s = e[n + 2];
+                                h = e[n + 3];
+                                if ((a & 192) === 128 && (s & 192) === 128 && (h & 192) === 128) {
+                                    c = (i & 15) << 18 | (a & 63) << 12 | (s & 63) << 6 | h & 63;
+                                    if (c > 65535 && c < 1114112) {
+                                        o = c;
+                                    }
+                                }
+                        }
+                    }
+                    if (o === null) {
+                        o = 65533;
+                        u = 1;
+                    } else if (o > 65535) {
+                        o -= 65536;
+                        f.push(o >>> 10 & 1023 | 55296);
+                        o = 56320 | o & 1023;
+                    }
+                    f.push(o);
+                    n += u;
+                }
+                return decodeCodePointsArray(f);
+            }
+            var u = 4096;
+            function decodeCodePointsArray(e) {
+                var r = e.length;
+                if (r <= u) {
+                    return String.fromCharCode.apply(String, e);
+                }
+                var t = "";
+                var f = 0;
+                while(f < r){
+                    t += String.fromCharCode.apply(String, e.slice(f, f += u));
+                }
+                return t;
+            }
+            function asciiSlice(e, r, t) {
+                var f = "";
+                t = Math.min(e.length, t);
+                for(var n = r; n < t; ++n){
+                    f += String.fromCharCode(e[n] & 127);
+                }
+                return f;
+            }
+            function latin1Slice(e, r, t) {
+                var f = "";
+                t = Math.min(e.length, t);
+                for(var n = r; n < t; ++n){
+                    f += String.fromCharCode(e[n]);
+                }
+                return f;
+            }
+            function hexSlice(e, r, t) {
+                var f = e.length;
+                if (!r || r < 0) r = 0;
+                if (!t || t < 0 || t > f) t = f;
+                var n = "";
+                for(var i = r; i < t; ++i){
+                    n += s[e[i]];
+                }
+                return n;
+            }
+            function utf16leSlice(e, r, t) {
+                var f = e.slice(r, t);
+                var n = "";
+                for(var i = 0; i < f.length; i += 2){
+                    n += String.fromCharCode(f[i] + f[i + 1] * 256);
+                }
+                return n;
+            }
+            Buffer.prototype.slice = function slice(e, r) {
+                var t = this.length;
+                e = ~~e;
+                r = r === undefined ? t : ~~r;
+                if (e < 0) {
+                    e += t;
+                    if (e < 0) e = 0;
+                } else if (e > t) {
+                    e = t;
+                }
+                if (r < 0) {
+                    r += t;
+                    if (r < 0) r = 0;
+                } else if (r > t) {
+                    r = t;
+                }
+                if (r < e) r = e;
+                var f = this.subarray(e, r);
+                Object.setPrototypeOf(f, Buffer.prototype);
+                return f;
+            };
+            function checkOffset(e, r, t) {
+                if (e % 1 !== 0 || e < 0) throw new RangeError("offset is not uint");
+                if (e + r > t) throw new RangeError("Trying to access beyond buffer length");
+            }
+            Buffer.prototype.readUIntLE = function readUIntLE(e, r, t) {
+                e = e >>> 0;
+                r = r >>> 0;
+                if (!t) checkOffset(e, r, this.length);
+                var f = this[e];
+                var n = 1;
+                var i = 0;
+                while(++i < r && (n *= 256)){
+                    f += this[e + i] * n;
+                }
+                return f;
+            };
+            Buffer.prototype.readUIntBE = function readUIntBE(e, r, t) {
+                e = e >>> 0;
+                r = r >>> 0;
+                if (!t) {
+                    checkOffset(e, r, this.length);
+                }
+                var f = this[e + --r];
+                var n = 1;
+                while(r > 0 && (n *= 256)){
+                    f += this[e + --r] * n;
+                }
+                return f;
+            };
+            Buffer.prototype.readUInt8 = function readUInt8(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 1, this.length);
+                return this[e];
+            };
+            Buffer.prototype.readUInt16LE = function readUInt16LE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 2, this.length);
+                return this[e] | this[e + 1] << 8;
+            };
+            Buffer.prototype.readUInt16BE = function readUInt16BE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 2, this.length);
+                return this[e] << 8 | this[e + 1];
+            };
+            Buffer.prototype.readUInt32LE = function readUInt32LE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return (this[e] | this[e + 1] << 8 | this[e + 2] << 16) + this[e + 3] * 16777216;
+            };
+            Buffer.prototype.readUInt32BE = function readUInt32BE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return this[e] * 16777216 + (this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3]);
+            };
+            Buffer.prototype.readIntLE = function readIntLE(e, r, t) {
+                e = e >>> 0;
+                r = r >>> 0;
+                if (!t) checkOffset(e, r, this.length);
+                var f = this[e];
+                var n = 1;
+                var i = 0;
+                while(++i < r && (n *= 256)){
+                    f += this[e + i] * n;
+                }
+                n *= 128;
+                if (f >= n) f -= Math.pow(2, 8 * r);
+                return f;
+            };
+            Buffer.prototype.readIntBE = function readIntBE(e, r, t) {
+                e = e >>> 0;
+                r = r >>> 0;
+                if (!t) checkOffset(e, r, this.length);
+                var f = r;
+                var n = 1;
+                var i = this[e + --f];
+                while(f > 0 && (n *= 256)){
+                    i += this[e + --f] * n;
+                }
+                n *= 128;
+                if (i >= n) i -= Math.pow(2, 8 * r);
+                return i;
+            };
+            Buffer.prototype.readInt8 = function readInt8(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 1, this.length);
+                if (!(this[e] & 128)) return this[e];
+                return (255 - this[e] + 1) * -1;
+            };
+            Buffer.prototype.readInt16LE = function readInt16LE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 2, this.length);
+                var t = this[e] | this[e + 1] << 8;
+                return t & 32768 ? t | 4294901760 : t;
+            };
+            Buffer.prototype.readInt16BE = function readInt16BE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 2, this.length);
+                var t = this[e + 1] | this[e] << 8;
+                return t & 32768 ? t | 4294901760 : t;
+            };
+            Buffer.prototype.readInt32LE = function readInt32LE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return this[e] | this[e + 1] << 8 | this[e + 2] << 16 | this[e + 3] << 24;
+            };
+            Buffer.prototype.readInt32BE = function readInt32BE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return this[e] << 24 | this[e + 1] << 16 | this[e + 2] << 8 | this[e + 3];
+            };
+            Buffer.prototype.readFloatLE = function readFloatLE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return n.read(this, e, true, 23, 4);
+            };
+            Buffer.prototype.readFloatBE = function readFloatBE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 4, this.length);
+                return n.read(this, e, false, 23, 4);
+            };
+            Buffer.prototype.readDoubleLE = function readDoubleLE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 8, this.length);
+                return n.read(this, e, true, 52, 8);
+            };
+            Buffer.prototype.readDoubleBE = function readDoubleBE(e, r) {
+                e = e >>> 0;
+                if (!r) checkOffset(e, 8, this.length);
+                return n.read(this, e, false, 52, 8);
+            };
+            function checkInt(e, r, t, f, n, i) {
+                if (!Buffer.isBuffer(e)) throw new TypeError('"buffer" argument must be a Buffer instance');
+                if (r > n || r < i) throw new RangeError('"value" argument is out of bounds');
+                if (t + f > e.length) throw new RangeError("Index out of range");
+            }
+            Buffer.prototype.writeUIntLE = function writeUIntLE(e, r, t, f) {
+                e = +e;
+                r = r >>> 0;
+                t = t >>> 0;
+                if (!f) {
+                    var n = Math.pow(2, 8 * t) - 1;
+                    checkInt(this, e, r, t, n, 0);
+                }
+                var i = 1;
+                var o = 0;
+                this[r] = e & 255;
+                while(++o < t && (i *= 256)){
+                    this[r + o] = e / i & 255;
+                }
+                return r + t;
+            };
+            Buffer.prototype.writeUIntBE = function writeUIntBE(e, r, t, f) {
+                e = +e;
+                r = r >>> 0;
+                t = t >>> 0;
+                if (!f) {
+                    var n = Math.pow(2, 8 * t) - 1;
+                    checkInt(this, e, r, t, n, 0);
+                }
+                var i = t - 1;
+                var o = 1;
+                this[r + i] = e & 255;
+                while(--i >= 0 && (o *= 256)){
+                    this[r + i] = e / o & 255;
+                }
+                return r + t;
+            };
+            Buffer.prototype.writeUInt8 = function writeUInt8(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 1, 255, 0);
+                this[r] = e & 255;
+                return r + 1;
+            };
+            Buffer.prototype.writeUInt16LE = function writeUInt16LE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 2, 65535, 0);
+                this[r] = e & 255;
+                this[r + 1] = e >>> 8;
+                return r + 2;
+            };
+            Buffer.prototype.writeUInt16BE = function writeUInt16BE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 2, 65535, 0);
+                this[r] = e >>> 8;
+                this[r + 1] = e & 255;
+                return r + 2;
+            };
+            Buffer.prototype.writeUInt32LE = function writeUInt32LE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 4, 4294967295, 0);
+                this[r + 3] = e >>> 24;
+                this[r + 2] = e >>> 16;
+                this[r + 1] = e >>> 8;
+                this[r] = e & 255;
+                return r + 4;
+            };
+            Buffer.prototype.writeUInt32BE = function writeUInt32BE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 4, 4294967295, 0);
+                this[r] = e >>> 24;
+                this[r + 1] = e >>> 16;
+                this[r + 2] = e >>> 8;
+                this[r + 3] = e & 255;
+                return r + 4;
+            };
+            Buffer.prototype.writeIntLE = function writeIntLE(e, r, t, f) {
+                e = +e;
+                r = r >>> 0;
+                if (!f) {
+                    var n = Math.pow(2, 8 * t - 1);
+                    checkInt(this, e, r, t, n - 1, -n);
+                }
+                var i = 0;
+                var o = 1;
+                var u = 0;
+                this[r] = e & 255;
+                while(++i < t && (o *= 256)){
+                    if (e < 0 && u === 0 && this[r + i - 1] !== 0) {
+                        u = 1;
+                    }
+                    this[r + i] = (e / o >> 0) - u & 255;
+                }
+                return r + t;
+            };
+            Buffer.prototype.writeIntBE = function writeIntBE(e, r, t, f) {
+                e = +e;
+                r = r >>> 0;
+                if (!f) {
+                    var n = Math.pow(2, 8 * t - 1);
+                    checkInt(this, e, r, t, n - 1, -n);
+                }
+                var i = t - 1;
+                var o = 1;
+                var u = 0;
+                this[r + i] = e & 255;
+                while(--i >= 0 && (o *= 256)){
+                    if (e < 0 && u === 0 && this[r + i + 1] !== 0) {
+                        u = 1;
+                    }
+                    this[r + i] = (e / o >> 0) - u & 255;
+                }
+                return r + t;
+            };
+            Buffer.prototype.writeInt8 = function writeInt8(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 1, 127, -128);
+                if (e < 0) e = 255 + e + 1;
+                this[r] = e & 255;
+                return r + 1;
+            };
+            Buffer.prototype.writeInt16LE = function writeInt16LE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 2, 32767, -32768);
+                this[r] = e & 255;
+                this[r + 1] = e >>> 8;
+                return r + 2;
+            };
+            Buffer.prototype.writeInt16BE = function writeInt16BE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 2, 32767, -32768);
+                this[r] = e >>> 8;
+                this[r + 1] = e & 255;
+                return r + 2;
+            };
+            Buffer.prototype.writeInt32LE = function writeInt32LE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 4, 2147483647, -2147483648);
+                this[r] = e & 255;
+                this[r + 1] = e >>> 8;
+                this[r + 2] = e >>> 16;
+                this[r + 3] = e >>> 24;
+                return r + 4;
+            };
+            Buffer.prototype.writeInt32BE = function writeInt32BE(e, r, t) {
+                e = +e;
+                r = r >>> 0;
+                if (!t) checkInt(this, e, r, 4, 2147483647, -2147483648);
+                if (e < 0) e = 4294967295 + e + 1;
+                this[r] = e >>> 24;
+                this[r + 1] = e >>> 16;
+                this[r + 2] = e >>> 8;
+                this[r + 3] = e & 255;
+                return r + 4;
+            };
+            function checkIEEE754(e, r, t, f, n, i) {
+                if (t + f > e.length) throw new RangeError("Index out of range");
+                if (t < 0) throw new RangeError("Index out of range");
+            }
+            function writeFloat(e, r, t, f, i) {
+                r = +r;
+                t = t >>> 0;
+                if (!i) {
+                    checkIEEE754(e, r, t, 4, 34028234663852886e22, -34028234663852886e22);
+                }
+                n.write(e, r, t, f, 23, 4);
+                return t + 4;
+            }
+            Buffer.prototype.writeFloatLE = function writeFloatLE(e, r, t) {
+                return writeFloat(this, e, r, true, t);
+            };
+            Buffer.prototype.writeFloatBE = function writeFloatBE(e, r, t) {
+                return writeFloat(this, e, r, false, t);
+            };
+            function writeDouble(e, r, t, f, i) {
+                r = +r;
+                t = t >>> 0;
+                if (!i) {
+                    checkIEEE754(e, r, t, 8, 17976931348623157e292, -17976931348623157e292);
+                }
+                n.write(e, r, t, f, 52, 8);
+                return t + 8;
+            }
+            Buffer.prototype.writeDoubleLE = function writeDoubleLE(e, r, t) {
+                return writeDouble(this, e, r, true, t);
+            };
+            Buffer.prototype.writeDoubleBE = function writeDoubleBE(e, r, t) {
+                return writeDouble(this, e, r, false, t);
+            };
+            Buffer.prototype.copy = function copy(e, r, t, f) {
+                if (!Buffer.isBuffer(e)) throw new TypeError("argument should be a Buffer");
+                if (!t) t = 0;
+                if (!f && f !== 0) f = this.length;
+                if (r >= e.length) r = e.length;
+                if (!r) r = 0;
+                if (f > 0 && f < t) f = t;
+                if (f === t) return 0;
+                if (e.length === 0 || this.length === 0) return 0;
+                if (r < 0) {
+                    throw new RangeError("targetStart out of bounds");
+                }
+                if (t < 0 || t >= this.length) throw new RangeError("Index out of range");
+                if (f < 0) throw new RangeError("sourceEnd out of bounds");
+                if (f > this.length) f = this.length;
+                if (e.length - r < f - t) {
+                    f = e.length - r + t;
+                }
+                var n = f - t;
+                if (this === e && typeof Uint8Array.prototype.copyWithin === "function") {
+                    this.copyWithin(r, t, f);
+                } else if (this === e && t < r && r < f) {
+                    for(var i = n - 1; i >= 0; --i){
+                        e[i + r] = this[i + t];
+                    }
+                } else {
+                    Uint8Array.prototype.set.call(e, this.subarray(t, f), r);
+                }
+                return n;
+            };
+            Buffer.prototype.fill = function fill(e, r, t, f) {
+                if (typeof e === "string") {
+                    if (typeof r === "string") {
+                        f = r;
+                        r = 0;
+                        t = this.length;
+                    } else if (typeof t === "string") {
+                        f = t;
+                        t = this.length;
+                    }
+                    if (f !== undefined && typeof f !== "string") {
+                        throw new TypeError("encoding must be a string");
+                    }
+                    if (typeof f === "string" && !Buffer.isEncoding(f)) {
+                        throw new TypeError("Unknown encoding: " + f);
+                    }
+                    if (e.length === 1) {
+                        var n = e.charCodeAt(0);
+                        if (f === "utf8" && n < 128 || f === "latin1") {
+                            e = n;
+                        }
+                    }
+                } else if (typeof e === "number") {
+                    e = e & 255;
+                } else if (typeof e === "boolean") {
+                    e = Number(e);
+                }
+                if (r < 0 || this.length < r || this.length < t) {
+                    throw new RangeError("Out of range index");
+                }
+                if (t <= r) {
+                    return this;
+                }
+                r = r >>> 0;
+                t = t === undefined ? this.length : t >>> 0;
+                if (!e) e = 0;
+                var i;
+                if (typeof e === "number") {
+                    for(i = r; i < t; ++i){
+                        this[i] = e;
+                    }
+                } else {
+                    var o = Buffer.isBuffer(e) ? e : Buffer.from(e, f);
+                    var u = o.length;
+                    if (u === 0) {
+                        throw new TypeError('The value "' + e + '" is invalid for argument "value"');
+                    }
+                    for(i = 0; i < t - r; ++i){
+                        this[i + r] = o[i % u];
+                    }
+                }
+                return this;
+            };
+            var a = /[^+/0-9A-Za-z-_]/g;
+            function base64clean(e) {
+                e = e.split("=")[0];
+                e = e.trim().replace(a, "");
+                if (e.length < 2) return "";
+                while(e.length % 4 !== 0){
+                    e = e + "=";
+                }
+                return e;
+            }
+            function utf8ToBytes(e, r) {
+                r = r || Infinity;
+                var t;
+                var f = e.length;
+                var n = null;
+                var i = [];
+                for(var o = 0; o < f; ++o){
+                    t = e.charCodeAt(o);
+                    if (t > 55295 && t < 57344) {
+                        if (!n) {
+                            if (t > 56319) {
+                                if ((r -= 3) > -1) i.push(239, 191, 189);
+                                continue;
+                            } else if (o + 1 === f) {
+                                if ((r -= 3) > -1) i.push(239, 191, 189);
+                                continue;
+                            }
+                            n = t;
+                            continue;
+                        }
+                        if (t < 56320) {
+                            if ((r -= 3) > -1) i.push(239, 191, 189);
+                            n = t;
+                            continue;
+                        }
+                        t = (n - 55296 << 10 | t - 56320) + 65536;
+                    } else if (n) {
+                        if ((r -= 3) > -1) i.push(239, 191, 189);
+                    }
+                    n = null;
+                    if (t < 128) {
+                        if ((r -= 1) < 0) break;
+                        i.push(t);
+                    } else if (t < 2048) {
+                        if ((r -= 2) < 0) break;
+                        i.push(t >> 6 | 192, t & 63 | 128);
+                    } else if (t < 65536) {
+                        if ((r -= 3) < 0) break;
+                        i.push(t >> 12 | 224, t >> 6 & 63 | 128, t & 63 | 128);
+                    } else if (t < 1114112) {
+                        if ((r -= 4) < 0) break;
+                        i.push(t >> 18 | 240, t >> 12 & 63 | 128, t >> 6 & 63 | 128, t & 63 | 128);
+                    } else {
+                        throw new Error("Invalid code point");
+                    }
+                }
+                return i;
+            }
+            function asciiToBytes(e) {
+                var r = [];
+                for(var t = 0; t < e.length; ++t){
+                    r.push(e.charCodeAt(t) & 255);
+                }
+                return r;
+            }
+            function utf16leToBytes(e, r) {
+                var t, f, n;
+                var i = [];
+                for(var o = 0; o < e.length; ++o){
+                    if ((r -= 2) < 0) break;
+                    t = e.charCodeAt(o);
+                    f = t >> 8;
+                    n = t % 256;
+                    i.push(n);
+                    i.push(f);
+                }
+                return i;
+            }
+            function base64ToBytes(e) {
+                return f.toByteArray(base64clean(e));
+            }
+            function blitBuffer(e, r, t, f) {
+                for(var n = 0; n < f; ++n){
+                    if (n + t >= r.length || n >= e.length) break;
+                    r[n + t] = e[n];
+                }
+                return n;
+            }
+            function isInstance(e, r) {
+                return e instanceof r || e != null && e.constructor != null && e.constructor.name != null && e.constructor.name === r.name;
+            }
+            function numberIsNaN(e) {
+                return e !== e;
+            }
+            var s = function() {
+                var e = "0123456789abcdef";
+                var r = new Array(256);
+                for(var t = 0; t < 16; ++t){
+                    var f = t * 16;
+                    for(var n = 0; n < 16; ++n){
+                        r[f + n] = e[t] + e[n];
+                    }
+                }
+                return r;
+            }();
+        },
+        783: function(e, r) {
+            /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */ r.read = function(e, r, t, f, n) {
+                var i, o;
+                var u = n * 8 - f - 1;
+                var a = (1 << u) - 1;
+                var s = a >> 1;
+                var h = -7;
+                var c = t ? n - 1 : 0;
+                var l = t ? -1 : 1;
+                var p = e[r + c];
+                c += l;
+                i = p & (1 << -h) - 1;
+                p >>= -h;
+                h += u;
+                for(; h > 0; i = i * 256 + e[r + c], c += l, h -= 8){}
+                o = i & (1 << -h) - 1;
+                i >>= -h;
+                h += f;
+                for(; h > 0; o = o * 256 + e[r + c], c += l, h -= 8){}
+                if (i === 0) {
+                    i = 1 - s;
+                } else if (i === a) {
+                    return o ? NaN : (p ? -1 : 1) * Infinity;
+                } else {
+                    o = o + Math.pow(2, f);
+                    i = i - s;
+                }
+                return (p ? -1 : 1) * o * Math.pow(2, i - f);
+            };
+            r.write = function(e, r, t, f, n, i) {
+                var o, u, a;
+                var s = i * 8 - n - 1;
+                var h = (1 << s) - 1;
+                var c = h >> 1;
+                var l = n === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0;
+                var p = f ? 0 : i - 1;
+                var y = f ? 1 : -1;
+                var g = r < 0 || r === 0 && 1 / r < 0 ? 1 : 0;
+                r = Math.abs(r);
+                if (isNaN(r) || r === Infinity) {
+                    u = isNaN(r) ? 1 : 0;
+                    o = h;
+                } else {
+                    o = Math.floor(Math.log(r) / Math.LN2);
+                    if (r * (a = Math.pow(2, -o)) < 1) {
+                        o--;
+                        a *= 2;
+                    }
+                    if (o + c >= 1) {
+                        r += l / a;
+                    } else {
+                        r += l * Math.pow(2, 1 - c);
+                    }
+                    if (r * a >= 2) {
+                        o++;
+                        a /= 2;
+                    }
+                    if (o + c >= h) {
+                        u = 0;
+                        o = h;
+                    } else if (o + c >= 1) {
+                        u = (r * a - 1) * Math.pow(2, n);
+                        o = o + c;
+                    } else {
+                        u = r * Math.pow(2, c - 1) * Math.pow(2, n);
+                        o = 0;
+                    }
+                }
+                for(; n >= 8; e[t + p] = u & 255, p += y, u /= 256, n -= 8){}
+                o = o << n | u;
+                s += n;
+                for(; s > 0; e[t + p] = o & 255, p += y, o /= 256, s -= 8){}
+                e[t + p - y] |= g * 128;
+            };
+        }
+    };
+    var r = {};
+    function __nccwpck_require__(t) {
+        var f = r[t];
+        if (f !== undefined) {
+            return f.exports;
+        }
+        var n = r[t] = {
+            exports: {}
+        };
+        var i = true;
+        try {
+            e[t](n, n.exports, __nccwpck_require__);
+            i = false;
+        } finally{
+            if (i) delete r[t];
+        }
+        return n.exports;
+    }
+    if (typeof __nccwpck_require__ !== "undefined") __nccwpck_require__.ab = ("TURBOPACK compile-time value", "/ROOT/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/buffer") + "/";
+    var t = __nccwpck_require__(72);
+    module.exports = t;
+})();
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/types.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+/**
+ * Base error for Supabase Edge Function invocations.
+ *
+ * @example
+ * ```ts
+ * import { FunctionsError } from '@supabase/functions-js'
+ *
+ * throw new FunctionsError('Unexpected error invoking function', 'FunctionsError', {
+ *   requestId: 'abc123',
+ * })
+ * ```
+ */ __turbopack_context__.s([
+    "FunctionRegion",
+    ()=>FunctionRegion,
+    "FunctionsError",
+    ()=>FunctionsError,
+    "FunctionsFetchError",
+    ()=>FunctionsFetchError,
+    "FunctionsHttpError",
+    ()=>FunctionsHttpError,
+    "FunctionsRelayError",
+    ()=>FunctionsRelayError
+]);
+class FunctionsError extends Error {
+    constructor(message, name = 'FunctionsError', context){
+        super(message);
+        this.name = name;
+        this.context = context;
+    }
+}
+class FunctionsFetchError extends FunctionsError {
+    constructor(context){
+        super('Failed to send a request to the Edge Function', 'FunctionsFetchError', context);
+    }
+}
+class FunctionsRelayError extends FunctionsError {
+    constructor(context){
+        super('Relay Error invoking the Edge Function', 'FunctionsRelayError', context);
+    }
+}
+class FunctionsHttpError extends FunctionsError {
+    constructor(context){
+        super('Edge Function returned a non-2xx status code', 'FunctionsHttpError', context);
+    }
+}
+var FunctionRegion;
+(function(FunctionRegion) {
+    FunctionRegion["Any"] = "any";
+    FunctionRegion["ApNortheast1"] = "ap-northeast-1";
+    FunctionRegion["ApNortheast2"] = "ap-northeast-2";
+    FunctionRegion["ApSouth1"] = "ap-south-1";
+    FunctionRegion["ApSoutheast1"] = "ap-southeast-1";
+    FunctionRegion["ApSoutheast2"] = "ap-southeast-2";
+    FunctionRegion["CaCentral1"] = "ca-central-1";
+    FunctionRegion["EuCentral1"] = "eu-central-1";
+    FunctionRegion["EuWest1"] = "eu-west-1";
+    FunctionRegion["EuWest2"] = "eu-west-2";
+    FunctionRegion["EuWest3"] = "eu-west-3";
+    FunctionRegion["SaEast1"] = "sa-east-1";
+    FunctionRegion["UsEast1"] = "us-east-1";
+    FunctionRegion["UsWest1"] = "us-west-1";
+    FunctionRegion["UsWest2"] = "us-west-2";
+})(FunctionRegion || (FunctionRegion = {})); //# sourceMappingURL=types.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/helper.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "resolveFetch",
+    ()=>resolveFetch
+]);
+const resolveFetch = (customFetch)=>{
+    if (customFetch) {
+        return (...args)=>customFetch(...args);
+    }
+    return (...args)=>fetch(...args);
+}; //# sourceMappingURL=helper.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "FunctionsClient",
+    ()=>FunctionsClient
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$tslib$40$2$2e$8$2e$1$2f$node_modules$2f$tslib$2f$tslib$2e$es6$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/tslib@2.8.1/node_modules/tslib/tslib.es6.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$helper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/helper.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/types.js [app-client] (ecmascript)");
+;
+;
+;
+class FunctionsClient {
+    /**
+     * Creates a new Functions client bound to an Edge Functions URL.
+     *
+     * @example
+     * ```ts
+     * import { FunctionsClient, FunctionRegion } from '@supabase/functions-js'
+     *
+     * const functions = new FunctionsClient('https://xyzcompany.supabase.co/functions/v1', {
+     *   headers: { apikey: 'public-anon-key' },
+     *   region: FunctionRegion.UsEast1,
+     * })
+     * ```
+     */ constructor(url, { headers = {}, customFetch, region = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionRegion"].Any } = {}){
+        this.url = url;
+        this.headers = headers;
+        this.region = region;
+        this.fetch = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$helper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["resolveFetch"])(customFetch);
+    }
+    /**
+     * Updates the authorization header
+     * @param token - the new jwt token sent in the authorisation header
+     * @example
+     * ```ts
+     * functions.setAuth(session.access_token)
+     * ```
+     */ setAuth(token) {
+        this.headers.Authorization = `Bearer ${token}`;
+    }
+    /**
+     * Invokes a function
+     * @param functionName - The name of the Function to invoke.
+     * @param options - Options for invoking the Function.
+     * @example
+     * ```ts
+     * const { data, error } = await functions.invoke('hello-world', {
+     *   body: { name: 'Ada' },
+     * })
+     * ```
+     */ invoke(functionName_1) {
+        return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$tslib$40$2$2e$8$2e$1$2f$node_modules$2f$tslib$2f$tslib$2e$es6$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["__awaiter"])(this, arguments, void 0, function*(functionName, options = {}) {
+            var _a;
+            let timeoutId;
+            let timeoutController;
+            try {
+                const { headers, method, body: functionArgs, signal, timeout } = options;
+                let _headers = {};
+                let { region } = options;
+                if (!region) {
+                    region = this.region;
+                }
+                // Add region as query parameter using URL API
+                const url = new URL(`${this.url}/${functionName}`);
+                if (region && region !== 'any') {
+                    _headers['x-region'] = region;
+                    url.searchParams.set('forceFunctionRegion', region);
+                }
+                let body;
+                if (functionArgs && (headers && !Object.prototype.hasOwnProperty.call(headers, 'Content-Type') || !headers)) {
+                    if (typeof Blob !== 'undefined' && functionArgs instanceof Blob || functionArgs instanceof ArrayBuffer) {
+                        // will work for File as File inherits Blob
+                        // also works for ArrayBuffer as it is the same underlying structure as a Blob
+                        _headers['Content-Type'] = 'application/octet-stream';
+                        body = functionArgs;
+                    } else if (typeof functionArgs === 'string') {
+                        // plain string
+                        _headers['Content-Type'] = 'text/plain';
+                        body = functionArgs;
+                    } else if (typeof FormData !== 'undefined' && functionArgs instanceof FormData) {
+                        // don't set content-type headers
+                        // Request will automatically add the right boundary value
+                        body = functionArgs;
+                    } else {
+                        // default, assume this is JSON
+                        _headers['Content-Type'] = 'application/json';
+                        body = JSON.stringify(functionArgs);
+                    }
+                } else {
+                    // if the Content-Type was supplied, simply set the body
+                    body = functionArgs;
+                }
+                // Handle timeout by creating an AbortController
+                let effectiveSignal = signal;
+                if (timeout) {
+                    timeoutController = new AbortController();
+                    timeoutId = setTimeout(()=>timeoutController.abort(), timeout);
+                    // If user provided their own signal, we need to respect both
+                    if (signal) {
+                        effectiveSignal = timeoutController.signal;
+                        // If the user's signal is aborted, abort our timeout controller too
+                        signal.addEventListener('abort', ()=>timeoutController.abort());
+                    } else {
+                        effectiveSignal = timeoutController.signal;
+                    }
+                }
+                const response = yield this.fetch(url.toString(), {
+                    method: method || 'POST',
+                    // headers priority is (high to low):
+                    // 1. invoke-level headers
+                    // 2. client-level headers
+                    // 3. default Content-Type header
+                    headers: Object.assign(Object.assign(Object.assign({}, _headers), this.headers), headers),
+                    body,
+                    signal: effectiveSignal
+                }).catch((fetchError)=>{
+                    throw new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsFetchError"](fetchError);
+                });
+                const isRelayError = response.headers.get('x-relay-error');
+                if (isRelayError && isRelayError === 'true') {
+                    throw new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsRelayError"](response);
+                }
+                if (!response.ok) {
+                    throw new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsHttpError"](response);
+                }
+                let responseType = ((_a = response.headers.get('Content-Type')) !== null && _a !== void 0 ? _a : 'text/plain').split(';')[0].trim();
+                let data;
+                if (responseType === 'application/json') {
+                    data = yield response.json();
+                } else if (responseType === 'application/octet-stream' || responseType === 'application/pdf') {
+                    data = yield response.blob();
+                } else if (responseType === 'text/event-stream') {
+                    data = response;
+                } else if (responseType === 'multipart/form-data') {
+                    data = yield response.formData();
+                } else {
+                    // default to text
+                    data = yield response.text();
+                }
+                return {
+                    data,
+                    error: null,
+                    response
+                };
+            } catch (error) {
+                return {
+                    data: null,
+                    error,
+                    response: error instanceof __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsHttpError"] || error instanceof __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsRelayError"] ? error.context : undefined
+                };
+            } finally{
+                // Clear the timeout if it was set
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+            }
+        });
+    }
+} //# sourceMappingURL=FunctionsClient.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/tslib@2.8.1/node_modules/tslib/tslib.es6.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "__addDisposableResource",
+    ()=>__addDisposableResource,
+    "__assign",
+    ()=>__assign,
+    "__asyncDelegator",
+    ()=>__asyncDelegator,
+    "__asyncGenerator",
+    ()=>__asyncGenerator,
+    "__asyncValues",
+    ()=>__asyncValues,
+    "__await",
+    ()=>__await,
+    "__awaiter",
+    ()=>__awaiter,
+    "__classPrivateFieldGet",
+    ()=>__classPrivateFieldGet,
+    "__classPrivateFieldIn",
+    ()=>__classPrivateFieldIn,
+    "__classPrivateFieldSet",
+    ()=>__classPrivateFieldSet,
+    "__createBinding",
+    ()=>__createBinding,
+    "__decorate",
+    ()=>__decorate,
+    "__disposeResources",
+    ()=>__disposeResources,
+    "__esDecorate",
+    ()=>__esDecorate,
+    "__exportStar",
+    ()=>__exportStar,
+    "__extends",
+    ()=>__extends,
+    "__generator",
+    ()=>__generator,
+    "__importDefault",
+    ()=>__importDefault,
+    "__importStar",
+    ()=>__importStar,
+    "__makeTemplateObject",
+    ()=>__makeTemplateObject,
+    "__metadata",
+    ()=>__metadata,
+    "__param",
+    ()=>__param,
+    "__propKey",
+    ()=>__propKey,
+    "__read",
+    ()=>__read,
+    "__rest",
+    ()=>__rest,
+    "__rewriteRelativeImportExtension",
+    ()=>__rewriteRelativeImportExtension,
+    "__runInitializers",
+    ()=>__runInitializers,
+    "__setFunctionName",
+    ()=>__setFunctionName,
+    "__spread",
+    ()=>__spread,
+    "__spreadArray",
+    ()=>__spreadArray,
+    "__spreadArrays",
+    ()=>__spreadArrays,
+    "__values",
+    ()=>__values,
+    "default",
+    ()=>__TURBOPACK__default__export__
+]);
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */ /* global Reflect, Promise, SuppressedError, Symbol, Iterator */ var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+        __proto__: []
+    }) instanceof Array && function(d, b) {
+        d.__proto__ = b;
+    } || function(d, b) {
+        for(var p in b)if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+    return extendStatics(d, b);
+};
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() {
+        this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for(var s, i = 1, n = arguments.length; i < n; i++){
+            s = arguments[i];
+            for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+function __rest(s, e) {
+    var t = {};
+    for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function") for(var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++){
+        if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+    }
+    return t;
+}
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for(var i = decorators.length - 1; i >= 0; i--)if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+function __param(paramIndex, decorator) {
+    return function(target, key) {
+        decorator(target, key, paramIndex);
+    };
+}
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) {
+        if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
+        return f;
+    }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for(var i = decorators.length - 1; i >= 0; i--){
+        var context = {};
+        for(var p in contextIn)context[p] = p === "access" ? {} : contextIn[p];
+        for(var p in contextIn.access)context.access[p] = contextIn.access[p];
+        context.addInitializer = function(f) {
+            if (done) throw new TypeError("Cannot add initializers after decoration has completed");
+            extraInitializers.push(accept(f || null));
+        };
+        var result = (0, decorators[i])(kind === "accessor" ? {
+            get: descriptor.get,
+            set: descriptor.set
+        } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        } else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+}
+;
+function __runInitializers(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for(var i = 0; i < initializers.length; i++){
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+}
+;
+function __propKey(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+}
+;
+function __setFunctionName(f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", {
+        configurable: true,
+        value: prefix ? "".concat(prefix, " ", name) : name
+    });
+}
+;
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+function __generator(thisArg, body) {
+    var _ = {
+        label: 0,
+        sent: function() {
+            if (t[0] & 1) throw t[1];
+            return t[1];
+        },
+        trys: [],
+        ops: []
+    }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+    }), g;
+    //TURBOPACK unreachable
+    ;
+    function verb(n) {
+        return function(v) {
+            return step([
+                n,
+                v
+            ]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while(g && (g = 0, op[0] && (_ = 0)), _)try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [
+                op[0] & 2,
+                t.value
+            ];
+            switch(op[0]){
+                case 0:
+                case 1:
+                    t = op;
+                    break;
+                case 4:
+                    _.label++;
+                    return {
+                        value: op[1],
+                        done: false
+                    };
+                case 5:
+                    _.label++;
+                    y = op[1];
+                    op = [
+                        0
+                    ];
+                    continue;
+                case 7:
+                    op = _.ops.pop();
+                    _.trys.pop();
+                    continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                        _ = 0;
+                        continue;
+                    }
+                    if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                        _.label = op[1];
+                        break;
+                    }
+                    if (op[0] === 6 && _.label < t[1]) {
+                        _.label = t[1];
+                        t = op;
+                        break;
+                    }
+                    if (t && _.label < t[2]) {
+                        _.label = t[2];
+                        _.ops.push(op);
+                        break;
+                    }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop();
+                    continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) {
+            op = [
+                6,
+                e
+            ];
+            y = 0;
+        } finally{
+            f = t = 0;
+        }
+        if (op[0] & 5) throw op[1];
+        return {
+            value: op[0] ? op[1] : void 0,
+            done: true
+        };
+    }
+}
+var __createBinding = Object.create ? function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = {
+            enumerable: true,
+            get: function() {
+                return m[k];
+            }
+        };
+    }
+    Object.defineProperty(o, k2, desc);
+} : function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+};
+function __exportStar(m, o) {
+    for(var p in m)if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function() {
+            if (o && i >= o.length) o = void 0;
+            return {
+                value: o && o[i++],
+                done: !o
+            };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while((n === void 0 || n-- > 0) && !(r = i.next()).done)ar.push(r.value);
+    } catch (error) {
+        e = {
+            error: error
+        };
+    } finally{
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally{
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+}
+function __spread() {
+    for(var ar = [], i = 0; i < arguments.length; i++)ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+function __spreadArrays() {
+    for(var s = 0, i = 0, il = arguments.length; i < il; i++)s += arguments[i].length;
+    for(var r = Array(s), k = 0, i = 0; i < il; i++)for(var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)r[k] = a[j];
+    return r;
+}
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for(var i = 0, l = from.length, ar; i < l; i++){
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i;
+    //TURBOPACK unreachable
+    ;
+    function awaitReturn(f) {
+        return function(v) {
+            return Promise.resolve(v).then(f, reject);
+        };
+    }
+    function verb(n, f) {
+        if (g[n]) {
+            i[n] = function(v) {
+                return new Promise(function(a, b) {
+                    q.push([
+                        n,
+                        v,
+                        a,
+                        b
+                    ]) > 1 || resume(n, v);
+                });
+            };
+            if (f) i[n] = f(i[n]);
+        }
+    }
+    function resume(n, v) {
+        try {
+            step(g[n](v));
+        } catch (e) {
+            settle(q[0][3], e);
+        }
+    }
+    function step(r) {
+        r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+    }
+    function fulfill(value) {
+        resume("next", value);
+    }
+    function reject(value) {
+        resume("throw", value);
+    }
+    function settle(f, v) {
+        if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
+    }
+}
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function(e) {
+        throw e;
+    }), verb("return"), i[Symbol.iterator] = function() {
+        return this;
+    }, i;
+    //TURBOPACK unreachable
+    ;
+    function verb(n, f) {
+        i[n] = o[n] ? function(v) {
+            return (p = !p) ? {
+                value: __await(o[n](v)),
+                done: false
+            } : f ? f(v) : v;
+        } : f;
+    }
+}
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i);
+    //TURBOPACK unreachable
+    ;
+    function verb(n) {
+        i[n] = o[n] && function(v) {
+            return new Promise(function(resolve, reject) {
+                v = o[n](v), settle(resolve, reject, v.done, v.value);
+            });
+        };
+    }
+    function settle(resolve, reject, d, v) {
+        Promise.resolve(v).then(function(v) {
+            resolve({
+                value: v,
+                done: d
+            });
+        }, reject);
+    }
+}
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) {
+        Object.defineProperty(cooked, "raw", {
+            value: raw
+        });
+    } else {
+        cooked.raw = raw;
+    }
+    return cooked;
+}
+;
+var __setModuleDefault = Object.create ? function(o, v) {
+    Object.defineProperty(o, "default", {
+        enumerable: true,
+        value: v
+    });
+} : function(o, v) {
+    o["default"] = v;
+};
+var ownKeys = function(o) {
+    ownKeys = Object.getOwnPropertyNames || function(o) {
+        var ar = [];
+        for(var k in o)if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+        return ar;
+    };
+    return ownKeys(o);
+};
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) {
+        for(var k = ownKeys(mod), i = 0; i < k.length; i++)if (k[i] !== "default") __createBinding(result, mod, k[i]);
+    }
+    __setModuleDefault(result, mod);
+    return result;
+}
+function __importDefault(mod) {
+    return mod && mod.__esModule ? mod : {
+        default: mod
+    };
+}
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function") throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+function __addDisposableResource(env, value, async) {
+    if (value !== null && value !== void 0) {
+        if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+        var dispose, inner;
+        if (async) {
+            if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+            dispose = value[Symbol.asyncDispose];
+        }
+        if (dispose === void 0) {
+            if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+            dispose = value[Symbol.dispose];
+            if (async) inner = dispose;
+        }
+        if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+        if (inner) dispose = function() {
+            try {
+                inner.call(this);
+            } catch (e) {
+                return Promise.reject(e);
+            }
+        };
+        env.stack.push({
+            value: value,
+            dispose: dispose,
+            async: async
+        });
+    } else if (async) {
+        env.stack.push({
+            async: true
+        });
+    }
+    return value;
+}
+var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+function __disposeResources(env) {
+    function fail(e) {
+        env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+        env.hasError = true;
+    }
+    var r, s = 0;
+    function next() {
+        while(r = env.stack.pop()){
+            try {
+                if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+                if (r.dispose) {
+                    var result = r.dispose.call(r.value);
+                    if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) {
+                        fail(e);
+                        return next();
+                    });
+                } else s |= 1;
+            } catch (e) {
+                fail(e);
+            }
+        }
+        if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
+        if (env.hasError) throw env.error;
+    }
+    return next();
+}
+function __rewriteRelativeImportExtension(path, preserveJsx) {
+    if (typeof path === "string" && /^\.\.?\//.test(path)) {
+        return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function(m, tsx, d, ext, cm) {
+            return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : d + ext + "." + cm.toLowerCase() + "js";
+        });
+    }
+    return path;
+}
+const __TURBOPACK__default__export__ = {
+    __extends,
+    __assign,
+    __rest,
+    __decorate,
+    __param,
+    __esDecorate,
+    __runInitializers,
+    __propKey,
+    __setFunctionName,
+    __metadata,
+    __awaiter,
+    __generator,
+    __createBinding,
+    __exportStar,
+    __values,
+    __read,
+    __spread,
+    __spreadArrays,
+    __spreadArray,
+    __await,
+    __asyncGenerator,
+    __asyncDelegator,
+    __asyncValues,
+    __makeTemplateObject,
+    __importStar,
+    __importDefault,
+    __classPrivateFieldGet,
+    __classPrivateFieldSet,
+    __classPrivateFieldIn,
+    __addDisposableResource,
+    __disposeResources,
+    __rewriteRelativeImportExtension
+};
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+postgrest-js@2.89.0/node_modules/@supabase/postgrest-js/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "PostgrestBuilder",
+    ()=>PostgrestBuilder,
+    "PostgrestClient",
+    ()=>PostgrestClient,
+    "PostgrestError",
+    ()=>PostgrestError,
+    "PostgrestFilterBuilder",
+    ()=>PostgrestFilterBuilder,
+    "PostgrestQueryBuilder",
+    ()=>PostgrestQueryBuilder,
+    "PostgrestTransformBuilder",
+    ()=>PostgrestTransformBuilder,
+    "default",
+    ()=>src_default
+]);
+//#region src/PostgrestError.ts
+/**
+* Error format
+*
+* {@link https://postgrest.org/en/stable/api.html?highlight=options#errors-and-http-status-codes}
+*/ var PostgrestError = class extends Error {
+    /**
+	* @example
+	* ```ts
+	* import PostgrestError from '@supabase/postgrest-js'
+	*
+	* throw new PostgrestError({
+	*   message: 'Row level security prevented the request',
+	*   details: 'RLS denied the insert',
+	*   hint: 'Check your policies',
+	*   code: 'PGRST301',
+	* })
+	* ```
+	*/ constructor(context){
+        super(context.message);
+        this.name = "PostgrestError";
+        this.details = context.details;
+        this.hint = context.hint;
+        this.code = context.code;
+    }
+};
+//#endregion
+//#region src/PostgrestBuilder.ts
+var PostgrestBuilder = class {
+    /**
+	* Creates a builder configured for a specific PostgREST request.
+	*
+	* @example
+	* ```ts
+	* import PostgrestQueryBuilder from '@supabase/postgrest-js'
+	*
+	* const builder = new PostgrestQueryBuilder(
+	*   new URL('https://xyzcompany.supabase.co/rest/v1/users'),
+	*   { headers: new Headers({ apikey: 'public-anon-key' }) }
+	* )
+	* ```
+	*/ constructor(builder){
+        var _builder$shouldThrowO, _builder$isMaybeSingl;
+        this.shouldThrowOnError = false;
+        this.method = builder.method;
+        this.url = builder.url;
+        this.headers = new Headers(builder.headers);
+        this.schema = builder.schema;
+        this.body = builder.body;
+        this.shouldThrowOnError = (_builder$shouldThrowO = builder.shouldThrowOnError) !== null && _builder$shouldThrowO !== void 0 ? _builder$shouldThrowO : false;
+        this.signal = builder.signal;
+        this.isMaybeSingle = (_builder$isMaybeSingl = builder.isMaybeSingle) !== null && _builder$isMaybeSingl !== void 0 ? _builder$isMaybeSingl : false;
+        if (builder.fetch) this.fetch = builder.fetch;
+        else this.fetch = fetch;
+    }
+    /**
+	* If there's an error with the query, throwOnError will reject the promise by
+	* throwing the error instead of returning it as part of a successful response.
+	*
+	* {@link https://github.com/supabase/supabase-js/issues/92}
+	*/ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /**
+	* Set an HTTP header for the request.
+	*/ setHeader(name, value) {
+        this.headers = new Headers(this.headers);
+        this.headers.set(name, value);
+        return this;
+    }
+    then(onfulfilled, onrejected) {
+        var _this = this;
+        if (this.schema === void 0) {} else if ([
+            "GET",
+            "HEAD"
+        ].includes(this.method)) this.headers.set("Accept-Profile", this.schema);
+        else this.headers.set("Content-Profile", this.schema);
+        if (this.method !== "GET" && this.method !== "HEAD") this.headers.set("Content-Type", "application/json");
+        const _fetch = this.fetch;
+        let res = _fetch(this.url.toString(), {
+            method: this.method,
+            headers: this.headers,
+            body: JSON.stringify(this.body),
+            signal: this.signal
+        }).then(async (res$1)=>{
+            let error = null;
+            let data = null;
+            let count = null;
+            let status = res$1.status;
+            let statusText = res$1.statusText;
+            if (res$1.ok) {
+                var _this$headers$get2, _res$headers$get;
+                if (_this.method !== "HEAD") {
+                    var _this$headers$get;
+                    const body = await res$1.text();
+                    if (body === "") {} else if (_this.headers.get("Accept") === "text/csv") data = body;
+                    else if (_this.headers.get("Accept") && ((_this$headers$get = _this.headers.get("Accept")) === null || _this$headers$get === void 0 ? void 0 : _this$headers$get.includes("application/vnd.pgrst.plan+text"))) data = body;
+                    else data = JSON.parse(body);
+                }
+                const countHeader = (_this$headers$get2 = _this.headers.get("Prefer")) === null || _this$headers$get2 === void 0 ? void 0 : _this$headers$get2.match(/count=(exact|planned|estimated)/);
+                const contentRange = (_res$headers$get = res$1.headers.get("content-range")) === null || _res$headers$get === void 0 ? void 0 : _res$headers$get.split("/");
+                if (countHeader && contentRange && contentRange.length > 1) count = parseInt(contentRange[1]);
+                if (_this.isMaybeSingle && _this.method === "GET" && Array.isArray(data)) if (data.length > 1) {
+                    error = {
+                        code: "PGRST116",
+                        details: `Results contain ${data.length} rows, application/vnd.pgrst.object+json requires 1 row`,
+                        hint: null,
+                        message: "JSON object requested, multiple (or no) rows returned"
+                    };
+                    data = null;
+                    count = null;
+                    status = 406;
+                    statusText = "Not Acceptable";
+                } else if (data.length === 1) data = data[0];
+                else data = null;
+            } else {
+                var _error$details;
+                const body = await res$1.text();
+                try {
+                    error = JSON.parse(body);
+                    if (Array.isArray(error) && res$1.status === 404) {
+                        data = [];
+                        error = null;
+                        status = 200;
+                        statusText = "OK";
+                    }
+                } catch (_unused) {
+                    if (res$1.status === 404 && body === "") {
+                        status = 204;
+                        statusText = "No Content";
+                    } else error = {
+                        message: body
+                    };
+                }
+                if (error && _this.isMaybeSingle && (error === null || error === void 0 || (_error$details = error.details) === null || _error$details === void 0 ? void 0 : _error$details.includes("0 rows"))) {
+                    error = null;
+                    status = 200;
+                    statusText = "OK";
+                }
+                if (error && _this.shouldThrowOnError) throw new PostgrestError(error);
+            }
+            return {
+                error,
+                data,
+                count,
+                status,
+                statusText
+            };
+        });
+        if (!this.shouldThrowOnError) res = res.catch((fetchError)=>{
+            var _fetchError$name2;
+            let errorDetails = "";
+            const cause = fetchError === null || fetchError === void 0 ? void 0 : fetchError.cause;
+            if (cause) {
+                var _cause$message, _cause$code, _fetchError$name, _cause$name;
+                const causeMessage = (_cause$message = cause === null || cause === void 0 ? void 0 : cause.message) !== null && _cause$message !== void 0 ? _cause$message : "";
+                const causeCode = (_cause$code = cause === null || cause === void 0 ? void 0 : cause.code) !== null && _cause$code !== void 0 ? _cause$code : "";
+                errorDetails = `${(_fetchError$name = fetchError === null || fetchError === void 0 ? void 0 : fetchError.name) !== null && _fetchError$name !== void 0 ? _fetchError$name : "FetchError"}: ${fetchError === null || fetchError === void 0 ? void 0 : fetchError.message}`;
+                errorDetails += `\n\nCaused by: ${(_cause$name = cause === null || cause === void 0 ? void 0 : cause.name) !== null && _cause$name !== void 0 ? _cause$name : "Error"}: ${causeMessage}`;
+                if (causeCode) errorDetails += ` (${causeCode})`;
+                if (cause === null || cause === void 0 ? void 0 : cause.stack) errorDetails += `\n${cause.stack}`;
+            } else {
+                var _fetchError$stack;
+                errorDetails = (_fetchError$stack = fetchError === null || fetchError === void 0 ? void 0 : fetchError.stack) !== null && _fetchError$stack !== void 0 ? _fetchError$stack : "";
+            }
+            return {
+                error: {
+                    message: `${(_fetchError$name2 = fetchError === null || fetchError === void 0 ? void 0 : fetchError.name) !== null && _fetchError$name2 !== void 0 ? _fetchError$name2 : "FetchError"}: ${fetchError === null || fetchError === void 0 ? void 0 : fetchError.message}`,
+                    details: errorDetails,
+                    hint: "",
+                    code: ""
+                },
+                data: null,
+                count: null,
+                status: 0,
+                statusText: ""
+            };
+        });
+        return res.then(onfulfilled, onrejected);
+    }
+    /**
+	* Override the type of the returned `data`.
+	*
+	* @typeParam NewResult - The new result type to override with
+	* @deprecated Use overrideTypes<yourType, { merge: false }>() method at the end of your call chain instead
+	*/ returns() {
+        /* istanbul ignore next */ return this;
+    }
+    /**
+	* Override the type of the returned `data` field in the response.
+	*
+	* @typeParam NewResult - The new type to cast the response data to
+	* @typeParam Options - Optional type configuration (defaults to { merge: true })
+	* @typeParam Options.merge - When true, merges the new type with existing return type. When false, replaces the existing types entirely (defaults to true)
+	* @example
+	* ```typescript
+	* // Merge with existing types (default behavior)
+	* const query = supabase
+	*   .from('users')
+	*   .select()
+	*   .overrideTypes<{ custom_field: string }>()
+	*
+	* // Replace existing types completely
+	* const replaceQuery = supabase
+	*   .from('users')
+	*   .select()
+	*   .overrideTypes<{ id: number; name: string }, { merge: false }>()
+	* ```
+	* @returns A PostgrestBuilder instance with the new type
+	*/ overrideTypes() {
+        return this;
+    }
+};
+//#endregion
+//#region src/PostgrestTransformBuilder.ts
+var PostgrestTransformBuilder = class extends PostgrestBuilder {
+    /**
+	* Perform a SELECT on the query result.
+	*
+	* By default, `.insert()`, `.update()`, `.upsert()`, and `.delete()` do not
+	* return modified rows. By calling this method, modified rows are returned in
+	* `data`.
+	*
+	* @param columns - The columns to retrieve, separated by commas
+	*/ select(columns) {
+        let quoted = false;
+        const cleanedColumns = (columns !== null && columns !== void 0 ? columns : "*").split("").map((c)=>{
+            if (/\s/.test(c) && !quoted) return "";
+            if (c === "\"") quoted = !quoted;
+            return c;
+        }).join("");
+        this.url.searchParams.set("select", cleanedColumns);
+        this.headers.append("Prefer", "return=representation");
+        return this;
+    }
+    /**
+	* Order the query result by `column`.
+	*
+	* You can call this method multiple times to order by multiple columns.
+	*
+	* You can order referenced tables, but it only affects the ordering of the
+	* parent table if you use `!inner` in the query.
+	*
+	* @param column - The column to order by
+	* @param options - Named parameters
+	* @param options.ascending - If `true`, the result will be in ascending order
+	* @param options.nullsFirst - If `true`, `null`s appear first. If `false`,
+	* `null`s appear last.
+	* @param options.referencedTable - Set this to order a referenced table by
+	* its columns
+	* @param options.foreignTable - Deprecated, use `options.referencedTable`
+	* instead
+	*/ order(column, { ascending = true, nullsFirst, foreignTable, referencedTable = foreignTable } = {}) {
+        const key = referencedTable ? `${referencedTable}.order` : "order";
+        const existingOrder = this.url.searchParams.get(key);
+        this.url.searchParams.set(key, `${existingOrder ? `${existingOrder},` : ""}${column}.${ascending ? "asc" : "desc"}${nullsFirst === void 0 ? "" : nullsFirst ? ".nullsfirst" : ".nullslast"}`);
+        return this;
+    }
+    /**
+	* Limit the query result by `count`.
+	*
+	* @param count - The maximum number of rows to return
+	* @param options - Named parameters
+	* @param options.referencedTable - Set this to limit rows of referenced
+	* tables instead of the parent table
+	* @param options.foreignTable - Deprecated, use `options.referencedTable`
+	* instead
+	*/ limit(count, { foreignTable, referencedTable = foreignTable } = {}) {
+        const key = typeof referencedTable === "undefined" ? "limit" : `${referencedTable}.limit`;
+        this.url.searchParams.set(key, `${count}`);
+        return this;
+    }
+    /**
+	* Limit the query result by starting at an offset `from` and ending at the offset `to`.
+	* Only records within this range are returned.
+	* This respects the query order and if there is no order clause the range could behave unexpectedly.
+	* The `from` and `to` values are 0-based and inclusive: `range(1, 3)` will include the second, third
+	* and fourth rows of the query.
+	*
+	* @param from - The starting index from which to limit the result
+	* @param to - The last index to which to limit the result
+	* @param options - Named parameters
+	* @param options.referencedTable - Set this to limit rows of referenced
+	* tables instead of the parent table
+	* @param options.foreignTable - Deprecated, use `options.referencedTable`
+	* instead
+	*/ range(from, to, { foreignTable, referencedTable = foreignTable } = {}) {
+        const keyOffset = typeof referencedTable === "undefined" ? "offset" : `${referencedTable}.offset`;
+        const keyLimit = typeof referencedTable === "undefined" ? "limit" : `${referencedTable}.limit`;
+        this.url.searchParams.set(keyOffset, `${from}`);
+        this.url.searchParams.set(keyLimit, `${to - from + 1}`);
+        return this;
+    }
+    /**
+	* Set the AbortSignal for the fetch request.
+	*
+	* @param signal - The AbortSignal to use for the fetch request
+	*/ abortSignal(signal) {
+        this.signal = signal;
+        return this;
+    }
+    /**
+	* Return `data` as a single object instead of an array of objects.
+	*
+	* Query result must be one row (e.g. using `.limit(1)`), otherwise this
+	* returns an error.
+	*/ single() {
+        this.headers.set("Accept", "application/vnd.pgrst.object+json");
+        return this;
+    }
+    /**
+	* Return `data` as a single object instead of an array of objects.
+	*
+	* Query result must be zero or one row (e.g. using `.limit(1)`), otherwise
+	* this returns an error.
+	*/ maybeSingle() {
+        if (this.method === "GET") this.headers.set("Accept", "application/json");
+        else this.headers.set("Accept", "application/vnd.pgrst.object+json");
+        this.isMaybeSingle = true;
+        return this;
+    }
+    /**
+	* Return `data` as a string in CSV format.
+	*/ csv() {
+        this.headers.set("Accept", "text/csv");
+        return this;
+    }
+    /**
+	* Return `data` as an object in [GeoJSON](https://geojson.org) format.
+	*/ geojson() {
+        this.headers.set("Accept", "application/geo+json");
+        return this;
+    }
+    /**
+	* Return `data` as the EXPLAIN plan for the query.
+	*
+	* You need to enable the
+	* [db_plan_enabled](https://supabase.com/docs/guides/database/debugging-performance#enabling-explain)
+	* setting before using this method.
+	*
+	* @param options - Named parameters
+	*
+	* @param options.analyze - If `true`, the query will be executed and the
+	* actual run time will be returned
+	*
+	* @param options.verbose - If `true`, the query identifier will be returned
+	* and `data` will include the output columns of the query
+	*
+	* @param options.settings - If `true`, include information on configuration
+	* parameters that affect query planning
+	*
+	* @param options.buffers - If `true`, include information on buffer usage
+	*
+	* @param options.wal - If `true`, include information on WAL record generation
+	*
+	* @param options.format - The format of the output, can be `"text"` (default)
+	* or `"json"`
+	*/ explain({ analyze = false, verbose = false, settings = false, buffers = false, wal = false, format = "text" } = {}) {
+        var _this$headers$get;
+        const options = [
+            analyze ? "analyze" : null,
+            verbose ? "verbose" : null,
+            settings ? "settings" : null,
+            buffers ? "buffers" : null,
+            wal ? "wal" : null
+        ].filter(Boolean).join("|");
+        const forMediatype = (_this$headers$get = this.headers.get("Accept")) !== null && _this$headers$get !== void 0 ? _this$headers$get : "application/json";
+        this.headers.set("Accept", `application/vnd.pgrst.plan+${format}; for="${forMediatype}"; options=${options};`);
+        if (format === "json") return this;
+        else return this;
+    }
+    /**
+	* Rollback the query.
+	*
+	* `data` will still be returned, but the query is not committed.
+	*/ rollback() {
+        this.headers.append("Prefer", "tx=rollback");
+        return this;
+    }
+    /**
+	* Override the type of the returned `data`.
+	*
+	* @typeParam NewResult - The new result type to override with
+	* @deprecated Use overrideTypes<yourType, { merge: false }>() method at the end of your call chain instead
+	*/ returns() {
+        return this;
+    }
+    /**
+	* Set the maximum number of rows that can be affected by the query.
+	* Only available in PostgREST v13+ and only works with PATCH and DELETE methods.
+	*
+	* @param value - The maximum number of rows that can be affected
+	*/ maxAffected(value) {
+        this.headers.append("Prefer", "handling=strict");
+        this.headers.append("Prefer", `max-affected=${value}`);
+        return this;
+    }
+};
+//#endregion
+//#region src/PostgrestFilterBuilder.ts
+const PostgrestReservedCharsRegexp = /* @__PURE__ */ new RegExp("[,()]");
+var PostgrestFilterBuilder = class extends PostgrestTransformBuilder {
+    /**
+	* Match only rows where `column` is equal to `value`.
+	*
+	* To check if the value of `column` is NULL, you should use `.is()` instead.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ eq(column, value) {
+        this.url.searchParams.append(column, `eq.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is not equal to `value`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ neq(column, value) {
+        this.url.searchParams.append(column, `neq.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is greater than `value`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ gt(column, value) {
+        this.url.searchParams.append(column, `gt.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is greater than or equal to `value`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ gte(column, value) {
+        this.url.searchParams.append(column, `gte.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is less than `value`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ lt(column, value) {
+        this.url.searchParams.append(column, `lt.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is less than or equal to `value`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ lte(column, value) {
+        this.url.searchParams.append(column, `lte.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches `pattern` case-sensitively.
+	*
+	* @param column - The column to filter on
+	* @param pattern - The pattern to match with
+	*/ like(column, pattern) {
+        this.url.searchParams.append(column, `like.${pattern}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches all of `patterns` case-sensitively.
+	*
+	* @param column - The column to filter on
+	* @param patterns - The patterns to match with
+	*/ likeAllOf(column, patterns) {
+        this.url.searchParams.append(column, `like(all).{${patterns.join(",")}}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches any of `patterns` case-sensitively.
+	*
+	* @param column - The column to filter on
+	* @param patterns - The patterns to match with
+	*/ likeAnyOf(column, patterns) {
+        this.url.searchParams.append(column, `like(any).{${patterns.join(",")}}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches `pattern` case-insensitively.
+	*
+	* @param column - The column to filter on
+	* @param pattern - The pattern to match with
+	*/ ilike(column, pattern) {
+        this.url.searchParams.append(column, `ilike.${pattern}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches all of `patterns` case-insensitively.
+	*
+	* @param column - The column to filter on
+	* @param patterns - The patterns to match with
+	*/ ilikeAllOf(column, patterns) {
+        this.url.searchParams.append(column, `ilike(all).{${patterns.join(",")}}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches any of `patterns` case-insensitively.
+	*
+	* @param column - The column to filter on
+	* @param patterns - The patterns to match with
+	*/ ilikeAnyOf(column, patterns) {
+        this.url.searchParams.append(column, `ilike(any).{${patterns.join(",")}}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches the PostgreSQL regex `pattern`
+	* case-sensitively (using the `~` operator).
+	*
+	* @param column - The column to filter on
+	* @param pattern - The PostgreSQL regular expression pattern to match with
+	*/ regexMatch(column, pattern) {
+        this.url.searchParams.append(column, `match.${pattern}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` matches the PostgreSQL regex `pattern`
+	* case-insensitively (using the `~*` operator).
+	*
+	* @param column - The column to filter on
+	* @param pattern - The PostgreSQL regular expression pattern to match with
+	*/ regexIMatch(column, pattern) {
+        this.url.searchParams.append(column, `imatch.${pattern}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` IS `value`.
+	*
+	* For non-boolean columns, this is only relevant for checking if the value of
+	* `column` is NULL by setting `value` to `null`.
+	*
+	* For boolean columns, you can also set `value` to `true` or `false` and it
+	* will behave the same way as `.eq()`.
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ is(column, value) {
+        this.url.searchParams.append(column, `is.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` IS DISTINCT FROM `value`.
+	*
+	* Unlike `.neq()`, this treats `NULL` as a comparable value. Two `NULL` values
+	* are considered equal (not distinct), and comparing `NULL` with any non-NULL
+	* value returns true (distinct).
+	*
+	* @param column - The column to filter on
+	* @param value - The value to filter with
+	*/ isDistinct(column, value) {
+        this.url.searchParams.append(column, `isdistinct.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is included in the `values` array.
+	*
+	* @param column - The column to filter on
+	* @param values - The values array to filter with
+	*/ in(column, values) {
+        const cleanedValues = Array.from(new Set(values)).map((s)=>{
+            if (typeof s === "string" && PostgrestReservedCharsRegexp.test(s)) return `"${s}"`;
+            else return `${s}`;
+        }).join(",");
+        this.url.searchParams.append(column, `in.(${cleanedValues})`);
+        return this;
+    }
+    /**
+	* Match only rows where `column` is NOT included in the `values` array.
+	*
+	* @param column - The column to filter on
+	* @param values - The values array to filter with
+	*/ notIn(column, values) {
+        const cleanedValues = Array.from(new Set(values)).map((s)=>{
+            if (typeof s === "string" && PostgrestReservedCharsRegexp.test(s)) return `"${s}"`;
+            else return `${s}`;
+        }).join(",");
+        this.url.searchParams.append(column, `not.in.(${cleanedValues})`);
+        return this;
+    }
+    /**
+	* Only relevant for jsonb, array, and range columns. Match only rows where
+	* `column` contains every element appearing in `value`.
+	*
+	* @param column - The jsonb, array, or range column to filter on
+	* @param value - The jsonb, array, or range value to filter with
+	*/ contains(column, value) {
+        if (typeof value === "string") this.url.searchParams.append(column, `cs.${value}`);
+        else if (Array.isArray(value)) this.url.searchParams.append(column, `cs.{${value.join(",")}}`);
+        else this.url.searchParams.append(column, `cs.${JSON.stringify(value)}`);
+        return this;
+    }
+    /**
+	* Only relevant for jsonb, array, and range columns. Match only rows where
+	* every element appearing in `column` is contained by `value`.
+	*
+	* @param column - The jsonb, array, or range column to filter on
+	* @param value - The jsonb, array, or range value to filter with
+	*/ containedBy(column, value) {
+        if (typeof value === "string") this.url.searchParams.append(column, `cd.${value}`);
+        else if (Array.isArray(value)) this.url.searchParams.append(column, `cd.{${value.join(",")}}`);
+        else this.url.searchParams.append(column, `cd.${JSON.stringify(value)}`);
+        return this;
+    }
+    /**
+	* Only relevant for range columns. Match only rows where every element in
+	* `column` is greater than any element in `range`.
+	*
+	* @param column - The range column to filter on
+	* @param range - The range to filter with
+	*/ rangeGt(column, range) {
+        this.url.searchParams.append(column, `sr.${range}`);
+        return this;
+    }
+    /**
+	* Only relevant for range columns. Match only rows where every element in
+	* `column` is either contained in `range` or greater than any element in
+	* `range`.
+	*
+	* @param column - The range column to filter on
+	* @param range - The range to filter with
+	*/ rangeGte(column, range) {
+        this.url.searchParams.append(column, `nxl.${range}`);
+        return this;
+    }
+    /**
+	* Only relevant for range columns. Match only rows where every element in
+	* `column` is less than any element in `range`.
+	*
+	* @param column - The range column to filter on
+	* @param range - The range to filter with
+	*/ rangeLt(column, range) {
+        this.url.searchParams.append(column, `sl.${range}`);
+        return this;
+    }
+    /**
+	* Only relevant for range columns. Match only rows where every element in
+	* `column` is either contained in `range` or less than any element in
+	* `range`.
+	*
+	* @param column - The range column to filter on
+	* @param range - The range to filter with
+	*/ rangeLte(column, range) {
+        this.url.searchParams.append(column, `nxr.${range}`);
+        return this;
+    }
+    /**
+	* Only relevant for range columns. Match only rows where `column` is
+	* mutually exclusive to `range` and there can be no element between the two
+	* ranges.
+	*
+	* @param column - The range column to filter on
+	* @param range - The range to filter with
+	*/ rangeAdjacent(column, range) {
+        this.url.searchParams.append(column, `adj.${range}`);
+        return this;
+    }
+    /**
+	* Only relevant for array and range columns. Match only rows where
+	* `column` and `value` have an element in common.
+	*
+	* @param column - The array or range column to filter on
+	* @param value - The array or range value to filter with
+	*/ overlaps(column, value) {
+        if (typeof value === "string") this.url.searchParams.append(column, `ov.${value}`);
+        else this.url.searchParams.append(column, `ov.{${value.join(",")}}`);
+        return this;
+    }
+    /**
+	* Only relevant for text and tsvector columns. Match only rows where
+	* `column` matches the query string in `query`.
+	*
+	* @param column - The text or tsvector column to filter on
+	* @param query - The query text to match with
+	* @param options - Named parameters
+	* @param options.config - The text search configuration to use
+	* @param options.type - Change how the `query` text is interpreted
+	*/ textSearch(column, query, { config, type } = {}) {
+        let typePart = "";
+        if (type === "plain") typePart = "pl";
+        else if (type === "phrase") typePart = "ph";
+        else if (type === "websearch") typePart = "w";
+        const configPart = config === void 0 ? "" : `(${config})`;
+        this.url.searchParams.append(column, `${typePart}fts${configPart}.${query}`);
+        return this;
+    }
+    /**
+	* Match only rows where each column in `query` keys is equal to its
+	* associated value. Shorthand for multiple `.eq()`s.
+	*
+	* @param query - The object to filter with, with column names as keys mapped
+	* to their filter values
+	*/ match(query) {
+        Object.entries(query).forEach(([column, value])=>{
+            this.url.searchParams.append(column, `eq.${value}`);
+        });
+        return this;
+    }
+    /**
+	* Match only rows which doesn't satisfy the filter.
+	*
+	* Unlike most filters, `opearator` and `value` are used as-is and need to
+	* follow [PostgREST
+	* syntax](https://postgrest.org/en/stable/api.html#operators). You also need
+	* to make sure they are properly sanitized.
+	*
+	* @param column - The column to filter on
+	* @param operator - The operator to be negated to filter with, following
+	* PostgREST syntax
+	* @param value - The value to filter with, following PostgREST syntax
+	*/ not(column, operator, value) {
+        this.url.searchParams.append(column, `not.${operator}.${value}`);
+        return this;
+    }
+    /**
+	* Match only rows which satisfy at least one of the filters.
+	*
+	* Unlike most filters, `filters` is used as-is and needs to follow [PostgREST
+	* syntax](https://postgrest.org/en/stable/api.html#operators). You also need
+	* to make sure it's properly sanitized.
+	*
+	* It's currently not possible to do an `.or()` filter across multiple tables.
+	*
+	* @param filters - The filters to use, following PostgREST syntax
+	* @param options - Named parameters
+	* @param options.referencedTable - Set this to filter on referenced tables
+	* instead of the parent table
+	* @param options.foreignTable - Deprecated, use `referencedTable` instead
+	*/ or(filters, { foreignTable, referencedTable = foreignTable } = {}) {
+        const key = referencedTable ? `${referencedTable}.or` : "or";
+        this.url.searchParams.append(key, `(${filters})`);
+        return this;
+    }
+    /**
+	* Match only rows which satisfy the filter. This is an escape hatch - you
+	* should use the specific filter methods wherever possible.
+	*
+	* Unlike most filters, `opearator` and `value` are used as-is and need to
+	* follow [PostgREST
+	* syntax](https://postgrest.org/en/stable/api.html#operators). You also need
+	* to make sure they are properly sanitized.
+	*
+	* @param column - The column to filter on
+	* @param operator - The operator to filter with, following PostgREST syntax
+	* @param value - The value to filter with, following PostgREST syntax
+	*/ filter(column, operator, value) {
+        this.url.searchParams.append(column, `${operator}.${value}`);
+        return this;
+    }
+};
+//#endregion
+//#region src/PostgrestQueryBuilder.ts
+var PostgrestQueryBuilder = class {
+    /**
+	* Creates a query builder scoped to a Postgres table or view.
+	*
+	* @example
+	* ```ts
+	* import PostgrestQueryBuilder from '@supabase/postgrest-js'
+	*
+	* const query = new PostgrestQueryBuilder(
+	*   new URL('https://xyzcompany.supabase.co/rest/v1/users'),
+	*   { headers: { apikey: 'public-anon-key' } }
+	* )
+	* ```
+	*/ constructor(url, { headers = {}, schema, fetch: fetch$1 }){
+        this.url = url;
+        this.headers = new Headers(headers);
+        this.schema = schema;
+        this.fetch = fetch$1;
+    }
+    /**
+	* Perform a SELECT query on the table or view.
+	*
+	* @param columns - The columns to retrieve, separated by commas. Columns can be renamed when returned with `customName:columnName`
+	*
+	* @param options - Named parameters
+	*
+	* @param options.head - When set to `true`, `data` will not be returned.
+	* Useful if you only need the count.
+	*
+	* @param options.count - Count algorithm to use to count rows in the table or view.
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*/ select(columns, options) {
+        const { head = false, count } = options !== null && options !== void 0 ? options : {};
+        const method = head ? "HEAD" : "GET";
+        let quoted = false;
+        const cleanedColumns = (columns !== null && columns !== void 0 ? columns : "*").split("").map((c)=>{
+            if (/\s/.test(c) && !quoted) return "";
+            if (c === "\"") quoted = !quoted;
+            return c;
+        }).join("");
+        this.url.searchParams.set("select", cleanedColumns);
+        if (count) this.headers.append("Prefer", `count=${count}`);
+        return new PostgrestFilterBuilder({
+            method,
+            url: this.url,
+            headers: this.headers,
+            schema: this.schema,
+            fetch: this.fetch
+        });
+    }
+    /**
+	* Perform an INSERT into the table or view.
+	*
+	* By default, inserted rows are not returned. To return it, chain the call
+	* with `.select()`.
+	*
+	* @param values - The values to insert. Pass an object to insert a single row
+	* or an array to insert multiple rows.
+	*
+	* @param options - Named parameters
+	*
+	* @param options.count - Count algorithm to use to count inserted rows.
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*
+	* @param options.defaultToNull - Make missing fields default to `null`.
+	* Otherwise, use the default value for the column. Only applies for bulk
+	* inserts.
+	*/ insert(values, { count, defaultToNull = true } = {}) {
+        var _this$fetch;
+        const method = "POST";
+        if (count) this.headers.append("Prefer", `count=${count}`);
+        if (!defaultToNull) this.headers.append("Prefer", `missing=default`);
+        if (Array.isArray(values)) {
+            const columns = values.reduce((acc, x)=>acc.concat(Object.keys(x)), []);
+            if (columns.length > 0) {
+                const uniqueColumns = [
+                    ...new Set(columns)
+                ].map((column)=>`"${column}"`);
+                this.url.searchParams.set("columns", uniqueColumns.join(","));
+            }
+        }
+        return new PostgrestFilterBuilder({
+            method,
+            url: this.url,
+            headers: this.headers,
+            schema: this.schema,
+            body: values,
+            fetch: (_this$fetch = this.fetch) !== null && _this$fetch !== void 0 ? _this$fetch : fetch
+        });
+    }
+    /**
+	* Perform an UPSERT on the table or view. Depending on the column(s) passed
+	* to `onConflict`, `.upsert()` allows you to perform the equivalent of
+	* `.insert()` if a row with the corresponding `onConflict` columns doesn't
+	* exist, or if it does exist, perform an alternative action depending on
+	* `ignoreDuplicates`.
+	*
+	* By default, upserted rows are not returned. To return it, chain the call
+	* with `.select()`.
+	*
+	* @param values - The values to upsert with. Pass an object to upsert a
+	* single row or an array to upsert multiple rows.
+	*
+	* @param options - Named parameters
+	*
+	* @param options.onConflict - Comma-separated UNIQUE column(s) to specify how
+	* duplicate rows are determined. Two rows are duplicates if all the
+	* `onConflict` columns are equal.
+	*
+	* @param options.ignoreDuplicates - If `true`, duplicate rows are ignored. If
+	* `false`, duplicate rows are merged with existing rows.
+	*
+	* @param options.count - Count algorithm to use to count upserted rows.
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*
+	* @param options.defaultToNull - Make missing fields default to `null`.
+	* Otherwise, use the default value for the column. This only applies when
+	* inserting new rows, not when merging with existing rows under
+	* `ignoreDuplicates: false`. This also only applies when doing bulk upserts.
+	*
+	* @example Upsert a single row using a unique key
+	* ```ts
+	* // Upserting a single row, overwriting based on the 'username' unique column
+	* const { data, error } = await supabase
+	*   .from('users')
+	*   .upsert({ username: 'supabot' }, { onConflict: 'username' })
+	*
+	* // Example response:
+	* // {
+	* //   data: [
+	* //     { id: 4, message: 'bar', username: 'supabot' }
+	* //   ],
+	* //   error: null
+	* // }
+	* ```
+	*
+	* @example Upsert with conflict resolution and exact row counting
+	* ```ts
+	* // Upserting and returning exact count
+	* const { data, error, count } = await supabase
+	*   .from('users')
+	*   .upsert(
+	*     {
+	*       id: 3,
+	*       message: 'foo',
+	*       username: 'supabot'
+	*     },
+	*     {
+	*       onConflict: 'username',
+	*       count: 'exact'
+	*     }
+	*   )
+	*
+	* // Example response:
+	* // {
+	* //   data: [
+	* //     {
+	* //       id: 42,
+	* //       handle: "saoirse",
+	* //       display_name: "Saoirse"
+	* //     }
+	* //   ],
+	* //   count: 1,
+	* //   error: null
+	* // }
+	* ```
+	*/ upsert(values, { onConflict, ignoreDuplicates = false, count, defaultToNull = true } = {}) {
+        var _this$fetch2;
+        const method = "POST";
+        this.headers.append("Prefer", `resolution=${ignoreDuplicates ? "ignore" : "merge"}-duplicates`);
+        if (onConflict !== void 0) this.url.searchParams.set("on_conflict", onConflict);
+        if (count) this.headers.append("Prefer", `count=${count}`);
+        if (!defaultToNull) this.headers.append("Prefer", "missing=default");
+        if (Array.isArray(values)) {
+            const columns = values.reduce((acc, x)=>acc.concat(Object.keys(x)), []);
+            if (columns.length > 0) {
+                const uniqueColumns = [
+                    ...new Set(columns)
+                ].map((column)=>`"${column}"`);
+                this.url.searchParams.set("columns", uniqueColumns.join(","));
+            }
+        }
+        return new PostgrestFilterBuilder({
+            method,
+            url: this.url,
+            headers: this.headers,
+            schema: this.schema,
+            body: values,
+            fetch: (_this$fetch2 = this.fetch) !== null && _this$fetch2 !== void 0 ? _this$fetch2 : fetch
+        });
+    }
+    /**
+	* Perform an UPDATE on the table or view.
+	*
+	* By default, updated rows are not returned. To return it, chain the call
+	* with `.select()` after filters.
+	*
+	* @param values - The values to update with
+	*
+	* @param options - Named parameters
+	*
+	* @param options.count - Count algorithm to use to count updated rows.
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*/ update(values, { count } = {}) {
+        var _this$fetch3;
+        const method = "PATCH";
+        if (count) this.headers.append("Prefer", `count=${count}`);
+        return new PostgrestFilterBuilder({
+            method,
+            url: this.url,
+            headers: this.headers,
+            schema: this.schema,
+            body: values,
+            fetch: (_this$fetch3 = this.fetch) !== null && _this$fetch3 !== void 0 ? _this$fetch3 : fetch
+        });
+    }
+    /**
+	* Perform a DELETE on the table or view.
+	*
+	* By default, deleted rows are not returned. To return it, chain the call
+	* with `.select()` after filters.
+	*
+	* @param options - Named parameters
+	*
+	* @param options.count - Count algorithm to use to count deleted rows.
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*/ delete({ count } = {}) {
+        var _this$fetch4;
+        const method = "DELETE";
+        if (count) this.headers.append("Prefer", `count=${count}`);
+        return new PostgrestFilterBuilder({
+            method,
+            url: this.url,
+            headers: this.headers,
+            schema: this.schema,
+            fetch: (_this$fetch4 = this.fetch) !== null && _this$fetch4 !== void 0 ? _this$fetch4 : fetch
+        });
+    }
+};
+//#endregion
+//#region src/PostgrestClient.ts
+/**
+* PostgREST client.
+*
+* @typeParam Database - Types for the schema from the [type
+* generator](https://supabase.com/docs/reference/javascript/next/typescript-support)
+*
+* @typeParam SchemaName - Postgres schema to switch to. Must be a string
+* literal, the same one passed to the constructor. If the schema is not
+* `"public"`, this must be supplied manually.
+*/ var PostgrestClient = class PostgrestClient {
+    /**
+	* Creates a PostgREST client.
+	*
+	* @param url - URL of the PostgREST endpoint
+	* @param options - Named parameters
+	* @param options.headers - Custom headers
+	* @param options.schema - Postgres schema to switch to
+	* @param options.fetch - Custom fetch
+	* @example
+	* ```ts
+	* import PostgrestClient from '@supabase/postgrest-js'
+	*
+	* const postgrest = new PostgrestClient('https://xyzcompany.supabase.co/rest/v1', {
+	*   headers: { apikey: 'public-anon-key' },
+	*   schema: 'public',
+	* })
+	* ```
+	*/ constructor(url, { headers = {}, schema, fetch: fetch$1 } = {}){
+        this.url = url;
+        this.headers = new Headers(headers);
+        this.schemaName = schema;
+        this.fetch = fetch$1;
+    }
+    /**
+	* Perform a query on a table or a view.
+	*
+	* @param relation - The table or view name to query
+	*/ from(relation) {
+        if (!relation || typeof relation !== "string" || relation.trim() === "") throw new Error("Invalid relation name: relation must be a non-empty string.");
+        return new PostgrestQueryBuilder(new URL(`${this.url}/${relation}`), {
+            headers: new Headers(this.headers),
+            schema: this.schemaName,
+            fetch: this.fetch
+        });
+    }
+    /**
+	* Select a schema to query or perform an function (rpc) call.
+	*
+	* The schema needs to be on the list of exposed schemas inside Supabase.
+	*
+	* @param schema - The schema to query
+	*/ schema(schema) {
+        return new PostgrestClient(this.url, {
+            headers: this.headers,
+            schema,
+            fetch: this.fetch
+        });
+    }
+    /**
+	* Perform a function call.
+	*
+	* @param fn - The function name to call
+	* @param args - The arguments to pass to the function call
+	* @param options - Named parameters
+	* @param options.head - When set to `true`, `data` will not be returned.
+	* Useful if you only need the count.
+	* @param options.get - When set to `true`, the function will be called with
+	* read-only access mode.
+	* @param options.count - Count algorithm to use to count rows returned by the
+	* function. Only applicable for [set-returning
+	* functions](https://www.postgresql.org/docs/current/functions-srf.html).
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*
+	* @example
+	* ```ts
+	* // For cross-schema functions where type inference fails, use overrideTypes:
+	* const { data } = await supabase
+	*   .schema('schema_b')
+	*   .rpc('function_a', {})
+	*   .overrideTypes<{ id: string; user_id: string }[]>()
+	* ```
+	*/ rpc(fn, args = {}, { head = false, get = false, count } = {}) {
+        var _this$fetch;
+        let method;
+        const url = new URL(`${this.url}/rpc/${fn}`);
+        let body;
+        if (head || get) {
+            method = head ? "HEAD" : "GET";
+            Object.entries(args).filter(([_, value])=>value !== void 0).map(([name, value])=>[
+                    name,
+                    Array.isArray(value) ? `{${value.join(",")}}` : `${value}`
+                ]).forEach(([name, value])=>{
+                url.searchParams.append(name, value);
+            });
+        } else {
+            method = "POST";
+            body = args;
+        }
+        const headers = new Headers(this.headers);
+        if (count) headers.set("Prefer", `count=${count}`);
+        return new PostgrestFilterBuilder({
+            method,
+            url,
+            headers,
+            schema: this.schemaName,
+            body,
+            fetch: (_this$fetch = this.fetch) !== null && _this$fetch !== void 0 ? _this$fetch : fetch
+        });
+    }
+};
+//#endregion
+//#region src/index.ts
+var src_default = {
+    PostgrestClient,
+    PostgrestQueryBuilder,
+    PostgrestFilterBuilder,
+    PostgrestTransformBuilder,
+    PostgrestBuilder,
+    PostgrestError
+};
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/iceberg-js@0.8.1/node_modules/iceberg-js/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "IcebergError",
+    ()=>IcebergError,
+    "IcebergRestCatalog",
+    ()=>IcebergRestCatalog,
+    "getCurrentSchema",
+    ()=>getCurrentSchema,
+    "isDecimalType",
+    ()=>isDecimalType,
+    "isFixedType",
+    ()=>isFixedType,
+    "parseDecimalType",
+    ()=>parseDecimalType,
+    "parseFixedType",
+    ()=>parseFixedType,
+    "typesEqual",
+    ()=>typesEqual
+]);
+// src/errors/IcebergError.ts
+var IcebergError = class extends Error {
+    constructor(message, opts){
+        super(message);
+        this.name = "IcebergError";
+        this.status = opts.status;
+        this.icebergType = opts.icebergType;
+        this.icebergCode = opts.icebergCode;
+        this.details = opts.details;
+        this.isCommitStateUnknown = opts.icebergType === "CommitStateUnknownException" || [
+            500,
+            502,
+            504
+        ].includes(opts.status) && opts.icebergType?.includes("CommitState") === true;
+    }
+    /**
+   * Returns true if the error is a 404 Not Found error.
+   */ isNotFound() {
+        return this.status === 404;
+    }
+    /**
+   * Returns true if the error is a 409 Conflict error.
+   */ isConflict() {
+        return this.status === 409;
+    }
+    /**
+   * Returns true if the error is a 419 Authentication Timeout error.
+   */ isAuthenticationTimeout() {
+        return this.status === 419;
+    }
+};
+// src/utils/url.ts
+function buildUrl(baseUrl, path, query) {
+    const url = new URL(path, baseUrl);
+    if (query) {
+        for (const [key, value] of Object.entries(query)){
+            if (value !== void 0) {
+                url.searchParams.set(key, value);
+            }
+        }
+    }
+    return url.toString();
+}
+// src/http/createFetchClient.ts
+async function buildAuthHeaders(auth) {
+    if (!auth || auth.type === "none") {
+        return {};
+    }
+    if (auth.type === "bearer") {
+        return {
+            Authorization: `Bearer ${auth.token}`
+        };
+    }
+    if (auth.type === "header") {
+        return {
+            [auth.name]: auth.value
+        };
+    }
+    if (auth.type === "custom") {
+        return await auth.getHeaders();
+    }
+    return {};
+}
+function createFetchClient(options) {
+    const fetchFn = options.fetchImpl ?? globalThis.fetch;
+    return {
+        async request ({ method, path, query, body, headers }) {
+            const url = buildUrl(options.baseUrl, path, query);
+            const authHeaders = await buildAuthHeaders(options.auth);
+            const res = await fetchFn(url, {
+                method,
+                headers: {
+                    ...body ? {
+                        "Content-Type": "application/json"
+                    } : {},
+                    ...authHeaders,
+                    ...headers
+                },
+                body: body ? JSON.stringify(body) : void 0
+            });
+            const text = await res.text();
+            const isJson = (res.headers.get("content-type") || "").includes("application/json");
+            const data = isJson && text ? JSON.parse(text) : text;
+            if (!res.ok) {
+                const errBody = isJson ? data : void 0;
+                const errorDetail = errBody?.error;
+                throw new IcebergError(errorDetail?.message ?? `Request failed with status ${res.status}`, {
+                    status: res.status,
+                    icebergType: errorDetail?.type,
+                    icebergCode: errorDetail?.code,
+                    details: errBody
+                });
+            }
+            return {
+                status: res.status,
+                headers: res.headers,
+                data
+            };
+        }
+    };
+}
+// src/catalog/namespaces.ts
+function namespaceToPath(namespace) {
+    return namespace.join("");
+}
+var NamespaceOperations = class {
+    constructor(client, prefix = ""){
+        this.client = client;
+        this.prefix = prefix;
+    }
+    async listNamespaces(parent) {
+        const query = parent ? {
+            parent: namespaceToPath(parent.namespace)
+        } : void 0;
+        const response = await this.client.request({
+            method: "GET",
+            path: `${this.prefix}/namespaces`,
+            query
+        });
+        return response.data.namespaces.map((ns)=>({
+                namespace: ns
+            }));
+    }
+    async createNamespace(id, metadata) {
+        const request = {
+            namespace: id.namespace,
+            properties: metadata?.properties
+        };
+        const response = await this.client.request({
+            method: "POST",
+            path: `${this.prefix}/namespaces`,
+            body: request
+        });
+        return response.data;
+    }
+    async dropNamespace(id) {
+        await this.client.request({
+            method: "DELETE",
+            path: `${this.prefix}/namespaces/${namespaceToPath(id.namespace)}`
+        });
+    }
+    async loadNamespaceMetadata(id) {
+        const response = await this.client.request({
+            method: "GET",
+            path: `${this.prefix}/namespaces/${namespaceToPath(id.namespace)}`
+        });
+        return {
+            properties: response.data.properties
+        };
+    }
+    async namespaceExists(id) {
+        try {
+            await this.client.request({
+                method: "HEAD",
+                path: `${this.prefix}/namespaces/${namespaceToPath(id.namespace)}`
+            });
+            return true;
+        } catch (error) {
+            if (error instanceof IcebergError && error.status === 404) {
+                return false;
+            }
+            throw error;
+        }
+    }
+    async createNamespaceIfNotExists(id, metadata) {
+        try {
+            return await this.createNamespace(id, metadata);
+        } catch (error) {
+            if (error instanceof IcebergError && error.status === 409) {
+                return;
+            }
+            throw error;
+        }
+    }
+};
+// src/catalog/tables.ts
+function namespaceToPath2(namespace) {
+    return namespace.join("");
+}
+var TableOperations = class {
+    constructor(client, prefix = "", accessDelegation){
+        this.client = client;
+        this.prefix = prefix;
+        this.accessDelegation = accessDelegation;
+    }
+    async listTables(namespace) {
+        const response = await this.client.request({
+            method: "GET",
+            path: `${this.prefix}/namespaces/${namespaceToPath2(namespace.namespace)}/tables`
+        });
+        return response.data.identifiers;
+    }
+    async createTable(namespace, request) {
+        const headers = {};
+        if (this.accessDelegation) {
+            headers["X-Iceberg-Access-Delegation"] = this.accessDelegation;
+        }
+        const response = await this.client.request({
+            method: "POST",
+            path: `${this.prefix}/namespaces/${namespaceToPath2(namespace.namespace)}/tables`,
+            body: request,
+            headers
+        });
+        return response.data.metadata;
+    }
+    async updateTable(id, request) {
+        const response = await this.client.request({
+            method: "POST",
+            path: `${this.prefix}/namespaces/${namespaceToPath2(id.namespace)}/tables/${id.name}`,
+            body: request
+        });
+        return {
+            "metadata-location": response.data["metadata-location"],
+            metadata: response.data.metadata
+        };
+    }
+    async dropTable(id, options) {
+        await this.client.request({
+            method: "DELETE",
+            path: `${this.prefix}/namespaces/${namespaceToPath2(id.namespace)}/tables/${id.name}`,
+            query: {
+                purgeRequested: String(options?.purge ?? false)
+            }
+        });
+    }
+    async loadTable(id) {
+        const headers = {};
+        if (this.accessDelegation) {
+            headers["X-Iceberg-Access-Delegation"] = this.accessDelegation;
+        }
+        const response = await this.client.request({
+            method: "GET",
+            path: `${this.prefix}/namespaces/${namespaceToPath2(id.namespace)}/tables/${id.name}`,
+            headers
+        });
+        return response.data.metadata;
+    }
+    async tableExists(id) {
+        const headers = {};
+        if (this.accessDelegation) {
+            headers["X-Iceberg-Access-Delegation"] = this.accessDelegation;
+        }
+        try {
+            await this.client.request({
+                method: "HEAD",
+                path: `${this.prefix}/namespaces/${namespaceToPath2(id.namespace)}/tables/${id.name}`,
+                headers
+            });
+            return true;
+        } catch (error) {
+            if (error instanceof IcebergError && error.status === 404) {
+                return false;
+            }
+            throw error;
+        }
+    }
+    async createTableIfNotExists(namespace, request) {
+        try {
+            return await this.createTable(namespace, request);
+        } catch (error) {
+            if (error instanceof IcebergError && error.status === 409) {
+                return await this.loadTable({
+                    namespace: namespace.namespace,
+                    name: request.name
+                });
+            }
+            throw error;
+        }
+    }
+};
+// src/catalog/IcebergRestCatalog.ts
+var IcebergRestCatalog = class {
+    /**
+   * Creates a new Iceberg REST Catalog client.
+   *
+   * @param options - Configuration options for the catalog client
+   */ constructor(options){
+        let prefix = "v1";
+        if (options.catalogName) {
+            prefix += `/${options.catalogName}`;
+        }
+        const baseUrl = options.baseUrl.endsWith("/") ? options.baseUrl : `${options.baseUrl}/`;
+        this.client = createFetchClient({
+            baseUrl,
+            auth: options.auth,
+            fetchImpl: options.fetch
+        });
+        this.accessDelegation = options.accessDelegation?.join(",");
+        this.namespaceOps = new NamespaceOperations(this.client, prefix);
+        this.tableOps = new TableOperations(this.client, prefix, this.accessDelegation);
+    }
+    /**
+   * Lists all namespaces in the catalog.
+   *
+   * @param parent - Optional parent namespace to list children under
+   * @returns Array of namespace identifiers
+   *
+   * @example
+   * ```typescript
+   * // List all top-level namespaces
+   * const namespaces = await catalog.listNamespaces();
+   *
+   * // List namespaces under a parent
+   * const children = await catalog.listNamespaces({ namespace: ['analytics'] });
+   * ```
+   */ async listNamespaces(parent) {
+        return this.namespaceOps.listNamespaces(parent);
+    }
+    /**
+   * Creates a new namespace in the catalog.
+   *
+   * @param id - Namespace identifier to create
+   * @param metadata - Optional metadata properties for the namespace
+   * @returns Response containing the created namespace and its properties
+   *
+   * @example
+   * ```typescript
+   * const response = await catalog.createNamespace(
+   *   { namespace: ['analytics'] },
+   *   { properties: { owner: 'data-team' } }
+   * );
+   * console.log(response.namespace); // ['analytics']
+   * console.log(response.properties); // { owner: 'data-team', ... }
+   * ```
+   */ async createNamespace(id, metadata) {
+        return this.namespaceOps.createNamespace(id, metadata);
+    }
+    /**
+   * Drops a namespace from the catalog.
+   *
+   * The namespace must be empty (contain no tables) before it can be dropped.
+   *
+   * @param id - Namespace identifier to drop
+   *
+   * @example
+   * ```typescript
+   * await catalog.dropNamespace({ namespace: ['analytics'] });
+   * ```
+   */ async dropNamespace(id) {
+        await this.namespaceOps.dropNamespace(id);
+    }
+    /**
+   * Loads metadata for a namespace.
+   *
+   * @param id - Namespace identifier to load
+   * @returns Namespace metadata including properties
+   *
+   * @example
+   * ```typescript
+   * const metadata = await catalog.loadNamespaceMetadata({ namespace: ['analytics'] });
+   * console.log(metadata.properties);
+   * ```
+   */ async loadNamespaceMetadata(id) {
+        return this.namespaceOps.loadNamespaceMetadata(id);
+    }
+    /**
+   * Lists all tables in a namespace.
+   *
+   * @param namespace - Namespace identifier to list tables from
+   * @returns Array of table identifiers
+   *
+   * @example
+   * ```typescript
+   * const tables = await catalog.listTables({ namespace: ['analytics'] });
+   * console.log(tables); // [{ namespace: ['analytics'], name: 'events' }, ...]
+   * ```
+   */ async listTables(namespace) {
+        return this.tableOps.listTables(namespace);
+    }
+    /**
+   * Creates a new table in the catalog.
+   *
+   * @param namespace - Namespace to create the table in
+   * @param request - Table creation request including name, schema, partition spec, etc.
+   * @returns Table metadata for the created table
+   *
+   * @example
+   * ```typescript
+   * const metadata = await catalog.createTable(
+   *   { namespace: ['analytics'] },
+   *   {
+   *     name: 'events',
+   *     schema: {
+   *       type: 'struct',
+   *       fields: [
+   *         { id: 1, name: 'id', type: 'long', required: true },
+   *         { id: 2, name: 'timestamp', type: 'timestamp', required: true }
+   *       ],
+   *       'schema-id': 0
+   *     },
+   *     'partition-spec': {
+   *       'spec-id': 0,
+   *       fields: [
+   *         { source_id: 2, field_id: 1000, name: 'ts_day', transform: 'day' }
+   *       ]
+   *     }
+   *   }
+   * );
+   * ```
+   */ async createTable(namespace, request) {
+        return this.tableOps.createTable(namespace, request);
+    }
+    /**
+   * Updates an existing table's metadata.
+   *
+   * Can update the schema, partition spec, or properties of a table.
+   *
+   * @param id - Table identifier to update
+   * @param request - Update request with fields to modify
+   * @returns Response containing the metadata location and updated table metadata
+   *
+   * @example
+   * ```typescript
+   * const response = await catalog.updateTable(
+   *   { namespace: ['analytics'], name: 'events' },
+   *   {
+   *     properties: { 'read.split.target-size': '134217728' }
+   *   }
+   * );
+   * console.log(response['metadata-location']); // s3://...
+   * console.log(response.metadata); // TableMetadata object
+   * ```
+   */ async updateTable(id, request) {
+        return this.tableOps.updateTable(id, request);
+    }
+    /**
+   * Drops a table from the catalog.
+   *
+   * @param id - Table identifier to drop
+   *
+   * @example
+   * ```typescript
+   * await catalog.dropTable({ namespace: ['analytics'], name: 'events' });
+   * ```
+   */ async dropTable(id, options) {
+        await this.tableOps.dropTable(id, options);
+    }
+    /**
+   * Loads metadata for a table.
+   *
+   * @param id - Table identifier to load
+   * @returns Table metadata including schema, partition spec, location, etc.
+   *
+   * @example
+   * ```typescript
+   * const metadata = await catalog.loadTable({ namespace: ['analytics'], name: 'events' });
+   * console.log(metadata.schema);
+   * console.log(metadata.location);
+   * ```
+   */ async loadTable(id) {
+        return this.tableOps.loadTable(id);
+    }
+    /**
+   * Checks if a namespace exists in the catalog.
+   *
+   * @param id - Namespace identifier to check
+   * @returns True if the namespace exists, false otherwise
+   *
+   * @example
+   * ```typescript
+   * const exists = await catalog.namespaceExists({ namespace: ['analytics'] });
+   * console.log(exists); // true or false
+   * ```
+   */ async namespaceExists(id) {
+        return this.namespaceOps.namespaceExists(id);
+    }
+    /**
+   * Checks if a table exists in the catalog.
+   *
+   * @param id - Table identifier to check
+   * @returns True if the table exists, false otherwise
+   *
+   * @example
+   * ```typescript
+   * const exists = await catalog.tableExists({ namespace: ['analytics'], name: 'events' });
+   * console.log(exists); // true or false
+   * ```
+   */ async tableExists(id) {
+        return this.tableOps.tableExists(id);
+    }
+    /**
+   * Creates a namespace if it does not exist.
+   *
+   * If the namespace already exists, returns void. If created, returns the response.
+   *
+   * @param id - Namespace identifier to create
+   * @param metadata - Optional metadata properties for the namespace
+   * @returns Response containing the created namespace and its properties, or void if it already exists
+   *
+   * @example
+   * ```typescript
+   * const response = await catalog.createNamespaceIfNotExists(
+   *   { namespace: ['analytics'] },
+   *   { properties: { owner: 'data-team' } }
+   * );
+   * if (response) {
+   *   console.log('Created:', response.namespace);
+   * } else {
+   *   console.log('Already exists');
+   * }
+   * ```
+   */ async createNamespaceIfNotExists(id, metadata) {
+        return this.namespaceOps.createNamespaceIfNotExists(id, metadata);
+    }
+    /**
+   * Creates a table if it does not exist.
+   *
+   * If the table already exists, returns its metadata instead.
+   *
+   * @param namespace - Namespace to create the table in
+   * @param request - Table creation request including name, schema, partition spec, etc.
+   * @returns Table metadata for the created or existing table
+   *
+   * @example
+   * ```typescript
+   * const metadata = await catalog.createTableIfNotExists(
+   *   { namespace: ['analytics'] },
+   *   {
+   *     name: 'events',
+   *     schema: {
+   *       type: 'struct',
+   *       fields: [
+   *         { id: 1, name: 'id', type: 'long', required: true },
+   *         { id: 2, name: 'timestamp', type: 'timestamp', required: true }
+   *       ],
+   *       'schema-id': 0
+   *     }
+   *   }
+   * );
+   * ```
+   */ async createTableIfNotExists(namespace, request) {
+        return this.tableOps.createTableIfNotExists(namespace, request);
+    }
+};
+// src/catalog/types.ts
+var DECIMAL_REGEX = /^decimal\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)$/;
+var FIXED_REGEX = /^fixed\s*\[\s*(\d+)\s*\]$/;
+function parseDecimalType(type) {
+    const match = type.match(DECIMAL_REGEX);
+    if (!match) return null;
+    return {
+        precision: parseInt(match[1], 10),
+        scale: parseInt(match[2], 10)
+    };
+}
+function parseFixedType(type) {
+    const match = type.match(FIXED_REGEX);
+    if (!match) return null;
+    return {
+        length: parseInt(match[1], 10)
+    };
+}
+function isDecimalType(type) {
+    return DECIMAL_REGEX.test(type);
+}
+function isFixedType(type) {
+    return FIXED_REGEX.test(type);
+}
+function typesEqual(a, b) {
+    const decimalA = parseDecimalType(a);
+    const decimalB = parseDecimalType(b);
+    if (decimalA && decimalB) {
+        return decimalA.precision === decimalB.precision && decimalA.scale === decimalB.scale;
+    }
+    const fixedA = parseFixedType(a);
+    const fixedB = parseFixedType(b);
+    if (fixedA && fixedB) {
+        return fixedA.length === fixedB.length;
+    }
+    return a === b;
+}
+function getCurrentSchema(metadata) {
+    return metadata.schemas.find((s)=>s["schema-id"] === metadata["current-schema-id"]);
+}
+;
+ //# sourceMappingURL=index.mjs.map
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+storage-js@2.89.0/node_modules/@supabase/storage-js/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "StorageAnalyticsClient",
+    ()=>StorageAnalyticsClient,
+    "StorageApiError",
+    ()=>StorageApiError,
+    "StorageClient",
+    ()=>StorageClient,
+    "StorageError",
+    ()=>StorageError,
+    "StorageUnknownError",
+    ()=>StorageUnknownError,
+    "StorageVectorsApiError",
+    ()=>StorageVectorsApiError,
+    "StorageVectorsClient",
+    ()=>StorageVectorsClient,
+    "StorageVectorsError",
+    ()=>StorageVectorsError,
+    "StorageVectorsErrorCode",
+    ()=>StorageVectorsErrorCode,
+    "StorageVectorsUnknownError",
+    ()=>StorageVectorsUnknownError,
+    "VectorBucketApi",
+    ()=>VectorBucketApi,
+    "VectorBucketScope",
+    ()=>VectorBucketScope,
+    "VectorDataApi",
+    ()=>VectorDataApi,
+    "VectorIndexApi",
+    ()=>VectorIndexApi,
+    "VectorIndexScope",
+    ()=>VectorIndexScope,
+    "isPlainObject",
+    ()=>isPlainObject,
+    "isStorageError",
+    ()=>isStorageError,
+    "isStorageVectorsError",
+    ()=>isStorageVectorsError,
+    "normalizeToFloat32",
+    ()=>normalizeToFloat32,
+    "resolveFetch",
+    ()=>resolveFetch,
+    "resolveResponse",
+    ()=>resolveResponse,
+    "validateVectorDimension",
+    ()=>validateVectorDimension
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$buffer$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/buffer/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$iceberg$2d$js$40$0$2e$8$2e$1$2f$node_modules$2f$iceberg$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/iceberg-js@0.8.1/node_modules/iceberg-js/dist/index.mjs [app-client] (ecmascript)");
+;
+//#region src/lib/errors.ts
+var StorageError = class extends Error {
+    constructor(message){
+        super(message);
+        this.__isStorageError = true;
+        this.name = "StorageError";
+    }
+};
+function isStorageError(error) {
+    return typeof error === "object" && error !== null && "__isStorageError" in error;
+}
+var StorageApiError = class extends StorageError {
+    constructor(message, status, statusCode){
+        super(message);
+        this.name = "StorageApiError";
+        this.status = status;
+        this.statusCode = statusCode;
+    }
+    toJSON() {
+        return {
+            name: this.name,
+            message: this.message,
+            status: this.status,
+            statusCode: this.statusCode
+        };
+    }
+};
+var StorageUnknownError = class extends StorageError {
+    constructor(message, originalError){
+        super(message);
+        this.name = "StorageUnknownError";
+        this.originalError = originalError;
+    }
+};
+//#endregion
+//#region src/lib/helpers.ts
+const resolveFetch$1 = (customFetch)=>{
+    if (customFetch) return (...args)=>customFetch(...args);
+    return (...args)=>fetch(...args);
+};
+const resolveResponse$1 = ()=>{
+    return Response;
+};
+const recursiveToCamel = (item)=>{
+    if (Array.isArray(item)) return item.map((el)=>recursiveToCamel(el));
+    else if (typeof item === "function" || item !== Object(item)) return item;
+    const result = {};
+    Object.entries(item).forEach(([key, value])=>{
+        const newKey = key.replace(/([-_][a-z])/gi, (c)=>c.toUpperCase().replace(/[-_]/g, ""));
+        result[newKey] = recursiveToCamel(value);
+    });
+    return result;
+};
+/**
+* Determine if input is a plain object
+* An object is plain if it's created by either {}, new Object(), or Object.create(null)
+* source: https://github.com/sindresorhus/is-plain-obj
+*/ const isPlainObject$1 = (value)=>{
+    if (typeof value !== "object" || value === null) return false;
+    const prototype = Object.getPrototypeOf(value);
+    return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in value) && !(Symbol.iterator in value);
+};
+/**
+* Validates if a given bucket name is valid according to Supabase Storage API rules
+* Mirrors backend validation from: storage/src/storage/limits.ts:isValidBucketName()
+*
+* Rules:
+* - Length: 1-100 characters
+* - Allowed characters: alphanumeric (a-z, A-Z, 0-9), underscore (_), and safe special characters
+* - Safe special characters: ! - . * ' ( ) space & $ @ = ; : + , ?
+* - Forbidden: path separators (/, \), path traversal (..), leading/trailing whitespace
+*
+* AWS S3 Reference: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
+*
+* @param bucketName - The bucket name to validate
+* @returns true if valid, false otherwise
+*/ const isValidBucketName = (bucketName)=>{
+    if (!bucketName || typeof bucketName !== "string") return false;
+    if (bucketName.length === 0 || bucketName.length > 100) return false;
+    if (bucketName.trim() !== bucketName) return false;
+    if (bucketName.includes("/") || bucketName.includes("\\")) return false;
+    return /^[\w!.\*'() &$@=;:+,?-]+$/.test(bucketName);
+};
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/typeof.js
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o$1) {
+        return typeof o$1;
+    } : function(o$1) {
+        return o$1 && "function" == typeof Symbol && o$1.constructor === Symbol && o$1 !== Symbol.prototype ? "symbol" : typeof o$1;
+    }, _typeof(o);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/toPrimitive.js
+function toPrimitive(t, r) {
+    if ("object" != _typeof(t) || !t) return t;
+    var e = t[Symbol.toPrimitive];
+    if (void 0 !== e) {
+        var i = e.call(t, r || "default");
+        if ("object" != _typeof(i)) return i;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return ("string" === r ? String : Number)(t);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/toPropertyKey.js
+function toPropertyKey(t) {
+    var i = toPrimitive(t, "string");
+    return "symbol" == _typeof(i) ? i : i + "";
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/defineProperty.js
+function _defineProperty(e, r, t) {
+    return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+        value: t,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+    }) : e[r] = t, e;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/objectSpread2.js
+function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        r && (o = o.filter(function(r$1) {
+            return Object.getOwnPropertyDescriptor(e, r$1).enumerable;
+        })), t.push.apply(t, o);
+    }
+    return t;
+}
+function _objectSpread2(e) {
+    for(var r = 1; r < arguments.length; r++){
+        var t = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t), !0).forEach(function(r$1) {
+            _defineProperty(e, r$1, t[r$1]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r$1) {
+            Object.defineProperty(e, r$1, Object.getOwnPropertyDescriptor(t, r$1));
+        });
+    }
+    return e;
+}
+//#endregion
+//#region src/lib/fetch.ts
+const _getErrorMessage$1 = (err)=>{
+    var _err$error;
+    return err.msg || err.message || err.error_description || (typeof err.error === "string" ? err.error : (_err$error = err.error) === null || _err$error === void 0 ? void 0 : _err$error.message) || JSON.stringify(err);
+};
+const handleError$1 = async (error, reject, options)=>{
+    if (error instanceof await resolveResponse$1() && !(options === null || options === void 0 ? void 0 : options.noResolveJson)) error.json().then((err)=>{
+        const status = error.status || 500;
+        const statusCode = (err === null || err === void 0 ? void 0 : err.statusCode) || status + "";
+        reject(new StorageApiError(_getErrorMessage$1(err), status, statusCode));
+    }).catch((err)=>{
+        reject(new StorageUnknownError(_getErrorMessage$1(err), err));
+    });
+    else reject(new StorageUnknownError(_getErrorMessage$1(error), error));
+};
+const _getRequestParams$1 = (method, options, parameters, body)=>{
+    const params = {
+        method,
+        headers: (options === null || options === void 0 ? void 0 : options.headers) || {}
+    };
+    if (method === "GET" || !body) return params;
+    if (isPlainObject$1(body)) {
+        params.headers = _objectSpread2({
+            "Content-Type": "application/json"
+        }, options === null || options === void 0 ? void 0 : options.headers);
+        params.body = JSON.stringify(body);
+    } else params.body = body;
+    if (options === null || options === void 0 ? void 0 : options.duplex) params.duplex = options.duplex;
+    return _objectSpread2(_objectSpread2({}, params), parameters);
+};
+async function _handleRequest$1(fetcher, method, url, options, parameters, body) {
+    return new Promise((resolve, reject)=>{
+        fetcher(url, _getRequestParams$1(method, options, parameters, body)).then((result)=>{
+            if (!result.ok) throw result;
+            if (options === null || options === void 0 ? void 0 : options.noResolveJson) return result;
+            return result.json();
+        }).then((data)=>resolve(data)).catch((error)=>handleError$1(error, reject, options));
+    });
+}
+async function get(fetcher, url, options, parameters) {
+    return _handleRequest$1(fetcher, "GET", url, options, parameters);
+}
+async function post$1(fetcher, url, body, options, parameters) {
+    return _handleRequest$1(fetcher, "POST", url, options, parameters, body);
+}
+async function put(fetcher, url, body, options, parameters) {
+    return _handleRequest$1(fetcher, "PUT", url, options, parameters, body);
+}
+async function head(fetcher, url, options, parameters) {
+    return _handleRequest$1(fetcher, "HEAD", url, _objectSpread2(_objectSpread2({}, options), {}, {
+        noResolveJson: true
+    }), parameters);
+}
+async function remove(fetcher, url, body, options, parameters) {
+    return _handleRequest$1(fetcher, "DELETE", url, options, parameters, body);
+}
+//#endregion
+//#region src/packages/StreamDownloadBuilder.ts
+var StreamDownloadBuilder = class {
+    constructor(downloadFn, shouldThrowOnError){
+        this.downloadFn = downloadFn;
+        this.shouldThrowOnError = shouldThrowOnError;
+    }
+    then(onfulfilled, onrejected) {
+        return this.execute().then(onfulfilled, onrejected);
+    }
+    async execute() {
+        var _this = this;
+        try {
+            return {
+                data: (await _this.downloadFn()).body,
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+};
+//#endregion
+//#region src/packages/BlobDownloadBuilder.ts
+let _Symbol$toStringTag;
+_Symbol$toStringTag = Symbol.toStringTag;
+var BlobDownloadBuilder = class {
+    constructor(downloadFn, shouldThrowOnError){
+        this.downloadFn = downloadFn;
+        this.shouldThrowOnError = shouldThrowOnError;
+        this[_Symbol$toStringTag] = "BlobDownloadBuilder";
+        this.promise = null;
+    }
+    asStream() {
+        return new StreamDownloadBuilder(this.downloadFn, this.shouldThrowOnError);
+    }
+    then(onfulfilled, onrejected) {
+        return this.getPromise().then(onfulfilled, onrejected);
+    }
+    catch(onrejected) {
+        return this.getPromise().catch(onrejected);
+    }
+    finally(onfinally) {
+        return this.getPromise().finally(onfinally);
+    }
+    getPromise() {
+        if (!this.promise) this.promise = this.execute();
+        return this.promise;
+    }
+    async execute() {
+        var _this = this;
+        try {
+            return {
+                data: await (await _this.downloadFn()).blob(),
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+};
+//#endregion
+//#region src/packages/StorageFileApi.ts
+const DEFAULT_SEARCH_OPTIONS = {
+    limit: 100,
+    offset: 0,
+    sortBy: {
+        column: "name",
+        order: "asc"
+    }
+};
+const DEFAULT_FILE_OPTIONS = {
+    cacheControl: "3600",
+    contentType: "text/plain;charset=UTF-8",
+    upsert: false
+};
+var StorageFileApi = class {
+    constructor(url, headers = {}, bucketId, fetch$1){
+        this.shouldThrowOnError = false;
+        this.url = url;
+        this.headers = headers;
+        this.bucketId = bucketId;
+        this.fetch = resolveFetch$1(fetch$1);
+    }
+    /**
+	* Enable throwing errors instead of returning them.
+	*
+	* @category File Buckets
+	*/ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /**
+	* Uploads a file to an existing bucket or replaces an existing file at the specified path with a new one.
+	*
+	* @param method HTTP method.
+	* @param path The relative file path. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.
+	* @param fileBody The body of the file to be stored in the bucket.
+	*/ async uploadOrUpdate(method, path, fileBody, fileOptions) {
+        var _this = this;
+        try {
+            let body;
+            const options = _objectSpread2(_objectSpread2({}, DEFAULT_FILE_OPTIONS), fileOptions);
+            let headers = _objectSpread2(_objectSpread2({}, _this.headers), method === "POST" && {
+                "x-upsert": String(options.upsert)
+            });
+            const metadata = options.metadata;
+            if (typeof Blob !== "undefined" && fileBody instanceof Blob) {
+                body = new FormData();
+                body.append("cacheControl", options.cacheControl);
+                if (metadata) body.append("metadata", _this.encodeMetadata(metadata));
+                body.append("", fileBody);
+            } else if (typeof FormData !== "undefined" && fileBody instanceof FormData) {
+                body = fileBody;
+                if (!body.has("cacheControl")) body.append("cacheControl", options.cacheControl);
+                if (metadata && !body.has("metadata")) body.append("metadata", _this.encodeMetadata(metadata));
+            } else {
+                body = fileBody;
+                headers["cache-control"] = `max-age=${options.cacheControl}`;
+                headers["content-type"] = options.contentType;
+                if (metadata) headers["x-metadata"] = _this.toBase64(_this.encodeMetadata(metadata));
+                if ((typeof ReadableStream !== "undefined" && body instanceof ReadableStream || body && typeof body === "object" && "pipe" in body && typeof body.pipe === "function") && !options.duplex) options.duplex = "half";
+            }
+            if (fileOptions === null || fileOptions === void 0 ? void 0 : fileOptions.headers) headers = _objectSpread2(_objectSpread2({}, headers), fileOptions.headers);
+            const cleanPath = _this._removeEmptyFolders(path);
+            const _path = _this._getFinalPath(cleanPath);
+            const data = await (method == "PUT" ? put : post$1)(_this.fetch, `${_this.url}/object/${_path}`, body, _objectSpread2({
+                headers
+            }, (options === null || options === void 0 ? void 0 : options.duplex) ? {
+                duplex: options.duplex
+            } : {}));
+            return {
+                data: {
+                    path: cleanPath,
+                    id: data.Id,
+                    fullPath: data.Key
+                },
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Uploads a file to an existing bucket.
+	*
+	* @category File Buckets
+	* @param path The file path, including the file name. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.
+	* @param fileBody The body of the file to be stored in the bucket.
+	* @param fileOptions Optional file upload options including cacheControl, contentType, upsert, and metadata.
+	* @returns Promise with response containing file path, id, and fullPath or error
+	*
+	* @example Upload file
+	* ```js
+	* const avatarFile = event.target.files[0]
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .upload('public/avatar1.png', avatarFile, {
+	*     cacheControl: '3600',
+	*     upsert: false
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "path": "public/avatar1.png",
+	*     "fullPath": "avatars/public/avatar1.png"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*
+	* @example Upload file using `ArrayBuffer` from base64 file data
+	* ```js
+	* import { decode } from 'base64-arraybuffer'
+	*
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .upload('public/avatar1.png', decode('base64FileData'), {
+	*     contentType: 'image/png'
+	*   })
+	* ```
+	*/ async upload(path, fileBody, fileOptions) {
+        return this.uploadOrUpdate("POST", path, fileBody, fileOptions);
+    }
+    /**
+	* Upload a file with a token generated from `createSignedUploadUrl`.
+	*
+	* @category File Buckets
+	* @param path The file path, including the file name. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.
+	* @param token The token generated from `createSignedUploadUrl`
+	* @param fileBody The body of the file to be stored in the bucket.
+	* @param fileOptions HTTP headers (cacheControl, contentType, etc.).
+	* **Note:** The `upsert` option has no effect here. To enable upsert behavior,
+	* pass `{ upsert: true }` when calling `createSignedUploadUrl()` instead.
+	* @returns Promise with response containing file path and fullPath or error
+	*
+	* @example Upload to a signed URL
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .uploadToSignedUrl('folder/cat.jpg', 'token-from-createSignedUploadUrl', file)
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "path": "folder/cat.jpg",
+	*     "fullPath": "avatars/folder/cat.jpg"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async uploadToSignedUrl(path, token, fileBody, fileOptions) {
+        var _this3 = this;
+        const cleanPath = _this3._removeEmptyFolders(path);
+        const _path = _this3._getFinalPath(cleanPath);
+        const url = new URL(_this3.url + `/object/upload/sign/${_path}`);
+        url.searchParams.set("token", token);
+        try {
+            let body;
+            const options = _objectSpread2({
+                upsert: DEFAULT_FILE_OPTIONS.upsert
+            }, fileOptions);
+            const headers = _objectSpread2(_objectSpread2({}, _this3.headers), {
+                "x-upsert": String(options.upsert)
+            });
+            if (typeof Blob !== "undefined" && fileBody instanceof Blob) {
+                body = new FormData();
+                body.append("cacheControl", options.cacheControl);
+                body.append("", fileBody);
+            } else if (typeof FormData !== "undefined" && fileBody instanceof FormData) {
+                body = fileBody;
+                body.append("cacheControl", options.cacheControl);
+            } else {
+                body = fileBody;
+                headers["cache-control"] = `max-age=${options.cacheControl}`;
+                headers["content-type"] = options.contentType;
+            }
+            return {
+                data: {
+                    path: cleanPath,
+                    fullPath: (await put(_this3.fetch, url.toString(), body, {
+                        headers
+                    })).Key
+                },
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Creates a signed upload URL.
+	* Signed upload URLs can be used to upload files to the bucket without further authentication.
+	* They are valid for 2 hours.
+	*
+	* @category File Buckets
+	* @param path The file path, including the current file name. For example `folder/image.png`.
+	* @param options.upsert If set to true, allows the file to be overwritten if it already exists.
+	* @returns Promise with response containing signed upload URL, token, and path or error
+	*
+	* @example Create Signed Upload URL
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .createSignedUploadUrl('folder/cat.jpg')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "signedUrl": "https://example.supabase.co/storage/v1/object/upload/sign/avatars/folder/cat.jpg?token=<TOKEN>",
+	*     "path": "folder/cat.jpg",
+	*     "token": "<TOKEN>"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async createSignedUploadUrl(path, options) {
+        var _this4 = this;
+        try {
+            let _path = _this4._getFinalPath(path);
+            const headers = _objectSpread2({}, _this4.headers);
+            if (options === null || options === void 0 ? void 0 : options.upsert) headers["x-upsert"] = "true";
+            const data = await post$1(_this4.fetch, `${_this4.url}/object/upload/sign/${_path}`, {}, {
+                headers
+            });
+            const url = new URL(_this4.url + data.url);
+            const token = url.searchParams.get("token");
+            if (!token) throw new StorageError("No token returned by API");
+            return {
+                data: {
+                    signedUrl: url.toString(),
+                    path,
+                    token
+                },
+                error: null
+            };
+        } catch (error) {
+            if (_this4.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Replaces an existing file at the specified path with a new one.
+	*
+	* @category File Buckets
+	* @param path The relative file path. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to update.
+	* @param fileBody The body of the file to be stored in the bucket.
+	* @param fileOptions Optional file upload options including cacheControl, contentType, upsert, and metadata.
+	* @returns Promise with response containing file path, id, and fullPath or error
+	*
+	* @example Update file
+	* ```js
+	* const avatarFile = event.target.files[0]
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .update('public/avatar1.png', avatarFile, {
+	*     cacheControl: '3600',
+	*     upsert: true
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "path": "public/avatar1.png",
+	*     "fullPath": "avatars/public/avatar1.png"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*
+	* @example Update file using `ArrayBuffer` from base64 file data
+	* ```js
+	* import {decode} from 'base64-arraybuffer'
+	*
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .update('public/avatar1.png', decode('base64FileData'), {
+	*     contentType: 'image/png'
+	*   })
+	* ```
+	*/ async update(path, fileBody, fileOptions) {
+        return this.uploadOrUpdate("PUT", path, fileBody, fileOptions);
+    }
+    /**
+	* Moves an existing file to a new path in the same bucket.
+	*
+	* @category File Buckets
+	* @param fromPath The original file path, including the current file name. For example `folder/image.png`.
+	* @param toPath The new file path, including the new file name. For example `folder/image-new.png`.
+	* @param options The destination options.
+	* @returns Promise with response containing success message or error
+	*
+	* @example Move file
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .move('public/avatar1.png', 'private/avatar2.png')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "message": "Successfully moved"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async move(fromPath, toPath, options) {
+        var _this6 = this;
+        try {
+            return {
+                data: await post$1(_this6.fetch, `${_this6.url}/object/move`, {
+                    bucketId: _this6.bucketId,
+                    sourceKey: fromPath,
+                    destinationKey: toPath,
+                    destinationBucket: options === null || options === void 0 ? void 0 : options.destinationBucket
+                }, {
+                    headers: _this6.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this6.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Copies an existing file to a new path in the same bucket.
+	*
+	* @category File Buckets
+	* @param fromPath The original file path, including the current file name. For example `folder/image.png`.
+	* @param toPath The new file path, including the new file name. For example `folder/image-copy.png`.
+	* @param options The destination options.
+	* @returns Promise with response containing copied file path or error
+	*
+	* @example Copy file
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .copy('public/avatar1.png', 'private/avatar2.png')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "path": "avatars/private/avatar2.png"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async copy(fromPath, toPath, options) {
+        var _this7 = this;
+        try {
+            return {
+                data: {
+                    path: (await post$1(_this7.fetch, `${_this7.url}/object/copy`, {
+                        bucketId: _this7.bucketId,
+                        sourceKey: fromPath,
+                        destinationKey: toPath,
+                        destinationBucket: options === null || options === void 0 ? void 0 : options.destinationBucket
+                    }, {
+                        headers: _this7.headers
+                    })).Key
+                },
+                error: null
+            };
+        } catch (error) {
+            if (_this7.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Creates a signed URL. Use a signed URL to share a file for a fixed amount of time.
+	*
+	* @category File Buckets
+	* @param path The file path, including the current file name. For example `folder/image.png`.
+	* @param expiresIn The number of seconds until the signed URL expires. For example, `60` for a URL which is valid for one minute.
+	* @param options.download triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.
+	* @param options.transform Transform the asset before serving it to the client.
+	* @returns Promise with response containing signed URL or error
+	*
+	* @example Create Signed URL
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .createSignedUrl('folder/avatar1.png', 60)
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "signedUrl": "https://example.supabase.co/storage/v1/object/sign/avatars/folder/avatar1.png?token=<TOKEN>"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*
+	* @example Create a signed URL for an asset with transformations
+	* ```js
+	* const { data } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .createSignedUrl('folder/avatar1.png', 60, {
+	*     transform: {
+	*       width: 100,
+	*       height: 100,
+	*     }
+	*   })
+	* ```
+	*
+	* @example Create a signed URL which triggers the download of the asset
+	* ```js
+	* const { data } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .createSignedUrl('folder/avatar1.png', 60, {
+	*     download: true,
+	*   })
+	* ```
+	*/ async createSignedUrl(path, expiresIn, options) {
+        var _this8 = this;
+        try {
+            let _path = _this8._getFinalPath(path);
+            let data = await post$1(_this8.fetch, `${_this8.url}/object/sign/${_path}`, _objectSpread2({
+                expiresIn
+            }, (options === null || options === void 0 ? void 0 : options.transform) ? {
+                transform: options.transform
+            } : {}), {
+                headers: _this8.headers
+            });
+            const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download) ? `&download=${options.download === true ? "" : options.download}` : "";
+            data = {
+                signedUrl: encodeURI(`${_this8.url}${data.signedURL}${downloadQueryParam}`)
+            };
+            return {
+                data,
+                error: null
+            };
+        } catch (error) {
+            if (_this8.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Creates multiple signed URLs. Use a signed URL to share a file for a fixed amount of time.
+	*
+	* @category File Buckets
+	* @param paths The file paths to be downloaded, including the current file names. For example `['folder/image.png', 'folder2/image2.png']`.
+	* @param expiresIn The number of seconds until the signed URLs expire. For example, `60` for URLs which are valid for one minute.
+	* @param options.download triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.
+	* @returns Promise with response containing array of objects with signedUrl, path, and error or error
+	*
+	* @example Create Signed URLs
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .createSignedUrls(['folder/avatar1.png', 'folder/avatar2.png'], 60)
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": [
+	*     {
+	*       "error": null,
+	*       "path": "folder/avatar1.png",
+	*       "signedURL": "/object/sign/avatars/folder/avatar1.png?token=<TOKEN>",
+	*       "signedUrl": "https://example.supabase.co/storage/v1/object/sign/avatars/folder/avatar1.png?token=<TOKEN>"
+	*     },
+	*     {
+	*       "error": null,
+	*       "path": "folder/avatar2.png",
+	*       "signedURL": "/object/sign/avatars/folder/avatar2.png?token=<TOKEN>",
+	*       "signedUrl": "https://example.supabase.co/storage/v1/object/sign/avatars/folder/avatar2.png?token=<TOKEN>"
+	*     }
+	*   ],
+	*   "error": null
+	* }
+	* ```
+	*/ async createSignedUrls(paths, expiresIn, options) {
+        var _this9 = this;
+        try {
+            const data = await post$1(_this9.fetch, `${_this9.url}/object/sign/${_this9.bucketId}`, {
+                expiresIn,
+                paths
+            }, {
+                headers: _this9.headers
+            });
+            const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download) ? `&download=${options.download === true ? "" : options.download}` : "";
+            return {
+                data: data.map((datum)=>_objectSpread2(_objectSpread2({}, datum), {}, {
+                        signedUrl: datum.signedURL ? encodeURI(`${_this9.url}${datum.signedURL}${downloadQueryParam}`) : null
+                    })),
+                error: null
+            };
+        } catch (error) {
+            if (_this9.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Downloads a file from a private bucket. For public buckets, make a request to the URL returned from `getPublicUrl` instead.
+	*
+	* @category File Buckets
+	* @param path The full path and file name of the file to be downloaded. For example `folder/image.png`.
+	* @param options.transform Transform the asset before serving it to the client.
+	* @returns BlobDownloadBuilder instance for downloading the file
+	*
+	* @example Download file
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .download('folder/avatar1.png')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": <BLOB>,
+	*   "error": null
+	* }
+	* ```
+	*
+	* @example Download file with transformations
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .download('folder/avatar1.png', {
+	*     transform: {
+	*       width: 100,
+	*       height: 100,
+	*       quality: 80
+	*     }
+	*   })
+	* ```
+	*/ download(path, options) {
+        const renderPath = typeof (options === null || options === void 0 ? void 0 : options.transform) !== "undefined" ? "render/image/authenticated" : "object";
+        const transformationQuery = this.transformOptsToQueryString((options === null || options === void 0 ? void 0 : options.transform) || {});
+        const queryString = transformationQuery ? `?${transformationQuery}` : "";
+        const _path = this._getFinalPath(path);
+        const downloadFn = ()=>get(this.fetch, `${this.url}/${renderPath}/${_path}${queryString}`, {
+                headers: this.headers,
+                noResolveJson: true
+            });
+        return new BlobDownloadBuilder(downloadFn, this.shouldThrowOnError);
+    }
+    /**
+	* Retrieves the details of an existing file.
+	*
+	* @category File Buckets
+	* @param path The file path, including the file name. For example `folder/image.png`.
+	* @returns Promise with response containing file metadata or error
+	*
+	* @example Get file info
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .info('folder/avatar1.png')
+	* ```
+	*/ async info(path) {
+        var _this10 = this;
+        const _path = _this10._getFinalPath(path);
+        try {
+            return {
+                data: recursiveToCamel(await get(_this10.fetch, `${_this10.url}/object/info/${_path}`, {
+                    headers: _this10.headers
+                })),
+                error: null
+            };
+        } catch (error) {
+            if (_this10.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Checks the existence of a file.
+	*
+	* @category File Buckets
+	* @param path The file path, including the file name. For example `folder/image.png`.
+	* @returns Promise with response containing boolean indicating file existence or error
+	*
+	* @example Check file existence
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .exists('folder/avatar1.png')
+	* ```
+	*/ async exists(path) {
+        var _this11 = this;
+        const _path = _this11._getFinalPath(path);
+        try {
+            await head(_this11.fetch, `${_this11.url}/object/${_path}`, {
+                headers: _this11.headers
+            });
+            return {
+                data: true,
+                error: null
+            };
+        } catch (error) {
+            if (_this11.shouldThrowOnError) throw error;
+            if (isStorageError(error) && error instanceof StorageUnknownError) {
+                const originalError = error.originalError;
+                if ([
+                    400,
+                    404
+                ].includes(originalError === null || originalError === void 0 ? void 0 : originalError.status)) return {
+                    data: false,
+                    error
+                };
+            }
+            throw error;
+        }
+    }
+    /**
+	* A simple convenience function to get the URL for an asset in a public bucket. If you do not want to use this function, you can construct the public URL by concatenating the bucket URL with the path to the asset.
+	* This function does not verify if the bucket is public. If a public URL is created for a bucket which is not public, you will not be able to download the asset.
+	*
+	* @category File Buckets
+	* @param path The path and name of the file to generate the public URL for. For example `folder/image.png`.
+	* @param options.download Triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.
+	* @param options.transform Transform the asset before serving it to the client.
+	* @returns Object with public URL
+	*
+	* @example Returns the URL for an asset in a public bucket
+	* ```js
+	* const { data } = supabase
+	*   .storage
+	*   .from('public-bucket')
+	*   .getPublicUrl('folder/avatar1.png')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "publicUrl": "https://example.supabase.co/storage/v1/object/public/public-bucket/folder/avatar1.png"
+	*   }
+	* }
+	* ```
+	*
+	* @example Returns the URL for an asset in a public bucket with transformations
+	* ```js
+	* const { data } = supabase
+	*   .storage
+	*   .from('public-bucket')
+	*   .getPublicUrl('folder/avatar1.png', {
+	*     transform: {
+	*       width: 100,
+	*       height: 100,
+	*     }
+	*   })
+	* ```
+	*
+	* @example Returns the URL which triggers the download of an asset in a public bucket
+	* ```js
+	* const { data } = supabase
+	*   .storage
+	*   .from('public-bucket')
+	*   .getPublicUrl('folder/avatar1.png', {
+	*     download: true,
+	*   })
+	* ```
+	*/ getPublicUrl(path, options) {
+        const _path = this._getFinalPath(path);
+        const _queryString = [];
+        const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download) ? `download=${options.download === true ? "" : options.download}` : "";
+        if (downloadQueryParam !== "") _queryString.push(downloadQueryParam);
+        const renderPath = typeof (options === null || options === void 0 ? void 0 : options.transform) !== "undefined" ? "render/image" : "object";
+        const transformationQuery = this.transformOptsToQueryString((options === null || options === void 0 ? void 0 : options.transform) || {});
+        if (transformationQuery !== "") _queryString.push(transformationQuery);
+        let queryString = _queryString.join("&");
+        if (queryString !== "") queryString = `?${queryString}`;
+        return {
+            data: {
+                publicUrl: encodeURI(`${this.url}/${renderPath}/public/${_path}${queryString}`)
+            }
+        };
+    }
+    /**
+	* Deletes files within the same bucket
+	*
+	* @category File Buckets
+	* @param paths An array of files to delete, including the path and file name. For example [`'folder/image.png'`].
+	* @returns Promise with response containing array of deleted file objects or error
+	*
+	* @example Delete file
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .remove(['folder/avatar1.png'])
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": [],
+	*   "error": null
+	* }
+	* ```
+	*/ async remove(paths) {
+        var _this12 = this;
+        try {
+            return {
+                data: await remove(_this12.fetch, `${_this12.url}/object/${_this12.bucketId}`, {
+                    prefixes: paths
+                }, {
+                    headers: _this12.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this12.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Get file metadata
+	* @param id the file id to retrieve metadata
+	*/ /**
+	* Update file metadata
+	* @param id the file id to update metadata
+	* @param meta the new file metadata
+	*/ /**
+	* Lists all the files and folders within a path of the bucket.
+	*
+	* @category File Buckets
+	* @param path The folder path.
+	* @param options Search options including limit (defaults to 100), offset, sortBy, and search
+	* @param parameters Optional fetch parameters including signal for cancellation
+	* @returns Promise with response containing array of files or error
+	*
+	* @example List files in a bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .list('folder', {
+	*     limit: 100,
+	*     offset: 0,
+	*     sortBy: { column: 'name', order: 'asc' },
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": [
+	*     {
+	*       "name": "avatar1.png",
+	*       "id": "e668cf7f-821b-4a2f-9dce-7dfa5dd1cfd2",
+	*       "updated_at": "2024-05-22T23:06:05.580Z",
+	*       "created_at": "2024-05-22T23:04:34.443Z",
+	*       "last_accessed_at": "2024-05-22T23:04:34.443Z",
+	*       "metadata": {
+	*         "eTag": "\"c5e8c553235d9af30ef4f6e280790b92\"",
+	*         "size": 32175,
+	*         "mimetype": "image/png",
+	*         "cacheControl": "max-age=3600",
+	*         "lastModified": "2024-05-22T23:06:05.574Z",
+	*         "contentLength": 32175,
+	*         "httpStatusCode": 200
+	*       }
+	*     }
+	*   ],
+	*   "error": null
+	* }
+	* ```
+	*
+	* @example Search files in a bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .from('avatars')
+	*   .list('folder', {
+	*     limit: 100,
+	*     offset: 0,
+	*     sortBy: { column: 'name', order: 'asc' },
+	*     search: 'jon'
+	*   })
+	* ```
+	*/ async list(path, options, parameters) {
+        var _this13 = this;
+        try {
+            const body = _objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_SEARCH_OPTIONS), options), {}, {
+                prefix: path || ""
+            });
+            return {
+                data: await post$1(_this13.fetch, `${_this13.url}/object/list/${_this13.bucketId}`, body, {
+                    headers: _this13.headers
+                }, parameters),
+                error: null
+            };
+        } catch (error) {
+            if (_this13.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* @experimental this method signature might change in the future
+	*
+	* @category File Buckets
+	* @param options search options
+	* @param parameters
+	*/ async listV2(options, parameters) {
+        var _this14 = this;
+        try {
+            const body = _objectSpread2({}, options);
+            return {
+                data: await post$1(_this14.fetch, `${_this14.url}/object/list-v2/${_this14.bucketId}`, body, {
+                    headers: _this14.headers
+                }, parameters),
+                error: null
+            };
+        } catch (error) {
+            if (_this14.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    encodeMetadata(metadata) {
+        return JSON.stringify(metadata);
+    }
+    toBase64(data) {
+        if (typeof __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$buffer$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Buffer"] !== "undefined") return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$buffer$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Buffer"].from(data).toString("base64");
+        return btoa(data);
+    }
+    _getFinalPath(path) {
+        return `${this.bucketId}/${path.replace(/^\/+/, "")}`;
+    }
+    _removeEmptyFolders(path) {
+        return path.replace(/^\/|\/$/g, "").replace(/\/+/g, "/");
+    }
+    transformOptsToQueryString(transform) {
+        const params = [];
+        if (transform.width) params.push(`width=${transform.width}`);
+        if (transform.height) params.push(`height=${transform.height}`);
+        if (transform.resize) params.push(`resize=${transform.resize}`);
+        if (transform.format) params.push(`format=${transform.format}`);
+        if (transform.quality) params.push(`quality=${transform.quality}`);
+        return params.join("&");
+    }
+};
+//#endregion
+//#region src/lib/version.ts
+const version = "2.89.0";
+//#endregion
+//#region src/lib/constants.ts
+const DEFAULT_HEADERS$1 = {
+    "X-Client-Info": `storage-js/${version}`
+};
+//#endregion
+//#region src/packages/StorageBucketApi.ts
+var StorageBucketApi = class {
+    constructor(url, headers = {}, fetch$1, opts){
+        this.shouldThrowOnError = false;
+        const baseUrl = new URL(url);
+        if (opts === null || opts === void 0 ? void 0 : opts.useNewHostname) {
+            if (/supabase\.(co|in|red)$/.test(baseUrl.hostname) && !baseUrl.hostname.includes("storage.supabase.")) baseUrl.hostname = baseUrl.hostname.replace("supabase.", "storage.supabase.");
+        }
+        this.url = baseUrl.href.replace(/\/$/, "");
+        this.headers = _objectSpread2(_objectSpread2({}, DEFAULT_HEADERS$1), headers);
+        this.fetch = resolveFetch$1(fetch$1);
+    }
+    /**
+	* Enable throwing errors instead of returning them.
+	*
+	* @category File Buckets
+	*/ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /**
+	* Retrieves the details of all Storage buckets within an existing project.
+	*
+	* @category File Buckets
+	* @param options Query parameters for listing buckets
+	* @param options.limit Maximum number of buckets to return
+	* @param options.offset Number of buckets to skip
+	* @param options.sortColumn Column to sort by ('id', 'name', 'created_at', 'updated_at')
+	* @param options.sortOrder Sort order ('asc' or 'desc')
+	* @param options.search Search term to filter bucket names
+	* @returns Promise with response containing array of buckets or error
+	*
+	* @example List buckets
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .listBuckets()
+	* ```
+	*
+	* @example List buckets with options
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .listBuckets({
+	*     limit: 10,
+	*     offset: 0,
+	*     sortColumn: 'created_at',
+	*     sortOrder: 'desc',
+	*     search: 'prod'
+	*   })
+	* ```
+	*/ async listBuckets(options) {
+        var _this = this;
+        try {
+            const queryString = _this.listBucketOptionsToQueryString(options);
+            return {
+                data: await get(_this.fetch, `${_this.url}/bucket${queryString}`, {
+                    headers: _this.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Retrieves the details of an existing Storage bucket.
+	*
+	* @category File Buckets
+	* @param id The unique identifier of the bucket you would like to retrieve.
+	* @returns Promise with response containing bucket details or error
+	*
+	* @example Get bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .getBucket('avatars')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "id": "avatars",
+	*     "name": "avatars",
+	*     "owner": "",
+	*     "public": false,
+	*     "file_size_limit": 1024,
+	*     "allowed_mime_types": [
+	*       "image/png"
+	*     ],
+	*     "created_at": "2024-05-22T22:26:05.100Z",
+	*     "updated_at": "2024-05-22T22:26:05.100Z"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async getBucket(id) {
+        var _this2 = this;
+        try {
+            return {
+                data: await get(_this2.fetch, `${_this2.url}/bucket/${id}`, {
+                    headers: _this2.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this2.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Creates a new Storage bucket
+	*
+	* @category File Buckets
+	* @param id A unique identifier for the bucket you are creating.
+	* @param options.public The visibility of the bucket. Public buckets don't require an authorization token to download objects, but still require a valid token for all other operations. By default, buckets are private.
+	* @param options.fileSizeLimit specifies the max file size in bytes that can be uploaded to this bucket.
+	* The global file size limit takes precedence over this value.
+	* The default value is null, which doesn't set a per bucket file size limit.
+	* @param options.allowedMimeTypes specifies the allowed mime types that this bucket can accept during upload.
+	* The default value is null, which allows files with all mime types to be uploaded.
+	* Each mime type specified can be a wildcard, e.g. image/*, or a specific mime type, e.g. image/png.
+	* @param options.type (private-beta) specifies the bucket type. see `BucketType` for more details.
+	*   - default bucket type is `STANDARD`
+	* @returns Promise with response containing newly created bucket name or error
+	*
+	* @example Create bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .createBucket('avatars', {
+	*     public: false,
+	*     allowedMimeTypes: ['image/png'],
+	*     fileSizeLimit: 1024
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "name": "avatars"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async createBucket(id, options = {
+        public: false
+    }) {
+        var _this3 = this;
+        try {
+            return {
+                data: await post$1(_this3.fetch, `${_this3.url}/bucket`, {
+                    id,
+                    name: id,
+                    type: options.type,
+                    public: options.public,
+                    file_size_limit: options.fileSizeLimit,
+                    allowed_mime_types: options.allowedMimeTypes
+                }, {
+                    headers: _this3.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Updates a Storage bucket
+	*
+	* @category File Buckets
+	* @param id A unique identifier for the bucket you are updating.
+	* @param options.public The visibility of the bucket. Public buckets don't require an authorization token to download objects, but still require a valid token for all other operations.
+	* @param options.fileSizeLimit specifies the max file size in bytes that can be uploaded to this bucket.
+	* The global file size limit takes precedence over this value.
+	* The default value is null, which doesn't set a per bucket file size limit.
+	* @param options.allowedMimeTypes specifies the allowed mime types that this bucket can accept during upload.
+	* The default value is null, which allows files with all mime types to be uploaded.
+	* Each mime type specified can be a wildcard, e.g. image/*, or a specific mime type, e.g. image/png.
+	* @returns Promise with response containing success message or error
+	*
+	* @example Update bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .updateBucket('avatars', {
+	*     public: false,
+	*     allowedMimeTypes: ['image/png'],
+	*     fileSizeLimit: 1024
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "message": "Successfully updated"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async updateBucket(id, options) {
+        var _this4 = this;
+        try {
+            return {
+                data: await put(_this4.fetch, `${_this4.url}/bucket/${id}`, {
+                    id,
+                    name: id,
+                    public: options.public,
+                    file_size_limit: options.fileSizeLimit,
+                    allowed_mime_types: options.allowedMimeTypes
+                }, {
+                    headers: _this4.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this4.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Removes all objects inside a single bucket.
+	*
+	* @category File Buckets
+	* @param id The unique identifier of the bucket you would like to empty.
+	* @returns Promise with success message or error
+	*
+	* @example Empty bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .emptyBucket('avatars')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "message": "Successfully emptied"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async emptyBucket(id) {
+        var _this5 = this;
+        try {
+            return {
+                data: await post$1(_this5.fetch, `${_this5.url}/bucket/${id}/empty`, {}, {
+                    headers: _this5.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this5.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* Deletes an existing bucket. A bucket can't be deleted with existing objects inside it.
+	* You must first `empty()` the bucket.
+	*
+	* @category File Buckets
+	* @param id The unique identifier of the bucket you would like to delete.
+	* @returns Promise with success message or error
+	*
+	* @example Delete bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .deleteBucket('avatars')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "message": "Successfully deleted"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async deleteBucket(id) {
+        var _this6 = this;
+        try {
+            return {
+                data: await remove(_this6.fetch, `${_this6.url}/bucket/${id}`, {}, {
+                    headers: _this6.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this6.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    listBucketOptionsToQueryString(options) {
+        const params = {};
+        if (options) {
+            if ("limit" in options) params.limit = String(options.limit);
+            if ("offset" in options) params.offset = String(options.offset);
+            if (options.search) params.search = options.search;
+            if (options.sortColumn) params.sortColumn = options.sortColumn;
+            if (options.sortOrder) params.sortOrder = options.sortOrder;
+        }
+        return Object.keys(params).length > 0 ? "?" + new URLSearchParams(params).toString() : "";
+    }
+};
+//#endregion
+//#region src/packages/StorageAnalyticsClient.ts
+/**
+* Client class for managing Analytics Buckets using Iceberg tables
+* Provides methods for creating, listing, and deleting analytics buckets
+*/ var StorageAnalyticsClient = class {
+    /**
+	* @alpha
+	*
+	* Creates a new StorageAnalyticsClient instance
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @param url - The base URL for the storage API
+	* @param headers - HTTP headers to include in requests
+	* @param fetch - Optional custom fetch implementation
+	*
+	* @example
+	* ```typescript
+	* const client = new StorageAnalyticsClient(url, headers)
+	* ```
+	*/ constructor(url, headers = {}, fetch$1){
+        this.shouldThrowOnError = false;
+        this.url = url.replace(/\/$/, "");
+        this.headers = _objectSpread2(_objectSpread2({}, DEFAULT_HEADERS$1), headers);
+        this.fetch = resolveFetch$1(fetch$1);
+    }
+    /**
+	* @alpha
+	*
+	* Enable throwing errors instead of returning them in the response
+	* When enabled, failed operations will throw instead of returning { data: null, error }
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @returns This instance for method chaining
+	*/ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /**
+	* @alpha
+	*
+	* Creates a new analytics bucket using Iceberg tables
+	* Analytics buckets are optimized for analytical queries and data processing
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @param name A unique name for the bucket you are creating
+	* @returns Promise with response containing newly created analytics bucket or error
+	*
+	* @example Create analytics bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .analytics
+	*   .createBucket('analytics-data')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "name": "analytics-data",
+	*     "type": "ANALYTICS",
+	*     "format": "iceberg",
+	*     "created_at": "2024-05-22T22:26:05.100Z",
+	*     "updated_at": "2024-05-22T22:26:05.100Z"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async createBucket(name) {
+        var _this = this;
+        try {
+            return {
+                data: await post$1(_this.fetch, `${_this.url}/bucket`, {
+                    name
+                }, {
+                    headers: _this.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* @alpha
+	*
+	* Retrieves the details of all Analytics Storage buckets within an existing project
+	* Only returns buckets of type 'ANALYTICS'
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @param options Query parameters for listing buckets
+	* @param options.limit Maximum number of buckets to return
+	* @param options.offset Number of buckets to skip
+	* @param options.sortColumn Column to sort by ('name', 'created_at', 'updated_at')
+	* @param options.sortOrder Sort order ('asc' or 'desc')
+	* @param options.search Search term to filter bucket names
+	* @returns Promise with response containing array of analytics buckets or error
+	*
+	* @example List analytics buckets
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .analytics
+	*   .listBuckets({
+	*     limit: 10,
+	*     offset: 0,
+	*     sortColumn: 'created_at',
+	*     sortOrder: 'desc'
+	*   })
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": [
+	*     {
+	*       "name": "analytics-data",
+	*       "type": "ANALYTICS",
+	*       "format": "iceberg",
+	*       "created_at": "2024-05-22T22:26:05.100Z",
+	*       "updated_at": "2024-05-22T22:26:05.100Z"
+	*     }
+	*   ],
+	*   "error": null
+	* }
+	* ```
+	*/ async listBuckets(options) {
+        var _this2 = this;
+        try {
+            const queryParams = new URLSearchParams();
+            if ((options === null || options === void 0 ? void 0 : options.limit) !== void 0) queryParams.set("limit", options.limit.toString());
+            if ((options === null || options === void 0 ? void 0 : options.offset) !== void 0) queryParams.set("offset", options.offset.toString());
+            if (options === null || options === void 0 ? void 0 : options.sortColumn) queryParams.set("sortColumn", options.sortColumn);
+            if (options === null || options === void 0 ? void 0 : options.sortOrder) queryParams.set("sortOrder", options.sortOrder);
+            if (options === null || options === void 0 ? void 0 : options.search) queryParams.set("search", options.search);
+            const queryString = queryParams.toString();
+            const url = queryString ? `${_this2.url}/bucket?${queryString}` : `${_this2.url}/bucket`;
+            return {
+                data: await get(_this2.fetch, url, {
+                    headers: _this2.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this2.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* @alpha
+	*
+	* Deletes an existing analytics bucket
+	* A bucket can't be deleted with existing objects inside it
+	* You must first empty the bucket before deletion
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @param bucketName The unique identifier of the bucket you would like to delete
+	* @returns Promise with response containing success message or error
+	*
+	* @example Delete analytics bucket
+	* ```js
+	* const { data, error } = await supabase
+	*   .storage
+	*   .analytics
+	*   .deleteBucket('analytics-data')
+	* ```
+	*
+	* Response:
+	* ```json
+	* {
+	*   "data": {
+	*     "message": "Successfully deleted"
+	*   },
+	*   "error": null
+	* }
+	* ```
+	*/ async deleteBucket(bucketName) {
+        var _this3 = this;
+        try {
+            return {
+                data: await remove(_this3.fetch, `${_this3.url}/bucket/${bucketName}`, {}, {
+                    headers: _this3.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /**
+	* @alpha
+	*
+	* Get an Iceberg REST Catalog client configured for a specific analytics bucket
+	* Use this to perform advanced table and namespace operations within the bucket
+	* The returned client provides full access to the Apache Iceberg REST Catalog API
+	* with the Supabase `{ data, error }` pattern for consistent error handling on all operations.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @param bucketName - The name of the analytics bucket (warehouse) to connect to
+	* @returns The wrapped Iceberg catalog client
+	* @throws {StorageError} If the bucket name is invalid
+	*
+	* @example Get catalog and create table
+	* ```js
+	* // First, create an analytics bucket
+	* const { data: bucket, error: bucketError } = await supabase
+	*   .storage
+	*   .analytics
+	*   .createBucket('analytics-data')
+	*
+	* // Get the Iceberg catalog for that bucket
+	* const catalog = supabase.storage.analytics.from('analytics-data')
+	*
+	* // Create a namespace
+	* const { error: nsError } = await catalog.createNamespace({ namespace: ['default'] })
+	*
+	* // Create a table with schema
+	* const { data: tableMetadata, error: tableError } = await catalog.createTable(
+	*   { namespace: ['default'] },
+	*   {
+	*     name: 'events',
+	*     schema: {
+	*       type: 'struct',
+	*       fields: [
+	*         { id: 1, name: 'id', type: 'long', required: true },
+	*         { id: 2, name: 'timestamp', type: 'timestamp', required: true },
+	*         { id: 3, name: 'user_id', type: 'string', required: false }
+	*       ],
+	*       'schema-id': 0,
+	*       'identifier-field-ids': [1]
+	*     },
+	*     'partition-spec': {
+	*       'spec-id': 0,
+	*       fields: []
+	*     },
+	*     'write-order': {
+	*       'order-id': 0,
+	*       fields: []
+	*     },
+	*     properties: {
+	*       'write.format.default': 'parquet'
+	*     }
+	*   }
+	* )
+	* ```
+	*
+	* @example List tables in namespace
+	* ```js
+	* const catalog = supabase.storage.analytics.from('analytics-data')
+	*
+	* // List all tables in the default namespace
+	* const { data: tables, error: listError } = await catalog.listTables({ namespace: ['default'] })
+	* if (listError) {
+	*   if (listError.isNotFound()) {
+	*     console.log('Namespace not found')
+	*   }
+	*   return
+	* }
+	* console.log(tables) // [{ namespace: ['default'], name: 'events' }]
+	* ```
+	*
+	* @example Working with namespaces
+	* ```js
+	* const catalog = supabase.storage.analytics.from('analytics-data')
+	*
+	* // List all namespaces
+	* const { data: namespaces } = await catalog.listNamespaces()
+	*
+	* // Create namespace with properties
+	* await catalog.createNamespace(
+	*   { namespace: ['production'] },
+	*   { properties: { owner: 'data-team', env: 'prod' } }
+	* )
+	* ```
+	*
+	* @example Cleanup operations
+	* ```js
+	* const catalog = supabase.storage.analytics.from('analytics-data')
+	*
+	* // Drop table with purge option (removes all data)
+	* const { error: dropError } = await catalog.dropTable(
+	*   { namespace: ['default'], name: 'events' },
+	*   { purge: true }
+	* )
+	*
+	* if (dropError?.isNotFound()) {
+	*   console.log('Table does not exist')
+	* }
+	*
+	* // Drop namespace (must be empty)
+	* await catalog.dropNamespace({ namespace: ['default'] })
+	* ```
+	*
+	* @remarks
+	* This method provides a bridge between Supabase's bucket management and the standard
+	* Apache Iceberg REST Catalog API. The bucket name maps to the Iceberg warehouse parameter.
+	* All authentication and configuration is handled automatically using your Supabase credentials.
+	*
+	* **Error Handling**: Invalid bucket names throw immediately. All catalog
+	* operations return `{ data, error }` where errors are `IcebergError` instances from iceberg-js.
+	* Use helper methods like `error.isNotFound()` or check `error.status` for specific error handling.
+	* Use `.throwOnError()` on the analytics client if you prefer exceptions for catalog operations.
+	*
+	* **Cleanup Operations**: When using `dropTable`, the `purge: true` option permanently
+	* deletes all table data. Without it, the table is marked as deleted but data remains.
+	*
+	* **Library Dependency**: The returned catalog wraps `IcebergRestCatalog` from iceberg-js.
+	* For complete API documentation and advanced usage, refer to the
+	* [iceberg-js documentation](https://supabase.github.io/iceberg-js/).
+	*/ from(bucketName) {
+        var _this4 = this;
+        if (!isValidBucketName(bucketName)) throw new StorageError("Invalid bucket name: File, folder, and bucket names must follow AWS object key naming guidelines and should avoid the use of any other characters.");
+        const catalog = new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$iceberg$2d$js$40$0$2e$8$2e$1$2f$node_modules$2f$iceberg$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["IcebergRestCatalog"]({
+            baseUrl: this.url,
+            catalogName: bucketName,
+            auth: {
+                type: "custom",
+                getHeaders: async ()=>_this4.headers
+            },
+            fetch: this.fetch
+        });
+        const shouldThrowOnError = this.shouldThrowOnError;
+        return new Proxy(catalog, {
+            get (target, prop) {
+                const value = target[prop];
+                if (typeof value !== "function") return value;
+                return async (...args)=>{
+                    try {
+                        return {
+                            data: await value.apply(target, args),
+                            error: null
+                        };
+                    } catch (error) {
+                        if (shouldThrowOnError) throw error;
+                        return {
+                            data: null,
+                            error
+                        };
+                    }
+                };
+            }
+        });
+    }
+};
+//#endregion
+//#region src/lib/vectors/constants.ts
+const DEFAULT_HEADERS = {
+    "X-Client-Info": `storage-js/${version}`,
+    "Content-Type": "application/json"
+};
+//#endregion
+//#region src/lib/vectors/errors.ts
+/**
+* Base error class for all Storage Vectors errors
+*/ var StorageVectorsError = class extends Error {
+    constructor(message){
+        super(message);
+        this.__isStorageVectorsError = true;
+        this.name = "StorageVectorsError";
+    }
+};
+/**
+* Type guard to check if an error is a StorageVectorsError
+* @param error - The error to check
+* @returns True if the error is a StorageVectorsError
+*/ function isStorageVectorsError(error) {
+    return typeof error === "object" && error !== null && "__isStorageVectorsError" in error;
+}
+/**
+* API error returned from S3 Vectors service
+* Includes HTTP status code and service-specific error code
+*/ var StorageVectorsApiError = class extends StorageVectorsError {
+    constructor(message, status, statusCode){
+        super(message);
+        this.name = "StorageVectorsApiError";
+        this.status = status;
+        this.statusCode = statusCode;
+    }
+    toJSON() {
+        return {
+            name: this.name,
+            message: this.message,
+            status: this.status,
+            statusCode: this.statusCode
+        };
+    }
+};
+/**
+* Unknown error that doesn't match expected error patterns
+* Wraps the original error for debugging
+*/ var StorageVectorsUnknownError = class extends StorageVectorsError {
+    constructor(message, originalError){
+        super(message);
+        this.name = "StorageVectorsUnknownError";
+        this.originalError = originalError;
+    }
+};
+/**
+* Error codes specific to S3 Vectors API
+* Maps AWS service errors to application-friendly error codes
+*/ let StorageVectorsErrorCode = /* @__PURE__ */ function(StorageVectorsErrorCode$1) {
+    /** Internal server fault (HTTP 500) */ StorageVectorsErrorCode$1["InternalError"] = "InternalError";
+    /** Resource already exists / conflict (HTTP 409) */ StorageVectorsErrorCode$1["S3VectorConflictException"] = "S3VectorConflictException";
+    /** Resource not found (HTTP 404) */ StorageVectorsErrorCode$1["S3VectorNotFoundException"] = "S3VectorNotFoundException";
+    /** Delete bucket while not empty (HTTP 400) */ StorageVectorsErrorCode$1["S3VectorBucketNotEmpty"] = "S3VectorBucketNotEmpty";
+    /** Exceeds bucket quota/limit (HTTP 400) */ StorageVectorsErrorCode$1["S3VectorMaxBucketsExceeded"] = "S3VectorMaxBucketsExceeded";
+    /** Exceeds index quota/limit (HTTP 400) */ StorageVectorsErrorCode$1["S3VectorMaxIndexesExceeded"] = "S3VectorMaxIndexesExceeded";
+    return StorageVectorsErrorCode$1;
+}({});
+//#endregion
+//#region src/lib/vectors/helpers.ts
+/**
+* Resolves the fetch implementation to use
+* Uses custom fetch if provided, otherwise uses native fetch
+*
+* @param customFetch - Optional custom fetch implementation
+* @returns Resolved fetch function
+*/ const resolveFetch = (customFetch)=>{
+    if (customFetch) return (...args)=>customFetch(...args);
+    return (...args)=>fetch(...args);
+};
+/**
+* Resolves the Response constructor to use
+* Returns native Response constructor
+*
+* @returns Response constructor
+*/ const resolveResponse = ()=>{
+    return Response;
+};
+/**
+* Determine if input is a plain object
+* An object is plain if it's created by either {}, new Object(), or Object.create(null)
+*
+* @param value - Value to check
+* @returns True if value is a plain object
+* @source https://github.com/sindresorhus/is-plain-obj
+*/ const isPlainObject = (value)=>{
+    if (typeof value !== "object" || value === null) return false;
+    const prototype = Object.getPrototypeOf(value);
+    return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in value) && !(Symbol.iterator in value);
+};
+/**
+* Normalizes a number array to float32 format
+* Ensures all vector values are valid 32-bit floats
+*
+* @param values - Array of numbers to normalize
+* @returns Normalized float32 array
+*/ const normalizeToFloat32 = (values)=>{
+    return Array.from(new Float32Array(values));
+};
+/**
+* Validates vector dimensions match expected dimension
+* Throws error if dimensions don't match
+*
+* @param vector - Vector data to validate
+* @param expectedDimension - Expected vector dimension
+* @throws Error if dimensions don't match
+*/ const validateVectorDimension = (vector, expectedDimension)=>{
+    if (expectedDimension !== void 0 && vector.float32.length !== expectedDimension) throw new Error(`Vector dimension mismatch: expected ${expectedDimension}, got ${vector.float32.length}`);
+};
+//#endregion
+//#region src/lib/vectors/fetch.ts
+/**
+* Extracts error message from various error response formats
+* @param err - Error object from API
+* @returns Human-readable error message
+*/ const _getErrorMessage = (err)=>err.msg || err.message || err.error_description || err.error || JSON.stringify(err);
+/**
+* Handles fetch errors and converts them to StorageVectors error types
+* @param error - The error caught from fetch
+* @param reject - Promise rejection function
+* @param options - Fetch options that may affect error handling
+*/ const handleError = async (error, reject, options)=>{
+    if (error && typeof error === "object" && "status" in error && "ok" in error && typeof error.status === "number" && !(options === null || options === void 0 ? void 0 : options.noResolveJson)) {
+        const status = error.status || 500;
+        const responseError = error;
+        if (typeof responseError.json === "function") responseError.json().then((err)=>{
+            const statusCode = (err === null || err === void 0 ? void 0 : err.statusCode) || (err === null || err === void 0 ? void 0 : err.code) || status + "";
+            reject(new StorageVectorsApiError(_getErrorMessage(err), status, statusCode));
+        }).catch(()=>{
+            const statusCode = status + "";
+            reject(new StorageVectorsApiError(responseError.statusText || `HTTP ${status} error`, status, statusCode));
+        });
+        else {
+            const statusCode = status + "";
+            reject(new StorageVectorsApiError(responseError.statusText || `HTTP ${status} error`, status, statusCode));
+        }
+    } else reject(new StorageVectorsUnknownError(_getErrorMessage(error), error));
+};
+/**
+* Builds request parameters for fetch calls
+* @param method - HTTP method
+* @param options - Custom fetch options
+* @param parameters - Additional fetch parameters like AbortSignal
+* @param body - Request body (will be JSON stringified if plain object)
+* @returns Complete fetch request parameters
+*/ const _getRequestParams = (method, options, parameters, body)=>{
+    const params = {
+        method,
+        headers: (options === null || options === void 0 ? void 0 : options.headers) || {}
+    };
+    if (method === "GET" || !body) return params;
+    if (isPlainObject(body)) {
+        params.headers = _objectSpread2({
+            "Content-Type": "application/json"
+        }, options === null || options === void 0 ? void 0 : options.headers);
+        params.body = JSON.stringify(body);
+    } else params.body = body;
+    return _objectSpread2(_objectSpread2({}, params), parameters);
+};
+/**
+* Internal request handler that wraps fetch with error handling
+* @param fetcher - Fetch function to use
+* @param method - HTTP method
+* @param url - Request URL
+* @param options - Custom fetch options
+* @param parameters - Additional fetch parameters
+* @param body - Request body
+* @returns Promise with parsed response or error
+*/ async function _handleRequest(fetcher, method, url, options, parameters, body) {
+    return new Promise((resolve, reject)=>{
+        fetcher(url, _getRequestParams(method, options, parameters, body)).then((result)=>{
+            if (!result.ok) throw result;
+            if (options === null || options === void 0 ? void 0 : options.noResolveJson) return result;
+            const contentType = result.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) return {};
+            return result.json();
+        }).then((data)=>resolve(data)).catch((error)=>handleError(error, reject, options));
+    });
+}
+/**
+* Performs a POST request
+* @param fetcher - Fetch function to use
+* @param url - Request URL
+* @param body - Request body to be JSON stringified
+* @param options - Custom fetch options
+* @param parameters - Additional fetch parameters
+* @returns Promise with parsed response
+*/ async function post(fetcher, url, body, options, parameters) {
+    return _handleRequest(fetcher, "POST", url, options, parameters, body);
+}
+//#endregion
+//#region src/lib/vectors/VectorIndexApi.ts
+/**
+* @hidden
+* Base implementation for vector index operations.
+* Use {@link VectorBucketScope} via `supabase.storage.vectors.from('bucket')` instead.
+*/ var VectorIndexApi = class {
+    /** Creates a new VectorIndexApi instance */ constructor(url, headers = {}, fetch$1){
+        this.shouldThrowOnError = false;
+        this.url = url.replace(/\/$/, "");
+        this.headers = _objectSpread2(_objectSpread2({}, DEFAULT_HEADERS), headers);
+        this.fetch = resolveFetch(fetch$1);
+    }
+    /** Enable throwing errors instead of returning them in the response */ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /** Creates a new vector index within a bucket */ async createIndex(options) {
+        var _this = this;
+        try {
+            return {
+                data: await post(_this.fetch, `${_this.url}/CreateIndex`, options, {
+                    headers: _this.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Retrieves metadata for a specific vector index */ async getIndex(vectorBucketName, indexName) {
+        var _this2 = this;
+        try {
+            return {
+                data: await post(_this2.fetch, `${_this2.url}/GetIndex`, {
+                    vectorBucketName,
+                    indexName
+                }, {
+                    headers: _this2.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this2.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Lists vector indexes within a bucket with optional filtering and pagination */ async listIndexes(options) {
+        var _this3 = this;
+        try {
+            return {
+                data: await post(_this3.fetch, `${_this3.url}/ListIndexes`, options, {
+                    headers: _this3.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Deletes a vector index and all its data */ async deleteIndex(vectorBucketName, indexName) {
+        var _this4 = this;
+        try {
+            return {
+                data: await post(_this4.fetch, `${_this4.url}/DeleteIndex`, {
+                    vectorBucketName,
+                    indexName
+                }, {
+                    headers: _this4.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this4.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+};
+//#endregion
+//#region src/lib/vectors/VectorDataApi.ts
+/**
+* @hidden
+* Base implementation for vector data operations.
+* Use {@link VectorIndexScope} via `supabase.storage.vectors.from('bucket').index('idx')` instead.
+*/ var VectorDataApi = class {
+    /** Creates a new VectorDataApi instance */ constructor(url, headers = {}, fetch$1){
+        this.shouldThrowOnError = false;
+        this.url = url.replace(/\/$/, "");
+        this.headers = _objectSpread2(_objectSpread2({}, DEFAULT_HEADERS), headers);
+        this.fetch = resolveFetch(fetch$1);
+    }
+    /** Enable throwing errors instead of returning them in the response */ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /** Inserts or updates vectors in batch (1-500 per request) */ async putVectors(options) {
+        var _this = this;
+        try {
+            if (options.vectors.length < 1 || options.vectors.length > 500) throw new Error("Vector batch size must be between 1 and 500 items");
+            return {
+                data: await post(_this.fetch, `${_this.url}/PutVectors`, options, {
+                    headers: _this.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Retrieves vectors by their keys in batch */ async getVectors(options) {
+        var _this2 = this;
+        try {
+            return {
+                data: await post(_this2.fetch, `${_this2.url}/GetVectors`, options, {
+                    headers: _this2.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this2.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Lists vectors in an index with pagination */ async listVectors(options) {
+        var _this3 = this;
+        try {
+            if (options.segmentCount !== void 0) {
+                if (options.segmentCount < 1 || options.segmentCount > 16) throw new Error("segmentCount must be between 1 and 16");
+                if (options.segmentIndex !== void 0) {
+                    if (options.segmentIndex < 0 || options.segmentIndex >= options.segmentCount) throw new Error(`segmentIndex must be between 0 and ${options.segmentCount - 1}`);
+                }
+            }
+            return {
+                data: await post(_this3.fetch, `${_this3.url}/ListVectors`, options, {
+                    headers: _this3.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Queries for similar vectors using approximate nearest neighbor search */ async queryVectors(options) {
+        var _this4 = this;
+        try {
+            return {
+                data: await post(_this4.fetch, `${_this4.url}/QueryVectors`, options, {
+                    headers: _this4.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this4.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Deletes vectors by their keys in batch (1-500 per request) */ async deleteVectors(options) {
+        var _this5 = this;
+        try {
+            if (options.keys.length < 1 || options.keys.length > 500) throw new Error("Keys batch size must be between 1 and 500 items");
+            return {
+                data: await post(_this5.fetch, `${_this5.url}/DeleteVectors`, options, {
+                    headers: _this5.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this5.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+};
+//#endregion
+//#region src/lib/vectors/VectorBucketApi.ts
+/**
+* @hidden
+* Base implementation for vector bucket operations.
+* Use {@link StorageVectorsClient} via `supabase.storage.vectors` instead.
+*/ var VectorBucketApi = class {
+    /** Creates a new VectorBucketApi instance */ constructor(url, headers = {}, fetch$1){
+        this.shouldThrowOnError = false;
+        this.url = url.replace(/\/$/, "");
+        this.headers = _objectSpread2(_objectSpread2({}, DEFAULT_HEADERS), headers);
+        this.fetch = resolveFetch(fetch$1);
+    }
+    /** Enable throwing errors instead of returning them in the response */ throwOnError() {
+        this.shouldThrowOnError = true;
+        return this;
+    }
+    /** Creates a new vector bucket */ async createBucket(vectorBucketName) {
+        var _this = this;
+        try {
+            return {
+                data: await post(_this.fetch, `${_this.url}/CreateVectorBucket`, {
+                    vectorBucketName
+                }, {
+                    headers: _this.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Retrieves metadata for a specific vector bucket */ async getBucket(vectorBucketName) {
+        var _this2 = this;
+        try {
+            return {
+                data: await post(_this2.fetch, `${_this2.url}/GetVectorBucket`, {
+                    vectorBucketName
+                }, {
+                    headers: _this2.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this2.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Lists vector buckets with optional filtering and pagination */ async listBuckets(options = {}) {
+        var _this3 = this;
+        try {
+            return {
+                data: await post(_this3.fetch, `${_this3.url}/ListVectorBuckets`, options, {
+                    headers: _this3.headers
+                }),
+                error: null
+            };
+        } catch (error) {
+            if (_this3.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+    /** Deletes a vector bucket (must be empty first) */ async deleteBucket(vectorBucketName) {
+        var _this4 = this;
+        try {
+            return {
+                data: await post(_this4.fetch, `${_this4.url}/DeleteVectorBucket`, {
+                    vectorBucketName
+                }, {
+                    headers: _this4.headers
+                }) || {},
+                error: null
+            };
+        } catch (error) {
+            if (_this4.shouldThrowOnError) throw error;
+            if (isStorageVectorsError(error)) return {
+                data: null,
+                error
+            };
+            throw error;
+        }
+    }
+};
+//#endregion
+//#region src/lib/vectors/StorageVectorsClient.ts
+/**
+*
+* @alpha
+*
+* Main client for interacting with S3 Vectors API
+* Provides access to bucket, index, and vector data operations
+*
+* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+*
+* **Usage Patterns:**
+*
+* ```typescript
+* const { data, error } = await supabase
+*  .storage
+*  .vectors
+*  .createBucket('embeddings-prod')
+*
+* // Access index operations via buckets
+* const bucket = supabase.storage.vectors.from('embeddings-prod')
+* await bucket.createIndex({
+*   indexName: 'documents',
+*   dataType: 'float32',
+*   dimension: 1536,
+*   distanceMetric: 'cosine'
+* })
+*
+* // Access vector operations via index
+* const index = bucket.index('documents')
+* await index.putVectors({
+*   vectors: [
+*     { key: 'doc-1', data: { float32: [...] }, metadata: { title: 'Intro' } }
+*   ]
+* })
+*
+* // Query similar vectors
+* const { data } = await index.queryVectors({
+*   queryVector: { float32: [...] },
+*   topK: 5,
+*   returnDistance: true
+* })
+* ```
+*/ var StorageVectorsClient = class extends VectorBucketApi {
+    /**
+	* @alpha
+	*
+	* Creates a StorageVectorsClient that can manage buckets, indexes, and vectors.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param url - Base URL of the Storage Vectors REST API.
+	* @param options.headers - Optional headers (for example `Authorization`) applied to every request.
+	* @param options.fetch - Optional custom `fetch` implementation for non-browser runtimes.
+	*
+	* @example
+	* ```typescript
+	* const client = new StorageVectorsClient(url, options)
+	* ```
+	*/ constructor(url, options = {}){
+        super(url, options.headers || {}, options.fetch);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Access operations for a specific vector bucket
+	* Returns a scoped client for index and vector operations within the bucket
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param vectorBucketName - Name of the vector bucket
+	* @returns Bucket-scoped client with index and vector operations
+	*
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* ```
+	*/ from(vectorBucketName) {
+        return new VectorBucketScope(this.url, this.headers, vectorBucketName, this.fetch);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Creates a new vector bucket
+	* Vector buckets are containers for vector indexes and their data
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param vectorBucketName - Unique name for the vector bucket
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const { data, error } = await supabase
+	*   .storage
+	*   .vectors
+	*   .createBucket('embeddings-prod')
+	* ```
+	*/ async createBucket(vectorBucketName) {
+        var _superprop_getCreateBucket = ()=>super.createBucket, _this = this;
+        return _superprop_getCreateBucket().call(_this, vectorBucketName);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Retrieves metadata for a specific vector bucket
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param vectorBucketName - Name of the vector bucket
+	* @returns Promise with bucket metadata or error
+	*
+	* @example
+	* ```typescript
+	* const { data, error } = await supabase
+	*   .storage
+	*   .vectors
+	*   .getBucket('embeddings-prod')
+	*
+	* console.log('Bucket created:', data?.vectorBucket.creationTime)
+	* ```
+	*/ async getBucket(vectorBucketName) {
+        var _superprop_getGetBucket = ()=>super.getBucket, _this2 = this;
+        return _superprop_getGetBucket().call(_this2, vectorBucketName);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Lists all vector buckets with optional filtering and pagination
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Optional filters (prefix, maxResults, nextToken)
+	* @returns Promise with list of buckets or error
+	*
+	* @example
+	* ```typescript
+	* const { data, error } = await supabase
+	*   .storage
+	*   .vectors
+	*   .listBuckets({ prefix: 'embeddings-' })
+	*
+	* data?.vectorBuckets.forEach(bucket => {
+	*   console.log(bucket.vectorBucketName)
+	* })
+	* ```
+	*/ async listBuckets(options = {}) {
+        var _superprop_getListBuckets = ()=>super.listBuckets, _this3 = this;
+        return _superprop_getListBuckets().call(_this3, options);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Deletes a vector bucket (bucket must be empty)
+	* All indexes must be deleted before deleting the bucket
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param vectorBucketName - Name of the vector bucket to delete
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const { data, error } = await supabase
+	*   .storage
+	*   .vectors
+	*   .deleteBucket('embeddings-old')
+	* ```
+	*/ async deleteBucket(vectorBucketName) {
+        var _superprop_getDeleteBucket = ()=>super.deleteBucket, _this4 = this;
+        return _superprop_getDeleteBucket().call(_this4, vectorBucketName);
+    }
+};
+/**
+*
+* @alpha
+*
+* Scoped client for operations within a specific vector bucket
+* Provides index management and access to vector operations
+*
+* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+*/ var VectorBucketScope = class extends VectorIndexApi {
+    /**
+	* @alpha
+	*
+	* Creates a helper that automatically scopes all index operations to the provided bucket.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* ```
+	*/ constructor(url, headers, vectorBucketName, fetch$1){
+        super(url, headers, fetch$1);
+        this.vectorBucketName = vectorBucketName;
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Creates a new vector index in this bucket
+	* Convenience method that automatically includes the bucket name
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Index configuration (vectorBucketName is automatically set)
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* await bucket.createIndex({
+	*   indexName: 'documents-openai',
+	*   dataType: 'float32',
+	*   dimension: 1536,
+	*   distanceMetric: 'cosine',
+	*   metadataConfiguration: {
+	*     nonFilterableMetadataKeys: ['raw_text']
+	*   }
+	* })
+	* ```
+	*/ async createIndex(options) {
+        var _superprop_getCreateIndex = ()=>super.createIndex, _this5 = this;
+        return _superprop_getCreateIndex().call(_this5, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this5.vectorBucketName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Lists indexes in this bucket
+	* Convenience method that automatically includes the bucket name
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Listing options (vectorBucketName is automatically set)
+	* @returns Promise with response containing indexes array and pagination token or error
+	*
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* const { data } = await bucket.listIndexes({ prefix: 'documents-' })
+	* ```
+	*/ async listIndexes(options = {}) {
+        var _superprop_getListIndexes = ()=>super.listIndexes, _this6 = this;
+        return _superprop_getListIndexes().call(_this6, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this6.vectorBucketName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Retrieves metadata for a specific index in this bucket
+	* Convenience method that automatically includes the bucket name
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param indexName - Name of the index to retrieve
+	* @returns Promise with index metadata or error
+	*
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* const { data } = await bucket.getIndex('documents-openai')
+	* console.log('Dimension:', data?.index.dimension)
+	* ```
+	*/ async getIndex(indexName) {
+        var _superprop_getGetIndex = ()=>super.getIndex, _this7 = this;
+        return _superprop_getGetIndex().call(_this7, _this7.vectorBucketName, indexName);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Deletes an index from this bucket
+	* Convenience method that automatically includes the bucket name
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param indexName - Name of the index to delete
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const bucket = supabase.storage.vectors.from('embeddings-prod')
+	* await bucket.deleteIndex('old-index')
+	* ```
+	*/ async deleteIndex(indexName) {
+        var _superprop_getDeleteIndex = ()=>super.deleteIndex, _this8 = this;
+        return _superprop_getDeleteIndex().call(_this8, _this8.vectorBucketName, indexName);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Access operations for a specific index within this bucket
+	* Returns a scoped client for vector data operations
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param indexName - Name of the index
+	* @returns Index-scoped client with vector data operations
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	*
+	* // Insert vectors
+	* await index.putVectors({
+	*   vectors: [
+	*     { key: 'doc-1', data: { float32: [...] }, metadata: { title: 'Intro' } }
+	*   ]
+	* })
+	*
+	* // Query similar vectors
+	* const { data } = await index.queryVectors({
+	*   queryVector: { float32: [...] },
+	*   topK: 5
+	* })
+	* ```
+	*/ index(indexName) {
+        return new VectorIndexScope(this.url, this.headers, this.vectorBucketName, indexName, this.fetch);
+    }
+};
+/**
+*
+* @alpha
+*
+* Scoped client for operations within a specific vector index
+* Provides vector data operations (put, get, list, query, delete)
+*
+* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+*/ var VectorIndexScope = class extends VectorDataApi {
+    /**
+	*
+	* @alpha
+	*
+	* Creates a helper that automatically scopes all vector operations to the provided bucket/index names.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* ```
+	*/ constructor(url, headers, vectorBucketName, indexName, fetch$1){
+        super(url, headers, fetch$1);
+        this.vectorBucketName = vectorBucketName;
+        this.indexName = indexName;
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Inserts or updates vectors in this index
+	* Convenience method that automatically includes bucket and index names
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Vector insertion options (bucket and index names automatically set)
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* await index.putVectors({
+	*   vectors: [
+	*     {
+	*       key: 'doc-1',
+	*       data: { float32: [0.1, 0.2, ...] },
+	*       metadata: { title: 'Introduction', page: 1 }
+	*     }
+	*   ]
+	* })
+	* ```
+	*/ async putVectors(options) {
+        var _superprop_getPutVectors = ()=>super.putVectors, _this9 = this;
+        return _superprop_getPutVectors().call(_this9, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this9.vectorBucketName,
+            indexName: _this9.indexName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Retrieves vectors by keys from this index
+	* Convenience method that automatically includes bucket and index names
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Vector retrieval options (bucket and index names automatically set)
+	* @returns Promise with response containing vectors array or error
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* const { data } = await index.getVectors({
+	*   keys: ['doc-1', 'doc-2'],
+	*   returnMetadata: true
+	* })
+	* ```
+	*/ async getVectors(options) {
+        var _superprop_getGetVectors = ()=>super.getVectors, _this10 = this;
+        return _superprop_getGetVectors().call(_this10, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this10.vectorBucketName,
+            indexName: _this10.indexName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Lists vectors in this index with pagination
+	* Convenience method that automatically includes bucket and index names
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Listing options (bucket and index names automatically set)
+	* @returns Promise with response containing vectors array and pagination token or error
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* const { data } = await index.listVectors({
+	*   maxResults: 500,
+	*   returnMetadata: true
+	* })
+	* ```
+	*/ async listVectors(options = {}) {
+        var _superprop_getListVectors = ()=>super.listVectors, _this11 = this;
+        return _superprop_getListVectors().call(_this11, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this11.vectorBucketName,
+            indexName: _this11.indexName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Queries for similar vectors in this index
+	* Convenience method that automatically includes bucket and index names
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Query options (bucket and index names automatically set)
+	* @returns Promise with response containing matches array of similar vectors ordered by distance or error
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* const { data } = await index.queryVectors({
+	*   queryVector: { float32: [0.1, 0.2, ...] },
+	*   topK: 5,
+	*   filter: { category: 'technical' },
+	*   returnDistance: true,
+	*   returnMetadata: true
+	* })
+	* ```
+	*/ async queryVectors(options) {
+        var _superprop_getQueryVectors = ()=>super.queryVectors, _this12 = this;
+        return _superprop_getQueryVectors().call(_this12, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this12.vectorBucketName,
+            indexName: _this12.indexName
+        }));
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Deletes vectors by keys from this index
+	* Convenience method that automatically includes bucket and index names
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @param options - Deletion options (bucket and index names automatically set)
+	* @returns Promise with empty response on success or error
+	*
+	* @example
+	* ```typescript
+	* const index = supabase.storage.vectors.from('embeddings-prod').index('documents-openai')
+	* await index.deleteVectors({
+	*   keys: ['doc-1', 'doc-2', 'doc-3']
+	* })
+	* ```
+	*/ async deleteVectors(options) {
+        var _superprop_getDeleteVectors = ()=>super.deleteVectors, _this13 = this;
+        return _superprop_getDeleteVectors().call(_this13, _objectSpread2(_objectSpread2({}, options), {}, {
+            vectorBucketName: _this13.vectorBucketName,
+            indexName: _this13.indexName
+        }));
+    }
+};
+//#endregion
+//#region src/StorageClient.ts
+var StorageClient = class extends StorageBucketApi {
+    /**
+	* Creates a client for Storage buckets, files, analytics, and vectors.
+	*
+	* @category File Buckets
+	* @example
+	* ```ts
+	* import { StorageClient } from '@supabase/storage-js'
+	*
+	* const storage = new StorageClient('https://xyzcompany.supabase.co/storage/v1', {
+	*   apikey: 'public-anon-key',
+	* })
+	* const avatars = storage.from('avatars')
+	* ```
+	*/ constructor(url, headers = {}, fetch$1, opts){
+        super(url, headers, fetch$1, opts);
+    }
+    /**
+	* Perform file operation in a bucket.
+	*
+	* @category File Buckets
+	* @param id The bucket id to operate on.
+	*
+	* @example
+	* ```typescript
+	* const avatars = supabase.storage.from('avatars')
+	* ```
+	*/ from(id) {
+        return new StorageFileApi(this.url, this.headers, id, this.fetch);
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Access vector storage operations.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Vector Buckets
+	* @returns A StorageVectorsClient instance configured with the current storage settings.
+	*/ get vectors() {
+        return new StorageVectorsClient(this.url + "/vector", {
+            headers: this.headers,
+            fetch: this.fetch
+        });
+    }
+    /**
+	*
+	* @alpha
+	*
+	* Access analytics storage operations using Iceberg tables.
+	*
+	* **Public alpha:** This API is part of a public alpha release and may not be available to your account type.
+	*
+	* @category Analytics Buckets
+	* @returns A StorageAnalyticsClient instance configured with the current storage settings.
+	*/ get analytics() {
+        return new StorageAnalyticsClient(this.url + "/iceberg", this.headers, this.fetch);
+    }
+};
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+supabase-js@2.89.0/node_modules/@supabase/supabase-js/dist/index.mjs [app-client] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "SupabaseClient",
+    ()=>SupabaseClient,
+    "createClient",
+    ()=>createClient
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$types$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/types.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$FunctionsClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+functions-js@2.89.0/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$postgrest$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$postgrest$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+postgrest-js@2.89.0/node_modules/@supabase/postgrest-js/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$realtime$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$realtime$2d$js$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+realtime-js@2.89.0/node_modules/@supabase/realtime-js/dist/module/index.js [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$realtime$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$realtime$2d$js$2f$dist$2f$module$2f$RealtimeClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RealtimeClient$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+realtime-js@2.89.0/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js [app-client] (ecmascript) <export default as RealtimeClient>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$storage$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$storage$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+storage-js@2.89.0/node_modules/@supabase/storage-js/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$auth$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$auth$2d$js$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+auth-js@2.89.0/node_modules/@supabase/auth-js/dist/module/index.js [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$auth$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$auth$2d$js$2f$dist$2f$module$2f$AuthClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AuthClient$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@supabase+auth-js@2.89.0/node_modules/@supabase/auth-js/dist/module/AuthClient.js [app-client] (ecmascript) <export default as AuthClient>");
+;
+;
+;
+;
+;
+;
+;
+//#region src/lib/version.ts
+const version = "2.89.0";
+//#endregion
+//#region src/lib/constants.ts
+let JS_ENV = "";
+if (typeof Deno !== "undefined") JS_ENV = "deno";
+else if (typeof document !== "undefined") JS_ENV = "web";
+else if (typeof navigator !== "undefined" && navigator.product === "ReactNative") JS_ENV = "react-native";
+else JS_ENV = "node";
+const DEFAULT_HEADERS = {
+    "X-Client-Info": `supabase-js-${JS_ENV}/${version}`
+};
+const DEFAULT_GLOBAL_OPTIONS = {
+    headers: DEFAULT_HEADERS
+};
+const DEFAULT_DB_OPTIONS = {
+    schema: "public"
+};
+const DEFAULT_AUTH_OPTIONS = {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+    flowType: "implicit"
+};
+const DEFAULT_REALTIME_OPTIONS = {};
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/typeof.js
+function _typeof(o) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o$1) {
+        return typeof o$1;
+    } : function(o$1) {
+        return o$1 && "function" == typeof Symbol && o$1.constructor === Symbol && o$1 !== Symbol.prototype ? "symbol" : typeof o$1;
+    }, _typeof(o);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/toPrimitive.js
+function toPrimitive(t, r) {
+    if ("object" != _typeof(t) || !t) return t;
+    var e = t[Symbol.toPrimitive];
+    if (void 0 !== e) {
+        var i = e.call(t, r || "default");
+        if ("object" != _typeof(i)) return i;
+        throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return ("string" === r ? String : Number)(t);
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/toPropertyKey.js
+function toPropertyKey(t) {
+    var i = toPrimitive(t, "string");
+    return "symbol" == _typeof(i) ? i : i + "";
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/defineProperty.js
+function _defineProperty(e, r, t) {
+    return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+        value: t,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+    }) : e[r] = t, e;
+}
+//#endregion
+//#region \0@oxc-project+runtime@0.101.0/helpers/objectSpread2.js
+function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+        var o = Object.getOwnPropertySymbols(e);
+        r && (o = o.filter(function(r$1) {
+            return Object.getOwnPropertyDescriptor(e, r$1).enumerable;
+        })), t.push.apply(t, o);
+    }
+    return t;
+}
+function _objectSpread2(e) {
+    for(var r = 1; r < arguments.length; r++){
+        var t = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t), !0).forEach(function(r$1) {
+            _defineProperty(e, r$1, t[r$1]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r$1) {
+            Object.defineProperty(e, r$1, Object.getOwnPropertyDescriptor(t, r$1));
+        });
+    }
+    return e;
+}
+//#endregion
+//#region src/lib/fetch.ts
+const resolveFetch = (customFetch)=>{
+    if (customFetch) return (...args)=>customFetch(...args);
+    return (...args)=>fetch(...args);
+};
+const resolveHeadersConstructor = ()=>{
+    return Headers;
+};
+const fetchWithAuth = (supabaseKey, getAccessToken, customFetch)=>{
+    const fetch$1 = resolveFetch(customFetch);
+    const HeadersConstructor = resolveHeadersConstructor();
+    return async (input, init)=>{
+        var _await$getAccessToken;
+        const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey;
+        let headers = new HeadersConstructor(init === null || init === void 0 ? void 0 : init.headers);
+        if (!headers.has("apikey")) headers.set("apikey", supabaseKey);
+        if (!headers.has("Authorization")) headers.set("Authorization", `Bearer ${accessToken}`);
+        return fetch$1(input, _objectSpread2(_objectSpread2({}, init), {}, {
+            headers
+        }));
+    };
+};
+//#endregion
+//#region src/lib/helpers.ts
+function ensureTrailingSlash(url) {
+    return url.endsWith("/") ? url : url + "/";
+}
+function applySettingDefaults(options, defaults) {
+    var _DEFAULT_GLOBAL_OPTIO, _globalOptions$header;
+    const { db: dbOptions, auth: authOptions, realtime: realtimeOptions, global: globalOptions } = options;
+    const { db: DEFAULT_DB_OPTIONS$1, auth: DEFAULT_AUTH_OPTIONS$1, realtime: DEFAULT_REALTIME_OPTIONS$1, global: DEFAULT_GLOBAL_OPTIONS$1 } = defaults;
+    const result = {
+        db: _objectSpread2(_objectSpread2({}, DEFAULT_DB_OPTIONS$1), dbOptions),
+        auth: _objectSpread2(_objectSpread2({}, DEFAULT_AUTH_OPTIONS$1), authOptions),
+        realtime: _objectSpread2(_objectSpread2({}, DEFAULT_REALTIME_OPTIONS$1), realtimeOptions),
+        storage: {},
+        global: _objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_GLOBAL_OPTIONS$1), globalOptions), {}, {
+            headers: _objectSpread2(_objectSpread2({}, (_DEFAULT_GLOBAL_OPTIO = DEFAULT_GLOBAL_OPTIONS$1 === null || DEFAULT_GLOBAL_OPTIONS$1 === void 0 ? void 0 : DEFAULT_GLOBAL_OPTIONS$1.headers) !== null && _DEFAULT_GLOBAL_OPTIO !== void 0 ? _DEFAULT_GLOBAL_OPTIO : {}), (_globalOptions$header = globalOptions === null || globalOptions === void 0 ? void 0 : globalOptions.headers) !== null && _globalOptions$header !== void 0 ? _globalOptions$header : {})
+        }),
+        accessToken: async ()=>""
+    };
+    if (options.accessToken) result.accessToken = options.accessToken;
+    else delete result.accessToken;
+    return result;
+}
+/**
+* Validates a Supabase client URL
+*
+* @param {string} supabaseUrl - The Supabase client URL string.
+* @returns {URL} - The validated base URL.
+* @throws {Error}
+*/ function validateSupabaseUrl(supabaseUrl) {
+    const trimmedUrl = supabaseUrl === null || supabaseUrl === void 0 ? void 0 : supabaseUrl.trim();
+    if (!trimmedUrl) throw new Error("supabaseUrl is required.");
+    if (!trimmedUrl.match(/^https?:\/\//i)) throw new Error("Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.");
+    try {
+        return new URL(ensureTrailingSlash(trimmedUrl));
+    } catch (_unused) {
+        throw Error("Invalid supabaseUrl: Provided URL is malformed.");
+    }
+}
+//#endregion
+//#region src/lib/SupabaseAuthClient.ts
+var SupabaseAuthClient = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$auth$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$auth$2d$js$2f$dist$2f$module$2f$AuthClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AuthClient$3e$__["AuthClient"] {
+    constructor(options){
+        super(options);
+    }
+};
+//#endregion
+//#region src/SupabaseClient.ts
+/**
+* Supabase Client.
+*
+* An isomorphic Javascript client for interacting with Postgres.
+*/ var SupabaseClient = class {
+    /**
+	* Create a new client for use in the browser.
+	* @param supabaseUrl The unique Supabase URL which is supplied when you create a new project in your project dashboard.
+	* @param supabaseKey The unique Supabase Key which is supplied when you create a new project in your project dashboard.
+	* @param options.db.schema You can switch in between schemas. The schema needs to be on the list of exposed schemas inside Supabase.
+	* @param options.auth.autoRefreshToken Set to "true" if you want to automatically refresh the token before expiring.
+	* @param options.auth.persistSession Set to "true" if you want to automatically save the user session into local storage.
+	* @param options.auth.detectSessionInUrl Set to "true" if you want to automatically detects OAuth grants in the URL and signs in the user.
+	* @param options.realtime Options passed along to realtime-js constructor.
+	* @param options.storage Options passed along to the storage-js constructor.
+	* @param options.global.fetch A custom fetch implementation.
+	* @param options.global.headers Any additional headers to send with each network request.
+	* @example
+	* ```ts
+	* import { createClient } from '@supabase/supabase-js'
+	*
+	* const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key')
+	* const { data } = await supabase.from('profiles').select('*')
+	* ```
+	*/ constructor(supabaseUrl, supabaseKey, options){
+        var _settings$auth$storag, _settings$global$head;
+        this.supabaseUrl = supabaseUrl;
+        this.supabaseKey = supabaseKey;
+        const baseUrl = validateSupabaseUrl(supabaseUrl);
+        if (!supabaseKey) throw new Error("supabaseKey is required.");
+        this.realtimeUrl = new URL("realtime/v1", baseUrl);
+        this.realtimeUrl.protocol = this.realtimeUrl.protocol.replace("http", "ws");
+        this.authUrl = new URL("auth/v1", baseUrl);
+        this.storageUrl = new URL("storage/v1", baseUrl);
+        this.functionsUrl = new URL("functions/v1", baseUrl);
+        const defaultStorageKey = `sb-${baseUrl.hostname.split(".")[0]}-auth-token`;
+        const DEFAULTS = {
+            db: DEFAULT_DB_OPTIONS,
+            realtime: DEFAULT_REALTIME_OPTIONS,
+            auth: _objectSpread2(_objectSpread2({}, DEFAULT_AUTH_OPTIONS), {}, {
+                storageKey: defaultStorageKey
+            }),
+            global: DEFAULT_GLOBAL_OPTIONS
+        };
+        const settings = applySettingDefaults(options !== null && options !== void 0 ? options : {}, DEFAULTS);
+        this.storageKey = (_settings$auth$storag = settings.auth.storageKey) !== null && _settings$auth$storag !== void 0 ? _settings$auth$storag : "";
+        this.headers = (_settings$global$head = settings.global.headers) !== null && _settings$global$head !== void 0 ? _settings$global$head : {};
+        if (!settings.accessToken) {
+            var _settings$auth;
+            this.auth = this._initSupabaseAuthClient((_settings$auth = settings.auth) !== null && _settings$auth !== void 0 ? _settings$auth : {}, this.headers, settings.global.fetch);
+        } else {
+            this.accessToken = settings.accessToken;
+            this.auth = new Proxy({}, {
+                get: (_, prop)=>{
+                    throw new Error(`@supabase/supabase-js: Supabase Client is configured with the accessToken option, accessing supabase.auth.${String(prop)} is not possible`);
+                }
+            });
+        }
+        this.fetch = fetchWithAuth(supabaseKey, this._getAccessToken.bind(this), settings.global.fetch);
+        this.realtime = this._initRealtimeClient(_objectSpread2({
+            headers: this.headers,
+            accessToken: this._getAccessToken.bind(this)
+        }, settings.realtime));
+        if (this.accessToken) this.accessToken().then((token)=>this.realtime.setAuth(token)).catch((e)=>console.warn("Failed to set initial Realtime auth token:", e));
+        this.rest = new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$postgrest$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$postgrest$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PostgrestClient"](new URL("rest/v1", baseUrl).href, {
+            headers: this.headers,
+            schema: settings.db.schema,
+            fetch: this.fetch
+        });
+        this.storage = new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$storage$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$storage$2d$js$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StorageClient"](this.storageUrl.href, this.headers, this.fetch, options === null || options === void 0 ? void 0 : options.storage);
+        if (!settings.accessToken) this._listenForAuthEvents();
+    }
+    /**
+	* Supabase Functions allows you to deploy and invoke edge functions.
+	*/ get functions() {
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$functions$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$functions$2d$js$2f$dist$2f$module$2f$FunctionsClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FunctionsClient"](this.functionsUrl.href, {
+            headers: this.headers,
+            customFetch: this.fetch
+        });
+    }
+    /**
+	* Perform a query on a table or a view.
+	*
+	* @param relation - The table or view name to query
+	*/ from(relation) {
+        return this.rest.from(relation);
+    }
+    /**
+	* Select a schema to query or perform an function (rpc) call.
+	*
+	* The schema needs to be on the list of exposed schemas inside Supabase.
+	*
+	* @param schema - The schema to query
+	*/ schema(schema) {
+        return this.rest.schema(schema);
+    }
+    /**
+	* Perform a function call.
+	*
+	* @param fn - The function name to call
+	* @param args - The arguments to pass to the function call
+	* @param options - Named parameters
+	* @param options.head - When set to `true`, `data` will not be returned.
+	* Useful if you only need the count.
+	* @param options.get - When set to `true`, the function will be called with
+	* read-only access mode.
+	* @param options.count - Count algorithm to use to count rows returned by the
+	* function. Only applicable for [set-returning
+	* functions](https://www.postgresql.org/docs/current/functions-srf.html).
+	*
+	* `"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+	* hood.
+	*
+	* `"planned"`: Approximated but fast count algorithm. Uses the Postgres
+	* statistics under the hood.
+	*
+	* `"estimated"`: Uses exact count for low numbers and planned count for high
+	* numbers.
+	*/ rpc(fn, args = {}, options = {
+        head: false,
+        get: false,
+        count: void 0
+    }) {
+        return this.rest.rpc(fn, args, options);
+    }
+    /**
+	* Creates a Realtime channel with Broadcast, Presence, and Postgres Changes.
+	*
+	* @param {string} name - The name of the Realtime channel.
+	* @param {Object} opts - The options to pass to the Realtime channel.
+	*
+	*/ channel(name, opts = {
+        config: {}
+    }) {
+        return this.realtime.channel(name, opts);
+    }
+    /**
+	* Returns all Realtime channels.
+	*/ getChannels() {
+        return this.realtime.getChannels();
+    }
+    /**
+	* Unsubscribes and removes Realtime channel from Realtime client.
+	*
+	* @param {RealtimeChannel} channel - The name of the Realtime channel.
+	*
+	*/ removeChannel(channel) {
+        return this.realtime.removeChannel(channel);
+    }
+    /**
+	* Unsubscribes and removes all Realtime channels from Realtime client.
+	*/ removeAllChannels() {
+        return this.realtime.removeAllChannels();
+    }
+    async _getAccessToken() {
+        var _this = this;
+        var _data$session$access_, _data$session;
+        if (_this.accessToken) return await _this.accessToken();
+        const { data } = await _this.auth.getSession();
+        return (_data$session$access_ = (_data$session = data.session) === null || _data$session === void 0 ? void 0 : _data$session.access_token) !== null && _data$session$access_ !== void 0 ? _data$session$access_ : _this.supabaseKey;
+    }
+    _initSupabaseAuthClient({ autoRefreshToken, persistSession, detectSessionInUrl, storage, userStorage, storageKey, flowType, lock, debug, throwOnError }, headers, fetch$1) {
+        const authHeaders = {
+            Authorization: `Bearer ${this.supabaseKey}`,
+            apikey: `${this.supabaseKey}`
+        };
+        return new SupabaseAuthClient({
+            url: this.authUrl.href,
+            headers: _objectSpread2(_objectSpread2({}, authHeaders), headers),
+            storageKey,
+            autoRefreshToken,
+            persistSession,
+            detectSessionInUrl,
+            storage,
+            userStorage,
+            flowType,
+            lock,
+            debug,
+            throwOnError,
+            fetch: fetch$1,
+            hasCustomAuthorizationHeader: Object.keys(this.headers).some((key)=>key.toLowerCase() === "authorization")
+        });
+    }
+    _initRealtimeClient(options) {
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$supabase$2b$realtime$2d$js$40$2$2e$89$2e$0$2f$node_modules$2f40$supabase$2f$realtime$2d$js$2f$dist$2f$module$2f$RealtimeClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RealtimeClient$3e$__["RealtimeClient"](this.realtimeUrl.href, _objectSpread2(_objectSpread2({}, options), {}, {
+            params: _objectSpread2(_objectSpread2({}, {
+                apikey: this.supabaseKey
+            }), options === null || options === void 0 ? void 0 : options.params)
+        }));
+    }
+    _listenForAuthEvents() {
+        return this.auth.onAuthStateChange((event, session)=>{
+            this._handleTokenChanged(event, "CLIENT", session === null || session === void 0 ? void 0 : session.access_token);
+        });
+    }
+    _handleTokenChanged(event, source, token) {
+        if ((event === "TOKEN_REFRESHED" || event === "SIGNED_IN") && this.changedAccessToken !== token) {
+            this.changedAccessToken = token;
+            this.realtime.setAuth(token);
+        } else if (event === "SIGNED_OUT") {
+            this.realtime.setAuth();
+            if (source == "STORAGE") this.auth.signOut();
+            this.changedAccessToken = void 0;
+        }
+    }
+};
+//#endregion
+//#region src/index.ts
+/**
+* Creates a new Supabase Client.
+*
+* @example
+* ```ts
+* import { createClient } from '@supabase/supabase-js'
+*
+* const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key')
+* const { data, error } = await supabase.from('profiles').select('*')
+* ```
+*/ const createClient = (supabaseUrl, supabaseKey, options)=>{
+    return new SupabaseClient(supabaseUrl, supabaseKey, options);
+};
+function shouldShowDeprecationWarning() {
+    if (typeof window !== "undefined") return false;
+    if (typeof __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"] === "undefined") return false;
+    const processVersion = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"]["version"];
+    if (processVersion === void 0 || processVersion === null) return false;
+    const versionMatch = processVersion.match(/^v(\d+)\./);
+    if (!versionMatch) return false;
+    return parseInt(versionMatch[1], 10) <= 18;
+}
+if (shouldShowDeprecationWarning()) console.warn("⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217");
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+primitive@1.1.2/node_modules/@radix-ui/primitive/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "composeEventHandlers",
+    ()=>composeEventHandlers
+]);
+// packages/core/primitive/src/primitive.tsx
+function composeEventHandlers(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
+    return function handleEvent(event) {
+        originalEventHandler?.(event);
+        if (checkForDefaultPrevented === false || !event.defaultPrevented) {
+            return ourEventHandler?.(event);
+        }
+    };
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "composeRefs",
+    ()=>composeRefs,
+    "useComposedRefs",
+    ()=>useComposedRefs
+]);
+// packages/react/compose-refs/src/compose-refs.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+;
+function setRef(ref, value) {
+    if (typeof ref === "function") {
+        return ref(value);
+    } else if (ref !== null && ref !== void 0) {
+        ref.current = value;
+    }
+}
+function composeRefs(...refs) {
+    return (node)=>{
+        let hasCleanup = false;
+        const cleanups = refs.map((ref)=>{
+            const cleanup = setRef(ref, node);
+            if (!hasCleanup && typeof cleanup == "function") {
+                hasCleanup = true;
+            }
+            return cleanup;
+        });
+        if (hasCleanup) {
+            return ()=>{
+                for(let i = 0; i < cleanups.length; i++){
+                    const cleanup = cleanups[i];
+                    if (typeof cleanup == "function") {
+                        cleanup();
+                    } else {
+                        setRef(refs[i], null);
+                    }
+                }
+            };
+        }
+    };
+}
+function useComposedRefs(...refs) {
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"](composeRefs(...refs), refs);
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-context@1.1_cfa0abbbae6354835f3a1fd3958b0817/node_modules/@radix-ui/react-context/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "createContext",
+    ()=>createContext2,
+    "createContextScope",
+    ()=>createContextScope
+]);
+// packages/react/context/src/create-context.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+;
+;
+function createContext2(rootComponentName, defaultContext) {
+    const Context = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"](defaultContext);
+    const Provider = (props)=>{
+        const { children, ...context } = props;
+        const value = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+            "createContext2.Provider.useMemo[value]": ()=>context
+        }["createContext2.Provider.useMemo[value]"], Object.values(context));
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Context.Provider, {
+            value,
+            children
+        });
+    };
+    Provider.displayName = rootComponentName + "Provider";
+    function useContext2(consumerName) {
+        const context = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](Context);
+        if (context) return context;
+        if (defaultContext !== void 0) return defaultContext;
+        throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+    }
+    return [
+        Provider,
+        useContext2
+    ];
+}
+function createContextScope(scopeName, createContextScopeDeps = []) {
+    let defaultContexts = [];
+    function createContext3(rootComponentName, defaultContext) {
+        const BaseContext = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"](defaultContext);
+        const index = defaultContexts.length;
+        defaultContexts = [
+            ...defaultContexts,
+            defaultContext
+        ];
+        const Provider = (props)=>{
+            const { scope, children, ...context } = props;
+            const Context = scope?.[scopeName]?.[index] || BaseContext;
+            const value = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+                "createContextScope.createContext3.Provider.useMemo[value]": ()=>context
+            }["createContextScope.createContext3.Provider.useMemo[value]"], Object.values(context));
+            return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Context.Provider, {
+                value,
+                children
+            });
+        };
+        Provider.displayName = rootComponentName + "Provider";
+        function useContext2(consumerName, scope) {
+            const Context = scope?.[scopeName]?.[index] || BaseContext;
+            const context = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](Context);
+            if (context) return context;
+            if (defaultContext !== void 0) return defaultContext;
+            throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+        }
+        return [
+            Provider,
+            useContext2
+        ];
+    }
+    const createScope = ()=>{
+        const scopeContexts = defaultContexts.map((defaultContext)=>{
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"](defaultContext);
+        });
+        return function useScope(scope) {
+            const contexts = scope?.[scopeName] || scopeContexts;
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+                "createContextScope.createScope.useScope.useMemo": ()=>({
+                        [`__scope${scopeName}`]: {
+                            ...scope,
+                            [scopeName]: contexts
+                        }
+                    })
+            }["createContextScope.createScope.useScope.useMemo"], [
+                scope,
+                contexts
+            ]);
+        };
+    };
+    createScope.scopeName = scopeName;
+    return [
+        createContext3,
+        composeContextScopes(createScope, ...createContextScopeDeps)
+    ];
+}
+function composeContextScopes(...scopes) {
+    const baseScope = scopes[0];
+    if (scopes.length === 1) return baseScope;
+    const createScope = ()=>{
+        const scopeHooks = scopes.map((createScope2)=>({
+                useScope: createScope2(),
+                scopeName: createScope2.scopeName
+            }));
+        return function useComposedScopes(overrideScopes) {
+            const nextScopes = scopeHooks.reduce((nextScopes2, { useScope, scopeName })=>{
+                const scopeProps = useScope(overrideScopes);
+                const currentScope = scopeProps[`__scope${scopeName}`];
+                return {
+                    ...nextScopes2,
+                    ...currentScope
+                };
+            }, {});
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+                "composeContextScopes.createScope.useComposedScopes.useMemo": ()=>({
+                        [`__scope${baseScope.scopeName}`]: nextScopes
+                    })
+            }["composeContextScopes.createScope.useComposedScopes.useMemo"], [
+                nextScopes
+            ]);
+        };
+    };
+    createScope.scopeName = baseScope.scopeName;
+    return createScope;
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-slot@1.2.0_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Root",
+    ()=>Slot,
+    "Slot",
+    ()=>Slot,
+    "Slottable",
+    ()=>Slottable,
+    "createSlot",
+    ()=>createSlot,
+    "createSlottable",
+    ()=>createSlottable
+]);
+// packages/react/slot/src/slot.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+;
+;
+;
+// @__NO_SIDE_EFFECTS__
+function createSlot(ownerName) {
+    const SlotClone = /* @__PURE__ */ createSlotClone(ownerName);
+    const Slot2 = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+        const { children, ...slotProps } = props;
+        const childrenArray = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].toArray(children);
+        const slottable = childrenArray.find(isSlottable);
+        if (slottable) {
+            const newElement = slottable.props.children;
+            const newChildren = childrenArray.map((child)=>{
+                if (child === slottable) {
+                    if (__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].count(newElement) > 1) return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].only(null);
+                    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](newElement) ? newElement.props.children : null;
+                } else {
+                    return child;
+                }
+            });
+            return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(SlotClone, {
+                ...slotProps,
+                ref: forwardedRef,
+                children: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](newElement) ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cloneElement"](newElement, void 0, newChildren) : null
+            });
+        }
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(SlotClone, {
+            ...slotProps,
+            ref: forwardedRef,
+            children
+        });
+    });
+    Slot2.displayName = `${ownerName}.Slot`;
+    return Slot2;
+}
+var Slot = /* @__PURE__ */ createSlot("Slot");
+// @__NO_SIDE_EFFECTS__
+function createSlotClone(ownerName) {
+    const SlotClone = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+        const { children, ...slotProps } = props;
+        if (__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](children)) {
+            const childrenRef = getElementRef(children);
+            const props2 = mergeProps(slotProps, children.props);
+            if (children.type !== __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"]) {
+                props2.ref = forwardedRef ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeRefs"])(forwardedRef, childrenRef) : childrenRef;
+            }
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cloneElement"](children, props2);
+        }
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].count(children) > 1 ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].only(null) : null;
+    });
+    SlotClone.displayName = `${ownerName}.SlotClone`;
+    return SlotClone;
+}
+var SLOTTABLE_IDENTIFIER = Symbol("radix.slottable");
+// @__NO_SIDE_EFFECTS__
+function createSlottable(ownerName) {
+    const Slottable2 = ({ children })=>{
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+            children
+        });
+    };
+    Slottable2.displayName = `${ownerName}.Slottable`;
+    Slottable2.__radixId = SLOTTABLE_IDENTIFIER;
+    return Slottable2;
+}
+var Slottable = /* @__PURE__ */ createSlottable("Slottable");
+function isSlottable(child) {
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"](child) && typeof child.type === "function" && "__radixId" in child.type && child.type.__radixId === SLOTTABLE_IDENTIFIER;
+}
+function mergeProps(slotProps, childProps) {
+    const overrideProps = {
+        ...childProps
+    };
+    for(const propName in childProps){
+        const slotPropValue = slotProps[propName];
+        const childPropValue = childProps[propName];
+        const isHandler = /^on[A-Z]/.test(propName);
+        if (isHandler) {
+            if (slotPropValue && childPropValue) {
+                overrideProps[propName] = (...args)=>{
+                    childPropValue(...args);
+                    slotPropValue(...args);
+                };
+            } else if (slotPropValue) {
+                overrideProps[propName] = slotPropValue;
+            }
+        } else if (propName === "style") {
+            overrideProps[propName] = {
+                ...slotPropValue,
+                ...childPropValue
+            };
+        } else if (propName === "className") {
+            overrideProps[propName] = [
+                slotPropValue,
+                childPropValue
+            ].filter(Boolean).join(" ");
+        }
+    }
+    return {
+        ...slotProps,
+        ...overrideProps
+    };
+}
+function getElementRef(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+        return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+        return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-collection@_18520cde4573e290c796eb19fc9ec3da/node_modules/@radix-ui/react-collection/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "createCollection",
+    ()=>createCollection
+]);
+// packages/react/collection/src/collection.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-context@1.1_cfa0abbbae6354835f3a1fd3958b0817/node_modules/@radix-ui/react-context/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-slot@1.2.0_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+function createCollection(name) {
+    const PROVIDER_NAME = name + "CollectionProvider";
+    const [createCollectionContext, createCollectionScope] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContextScope"])(PROVIDER_NAME);
+    const [CollectionProviderImpl, useCollectionContext] = createCollectionContext(PROVIDER_NAME, {
+        collectionRef: {
+            current: null
+        },
+        itemMap: /* @__PURE__ */ new Map()
+    });
+    const CollectionProvider = (props)=>{
+        const { scope, children } = props;
+        const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null);
+        const itemMap = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(/* @__PURE__ */ new Map()).current;
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(CollectionProviderImpl, {
+            scope,
+            itemMap,
+            collectionRef: ref,
+            children
+        });
+    };
+    CollectionProvider.displayName = PROVIDER_NAME;
+    const COLLECTION_SLOT_NAME = name + "CollectionSlot";
+    const CollectionSlotImpl = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createSlot"])(COLLECTION_SLOT_NAME);
+    const CollectionSlot = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].forwardRef((props, forwardedRef)=>{
+        const { scope, children } = props;
+        const context = useCollectionContext(COLLECTION_SLOT_NAME, scope);
+        const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, context.collectionRef);
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(CollectionSlotImpl, {
+            ref: composedRefs,
+            children
+        });
+    });
+    CollectionSlot.displayName = COLLECTION_SLOT_NAME;
+    const ITEM_SLOT_NAME = name + "CollectionItemSlot";
+    const ITEM_DATA_ATTR = "data-radix-collection-item";
+    const CollectionItemSlotImpl = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createSlot"])(ITEM_SLOT_NAME);
+    const CollectionItemSlot = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].forwardRef((props, forwardedRef)=>{
+        const { scope, children, ...itemData } = props;
+        const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null);
+        const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref);
+        const context = useCollectionContext(ITEM_SLOT_NAME, scope);
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+            "createCollection.CollectionItemSlot.useEffect": ()=>{
+                context.itemMap.set(ref, {
+                    ref,
+                    ...itemData
+                });
+                return ({
+                    "createCollection.CollectionItemSlot.useEffect": ()=>void context.itemMap.delete(ref)
+                })["createCollection.CollectionItemSlot.useEffect"];
+            }
+        }["createCollection.CollectionItemSlot.useEffect"]);
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(CollectionItemSlotImpl, {
+            ...{
+                [ITEM_DATA_ATTR]: ""
+            },
+            ref: composedRefs,
+            children
+        });
+    });
+    CollectionItemSlot.displayName = ITEM_SLOT_NAME;
+    function useCollection(scope) {
+        const context = useCollectionContext(name + "CollectionConsumer", scope);
+        const getItems = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useCallback({
+            "createCollection.useCollection.useCallback[getItems]": ()=>{
+                const collectionNode = context.collectionRef.current;
+                if (!collectionNode) return [];
+                const orderedNodes = Array.from(collectionNode.querySelectorAll(`[${ITEM_DATA_ATTR}]`));
+                const items = Array.from(context.itemMap.values());
+                const orderedItems = items.sort({
+                    "createCollection.useCollection.useCallback[getItems].orderedItems": (a, b)=>orderedNodes.indexOf(a.ref.current) - orderedNodes.indexOf(b.ref.current)
+                }["createCollection.useCollection.useCallback[getItems].orderedItems"]);
+                return orderedItems;
+            }
+        }["createCollection.useCollection.useCallback[getItems]"], [
+            context.collectionRef,
+            context.itemMap
+        ]);
+        return getItems;
+    }
+    return [
+        {
+            Provider: CollectionProvider,
+            Slot: CollectionSlot,
+            ItemSlot: CollectionItemSlot
+        },
+        useCollection,
+        createCollectionScope
+    ];
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Primitive",
+    ()=>Primitive,
+    "Root",
+    ()=>Root,
+    "dispatchDiscreteCustomEvent",
+    ()=>dispatchDiscreteCustomEvent
+]);
+// packages/react/primitive/src/primitive.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-slot@1.2.0_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+;
+;
+;
+;
+var NODES = [
+    "a",
+    "button",
+    "div",
+    "form",
+    "h2",
+    "h3",
+    "img",
+    "input",
+    "label",
+    "li",
+    "nav",
+    "ol",
+    "p",
+    "span",
+    "svg",
+    "ul"
+];
+var Primitive = NODES.reduce((primitive, node)=>{
+    const Slot = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createSlot"])(`Primitive.${node}`);
+    const Node = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+        const { asChild, ...primitiveProps } = props;
+        const Comp = asChild ? Slot : node;
+        if (typeof window !== "undefined") {
+            window[Symbol.for("radix-ui")] = true;
+        }
+        return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Comp, {
+            ...primitiveProps,
+            ref: forwardedRef
+        });
+    });
+    Node.displayName = `Primitive.${node}`;
+    return {
+        ...primitive,
+        [node]: Node
+    };
+}, {});
+function dispatchDiscreteCustomEvent(target, event) {
+    if (target) __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["flushSync"](()=>target.dispatchEvent(event));
+}
+var Root = Primitive;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useCallbackRef",
+    ()=>useCallbackRef
+]);
+// packages/react/use-callback-ref/src/use-callback-ref.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+;
+function useCallbackRef(callback) {
+    const callbackRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](callback);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "useCallbackRef.useEffect": ()=>{
+            callbackRef.current = callback;
+        }
+    }["useCallbackRef.useEffect"]);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "useCallbackRef.useMemo": ()=>({
+                "useCallbackRef.useMemo": (...args)=>callbackRef.current?.(...args)
+            })["useCallbackRef.useMemo"]
+    }["useCallbackRef.useMemo"], []);
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-escape-_3de5b5e7f85c5bf1bb5ee1e7517cf40c/node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useEscapeKeydown",
+    ()=>useEscapeKeydown
+]);
+// packages/react/use-escape-keydown/src/use-escape-keydown.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)");
+;
+;
+function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis?.document) {
+    const onEscapeKeyDown = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onEscapeKeyDownProp);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "useEscapeKeydown.useEffect": ()=>{
+            const handleKeyDown = {
+                "useEscapeKeydown.useEffect.handleKeyDown": (event)=>{
+                    if (event.key === "Escape") {
+                        onEscapeKeyDown(event);
+                    }
+                }
+            }["useEscapeKeydown.useEffect.handleKeyDown"];
+            ownerDocument.addEventListener("keydown", handleKeyDown, {
+                capture: true
+            });
+            return ({
+                "useEscapeKeydown.useEffect": ()=>ownerDocument.removeEventListener("keydown", handleKeyDown, {
+                        capture: true
+                    })
+            })["useEscapeKeydown.useEffect"];
+        }
+    }["useEscapeKeydown.useEffect"], [
+        onEscapeKeyDown,
+        ownerDocument
+    ]);
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-dismissable_d70bf76468a29d7aaccf3379f82d0207/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Branch",
+    ()=>Branch,
+    "DismissableLayer",
+    ()=>DismissableLayer,
+    "DismissableLayerBranch",
+    ()=>DismissableLayerBranch,
+    "Root",
+    ()=>Root
+]);
+// packages/react/dismissable-layer/src/dismissable-layer.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+primitive@1.1.2/node_modules/@radix-ui/primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$escape$2d$_3de5b5e7f85c5bf1bb5ee1e7517cf40c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$escape$2d$keydown$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-escape-_3de5b5e7f85c5bf1bb5ee1e7517cf40c/node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+;
+;
+var DISMISSABLE_LAYER_NAME = "DismissableLayer";
+var CONTEXT_UPDATE = "dismissableLayer.update";
+var POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
+var FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
+var originalBodyPointerEvents;
+var DismissableLayerContext = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"]({
+    layers: /* @__PURE__ */ new Set(),
+    layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
+    branches: /* @__PURE__ */ new Set()
+});
+var DismissableLayer = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { disableOutsidePointerEvents = false, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, onDismiss, ...layerProps } = props;
+    const context = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](DismissableLayerContext);
+    const [node, setNode] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const ownerDocument = node?.ownerDocument ?? globalThis?.document;
+    const [, force] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]({});
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, {
+        "DismissableLayer.useComposedRefs[composedRefs]": (node2)=>setNode(node2)
+    }["DismissableLayer.useComposedRefs[composedRefs]"]);
+    const layers = Array.from(context.layers);
+    const [highestLayerWithOutsidePointerEventsDisabled] = [
+        ...context.layersWithOutsidePointerEventsDisabled
+    ].slice(-1);
+    const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(highestLayerWithOutsidePointerEventsDisabled);
+    const index = node ? layers.indexOf(node) : -1;
+    const isBodyPointerEventsDisabled = context.layersWithOutsidePointerEventsDisabled.size > 0;
+    const isPointerEventsEnabled = index >= highestLayerWithOutsidePointerEventsDisabledIndex;
+    const pointerDownOutside = usePointerDownOutside({
+        "DismissableLayer.usePointerDownOutside[pointerDownOutside]": (event)=>{
+            const target = event.target;
+            const isPointerDownOnBranch = [
+                ...context.branches
+            ].some({
+                "DismissableLayer.usePointerDownOutside[pointerDownOutside].isPointerDownOnBranch": (branch)=>branch.contains(target)
+            }["DismissableLayer.usePointerDownOutside[pointerDownOutside].isPointerDownOnBranch"]);
+            if (!isPointerEventsEnabled || isPointerDownOnBranch) return;
+            onPointerDownOutside?.(event);
+            onInteractOutside?.(event);
+            if (!event.defaultPrevented) onDismiss?.();
+        }
+    }["DismissableLayer.usePointerDownOutside[pointerDownOutside]"], ownerDocument);
+    const focusOutside = useFocusOutside({
+        "DismissableLayer.useFocusOutside[focusOutside]": (event)=>{
+            const target = event.target;
+            const isFocusInBranch = [
+                ...context.branches
+            ].some({
+                "DismissableLayer.useFocusOutside[focusOutside].isFocusInBranch": (branch)=>branch.contains(target)
+            }["DismissableLayer.useFocusOutside[focusOutside].isFocusInBranch"]);
+            if (isFocusInBranch) return;
+            onFocusOutside?.(event);
+            onInteractOutside?.(event);
+            if (!event.defaultPrevented) onDismiss?.();
+        }
+    }["DismissableLayer.useFocusOutside[focusOutside]"], ownerDocument);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$escape$2d$_3de5b5e7f85c5bf1bb5ee1e7517cf40c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$escape$2d$keydown$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEscapeKeydown"])({
+        "DismissableLayer.useEscapeKeydown": (event)=>{
+            const isHighestLayer = index === context.layers.size - 1;
+            if (!isHighestLayer) return;
+            onEscapeKeyDown?.(event);
+            if (!event.defaultPrevented && onDismiss) {
+                event.preventDefault();
+                onDismiss();
+            }
+        }
+    }["DismissableLayer.useEscapeKeydown"], ownerDocument);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "DismissableLayer.useEffect": ()=>{
+            if (!node) return;
+            if (disableOutsidePointerEvents) {
+                if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
+                    originalBodyPointerEvents = ownerDocument.body.style.pointerEvents;
+                    ownerDocument.body.style.pointerEvents = "none";
+                }
+                context.layersWithOutsidePointerEventsDisabled.add(node);
+            }
+            context.layers.add(node);
+            dispatchUpdate();
+            return ({
+                "DismissableLayer.useEffect": ()=>{
+                    if (disableOutsidePointerEvents && context.layersWithOutsidePointerEventsDisabled.size === 1) {
+                        ownerDocument.body.style.pointerEvents = originalBodyPointerEvents;
+                    }
+                }
+            })["DismissableLayer.useEffect"];
+        }
+    }["DismissableLayer.useEffect"], [
+        node,
+        ownerDocument,
+        disableOutsidePointerEvents,
+        context
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "DismissableLayer.useEffect": ()=>{
+            return ({
+                "DismissableLayer.useEffect": ()=>{
+                    if (!node) return;
+                    context.layers.delete(node);
+                    context.layersWithOutsidePointerEventsDisabled.delete(node);
+                    dispatchUpdate();
+                }
+            })["DismissableLayer.useEffect"];
+        }
+    }["DismissableLayer.useEffect"], [
+        node,
+        context
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "DismissableLayer.useEffect": ()=>{
+            const handleUpdate = {
+                "DismissableLayer.useEffect.handleUpdate": ()=>force({})
+            }["DismissableLayer.useEffect.handleUpdate"];
+            document.addEventListener(CONTEXT_UPDATE, handleUpdate);
+            return ({
+                "DismissableLayer.useEffect": ()=>document.removeEventListener(CONTEXT_UPDATE, handleUpdate)
+            })["DismissableLayer.useEffect"];
+        }
+    }["DismissableLayer.useEffect"], []);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...layerProps,
+        ref: composedRefs,
+        style: {
+            pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
+            ...props.style
+        },
+        onFocusCapture: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onFocusCapture, focusOutside.onFocusCapture),
+        onBlurCapture: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onBlurCapture, focusOutside.onBlurCapture),
+        onPointerDownCapture: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerDownCapture, pointerDownOutside.onPointerDownCapture)
+    });
+});
+DismissableLayer.displayName = DISMISSABLE_LAYER_NAME;
+var BRANCH_NAME = "DismissableLayerBranch";
+var DismissableLayerBranch = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const context = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](DismissableLayerContext);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "DismissableLayerBranch.useEffect": ()=>{
+            const node = ref.current;
+            if (node) {
+                context.branches.add(node);
+                return ({
+                    "DismissableLayerBranch.useEffect": ()=>{
+                        context.branches.delete(node);
+                    }
+                })["DismissableLayerBranch.useEffect"];
+            }
+        }
+    }["DismissableLayerBranch.useEffect"], [
+        context.branches
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...props,
+        ref: composedRefs
+    });
+});
+DismissableLayerBranch.displayName = BRANCH_NAME;
+function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis?.document) {
+    const handlePointerDownOutside = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onPointerDownOutside);
+    const isPointerInsideReactTreeRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const handleClickRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"]({
+        "usePointerDownOutside.useRef[handleClickRef]": ()=>{}
+    }["usePointerDownOutside.useRef[handleClickRef]"]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "usePointerDownOutside.useEffect": ()=>{
+            const handlePointerDown = {
+                "usePointerDownOutside.useEffect.handlePointerDown": (event)=>{
+                    if (event.target && !isPointerInsideReactTreeRef.current) {
+                        let handleAndDispatchPointerDownOutsideEvent2 = {
+                            "usePointerDownOutside.useEffect.handlePointerDown.handleAndDispatchPointerDownOutsideEvent2": function() {
+                                handleAndDispatchCustomEvent(POINTER_DOWN_OUTSIDE, handlePointerDownOutside, eventDetail, {
+                                    discrete: true
+                                });
+                            }
+                        }["usePointerDownOutside.useEffect.handlePointerDown.handleAndDispatchPointerDownOutsideEvent2"];
+                        var handleAndDispatchPointerDownOutsideEvent = handleAndDispatchPointerDownOutsideEvent2;
+                        const eventDetail = {
+                            originalEvent: event
+                        };
+                        if (event.pointerType === "touch") {
+                            ownerDocument.removeEventListener("click", handleClickRef.current);
+                            handleClickRef.current = handleAndDispatchPointerDownOutsideEvent2;
+                            ownerDocument.addEventListener("click", handleClickRef.current, {
+                                once: true
+                            });
+                        } else {
+                            handleAndDispatchPointerDownOutsideEvent2();
+                        }
+                    } else {
+                        ownerDocument.removeEventListener("click", handleClickRef.current);
+                    }
+                    isPointerInsideReactTreeRef.current = false;
+                }
+            }["usePointerDownOutside.useEffect.handlePointerDown"];
+            const timerId = window.setTimeout({
+                "usePointerDownOutside.useEffect.timerId": ()=>{
+                    ownerDocument.addEventListener("pointerdown", handlePointerDown);
+                }
+            }["usePointerDownOutside.useEffect.timerId"], 0);
+            return ({
+                "usePointerDownOutside.useEffect": ()=>{
+                    window.clearTimeout(timerId);
+                    ownerDocument.removeEventListener("pointerdown", handlePointerDown);
+                    ownerDocument.removeEventListener("click", handleClickRef.current);
+                }
+            })["usePointerDownOutside.useEffect"];
+        }
+    }["usePointerDownOutside.useEffect"], [
+        ownerDocument,
+        handlePointerDownOutside
+    ]);
+    return {
+        // ensures we check React component tree (not just DOM tree)
+        onPointerDownCapture: ()=>isPointerInsideReactTreeRef.current = true
+    };
+}
+function useFocusOutside(onFocusOutside, ownerDocument = globalThis?.document) {
+    const handleFocusOutside = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onFocusOutside);
+    const isFocusInsideReactTreeRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "useFocusOutside.useEffect": ()=>{
+            const handleFocus = {
+                "useFocusOutside.useEffect.handleFocus": (event)=>{
+                    if (event.target && !isFocusInsideReactTreeRef.current) {
+                        const eventDetail = {
+                            originalEvent: event
+                        };
+                        handleAndDispatchCustomEvent(FOCUS_OUTSIDE, handleFocusOutside, eventDetail, {
+                            discrete: false
+                        });
+                    }
+                }
+            }["useFocusOutside.useEffect.handleFocus"];
+            ownerDocument.addEventListener("focusin", handleFocus);
+            return ({
+                "useFocusOutside.useEffect": ()=>ownerDocument.removeEventListener("focusin", handleFocus)
+            })["useFocusOutside.useEffect"];
+        }
+    }["useFocusOutside.useEffect"], [
+        ownerDocument,
+        handleFocusOutside
+    ]);
+    return {
+        onFocusCapture: ()=>isFocusInsideReactTreeRef.current = true,
+        onBlurCapture: ()=>isFocusInsideReactTreeRef.current = false
+    };
+}
+function dispatchUpdate() {
+    const event = new CustomEvent(CONTEXT_UPDATE);
+    document.dispatchEvent(event);
+}
+function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
+    const target = detail.originalEvent.target;
+    const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: true,
+        detail
+    });
+    if (handler) target.addEventListener(name, handler, {
+        once: true
+    });
+    if (discrete) {
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["dispatchDiscreteCustomEvent"])(target, event);
+    } else {
+        target.dispatchEvent(event);
+    }
+}
+var Root = DismissableLayer;
+var Branch = DismissableLayerBranch;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useLayoutEffect",
+    ()=>useLayoutEffect2
+]);
+// packages/react/use-layout-effect/src/use-layout-effect.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+;
+var useLayoutEffect2 = globalThis?.document ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"] : ()=>{};
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-portal@1.1._1842d2a7a75d0a98272fb7729bd301da/node_modules/@radix-ui/react-portal/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Portal",
+    ()=>Portal,
+    "Root",
+    ()=>Root
+]);
+// packages/react/portal/src/portal.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+var PORTAL_NAME = "Portal";
+var Portal = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { container: containerProp, ...portalProps } = props;
+    const [mounted, setMounted] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](false);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "Portal.useLayoutEffect": ()=>setMounted(true)
+    }["Portal.useLayoutEffect"], []);
+    const container = containerProp || mounted && globalThis?.document?.body;
+    return container ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createPortal(/* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...portalProps,
+        ref: forwardedRef
+    }), container) : null;
+});
+Portal.displayName = PORTAL_NAME;
+var Root = Portal;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-presence@1._63e879ae52f586b0037bd210a7056e2f/node_modules/@radix-ui/react-presence/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Presence",
+    ()=>Presence,
+    "Root",
+    ()=>Root
+]);
+// packages/react/presence/src/presence.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function useStateMachine(initialState, machine) {
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useReducer"]({
+        "useStateMachine.useReducer": (state, event)=>{
+            const nextState = machine[state][event];
+            return nextState ?? state;
+        }
+    }["useStateMachine.useReducer"], initialState);
+}
+// packages/react/presence/src/presence.tsx
+var Presence = (props)=>{
+    const { present, children } = props;
+    const presence = usePresence(present);
+    const child = typeof children === "function" ? children({
+        present: presence.isPresent
+    }) : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Children"].only(children);
+    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(presence.ref, getElementRef(child));
+    const forceMount = typeof children === "function";
+    return forceMount || presence.isPresent ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cloneElement"](child, {
+        ref
+    }) : null;
+};
+Presence.displayName = "Presence";
+function usePresence(present) {
+    const [node, setNode] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]();
+    const stylesRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"]({});
+    const prevPresentRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](present);
+    const prevAnimationNameRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"]("none");
+    const initialState = present ? "mounted" : "unmounted";
+    const [state, send] = useStateMachine(initialState, {
+        mounted: {
+            UNMOUNT: "unmounted",
+            ANIMATION_OUT: "unmountSuspended"
+        },
+        unmountSuspended: {
+            MOUNT: "mounted",
+            ANIMATION_END: "unmounted"
+        },
+        unmounted: {
+            MOUNT: "mounted"
+        }
+    });
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "usePresence.useEffect": ()=>{
+            const currentAnimationName = getAnimationName(stylesRef.current);
+            prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
+        }
+    }["usePresence.useEffect"], [
+        state
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "usePresence.useLayoutEffect": ()=>{
+            const styles = stylesRef.current;
+            const wasPresent = prevPresentRef.current;
+            const hasPresentChanged = wasPresent !== present;
+            if (hasPresentChanged) {
+                const prevAnimationName = prevAnimationNameRef.current;
+                const currentAnimationName = getAnimationName(styles);
+                if (present) {
+                    send("MOUNT");
+                } else if (currentAnimationName === "none" || styles?.display === "none") {
+                    send("UNMOUNT");
+                } else {
+                    const isAnimating = prevAnimationName !== currentAnimationName;
+                    if (wasPresent && isAnimating) {
+                        send("ANIMATION_OUT");
+                    } else {
+                        send("UNMOUNT");
+                    }
+                }
+                prevPresentRef.current = present;
+            }
+        }
+    }["usePresence.useLayoutEffect"], [
+        present,
+        send
+    ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "usePresence.useLayoutEffect": ()=>{
+            if (node) {
+                let timeoutId;
+                const ownerWindow = node.ownerDocument.defaultView ?? window;
+                const handleAnimationEnd = {
+                    "usePresence.useLayoutEffect.handleAnimationEnd": (event)=>{
+                        const currentAnimationName = getAnimationName(stylesRef.current);
+                        const isCurrentAnimation = currentAnimationName.includes(event.animationName);
+                        if (event.target === node && isCurrentAnimation) {
+                            send("ANIMATION_END");
+                            if (!prevPresentRef.current) {
+                                const currentFillMode = node.style.animationFillMode;
+                                node.style.animationFillMode = "forwards";
+                                timeoutId = ownerWindow.setTimeout({
+                                    "usePresence.useLayoutEffect.handleAnimationEnd": ()=>{
+                                        if (node.style.animationFillMode === "forwards") {
+                                            node.style.animationFillMode = currentFillMode;
+                                        }
+                                    }
+                                }["usePresence.useLayoutEffect.handleAnimationEnd"]);
+                            }
+                        }
+                    }
+                }["usePresence.useLayoutEffect.handleAnimationEnd"];
+                const handleAnimationStart = {
+                    "usePresence.useLayoutEffect.handleAnimationStart": (event)=>{
+                        if (event.target === node) {
+                            prevAnimationNameRef.current = getAnimationName(stylesRef.current);
+                        }
+                    }
+                }["usePresence.useLayoutEffect.handleAnimationStart"];
+                node.addEventListener("animationstart", handleAnimationStart);
+                node.addEventListener("animationcancel", handleAnimationEnd);
+                node.addEventListener("animationend", handleAnimationEnd);
+                return ({
+                    "usePresence.useLayoutEffect": ()=>{
+                        ownerWindow.clearTimeout(timeoutId);
+                        node.removeEventListener("animationstart", handleAnimationStart);
+                        node.removeEventListener("animationcancel", handleAnimationEnd);
+                        node.removeEventListener("animationend", handleAnimationEnd);
+                    }
+                })["usePresence.useLayoutEffect"];
+            } else {
+                send("ANIMATION_END");
+            }
+        }
+    }["usePresence.useLayoutEffect"], [
+        node,
+        send
+    ]);
+    return {
+        isPresent: [
+            "mounted",
+            "unmountSuspended"
+        ].includes(state),
+        ref: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+            "usePresence.useCallback": (node2)=>{
+                if (node2) stylesRef.current = getComputedStyle(node2);
+                setNode(node2);
+            }
+        }["usePresence.useCallback"], [])
+    };
+}
+function getAnimationName(styles) {
+    return styles?.animationName || "none";
+}
+function getElementRef(element) {
+    let getter = Object.getOwnPropertyDescriptor(element.props, "ref")?.get;
+    let mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+        return element.ref;
+    }
+    getter = Object.getOwnPropertyDescriptor(element, "ref")?.get;
+    mayWarn = getter && "isReactWarning" in getter && getter.isReactWarning;
+    if (mayWarn) {
+        return element.props.ref;
+    }
+    return element.props.ref || element.ref;
+}
+var Root = Presence;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-control_30e592304562fabd7ca6cd629c5af3dc/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useControllableState",
+    ()=>useControllableState
+]);
+// packages/react/use-controllable-state/src/use-controllable-state.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)");
+;
+;
+function useControllableState({ prop, defaultProp, onChange = ()=>{} }) {
+    const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({
+        defaultProp,
+        onChange
+    });
+    const isControlled = prop !== void 0;
+    const value = isControlled ? prop : uncontrolledProp;
+    const handleChange = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onChange);
+    const setValue = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "useControllableState.useCallback[setValue]": (nextValue)=>{
+            if (isControlled) {
+                const setter = nextValue;
+                const value2 = typeof nextValue === "function" ? setter(prop) : nextValue;
+                if (value2 !== prop) handleChange(value2);
+            } else {
+                setUncontrolledProp(nextValue);
+            }
+        }
+    }["useControllableState.useCallback[setValue]"], [
+        isControlled,
+        prop,
+        setUncontrolledProp,
+        handleChange
+    ]);
+    return [
+        value,
+        setValue
+    ];
+}
+function useUncontrolledState({ defaultProp, onChange }) {
+    const uncontrolledState = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](defaultProp);
+    const [value] = uncontrolledState;
+    const prevValueRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](value);
+    const handleChange = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onChange);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "useUncontrolledState.useEffect": ()=>{
+            if (prevValueRef.current !== value) {
+                handleChange(value);
+                prevValueRef.current = value;
+            }
+        }
+    }["useUncontrolledState.useEffect"], [
+        value,
+        prevValueRef,
+        handleChange
+    ]);
+    return uncontrolledState;
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-visually-hi_114ba245af3f27a158dce91aa94e789f/node_modules/@radix-ui/react-visually-hidden/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Root",
+    ()=>Root,
+    "VisuallyHidden",
+    ()=>VisuallyHidden
+]);
+// packages/react/visually-hidden/src/visually-hidden.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+;
+;
+;
+var NAME = "VisuallyHidden";
+var VisuallyHidden = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].span, {
+        ...props,
+        ref: forwardedRef,
+        style: {
+            // See: https://github.com/twbs/bootstrap/blob/main/scss/mixins/_visually-hidden.scss
+            position: "absolute",
+            border: 0,
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            wordWrap: "normal",
+            ...props.style
+        }
+    });
+});
+VisuallyHidden.displayName = NAME;
+var Root = VisuallyHidden;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-toast@1.2.7_937ff44ad45c18b17bf7608b9905d93b/node_modules/@radix-ui/react-toast/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Action",
+    ()=>Action,
+    "Close",
+    ()=>Close,
+    "Description",
+    ()=>Description,
+    "Provider",
+    ()=>Provider,
+    "Root",
+    ()=>Root2,
+    "Title",
+    ()=>Title,
+    "Toast",
+    ()=>Toast,
+    "ToastAction",
+    ()=>ToastAction,
+    "ToastClose",
+    ()=>ToastClose,
+    "ToastDescription",
+    ()=>ToastDescription,
+    "ToastProvider",
+    ()=>ToastProvider,
+    "ToastTitle",
+    ()=>ToastTitle,
+    "ToastViewport",
+    ()=>ToastViewport,
+    "Viewport",
+    ()=>Viewport,
+    "createToastScope",
+    ()=>createToastScope
+]);
+// packages/react/toast/src/toast.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+primitive@1.1.2/node_modules/@radix-ui/primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$collection$40$_18520cde4573e290c796eb19fc9ec3da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$collection$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-collection@_18520cde4573e290c796eb19fc9ec3da/node_modules/@radix-ui/react-collection/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-context@1.1_cfa0abbbae6354835f3a1fd3958b0817/node_modules/@radix-ui/react-context/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$dismissable_d70bf76468a29d7aaccf3379f82d0207$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dismissable$2d$layer$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-dismissable_d70bf76468a29d7aaccf3379f82d0207/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$portal$40$1$2e$1$2e$_1842d2a7a75d0a98272fb7729bd301da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$portal$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-portal@1.1._1842d2a7a75d0a98272fb7729bd301da/node_modules/@radix-ui/react-portal/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$presence$40$1$2e$_63e879ae52f586b0037bd210a7056e2f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$presence$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-presence@1._63e879ae52f586b0037bd210a7056e2f/node_modules/@radix-ui/react-presence/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$control_30e592304562fabd7ca6cd629c5af3dc$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$controllable$2d$state$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-control_30e592304562fabd7ca6cd629c5af3dc/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$visually$2d$hi_114ba245af3f27a158dce91aa94e789f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$visually$2d$hidden$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-visually-hi_114ba245af3f27a158dce91aa94e789f/node_modules/@radix-ui/react-visually-hidden/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+var PROVIDER_NAME = "ToastProvider";
+var [Collection, useCollection, createCollectionScope] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$collection$40$_18520cde4573e290c796eb19fc9ec3da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$collection$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCollection"])("Toast");
+var [createToastContext, createToastScope] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContextScope"])("Toast", [
+    createCollectionScope
+]);
+var [ToastProviderProvider, useToastProviderContext] = createToastContext(PROVIDER_NAME);
+var ToastProvider = (props)=>{
+    const { __scopeToast, label = "Notification", duration = 5e3, swipeDirection = "right", swipeThreshold = 50, children } = props;
+    const [viewport, setViewport] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const [toastCount, setToastCount] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](0);
+    const isFocusedToastEscapeKeyDownRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const isClosePausedRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    if (!label.trim()) {
+        console.error(`Invalid prop \`label\` supplied to \`${PROVIDER_NAME}\`. Expected non-empty \`string\`.`);
+    }
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Collection.Provider, {
+        scope: __scopeToast,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastProviderProvider, {
+            scope: __scopeToast,
+            label,
+            duration,
+            swipeDirection,
+            swipeThreshold,
+            toastCount,
+            viewport,
+            onViewportChange: setViewport,
+            onToastAdd: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+                "ToastProvider.useCallback": ()=>setToastCount({
+                        "ToastProvider.useCallback": (prevCount)=>prevCount + 1
+                    }["ToastProvider.useCallback"])
+            }["ToastProvider.useCallback"], []),
+            onToastRemove: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+                "ToastProvider.useCallback": ()=>setToastCount({
+                        "ToastProvider.useCallback": (prevCount)=>prevCount - 1
+                    }["ToastProvider.useCallback"])
+            }["ToastProvider.useCallback"], []),
+            isFocusedToastEscapeKeyDownRef,
+            isClosePausedRef,
+            children
+        })
+    });
+};
+ToastProvider.displayName = PROVIDER_NAME;
+var VIEWPORT_NAME = "ToastViewport";
+var VIEWPORT_DEFAULT_HOTKEY = [
+    "F8"
+];
+var VIEWPORT_PAUSE = "toast.viewportPause";
+var VIEWPORT_RESUME = "toast.viewportResume";
+var ToastViewport = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, hotkey = VIEWPORT_DEFAULT_HOTKEY, label = "Notifications ({hotkey})", ...viewportProps } = props;
+    const context = useToastProviderContext(VIEWPORT_NAME, __scopeToast);
+    const getItems = useCollection(__scopeToast);
+    const wrapperRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const headFocusProxyRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const tailFocusProxyRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref, context.onViewportChange);
+    const hotkeyLabel = hotkey.join("+").replace(/Key/g, "").replace(/Digit/g, "");
+    const hasToasts = context.toastCount > 0;
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastViewport.useEffect": ()=>{
+            const handleKeyDown = {
+                "ToastViewport.useEffect.handleKeyDown": (event)=>{
+                    const isHotkeyPressed = hotkey.length !== 0 && hotkey.every({
+                        "ToastViewport.useEffect.handleKeyDown": (key)=>event[key] || event.code === key
+                    }["ToastViewport.useEffect.handleKeyDown"]);
+                    if (isHotkeyPressed) ref.current?.focus();
+                }
+            }["ToastViewport.useEffect.handleKeyDown"];
+            document.addEventListener("keydown", handleKeyDown);
+            return ({
+                "ToastViewport.useEffect": ()=>document.removeEventListener("keydown", handleKeyDown)
+            })["ToastViewport.useEffect"];
+        }
+    }["ToastViewport.useEffect"], [
+        hotkey
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastViewport.useEffect": ()=>{
+            const wrapper = wrapperRef.current;
+            const viewport = ref.current;
+            if (hasToasts && wrapper && viewport) {
+                const handlePause = {
+                    "ToastViewport.useEffect.handlePause": ()=>{
+                        if (!context.isClosePausedRef.current) {
+                            const pauseEvent = new CustomEvent(VIEWPORT_PAUSE);
+                            viewport.dispatchEvent(pauseEvent);
+                            context.isClosePausedRef.current = true;
+                        }
+                    }
+                }["ToastViewport.useEffect.handlePause"];
+                const handleResume = {
+                    "ToastViewport.useEffect.handleResume": ()=>{
+                        if (context.isClosePausedRef.current) {
+                            const resumeEvent = new CustomEvent(VIEWPORT_RESUME);
+                            viewport.dispatchEvent(resumeEvent);
+                            context.isClosePausedRef.current = false;
+                        }
+                    }
+                }["ToastViewport.useEffect.handleResume"];
+                const handleFocusOutResume = {
+                    "ToastViewport.useEffect.handleFocusOutResume": (event)=>{
+                        const isFocusMovingOutside = !wrapper.contains(event.relatedTarget);
+                        if (isFocusMovingOutside) handleResume();
+                    }
+                }["ToastViewport.useEffect.handleFocusOutResume"];
+                const handlePointerLeaveResume = {
+                    "ToastViewport.useEffect.handlePointerLeaveResume": ()=>{
+                        const isFocusInside = wrapper.contains(document.activeElement);
+                        if (!isFocusInside) handleResume();
+                    }
+                }["ToastViewport.useEffect.handlePointerLeaveResume"];
+                wrapper.addEventListener("focusin", handlePause);
+                wrapper.addEventListener("focusout", handleFocusOutResume);
+                wrapper.addEventListener("pointermove", handlePause);
+                wrapper.addEventListener("pointerleave", handlePointerLeaveResume);
+                window.addEventListener("blur", handlePause);
+                window.addEventListener("focus", handleResume);
+                return ({
+                    "ToastViewport.useEffect": ()=>{
+                        wrapper.removeEventListener("focusin", handlePause);
+                        wrapper.removeEventListener("focusout", handleFocusOutResume);
+                        wrapper.removeEventListener("pointermove", handlePause);
+                        wrapper.removeEventListener("pointerleave", handlePointerLeaveResume);
+                        window.removeEventListener("blur", handlePause);
+                        window.removeEventListener("focus", handleResume);
+                    }
+                })["ToastViewport.useEffect"];
+            }
+        }
+    }["ToastViewport.useEffect"], [
+        hasToasts,
+        context.isClosePausedRef
+    ]);
+    const getSortedTabbableCandidates = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "ToastViewport.useCallback[getSortedTabbableCandidates]": ({ tabbingDirection })=>{
+            const toastItems = getItems();
+            const tabbableCandidates = toastItems.map({
+                "ToastViewport.useCallback[getSortedTabbableCandidates].tabbableCandidates": (toastItem)=>{
+                    const toastNode = toastItem.ref.current;
+                    const toastTabbableCandidates = [
+                        toastNode,
+                        ...getTabbableCandidates(toastNode)
+                    ];
+                    return tabbingDirection === "forwards" ? toastTabbableCandidates : toastTabbableCandidates.reverse();
+                }
+            }["ToastViewport.useCallback[getSortedTabbableCandidates].tabbableCandidates"]);
+            return (tabbingDirection === "forwards" ? tabbableCandidates.reverse() : tabbableCandidates).flat();
+        }
+    }["ToastViewport.useCallback[getSortedTabbableCandidates]"], [
+        getItems
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastViewport.useEffect": ()=>{
+            const viewport = ref.current;
+            if (viewport) {
+                const handleKeyDown = {
+                    "ToastViewport.useEffect.handleKeyDown": (event)=>{
+                        const isMetaKey = event.altKey || event.ctrlKey || event.metaKey;
+                        const isTabKey = event.key === "Tab" && !isMetaKey;
+                        if (isTabKey) {
+                            const focusedElement = document.activeElement;
+                            const isTabbingBackwards = event.shiftKey;
+                            const targetIsViewport = event.target === viewport;
+                            if (targetIsViewport && isTabbingBackwards) {
+                                headFocusProxyRef.current?.focus();
+                                return;
+                            }
+                            const tabbingDirection = isTabbingBackwards ? "backwards" : "forwards";
+                            const sortedCandidates = getSortedTabbableCandidates({
+                                tabbingDirection
+                            });
+                            const index = sortedCandidates.findIndex({
+                                "ToastViewport.useEffect.handleKeyDown.index": (candidate)=>candidate === focusedElement
+                            }["ToastViewport.useEffect.handleKeyDown.index"]);
+                            if (focusFirst(sortedCandidates.slice(index + 1))) {
+                                event.preventDefault();
+                            } else {
+                                isTabbingBackwards ? headFocusProxyRef.current?.focus() : tailFocusProxyRef.current?.focus();
+                            }
+                        }
+                    }
+                }["ToastViewport.useEffect.handleKeyDown"];
+                viewport.addEventListener("keydown", handleKeyDown);
+                return ({
+                    "ToastViewport.useEffect": ()=>viewport.removeEventListener("keydown", handleKeyDown)
+                })["ToastViewport.useEffect"];
+            }
+        }
+    }["ToastViewport.useEffect"], [
+        getItems,
+        getSortedTabbableCandidates
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxs"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$dismissable_d70bf76468a29d7aaccf3379f82d0207$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dismissable$2d$layer$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Branch"], {
+        ref: wrapperRef,
+        role: "region",
+        "aria-label": label.replace("{hotkey}", hotkeyLabel),
+        tabIndex: -1,
+        style: {
+            pointerEvents: hasToasts ? void 0 : "none"
+        },
+        children: [
+            hasToasts && /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(FocusProxy, {
+                ref: headFocusProxyRef,
+                onFocusFromOutsideViewport: ()=>{
+                    const tabbableCandidates = getSortedTabbableCandidates({
+                        tabbingDirection: "forwards"
+                    });
+                    focusFirst(tabbableCandidates);
+                }
+            }),
+            /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Collection.Slot, {
+                scope: __scopeToast,
+                children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].ol, {
+                    tabIndex: -1,
+                    ...viewportProps,
+                    ref: composedRefs
+                })
+            }),
+            hasToasts && /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(FocusProxy, {
+                ref: tailFocusProxyRef,
+                onFocusFromOutsideViewport: ()=>{
+                    const tabbableCandidates = getSortedTabbableCandidates({
+                        tabbingDirection: "backwards"
+                    });
+                    focusFirst(tabbableCandidates);
+                }
+            })
+        ]
+    });
+});
+ToastViewport.displayName = VIEWPORT_NAME;
+var FOCUS_PROXY_NAME = "ToastFocusProxy";
+var FocusProxy = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, onFocusFromOutsideViewport, ...proxyProps } = props;
+    const context = useToastProviderContext(FOCUS_PROXY_NAME, __scopeToast);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$visually$2d$hi_114ba245af3f27a158dce91aa94e789f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$visually$2d$hidden$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["VisuallyHidden"], {
+        "aria-hidden": true,
+        tabIndex: 0,
+        ...proxyProps,
+        ref: forwardedRef,
+        style: {
+            position: "fixed"
+        },
+        onFocus: (event)=>{
+            const prevFocusedElement = event.relatedTarget;
+            const isFocusFromOutsideViewport = !context.viewport?.contains(prevFocusedElement);
+            if (isFocusFromOutsideViewport) onFocusFromOutsideViewport();
+        }
+    });
+});
+FocusProxy.displayName = FOCUS_PROXY_NAME;
+var TOAST_NAME = "Toast";
+var TOAST_SWIPE_START = "toast.swipeStart";
+var TOAST_SWIPE_MOVE = "toast.swipeMove";
+var TOAST_SWIPE_CANCEL = "toast.swipeCancel";
+var TOAST_SWIPE_END = "toast.swipeEnd";
+var Toast = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { forceMount, open: openProp, defaultOpen, onOpenChange, ...toastProps } = props;
+    const [open = true, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$control_30e592304562fabd7ca6cd629c5af3dc$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$controllable$2d$state$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useControllableState"])({
+        prop: openProp,
+        defaultProp: defaultOpen,
+        onChange: onOpenChange
+    });
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$presence$40$1$2e$_63e879ae52f586b0037bd210a7056e2f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$presence$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Presence"], {
+        present: forceMount || open,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastImpl, {
+            open,
+            ...toastProps,
+            ref: forwardedRef,
+            onClose: ()=>setOpen(false),
+            onPause: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(props.onPause),
+            onResume: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(props.onResume),
+            onSwipeStart: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onSwipeStart, (event)=>{
+                event.currentTarget.setAttribute("data-swipe", "start");
+            }),
+            onSwipeMove: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onSwipeMove, (event)=>{
+                const { x, y } = event.detail.delta;
+                event.currentTarget.setAttribute("data-swipe", "move");
+                event.currentTarget.style.setProperty("--radix-toast-swipe-move-x", `${x}px`);
+                event.currentTarget.style.setProperty("--radix-toast-swipe-move-y", `${y}px`);
+            }),
+            onSwipeCancel: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onSwipeCancel, (event)=>{
+                event.currentTarget.setAttribute("data-swipe", "cancel");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-move-x");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-move-y");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-end-x");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-end-y");
+            }),
+            onSwipeEnd: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onSwipeEnd, (event)=>{
+                const { x, y } = event.detail.delta;
+                event.currentTarget.setAttribute("data-swipe", "end");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-move-x");
+                event.currentTarget.style.removeProperty("--radix-toast-swipe-move-y");
+                event.currentTarget.style.setProperty("--radix-toast-swipe-end-x", `${x}px`);
+                event.currentTarget.style.setProperty("--radix-toast-swipe-end-y", `${y}px`);
+                setOpen(false);
+            })
+        })
+    });
+});
+Toast.displayName = TOAST_NAME;
+var [ToastInteractiveProvider, useToastInteractiveContext] = createToastContext(TOAST_NAME, {
+    onClose () {}
+});
+var ToastImpl = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, type = "foreground", duration: durationProp, open, onClose, onEscapeKeyDown, onPause, onResume, onSwipeStart, onSwipeMove, onSwipeCancel, onSwipeEnd, ...toastProps } = props;
+    const context = useToastProviderContext(TOAST_NAME, __scopeToast);
+    const [node, setNode] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, {
+        "ToastImpl.useComposedRefs[composedRefs]": (node2)=>setNode(node2)
+    }["ToastImpl.useComposedRefs[composedRefs]"]);
+    const pointerStartRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const swipeDeltaRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const duration = durationProp || context.duration;
+    const closeTimerStartTimeRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](0);
+    const closeTimerRemainingTimeRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](duration);
+    const closeTimerRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](0);
+    const { onToastAdd, onToastRemove } = context;
+    const handleClose = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])({
+        "ToastImpl.useCallbackRef[handleClose]": ()=>{
+            const isFocusInToast = node?.contains(document.activeElement);
+            if (isFocusInToast) context.viewport?.focus();
+            onClose();
+        }
+    }["ToastImpl.useCallbackRef[handleClose]"]);
+    const startTimer = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "ToastImpl.useCallback[startTimer]": (duration2)=>{
+            if (!duration2 || duration2 === Infinity) return;
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerStartTimeRef.current = /* @__PURE__ */ new Date().getTime();
+            closeTimerRef.current = window.setTimeout(handleClose, duration2);
+        }
+    }["ToastImpl.useCallback[startTimer]"], [
+        handleClose
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastImpl.useEffect": ()=>{
+            const viewport = context.viewport;
+            if (viewport) {
+                const handleResume = {
+                    "ToastImpl.useEffect.handleResume": ()=>{
+                        startTimer(closeTimerRemainingTimeRef.current);
+                        onResume?.();
+                    }
+                }["ToastImpl.useEffect.handleResume"];
+                const handlePause = {
+                    "ToastImpl.useEffect.handlePause": ()=>{
+                        const elapsedTime = /* @__PURE__ */ new Date().getTime() - closeTimerStartTimeRef.current;
+                        closeTimerRemainingTimeRef.current = closeTimerRemainingTimeRef.current - elapsedTime;
+                        window.clearTimeout(closeTimerRef.current);
+                        onPause?.();
+                    }
+                }["ToastImpl.useEffect.handlePause"];
+                viewport.addEventListener(VIEWPORT_PAUSE, handlePause);
+                viewport.addEventListener(VIEWPORT_RESUME, handleResume);
+                return ({
+                    "ToastImpl.useEffect": ()=>{
+                        viewport.removeEventListener(VIEWPORT_PAUSE, handlePause);
+                        viewport.removeEventListener(VIEWPORT_RESUME, handleResume);
+                    }
+                })["ToastImpl.useEffect"];
+            }
+        }
+    }["ToastImpl.useEffect"], [
+        context.viewport,
+        duration,
+        onPause,
+        onResume,
+        startTimer
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastImpl.useEffect": ()=>{
+            if (open && !context.isClosePausedRef.current) startTimer(duration);
+        }
+    }["ToastImpl.useEffect"], [
+        open,
+        duration,
+        context.isClosePausedRef,
+        startTimer
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastImpl.useEffect": ()=>{
+            onToastAdd();
+            return ({
+                "ToastImpl.useEffect": ()=>onToastRemove()
+            })["ToastImpl.useEffect"];
+        }
+    }["ToastImpl.useEffect"], [
+        onToastAdd,
+        onToastRemove
+    ]);
+    const announceTextContent = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "ToastImpl.useMemo[announceTextContent]": ()=>{
+            return node ? getAnnounceTextContent(node) : null;
+        }
+    }["ToastImpl.useMemo[announceTextContent]"], [
+        node
+    ]);
+    if (!context.viewport) return null;
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxs"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            announceTextContent && /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastAnnounce, {
+                __scopeToast,
+                role: "status",
+                "aria-live": type === "foreground" ? "assertive" : "polite",
+                "aria-atomic": true,
+                children: announceTextContent
+            }),
+            /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastInteractiveProvider, {
+                scope: __scopeToast,
+                onClose: handleClose,
+                children: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPortal"](/* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Collection.ItemSlot, {
+                    scope: __scopeToast,
+                    children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$dismissable_d70bf76468a29d7aaccf3379f82d0207$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dismissable$2d$layer$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+                        asChild: true,
+                        onEscapeKeyDown: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(onEscapeKeyDown, ()=>{
+                            if (!context.isFocusedToastEscapeKeyDownRef.current) handleClose();
+                            context.isFocusedToastEscapeKeyDownRef.current = false;
+                        }),
+                        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].li, {
+                            role: "status",
+                            "aria-live": "off",
+                            "aria-atomic": true,
+                            tabIndex: 0,
+                            "data-state": open ? "open" : "closed",
+                            "data-swipe-direction": context.swipeDirection,
+                            ...toastProps,
+                            ref: composedRefs,
+                            style: {
+                                userSelect: "none",
+                                touchAction: "none",
+                                ...props.style
+                            },
+                            onKeyDown: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onKeyDown, (event)=>{
+                                if (event.key !== "Escape") return;
+                                onEscapeKeyDown?.(event.nativeEvent);
+                                if (!event.nativeEvent.defaultPrevented) {
+                                    context.isFocusedToastEscapeKeyDownRef.current = true;
+                                    handleClose();
+                                }
+                            }),
+                            onPointerDown: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerDown, (event)=>{
+                                if (event.button !== 0) return;
+                                pointerStartRef.current = {
+                                    x: event.clientX,
+                                    y: event.clientY
+                                };
+                            }),
+                            onPointerMove: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerMove, (event)=>{
+                                if (!pointerStartRef.current) return;
+                                const x = event.clientX - pointerStartRef.current.x;
+                                const y = event.clientY - pointerStartRef.current.y;
+                                const hasSwipeMoveStarted = Boolean(swipeDeltaRef.current);
+                                const isHorizontalSwipe = [
+                                    "left",
+                                    "right"
+                                ].includes(context.swipeDirection);
+                                const clamp = [
+                                    "left",
+                                    "up"
+                                ].includes(context.swipeDirection) ? Math.min : Math.max;
+                                const clampedX = isHorizontalSwipe ? clamp(0, x) : 0;
+                                const clampedY = !isHorizontalSwipe ? clamp(0, y) : 0;
+                                const moveStartBuffer = event.pointerType === "touch" ? 10 : 2;
+                                const delta = {
+                                    x: clampedX,
+                                    y: clampedY
+                                };
+                                const eventDetail = {
+                                    originalEvent: event,
+                                    delta
+                                };
+                                if (hasSwipeMoveStarted) {
+                                    swipeDeltaRef.current = delta;
+                                    handleAndDispatchCustomEvent(TOAST_SWIPE_MOVE, onSwipeMove, eventDetail, {
+                                        discrete: false
+                                    });
+                                } else if (isDeltaInDirection(delta, context.swipeDirection, moveStartBuffer)) {
+                                    swipeDeltaRef.current = delta;
+                                    handleAndDispatchCustomEvent(TOAST_SWIPE_START, onSwipeStart, eventDetail, {
+                                        discrete: false
+                                    });
+                                    event.target.setPointerCapture(event.pointerId);
+                                } else if (Math.abs(x) > moveStartBuffer || Math.abs(y) > moveStartBuffer) {
+                                    pointerStartRef.current = null;
+                                }
+                            }),
+                            onPointerUp: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerUp, (event)=>{
+                                const delta = swipeDeltaRef.current;
+                                const target = event.target;
+                                if (target.hasPointerCapture(event.pointerId)) {
+                                    target.releasePointerCapture(event.pointerId);
+                                }
+                                swipeDeltaRef.current = null;
+                                pointerStartRef.current = null;
+                                if (delta) {
+                                    const toast = event.currentTarget;
+                                    const eventDetail = {
+                                        originalEvent: event,
+                                        delta
+                                    };
+                                    if (isDeltaInDirection(delta, context.swipeDirection, context.swipeThreshold)) {
+                                        handleAndDispatchCustomEvent(TOAST_SWIPE_END, onSwipeEnd, eventDetail, {
+                                            discrete: true
+                                        });
+                                    } else {
+                                        handleAndDispatchCustomEvent(TOAST_SWIPE_CANCEL, onSwipeCancel, eventDetail, {
+                                            discrete: true
+                                        });
+                                    }
+                                    toast.addEventListener("click", (event2)=>event2.preventDefault(), {
+                                        once: true
+                                    });
+                                }
+                            })
+                        })
+                    })
+                }), context.viewport)
+            })
+        ]
+    });
+});
+var ToastAnnounce = (props)=>{
+    const { __scopeToast, children, ...announceProps } = props;
+    const context = useToastProviderContext(TOAST_NAME, __scopeToast);
+    const [renderAnnounceText, setRenderAnnounceText] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](false);
+    const [isAnnounced, setIsAnnounced] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](false);
+    useNextFrame({
+        "ToastAnnounce.useNextFrame": ()=>setRenderAnnounceText(true)
+    }["ToastAnnounce.useNextFrame"]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "ToastAnnounce.useEffect": ()=>{
+            const timer = window.setTimeout({
+                "ToastAnnounce.useEffect.timer": ()=>setIsAnnounced(true)
+            }["ToastAnnounce.useEffect.timer"], 1e3);
+            return ({
+                "ToastAnnounce.useEffect": ()=>window.clearTimeout(timer)
+            })["ToastAnnounce.useEffect"];
+        }
+    }["ToastAnnounce.useEffect"], []);
+    return isAnnounced ? null : /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$portal$40$1$2e$1$2e$_1842d2a7a75d0a98272fb7729bd301da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$portal$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Portal"], {
+        asChild: true,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$visually$2d$hi_114ba245af3f27a158dce91aa94e789f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$visually$2d$hidden$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["VisuallyHidden"], {
+            ...announceProps,
+            children: renderAnnounceText && /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxs"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                children: [
+                    context.label,
+                    " ",
+                    children
+                ]
+            })
+        })
+    });
+};
+var TITLE_NAME = "ToastTitle";
+var ToastTitle = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, ...titleProps } = props;
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...titleProps,
+        ref: forwardedRef
+    });
+});
+ToastTitle.displayName = TITLE_NAME;
+var DESCRIPTION_NAME = "ToastDescription";
+var ToastDescription = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, ...descriptionProps } = props;
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...descriptionProps,
+        ref: forwardedRef
+    });
+});
+ToastDescription.displayName = DESCRIPTION_NAME;
+var ACTION_NAME = "ToastAction";
+var ToastAction = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { altText, ...actionProps } = props;
+    if (!altText.trim()) {
+        console.error(`Invalid prop \`altText\` supplied to \`${ACTION_NAME}\`. Expected non-empty \`string\`.`);
+        return null;
+    }
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastAnnounceExclude, {
+        altText,
+        asChild: true,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastClose, {
+            ...actionProps,
+            ref: forwardedRef
+        })
+    });
+});
+ToastAction.displayName = ACTION_NAME;
+var CLOSE_NAME = "ToastClose";
+var ToastClose = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, ...closeProps } = props;
+    const interactiveContext = useToastInteractiveContext(CLOSE_NAME, __scopeToast);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(ToastAnnounceExclude, {
+        asChild: true,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].button, {
+            type: "button",
+            ...closeProps,
+            ref: forwardedRef,
+            onClick: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onClick, interactiveContext.onClose)
+        })
+    });
+});
+ToastClose.displayName = CLOSE_NAME;
+var ToastAnnounceExclude = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeToast, altText, ...announceExcludeProps } = props;
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        "data-radix-toast-announce-exclude": "",
+        "data-radix-toast-announce-alt": altText || void 0,
+        ...announceExcludeProps,
+        ref: forwardedRef
+    });
+});
+function getAnnounceTextContent(container) {
+    const textContent = [];
+    const childNodes = Array.from(container.childNodes);
+    childNodes.forEach((node)=>{
+        if (node.nodeType === node.TEXT_NODE && node.textContent) textContent.push(node.textContent);
+        if (isHTMLElement(node)) {
+            const isHidden = node.ariaHidden || node.hidden || node.style.display === "none";
+            const isExcluded = node.dataset.radixToastAnnounceExclude === "";
+            if (!isHidden) {
+                if (isExcluded) {
+                    const altText = node.dataset.radixToastAnnounceAlt;
+                    if (altText) textContent.push(altText);
+                } else {
+                    textContent.push(...getAnnounceTextContent(node));
+                }
+            }
+        }
+    });
+    return textContent;
+}
+function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
+    const currentTarget = detail.originalEvent.currentTarget;
+    const event = new CustomEvent(name, {
+        bubbles: true,
+        cancelable: true,
+        detail
+    });
+    if (handler) currentTarget.addEventListener(name, handler, {
+        once: true
+    });
+    if (discrete) {
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["dispatchDiscreteCustomEvent"])(currentTarget, event);
+    } else {
+        currentTarget.dispatchEvent(event);
+    }
+}
+var isDeltaInDirection = (delta, direction, threshold = 0)=>{
+    const deltaX = Math.abs(delta.x);
+    const deltaY = Math.abs(delta.y);
+    const isDeltaX = deltaX > deltaY;
+    if (direction === "left" || direction === "right") {
+        return isDeltaX && deltaX > threshold;
+    } else {
+        return !isDeltaX && deltaY > threshold;
+    }
+};
+function useNextFrame(callback = ()=>{}) {
+    const fn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(callback);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "useNextFrame.useLayoutEffect": ()=>{
+            let raf1 = 0;
+            let raf2 = 0;
+            raf1 = window.requestAnimationFrame({
+                "useNextFrame.useLayoutEffect": ()=>raf2 = window.requestAnimationFrame(fn)
+            }["useNextFrame.useLayoutEffect"]);
+            return ({
+                "useNextFrame.useLayoutEffect": ()=>{
+                    window.cancelAnimationFrame(raf1);
+                    window.cancelAnimationFrame(raf2);
+                }
+            })["useNextFrame.useLayoutEffect"];
+        }
+    }["useNextFrame.useLayoutEffect"], [
+        fn
+    ]);
+}
+function isHTMLElement(node) {
+    return node.nodeType === node.ELEMENT_NODE;
+}
+function getTabbableCandidates(container) {
+    const nodes = [];
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, {
+        acceptNode: (node)=>{
+            const isHiddenInput = node.tagName === "INPUT" && node.type === "hidden";
+            if (node.disabled || node.hidden || isHiddenInput) return NodeFilter.FILTER_SKIP;
+            return node.tabIndex >= 0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+        }
+    });
+    while(walker.nextNode())nodes.push(walker.currentNode);
+    return nodes;
+}
+function focusFirst(candidates) {
+    const previouslyFocusedElement = document.activeElement;
+    return candidates.some((candidate)=>{
+        if (candidate === previouslyFocusedElement) return true;
+        candidate.focus();
+        return document.activeElement !== previouslyFocusedElement;
+    });
+}
+var Provider = ToastProvider;
+var Viewport = ToastViewport;
+var Root2 = Toast;
+var Title = ToastTitle;
+var Description = ToastDescription;
+var Action = ToastAction;
+var Close = ToastClose;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next-themes@0.3.0_react-dom_02ecbd929a5bac799ec9e5c06bf21e53/node_modules/next-themes/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "ThemeProvider",
+    ()=>z,
+    "useTheme",
+    ()=>j
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+"use client";
+;
+var P = [
+    "light",
+    "dark"
+], E = "(prefers-color-scheme: dark)", Q = typeof window == "undefined", L = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"](void 0), D = {
+    setTheme: (e)=>{},
+    themes: []
+}, j = ()=>{
+    var e;
+    return (e = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](L)) != null ? e : D;
+}, z = (e)=>__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](L) ? e.children : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createElement"](O, {
+        ...e
+    }), N = [
+    "light",
+    "dark"
+], O = ({ forcedTheme: e, disableTransitionOnChange: a = !1, enableSystem: n = !0, enableColorScheme: g = !0, storageKey: m = "theme", themes: c = N, defaultTheme: o = n ? "system" : "light", attribute: y = "data-theme", value: h, children: k, nonce: w })=>{
+    let [i, d] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]({
+        "O.useState": ()=>M(m, o)
+    }["O.useState"]), [S, l] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]({
+        "O.useState": ()=>M(m)
+    }["O.useState"]), u = h ? Object.values(h) : c, R = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "O.useCallback[R]": (s)=>{
+            let r = s;
+            if (!r) return;
+            s === "system" && n && (r = T());
+            let v = h ? h[r] : r, C = a ? _() : null, x = document.documentElement;
+            if (y === "class" ? (x.classList.remove(...u), v && x.classList.add(v)) : v ? x.setAttribute(y, v) : x.removeAttribute(y), g) {
+                let I = P.includes(o) ? o : null, A = P.includes(r) ? r : I;
+                x.style.colorScheme = A;
+            }
+            C == null || C();
+        }
+    }["O.useCallback[R]"], []), f = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "O.useCallback[f]": (s)=>{
+            let r = typeof s == "function" ? s(s) : s;
+            d(r);
+            try {
+                localStorage.setItem(m, r);
+            } catch (v) {}
+        }
+    }["O.useCallback[f]"], [
+        e
+    ]), p = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "O.useCallback[p]": (s)=>{
+            let r = T(s);
+            l(r), i === "system" && n && !e && R("system");
+        }
+    }["O.useCallback[p]"], [
+        i,
+        e
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "O.useEffect": ()=>{
+            let s = window.matchMedia(E);
+            return s.addListener(p), p(s), ({
+                "O.useEffect": ()=>s.removeListener(p)
+            })["O.useEffect"];
+        }
+    }["O.useEffect"], [
+        p
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "O.useEffect": ()=>{
+            let s = {
+                "O.useEffect.s": (r)=>{
+                    if (r.key !== m) return;
+                    let v = r.newValue || o;
+                    f(v);
+                }
+            }["O.useEffect.s"];
+            return window.addEventListener("storage", s), ({
+                "O.useEffect": ()=>window.removeEventListener("storage", s)
+            })["O.useEffect"];
+        }
+    }["O.useEffect"], [
+        f
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "O.useEffect": ()=>{
+            R(e != null ? e : i);
+        }
+    }["O.useEffect"], [
+        e,
+        i
+    ]);
+    let $ = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "O.useMemo[$]": ()=>({
+                theme: i,
+                setTheme: f,
+                forcedTheme: e,
+                resolvedTheme: i === "system" ? S : i,
+                themes: n ? [
+                    ...c,
+                    "system"
+                ] : c,
+                systemTheme: n ? S : void 0
+            })
+    }["O.useMemo[$]"], [
+        i,
+        f,
+        e,
+        S,
+        n,
+        c
+    ]);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createElement"](L.Provider, {
+        value: $
+    }, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createElement"](U, {
+        forcedTheme: e,
+        disableTransitionOnChange: a,
+        enableSystem: n,
+        enableColorScheme: g,
+        storageKey: m,
+        themes: c,
+        defaultTheme: o,
+        attribute: y,
+        value: h,
+        children: k,
+        attrs: u,
+        nonce: w
+    }), k);
+}, U = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["memo"](({ forcedTheme: e, storageKey: a, attribute: n, enableSystem: g, enableColorScheme: m, defaultTheme: c, value: o, attrs: y, nonce: h })=>{
+    let k = c === "system", w = n === "class" ? `var d=document.documentElement,c=d.classList;${`c.remove(${y.map((u)=>`'${u}'`).join(",")})`};` : `var d=document.documentElement,n='${n}',s='setAttribute';`, i = m ? (P.includes(c) ? c : null) ? `if(e==='light'||e==='dark'||!e)d.style.colorScheme=e||'${c}'` : "if(e==='light'||e==='dark')d.style.colorScheme=e" : "", d = (l, u = !1, R = !0)=>{
+        let f = o ? o[l] : l, p = u ? l + "|| ''" : `'${f}'`, $ = "";
+        return m && R && !u && P.includes(l) && ($ += `d.style.colorScheme = '${l}';`), n === "class" ? u || f ? $ += `c.add(${p})` : $ += "null" : f && ($ += `d[s](n,${p})`), $;
+    }, S = e ? `!function(){${w}${d(e)}}()` : g ? `!function(){try{${w}var e=localStorage.getItem('${a}');if('system'===e||(!e&&${k})){var t='${E}',m=window.matchMedia(t);if(m.media!==t||m.matches){${d("dark")}}else{${d("light")}}}else if(e){${o ? `var x=${JSON.stringify(o)};` : ""}${d(o ? "x[e]" : "e", !0)}}${k ? "" : "else{" + d(c, !1, !1) + "}"}${i}}catch(e){}}()` : `!function(){try{${w}var e=localStorage.getItem('${a}');if(e){${o ? `var x=${JSON.stringify(o)};` : ""}${d(o ? "x[e]" : "e", !0)}}else{${d(c, !1, !1)};}${i}}catch(t){}}();`;
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createElement"]("script", {
+        nonce: h,
+        dangerouslySetInnerHTML: {
+            __html: S
+        }
+    });
+}), M = (e, a)=>{
+    if (Q) return;
+    let n;
+    try {
+        n = localStorage.getItem(e) || void 0;
+    } catch (g) {}
+    return n || a;
+}, _ = ()=>{
+    let e = document.createElement("style");
+    return e.appendChild(document.createTextNode("*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}")), document.head.appendChild(e), ()=>{
+        window.getComputedStyle(document.body), setTimeout(()=>{
+            document.head.removeChild(e);
+        }, 1);
+    };
+}, T = (e)=>(e || (e = window.matchMedia(E)), e.matches ? "dark" : "light");
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/sonner@1.7.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/sonner/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Toaster",
+    ()=>$e,
+    "toast",
+    ()=>ue,
+    "useSonner",
+    ()=>Oe
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+var jt = (n)=>{
+    switch(n){
+        case "success":
+            return ee;
+        case "info":
+            return ae;
+        case "warning":
+            return oe;
+        case "error":
+            return se;
+        default:
+            return null;
+    }
+}, te = Array(12).fill(0), Yt = ({ visible: n, className: e })=>__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        className: [
+            "sonner-loading-wrapper",
+            e
+        ].filter(Boolean).join(" "),
+        "data-visible": n
+    }, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        className: "sonner-spinner"
+    }, te.map((t, a)=>__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+            className: "sonner-loading-bar",
+            key: `spinner-bar-${a}`
+        })))), ee = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor",
+    height: "20",
+    width: "20"
+}, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("path", {
+    fillRule: "evenodd",
+    d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z",
+    clipRule: "evenodd"
+})), oe = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "currentColor",
+    height: "20",
+    width: "20"
+}, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("path", {
+    fillRule: "evenodd",
+    d: "M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z",
+    clipRule: "evenodd"
+})), ae = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor",
+    height: "20",
+    width: "20"
+}, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("path", {
+    fillRule: "evenodd",
+    d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z",
+    clipRule: "evenodd"
+})), se = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 20 20",
+    fill: "currentColor",
+    height: "20",
+    width: "20"
+}, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("path", {
+    fillRule: "evenodd",
+    d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z",
+    clipRule: "evenodd"
+})), Ot = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "12",
+    height: "12",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+}, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("line", {
+    x1: "18",
+    y1: "6",
+    x2: "6",
+    y2: "18"
+}), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("line", {
+    x1: "6",
+    y1: "6",
+    x2: "18",
+    y2: "18"
+}));
+;
+var Ft = ()=>{
+    let [n, e] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(document.hidden);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "Ft.useEffect": ()=>{
+            let t = {
+                "Ft.useEffect.t": ()=>{
+                    e(document.hidden);
+                }
+            }["Ft.useEffect.t"];
+            return document.addEventListener("visibilitychange", t), ({
+                "Ft.useEffect": ()=>window.removeEventListener("visibilitychange", t)
+            })["Ft.useEffect"];
+        }
+    }["Ft.useEffect"], []), n;
+};
+;
+var bt = 1, yt = class {
+    constructor(){
+        this.subscribe = (e)=>(this.subscribers.push(e), ()=>{
+                let t = this.subscribers.indexOf(e);
+                this.subscribers.splice(t, 1);
+            });
+        this.publish = (e)=>{
+            this.subscribers.forEach((t)=>t(e));
+        };
+        this.addToast = (e)=>{
+            this.publish(e), this.toasts = [
+                ...this.toasts,
+                e
+            ];
+        };
+        this.create = (e)=>{
+            var S;
+            let { message: t, ...a } = e, u = typeof (e == null ? void 0 : e.id) == "number" || ((S = e.id) == null ? void 0 : S.length) > 0 ? e.id : bt++, f = this.toasts.find((g)=>g.id === u), w = e.dismissible === void 0 ? !0 : e.dismissible;
+            return this.dismissedToasts.has(u) && this.dismissedToasts.delete(u), f ? this.toasts = this.toasts.map((g)=>g.id === u ? (this.publish({
+                    ...g,
+                    ...e,
+                    id: u,
+                    title: t
+                }), {
+                    ...g,
+                    ...e,
+                    id: u,
+                    dismissible: w,
+                    title: t
+                }) : g) : this.addToast({
+                title: t,
+                ...a,
+                dismissible: w,
+                id: u
+            }), u;
+        };
+        this.dismiss = (e)=>(this.dismissedToasts.add(e), e || this.toasts.forEach((t)=>{
+                this.subscribers.forEach((a)=>a({
+                        id: t.id,
+                        dismiss: !0
+                    }));
+            }), this.subscribers.forEach((t)=>t({
+                    id: e,
+                    dismiss: !0
+                })), e);
+        this.message = (e, t)=>this.create({
+                ...t,
+                message: e
+            });
+        this.error = (e, t)=>this.create({
+                ...t,
+                message: e,
+                type: "error"
+            });
+        this.success = (e, t)=>this.create({
+                ...t,
+                type: "success",
+                message: e
+            });
+        this.info = (e, t)=>this.create({
+                ...t,
+                type: "info",
+                message: e
+            });
+        this.warning = (e, t)=>this.create({
+                ...t,
+                type: "warning",
+                message: e
+            });
+        this.loading = (e, t)=>this.create({
+                ...t,
+                type: "loading",
+                message: e
+            });
+        this.promise = (e, t)=>{
+            if (!t) return;
+            let a;
+            t.loading !== void 0 && (a = this.create({
+                ...t,
+                promise: e,
+                type: "loading",
+                message: t.loading,
+                description: typeof t.description != "function" ? t.description : void 0
+            }));
+            let u = e instanceof Promise ? e : e(), f = a !== void 0, w, S = u.then(async (i)=>{
+                if (w = [
+                    "resolve",
+                    i
+                ], __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].isValidElement(i)) f = !1, this.create({
+                    id: a,
+                    type: "default",
+                    message: i
+                });
+                else if (ie(i) && !i.ok) {
+                    f = !1;
+                    let T = typeof t.error == "function" ? await t.error(`HTTP error! status: ${i.status}`) : t.error, F = typeof t.description == "function" ? await t.description(`HTTP error! status: ${i.status}`) : t.description;
+                    this.create({
+                        id: a,
+                        type: "error",
+                        message: T,
+                        description: F
+                    });
+                } else if (t.success !== void 0) {
+                    f = !1;
+                    let T = typeof t.success == "function" ? await t.success(i) : t.success, F = typeof t.description == "function" ? await t.description(i) : t.description;
+                    this.create({
+                        id: a,
+                        type: "success",
+                        message: T,
+                        description: F
+                    });
+                }
+            }).catch(async (i)=>{
+                if (w = [
+                    "reject",
+                    i
+                ], t.error !== void 0) {
+                    f = !1;
+                    let D = typeof t.error == "function" ? await t.error(i) : t.error, T = typeof t.description == "function" ? await t.description(i) : t.description;
+                    this.create({
+                        id: a,
+                        type: "error",
+                        message: D,
+                        description: T
+                    });
+                }
+            }).finally(()=>{
+                var i;
+                f && (this.dismiss(a), a = void 0), (i = t.finally) == null || i.call(t);
+            }), g = ()=>new Promise((i, D)=>S.then(()=>w[0] === "reject" ? D(w[1]) : i(w[1])).catch(D));
+            return typeof a != "string" && typeof a != "number" ? {
+                unwrap: g
+            } : Object.assign(a, {
+                unwrap: g
+            });
+        };
+        this.custom = (e, t)=>{
+            let a = (t == null ? void 0 : t.id) || bt++;
+            return this.create({
+                jsx: e(a),
+                id: a,
+                ...t
+            }), a;
+        };
+        this.getActiveToasts = ()=>this.toasts.filter((e)=>!this.dismissedToasts.has(e.id));
+        this.subscribers = [], this.toasts = [], this.dismissedToasts = new Set;
+    }
+}, v = new yt, ne = (n, e)=>{
+    let t = (e == null ? void 0 : e.id) || bt++;
+    return v.addToast({
+        title: n,
+        ...e,
+        id: t
+    }), t;
+}, ie = (n)=>n && typeof n == "object" && "ok" in n && typeof n.ok == "boolean" && "status" in n && typeof n.status == "number", le = ne, ce = ()=>v.toasts, de = ()=>v.getActiveToasts(), ue = Object.assign(le, {
+    success: v.success,
+    info: v.info,
+    warning: v.warning,
+    error: v.error,
+    custom: v.custom,
+    message: v.message,
+    promise: v.promise,
+    dismiss: v.dismiss,
+    loading: v.loading
+}, {
+    getHistory: ce,
+    getToasts: de
+});
+function wt(n, { insertAt: e } = {}) {
+    if (!n || typeof document == "undefined") return;
+    let t = document.head || document.getElementsByTagName("head")[0], a = document.createElement("style");
+    a.type = "text/css", e === "top" && t.firstChild ? t.insertBefore(a, t.firstChild) : t.appendChild(a), a.styleSheet ? a.styleSheet.cssText = n : a.appendChild(document.createTextNode(n));
+}
+wt(`:where(html[dir="ltr"]),:where([data-sonner-toaster][dir="ltr"]){--toast-icon-margin-start: -3px;--toast-icon-margin-end: 4px;--toast-svg-margin-start: -1px;--toast-svg-margin-end: 0px;--toast-button-margin-start: auto;--toast-button-margin-end: 0;--toast-close-button-start: 0;--toast-close-button-end: unset;--toast-close-button-transform: translate(-35%, -35%)}:where(html[dir="rtl"]),:where([data-sonner-toaster][dir="rtl"]){--toast-icon-margin-start: 4px;--toast-icon-margin-end: -3px;--toast-svg-margin-start: 0px;--toast-svg-margin-end: -1px;--toast-button-margin-start: 0;--toast-button-margin-end: auto;--toast-close-button-start: unset;--toast-close-button-end: 0;--toast-close-button-transform: translate(35%, -35%)}:where([data-sonner-toaster]){position:fixed;width:var(--width);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;--gray1: hsl(0, 0%, 99%);--gray2: hsl(0, 0%, 97.3%);--gray3: hsl(0, 0%, 95.1%);--gray4: hsl(0, 0%, 93%);--gray5: hsl(0, 0%, 90.9%);--gray6: hsl(0, 0%, 88.7%);--gray7: hsl(0, 0%, 85.8%);--gray8: hsl(0, 0%, 78%);--gray9: hsl(0, 0%, 56.1%);--gray10: hsl(0, 0%, 52.3%);--gray11: hsl(0, 0%, 43.5%);--gray12: hsl(0, 0%, 9%);--border-radius: 8px;box-sizing:border-box;padding:0;margin:0;list-style:none;outline:none;z-index:999999999;transition:transform .4s ease}:where([data-sonner-toaster][data-lifted="true"]){transform:translateY(-10px)}@media (hover: none) and (pointer: coarse){:where([data-sonner-toaster][data-lifted="true"]){transform:none}}:where([data-sonner-toaster][data-x-position="right"]){right:var(--offset-right)}:where([data-sonner-toaster][data-x-position="left"]){left:var(--offset-left)}:where([data-sonner-toaster][data-x-position="center"]){left:50%;transform:translate(-50%)}:where([data-sonner-toaster][data-y-position="top"]){top:var(--offset-top)}:where([data-sonner-toaster][data-y-position="bottom"]){bottom:var(--offset-bottom)}:where([data-sonner-toast]){--y: translateY(100%);--lift-amount: calc(var(--lift) * var(--gap));z-index:var(--z-index);position:absolute;opacity:0;transform:var(--y);filter:blur(0);touch-action:none;transition:transform .4s,opacity .4s,height .4s,box-shadow .2s;box-sizing:border-box;outline:none;overflow-wrap:anywhere}:where([data-sonner-toast][data-styled="true"]){padding:16px;background:var(--normal-bg);border:1px solid var(--normal-border);color:var(--normal-text);border-radius:var(--border-radius);box-shadow:0 4px 12px #0000001a;width:var(--width);font-size:13px;display:flex;align-items:center;gap:6px}:where([data-sonner-toast]:focus-visible){box-shadow:0 4px 12px #0000001a,0 0 0 2px #0003}:where([data-sonner-toast][data-y-position="top"]){top:0;--y: translateY(-100%);--lift: 1;--lift-amount: calc(1 * var(--gap))}:where([data-sonner-toast][data-y-position="bottom"]){bottom:0;--y: translateY(100%);--lift: -1;--lift-amount: calc(var(--lift) * var(--gap))}:where([data-sonner-toast]) :where([data-description]){font-weight:400;line-height:1.4;color:inherit}:where([data-sonner-toast]) :where([data-title]){font-weight:500;line-height:1.5;color:inherit}:where([data-sonner-toast]) :where([data-icon]){display:flex;height:16px;width:16px;position:relative;justify-content:flex-start;align-items:center;flex-shrink:0;margin-left:var(--toast-icon-margin-start);margin-right:var(--toast-icon-margin-end)}:where([data-sonner-toast][data-promise="true"]) :where([data-icon])>svg{opacity:0;transform:scale(.8);transform-origin:center;animation:sonner-fade-in .3s ease forwards}:where([data-sonner-toast]) :where([data-icon])>*{flex-shrink:0}:where([data-sonner-toast]) :where([data-icon]) svg{margin-left:var(--toast-svg-margin-start);margin-right:var(--toast-svg-margin-end)}:where([data-sonner-toast]) :where([data-content]){display:flex;flex-direction:column;gap:2px}[data-sonner-toast][data-styled=true] [data-button]{border-radius:4px;padding-left:8px;padding-right:8px;height:24px;font-size:12px;color:var(--normal-bg);background:var(--normal-text);margin-left:var(--toast-button-margin-start);margin-right:var(--toast-button-margin-end);border:none;cursor:pointer;outline:none;display:flex;align-items:center;flex-shrink:0;transition:opacity .4s,box-shadow .2s}:where([data-sonner-toast]) :where([data-button]):focus-visible{box-shadow:0 0 0 2px #0006}:where([data-sonner-toast]) :where([data-button]):first-of-type{margin-left:var(--toast-button-margin-start);margin-right:var(--toast-button-margin-end)}:where([data-sonner-toast]) :where([data-cancel]){color:var(--normal-text);background:rgba(0,0,0,.08)}:where([data-sonner-toast][data-theme="dark"]) :where([data-cancel]){background:rgba(255,255,255,.3)}:where([data-sonner-toast]) :where([data-close-button]){position:absolute;left:var(--toast-close-button-start);right:var(--toast-close-button-end);top:0;height:20px;width:20px;display:flex;justify-content:center;align-items:center;padding:0;color:var(--gray12);border:1px solid var(--gray4);transform:var(--toast-close-button-transform);border-radius:50%;cursor:pointer;z-index:1;transition:opacity .1s,background .2s,border-color .2s}[data-sonner-toast] [data-close-button]{background:var(--gray1)}:where([data-sonner-toast]) :where([data-close-button]):focus-visible{box-shadow:0 4px 12px #0000001a,0 0 0 2px #0003}:where([data-sonner-toast]) :where([data-disabled="true"]){cursor:not-allowed}:where([data-sonner-toast]):hover :where([data-close-button]):hover{background:var(--gray2);border-color:var(--gray5)}:where([data-sonner-toast][data-swiping="true"]):before{content:"";position:absolute;left:-50%;right:-50%;height:100%;z-index:-1}:where([data-sonner-toast][data-y-position="top"][data-swiping="true"]):before{bottom:50%;transform:scaleY(3) translateY(50%)}:where([data-sonner-toast][data-y-position="bottom"][data-swiping="true"]):before{top:50%;transform:scaleY(3) translateY(-50%)}:where([data-sonner-toast][data-swiping="false"][data-removed="true"]):before{content:"";position:absolute;inset:0;transform:scaleY(2)}:where([data-sonner-toast]):after{content:"";position:absolute;left:0;height:calc(var(--gap) + 1px);bottom:100%;width:100%}:where([data-sonner-toast][data-mounted="true"]){--y: translateY(0);opacity:1}:where([data-sonner-toast][data-expanded="false"][data-front="false"]){--scale: var(--toasts-before) * .05 + 1;--y: translateY(calc(var(--lift-amount) * var(--toasts-before))) scale(calc(-1 * var(--scale)));height:var(--front-toast-height)}:where([data-sonner-toast])>*{transition:opacity .4s}:where([data-sonner-toast][data-expanded="false"][data-front="false"][data-styled="true"])>*{opacity:0}:where([data-sonner-toast][data-visible="false"]){opacity:0;pointer-events:none}:where([data-sonner-toast][data-mounted="true"][data-expanded="true"]){--y: translateY(calc(var(--lift) * var(--offset)));height:var(--initial-height)}:where([data-sonner-toast][data-removed="true"][data-front="true"][data-swipe-out="false"]){--y: translateY(calc(var(--lift) * -100%));opacity:0}:where([data-sonner-toast][data-removed="true"][data-front="false"][data-swipe-out="false"][data-expanded="true"]){--y: translateY(calc(var(--lift) * var(--offset) + var(--lift) * -100%));opacity:0}:where([data-sonner-toast][data-removed="true"][data-front="false"][data-swipe-out="false"][data-expanded="false"]){--y: translateY(40%);opacity:0;transition:transform .5s,opacity .2s}:where([data-sonner-toast][data-removed="true"][data-front="false"]):before{height:calc(var(--initial-height) + 20%)}[data-sonner-toast][data-swiping=true]{transform:var(--y) translateY(var(--swipe-amount-y, 0px)) translate(var(--swipe-amount-x, 0px));transition:none}[data-sonner-toast][data-swiped=true]{user-select:none}[data-sonner-toast][data-swipe-out=true][data-y-position=bottom],[data-sonner-toast][data-swipe-out=true][data-y-position=top]{animation-duration:.2s;animation-timing-function:ease-out;animation-fill-mode:forwards}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=left]{animation-name:swipe-out-left}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=right]{animation-name:swipe-out-right}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=up]{animation-name:swipe-out-up}[data-sonner-toast][data-swipe-out=true][data-swipe-direction=down]{animation-name:swipe-out-down}@keyframes swipe-out-left{0%{transform:var(--y) translate(var(--swipe-amount-x));opacity:1}to{transform:var(--y) translate(calc(var(--swipe-amount-x) - 100%));opacity:0}}@keyframes swipe-out-right{0%{transform:var(--y) translate(var(--swipe-amount-x));opacity:1}to{transform:var(--y) translate(calc(var(--swipe-amount-x) + 100%));opacity:0}}@keyframes swipe-out-up{0%{transform:var(--y) translateY(var(--swipe-amount-y));opacity:1}to{transform:var(--y) translateY(calc(var(--swipe-amount-y) - 100%));opacity:0}}@keyframes swipe-out-down{0%{transform:var(--y) translateY(var(--swipe-amount-y));opacity:1}to{transform:var(--y) translateY(calc(var(--swipe-amount-y) + 100%));opacity:0}}@media (max-width: 600px){[data-sonner-toaster]{position:fixed;right:var(--mobile-offset-right);left:var(--mobile-offset-left);width:100%}[data-sonner-toaster][dir=rtl]{left:calc(var(--mobile-offset-left) * -1)}[data-sonner-toaster] [data-sonner-toast]{left:0;right:0;width:calc(100% - var(--mobile-offset-left) * 2)}[data-sonner-toaster][data-x-position=left]{left:var(--mobile-offset-left)}[data-sonner-toaster][data-y-position=bottom]{bottom:var(--mobile-offset-bottom)}[data-sonner-toaster][data-y-position=top]{top:var(--mobile-offset-top)}[data-sonner-toaster][data-x-position=center]{left:var(--mobile-offset-left);right:var(--mobile-offset-right);transform:none}}[data-sonner-toaster][data-theme=light]{--normal-bg: #fff;--normal-border: var(--gray4);--normal-text: var(--gray12);--success-bg: hsl(143, 85%, 96%);--success-border: hsl(145, 92%, 91%);--success-text: hsl(140, 100%, 27%);--info-bg: hsl(208, 100%, 97%);--info-border: hsl(221, 91%, 91%);--info-text: hsl(210, 92%, 45%);--warning-bg: hsl(49, 100%, 97%);--warning-border: hsl(49, 91%, 91%);--warning-text: hsl(31, 92%, 45%);--error-bg: hsl(359, 100%, 97%);--error-border: hsl(359, 100%, 94%);--error-text: hsl(360, 100%, 45%)}[data-sonner-toaster][data-theme=light] [data-sonner-toast][data-invert=true]{--normal-bg: #000;--normal-border: hsl(0, 0%, 20%);--normal-text: var(--gray1)}[data-sonner-toaster][data-theme=dark] [data-sonner-toast][data-invert=true]{--normal-bg: #fff;--normal-border: var(--gray3);--normal-text: var(--gray12)}[data-sonner-toaster][data-theme=dark]{--normal-bg: #000;--normal-bg-hover: hsl(0, 0%, 12%);--normal-border: hsl(0, 0%, 20%);--normal-border-hover: hsl(0, 0%, 25%);--normal-text: var(--gray1);--success-bg: hsl(150, 100%, 6%);--success-border: hsl(147, 100%, 12%);--success-text: hsl(150, 86%, 65%);--info-bg: hsl(215, 100%, 6%);--info-border: hsl(223, 100%, 12%);--info-text: hsl(216, 87%, 65%);--warning-bg: hsl(64, 100%, 6%);--warning-border: hsl(60, 100%, 12%);--warning-text: hsl(46, 87%, 65%);--error-bg: hsl(358, 76%, 10%);--error-border: hsl(357, 89%, 16%);--error-text: hsl(358, 100%, 81%)}[data-sonner-toaster][data-theme=dark] [data-sonner-toast] [data-close-button]{background:var(--normal-bg);border-color:var(--normal-border);color:var(--normal-text)}[data-sonner-toaster][data-theme=dark] [data-sonner-toast] [data-close-button]:hover{background:var(--normal-bg-hover);border-color:var(--normal-border-hover)}[data-rich-colors=true][data-sonner-toast][data-type=success],[data-rich-colors=true][data-sonner-toast][data-type=success] [data-close-button]{background:var(--success-bg);border-color:var(--success-border);color:var(--success-text)}[data-rich-colors=true][data-sonner-toast][data-type=info],[data-rich-colors=true][data-sonner-toast][data-type=info] [data-close-button]{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)}[data-rich-colors=true][data-sonner-toast][data-type=warning],[data-rich-colors=true][data-sonner-toast][data-type=warning] [data-close-button]{background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning-text)}[data-rich-colors=true][data-sonner-toast][data-type=error],[data-rich-colors=true][data-sonner-toast][data-type=error] [data-close-button]{background:var(--error-bg);border-color:var(--error-border);color:var(--error-text)}.sonner-loading-wrapper{--size: 16px;height:var(--size);width:var(--size);position:absolute;inset:0;z-index:10}.sonner-loading-wrapper[data-visible=false]{transform-origin:center;animation:sonner-fade-out .2s ease forwards}.sonner-spinner{position:relative;top:50%;left:50%;height:var(--size);width:var(--size)}.sonner-loading-bar{animation:sonner-spin 1.2s linear infinite;background:var(--gray11);border-radius:6px;height:8%;left:-10%;position:absolute;top:-3.9%;width:24%}.sonner-loading-bar:nth-child(1){animation-delay:-1.2s;transform:rotate(.0001deg) translate(146%)}.sonner-loading-bar:nth-child(2){animation-delay:-1.1s;transform:rotate(30deg) translate(146%)}.sonner-loading-bar:nth-child(3){animation-delay:-1s;transform:rotate(60deg) translate(146%)}.sonner-loading-bar:nth-child(4){animation-delay:-.9s;transform:rotate(90deg) translate(146%)}.sonner-loading-bar:nth-child(5){animation-delay:-.8s;transform:rotate(120deg) translate(146%)}.sonner-loading-bar:nth-child(6){animation-delay:-.7s;transform:rotate(150deg) translate(146%)}.sonner-loading-bar:nth-child(7){animation-delay:-.6s;transform:rotate(180deg) translate(146%)}.sonner-loading-bar:nth-child(8){animation-delay:-.5s;transform:rotate(210deg) translate(146%)}.sonner-loading-bar:nth-child(9){animation-delay:-.4s;transform:rotate(240deg) translate(146%)}.sonner-loading-bar:nth-child(10){animation-delay:-.3s;transform:rotate(270deg) translate(146%)}.sonner-loading-bar:nth-child(11){animation-delay:-.2s;transform:rotate(300deg) translate(146%)}.sonner-loading-bar:nth-child(12){animation-delay:-.1s;transform:rotate(330deg) translate(146%)}@keyframes sonner-fade-in{0%{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@keyframes sonner-fade-out{0%{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.8)}}@keyframes sonner-spin{0%{opacity:1}to{opacity:.15}}@media (prefers-reduced-motion){[data-sonner-toast],[data-sonner-toast]>*,.sonner-loading-bar{transition:none!important;animation:none!important}}.sonner-loader{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transform-origin:center;transition:opacity .2s,transform .2s}.sonner-loader[data-visible=false]{opacity:0;transform:scale(.8) translate(-50%,-50%)}
+`);
+function tt(n) {
+    return n.label !== void 0;
+}
+var pe = 3, me = "32px", ge = "16px", Wt = 4e3, he = 356, be = 14, ye = 20, we = 200;
+function M(...n) {
+    return n.filter(Boolean).join(" ");
+}
+function xe(n) {
+    let [e, t] = n.split("-"), a = [];
+    return e && a.push(e), t && a.push(t), a;
+}
+var ve = (n)=>{
+    var Dt, Pt, Nt, Bt, Ct, kt, It, Mt, Ht, At, Lt;
+    let { invert: e, toast: t, unstyled: a, interacting: u, setHeights: f, visibleToasts: w, heights: S, index: g, toasts: i, expanded: D, removeToast: T, defaultRichColors: F, closeButton: et, style: ut, cancelButtonStyle: ft, actionButtonStyle: l, className: ot = "", descriptionClassName: at = "", duration: X, position: st, gap: pt, loadingIcon: rt, expandByDefault: B, classNames: s, icons: P, closeButtonAriaLabel: nt = "Close toast", pauseWhenPageIsHidden: it } = n, [Y, C] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(null), [lt, J] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(null), [W, H] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [A, mt] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [L, z] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [ct, d] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [h, y] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [R, j] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(0), [p, _] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(0), O = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(t.duration || X || Wt), G = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null), k = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null), Vt = g === 0, Ut = g + 1 <= w, N = t.type, V = t.dismissible !== !1, Kt = t.className || "", Xt = t.descriptionClassName || "", dt = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ve.useMemo[dt]": ()=>S.findIndex({
+                "ve.useMemo[dt]": (r)=>r.toastId === t.id
+            }["ve.useMemo[dt]"]) || 0
+    }["ve.useMemo[dt]"], [
+        S,
+        t.id
+    ]), Jt = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ve.useMemo[Jt]": ()=>{
+            var r;
+            return (r = t.closeButton) != null ? r : et;
+        }
+    }["ve.useMemo[Jt]"], [
+        t.closeButton,
+        et
+    ]), Tt = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ve.useMemo[Tt]": ()=>t.duration || X || Wt
+    }["ve.useMemo[Tt]"], [
+        t.duration,
+        X
+    ]), gt = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(0), U = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(0), St = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(0), K = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null), [Gt, Qt] = st.split("-"), Rt = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ve.useMemo[Rt]": ()=>S.reduce({
+                "ve.useMemo[Rt]": (r, m, c)=>c >= dt ? r : r + m.height
+            }["ve.useMemo[Rt]"], 0)
+    }["ve.useMemo[Rt]"], [
+        S,
+        dt
+    ]), Et = Ft(), qt = t.invert || e, ht = N === "loading";
+    U.current = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ve.useMemo": ()=>dt * pt + Rt
+    }["ve.useMemo"], [
+        dt,
+        Rt
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ve.useEffect": ()=>{
+            O.current = Tt;
+        }
+    }["ve.useEffect"], [
+        Tt
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ve.useEffect": ()=>{
+            H(!0);
+        }
+    }["ve.useEffect"], []), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ve.useEffect": ()=>{
+            let r = k.current;
+            if (r) {
+                let m = r.getBoundingClientRect().height;
+                return _(m), f({
+                    "ve.useEffect": (c)=>[
+                            {
+                                toastId: t.id,
+                                height: m,
+                                position: t.position
+                            },
+                            ...c
+                        ]
+                }["ve.useEffect"]), ({
+                    "ve.useEffect": ()=>f({
+                            "ve.useEffect": (c)=>c.filter({
+                                    "ve.useEffect": (b)=>b.toastId !== t.id
+                                }["ve.useEffect"])
+                        }["ve.useEffect"])
+                })["ve.useEffect"];
+            }
+        }
+    }["ve.useEffect"], [
+        f,
+        t.id
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useLayoutEffect({
+        "ve.useLayoutEffect": ()=>{
+            if (!W) return;
+            let r = k.current, m = r.style.height;
+            r.style.height = "auto";
+            let c = r.getBoundingClientRect().height;
+            r.style.height = m, _(c), f({
+                "ve.useLayoutEffect": (b)=>b.find({
+                        "ve.useLayoutEffect": (x)=>x.toastId === t.id
+                    }["ve.useLayoutEffect"]) ? b.map({
+                        "ve.useLayoutEffect": (x)=>x.toastId === t.id ? {
+                                ...x,
+                                height: c
+                            } : x
+                    }["ve.useLayoutEffect"]) : [
+                        {
+                            toastId: t.id,
+                            height: c,
+                            position: t.position
+                        },
+                        ...b
+                    ]
+            }["ve.useLayoutEffect"]);
+        }
+    }["ve.useLayoutEffect"], [
+        W,
+        t.title,
+        t.description,
+        f,
+        t.id
+    ]);
+    let $ = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useCallback({
+        "ve.useCallback[$]": ()=>{
+            mt(!0), j(U.current), f({
+                "ve.useCallback[$]": (r)=>r.filter({
+                        "ve.useCallback[$]": (m)=>m.toastId !== t.id
+                    }["ve.useCallback[$]"])
+            }["ve.useCallback[$]"]), setTimeout({
+                "ve.useCallback[$]": ()=>{
+                    T(t);
+                }
+            }["ve.useCallback[$]"], we);
+        }
+    }["ve.useCallback[$]"], [
+        t,
+        T,
+        f,
+        U
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ve.useEffect": ()=>{
+            if (t.promise && N === "loading" || t.duration === 1 / 0 || t.type === "loading") return;
+            let r;
+            return D || u || it && Et ? ({
+                "ve.useEffect": ()=>{
+                    if (St.current < gt.current) {
+                        let b = new Date().getTime() - gt.current;
+                        O.current = O.current - b;
+                    }
+                    St.current = new Date().getTime();
+                }
+            })["ve.useEffect"]() : ({
+                "ve.useEffect": ()=>{
+                    O.current !== 1 / 0 && (gt.current = new Date().getTime(), r = setTimeout({
+                        "ve.useEffect": ()=>{
+                            var b;
+                            (b = t.onAutoClose) == null || b.call(t, t), $();
+                        }
+                    }["ve.useEffect"], O.current));
+                }
+            })["ve.useEffect"](), ({
+                "ve.useEffect": ()=>clearTimeout(r)
+            })["ve.useEffect"];
+        }
+    }["ve.useEffect"], [
+        D,
+        u,
+        t,
+        N,
+        it,
+        Et,
+        $
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ve.useEffect": ()=>{
+            t.delete && $();
+        }
+    }["ve.useEffect"], [
+        $,
+        t.delete
+    ]);
+    function Zt() {
+        var r, m, c;
+        return P != null && P.loading ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+            className: M(s == null ? void 0 : s.loader, (r = t == null ? void 0 : t.classNames) == null ? void 0 : r.loader, "sonner-loader"),
+            "data-visible": N === "loading"
+        }, P.loading) : rt ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+            className: M(s == null ? void 0 : s.loader, (m = t == null ? void 0 : t.classNames) == null ? void 0 : m.loader, "sonner-loader"),
+            "data-visible": N === "loading"
+        }, rt) : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement(Yt, {
+            className: M(s == null ? void 0 : s.loader, (c = t == null ? void 0 : t.classNames) == null ? void 0 : c.loader),
+            visible: N === "loading"
+        });
+    }
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("li", {
+        tabIndex: 0,
+        ref: k,
+        className: M(ot, Kt, s == null ? void 0 : s.toast, (Dt = t == null ? void 0 : t.classNames) == null ? void 0 : Dt.toast, s == null ? void 0 : s.default, s == null ? void 0 : s[N], (Pt = t == null ? void 0 : t.classNames) == null ? void 0 : Pt[N]),
+        "data-sonner-toast": "",
+        "data-rich-colors": (Nt = t.richColors) != null ? Nt : F,
+        "data-styled": !(t.jsx || t.unstyled || a),
+        "data-mounted": W,
+        "data-promise": !!t.promise,
+        "data-swiped": h,
+        "data-removed": A,
+        "data-visible": Ut,
+        "data-y-position": Gt,
+        "data-x-position": Qt,
+        "data-index": g,
+        "data-front": Vt,
+        "data-swiping": L,
+        "data-dismissible": V,
+        "data-type": N,
+        "data-invert": qt,
+        "data-swipe-out": ct,
+        "data-swipe-direction": lt,
+        "data-expanded": !!(D || B && W),
+        style: {
+            "--index": g,
+            "--toasts-before": g,
+            "--z-index": i.length - g,
+            "--offset": `${A ? R : U.current}px`,
+            "--initial-height": B ? "auto" : `${p}px`,
+            ...ut,
+            ...t.style
+        },
+        onDragEnd: ()=>{
+            z(!1), C(null), K.current = null;
+        },
+        onPointerDown: (r)=>{
+            ht || !V || (G.current = new Date, j(U.current), r.target.setPointerCapture(r.pointerId), r.target.tagName !== "BUTTON" && (z(!0), K.current = {
+                x: r.clientX,
+                y: r.clientY
+            }));
+        },
+        onPointerUp: ()=>{
+            var x, Q, q, Z;
+            if (ct || !V) return;
+            K.current = null;
+            let r = Number(((x = k.current) == null ? void 0 : x.style.getPropertyValue("--swipe-amount-x").replace("px", "")) || 0), m = Number(((Q = k.current) == null ? void 0 : Q.style.getPropertyValue("--swipe-amount-y").replace("px", "")) || 0), c = new Date().getTime() - ((q = G.current) == null ? void 0 : q.getTime()), b = Y === "x" ? r : m, I = Math.abs(b) / c;
+            if (Math.abs(b) >= ye || I > .11) {
+                j(U.current), (Z = t.onDismiss) == null || Z.call(t, t), J(Y === "x" ? r > 0 ? "right" : "left" : m > 0 ? "down" : "up"), $(), d(!0), y(!1);
+                return;
+            }
+            z(!1), C(null);
+        },
+        onPointerMove: (r)=>{
+            var Q, q, Z, zt;
+            if (!K.current || !V || ((Q = window.getSelection()) == null ? void 0 : Q.toString().length) > 0) return;
+            let c = r.clientY - K.current.y, b = r.clientX - K.current.x, I = (q = n.swipeDirections) != null ? q : xe(st);
+            !Y && (Math.abs(b) > 1 || Math.abs(c) > 1) && C(Math.abs(b) > Math.abs(c) ? "x" : "y");
+            let x = {
+                x: 0,
+                y: 0
+            };
+            Y === "y" ? (I.includes("top") || I.includes("bottom")) && (I.includes("top") && c < 0 || I.includes("bottom") && c > 0) && (x.y = c) : Y === "x" && (I.includes("left") || I.includes("right")) && (I.includes("left") && b < 0 || I.includes("right") && b > 0) && (x.x = b), (Math.abs(x.x) > 0 || Math.abs(x.y) > 0) && y(!0), (Z = k.current) == null || Z.style.setProperty("--swipe-amount-x", `${x.x}px`), (zt = k.current) == null || zt.style.setProperty("--swipe-amount-y", `${x.y}px`);
+        }
+    }, Jt && !t.jsx ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("button", {
+        "aria-label": nt,
+        "data-disabled": ht,
+        "data-close-button": !0,
+        onClick: ht || !V ? ()=>{} : ()=>{
+            var r;
+            $(), (r = t.onDismiss) == null || r.call(t, t);
+        },
+        className: M(s == null ? void 0 : s.closeButton, (Bt = t == null ? void 0 : t.classNames) == null ? void 0 : Bt.closeButton)
+    }, (Ct = P == null ? void 0 : P.close) != null ? Ct : Ot) : null, t.jsx || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"])(t.title) ? t.jsx ? t.jsx : typeof t.title == "function" ? t.title() : t.title : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].Fragment, null, N || t.icon || t.promise ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        "data-icon": "",
+        className: M(s == null ? void 0 : s.icon, (kt = t == null ? void 0 : t.classNames) == null ? void 0 : kt.icon)
+    }, t.promise || t.type === "loading" && !t.icon ? t.icon || Zt() : null, t.type !== "loading" ? t.icon || (P == null ? void 0 : P[N]) || jt(N) : null) : null, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        "data-content": "",
+        className: M(s == null ? void 0 : s.content, (It = t == null ? void 0 : t.classNames) == null ? void 0 : It.content)
+    }, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        "data-title": "",
+        className: M(s == null ? void 0 : s.title, (Mt = t == null ? void 0 : t.classNames) == null ? void 0 : Mt.title)
+    }, typeof t.title == "function" ? t.title() : t.title), t.description ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("div", {
+        "data-description": "",
+        className: M(at, Xt, s == null ? void 0 : s.description, (Ht = t == null ? void 0 : t.classNames) == null ? void 0 : Ht.description)
+    }, typeof t.description == "function" ? t.description() : t.description) : null), (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"])(t.cancel) ? t.cancel : t.cancel && tt(t.cancel) ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("button", {
+        "data-button": !0,
+        "data-cancel": !0,
+        style: t.cancelButtonStyle || ft,
+        onClick: (r)=>{
+            var m, c;
+            tt(t.cancel) && V && ((c = (m = t.cancel).onClick) == null || c.call(m, r), $());
+        },
+        className: M(s == null ? void 0 : s.cancelButton, (At = t == null ? void 0 : t.classNames) == null ? void 0 : At.cancelButton)
+    }, t.cancel.label) : null, (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidElement"])(t.action) ? t.action : t.action && tt(t.action) ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("button", {
+        "data-button": !0,
+        "data-action": !0,
+        style: t.actionButtonStyle || l,
+        onClick: (r)=>{
+            var m, c;
+            tt(t.action) && ((c = (m = t.action).onClick) == null || c.call(m, r), !r.defaultPrevented && $());
+        },
+        className: M(s == null ? void 0 : s.actionButton, (Lt = t == null ? void 0 : t.classNames) == null ? void 0 : Lt.actionButton)
+    }, t.action.label) : null));
+};
+function _t() {
+    if (typeof window == "undefined" || typeof document == "undefined") return "ltr";
+    let n = document.documentElement.getAttribute("dir");
+    return n === "auto" || !n ? window.getComputedStyle(document.documentElement).direction : n;
+}
+function Te(n, e) {
+    let t = {};
+    return [
+        n,
+        e
+    ].forEach((a, u)=>{
+        let f = u === 1, w = f ? "--mobile-offset" : "--offset", S = f ? ge : me;
+        function g(i) {
+            [
+                "top",
+                "right",
+                "bottom",
+                "left"
+            ].forEach((D)=>{
+                t[`${w}-${D}`] = typeof i == "number" ? `${i}px` : i;
+            });
+        }
+        typeof a == "number" || typeof a == "string" ? g(a) : typeof a == "object" ? [
+            "top",
+            "right",
+            "bottom",
+            "left"
+        ].forEach((i)=>{
+            a[i] === void 0 ? t[`${w}-${i}`] = S : t[`${w}-${i}`] = typeof a[i] == "number" ? `${a[i]}px` : a[i];
+        }) : g(S);
+    }), t;
+}
+function Oe() {
+    let [n, e] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "Oe.useEffect": ()=>v.subscribe({
+                "Oe.useEffect": (t)=>{
+                    if (t.dismiss) {
+                        setTimeout({
+                            "Oe.useEffect": ()=>{
+                                __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].flushSync({
+                                    "Oe.useEffect": ()=>{
+                                        e({
+                                            "Oe.useEffect": (a)=>a.filter({
+                                                    "Oe.useEffect": (u)=>u.id !== t.id
+                                                }["Oe.useEffect"])
+                                        }["Oe.useEffect"]);
+                                    }
+                                }["Oe.useEffect"]);
+                            }
+                        }["Oe.useEffect"]);
+                        return;
+                    }
+                    setTimeout({
+                        "Oe.useEffect": ()=>{
+                            __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].flushSync({
+                                "Oe.useEffect": ()=>{
+                                    e({
+                                        "Oe.useEffect": (a)=>{
+                                            let u = a.findIndex({
+                                                "Oe.useEffect.u": (f)=>f.id === t.id
+                                            }["Oe.useEffect.u"]);
+                                            return u !== -1 ? [
+                                                ...a.slice(0, u),
+                                                {
+                                                    ...a[u],
+                                                    ...t
+                                                },
+                                                ...a.slice(u + 1)
+                                            ] : [
+                                                t,
+                                                ...a
+                                            ];
+                                        }
+                                    }["Oe.useEffect"]);
+                                }
+                            }["Oe.useEffect"]);
+                        }
+                    }["Oe.useEffect"]);
+                }
+            }["Oe.useEffect"])
+    }["Oe.useEffect"], []), {
+        toasts: n
+    };
+}
+var $e = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"])(function(e, t) {
+    let { invert: a, position: u = "bottom-right", hotkey: f = [
+        "altKey",
+        "KeyT"
+    ], expand: w, closeButton: S, className: g, offset: i, mobileOffset: D, theme: T = "light", richColors: F, duration: et, style: ut, visibleToasts: ft = pe, toastOptions: l, dir: ot = _t(), gap: at = be, loadingIcon: X, icons: st, containerAriaLabel: pt = "Notifications", pauseWhenPageIsHidden: rt } = e, [B, s] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]), P = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "$e.useMemo[P]": ()=>Array.from(new Set([
+                u
+            ].concat(B.filter({
+                "$e.useMemo[P]": (d)=>d.position
+            }["$e.useMemo[P]"]).map({
+                "$e.useMemo[P]": (d)=>d.position
+            }["$e.useMemo[P]"]))))
+    }["$e.useMemo[P]"], [
+        B,
+        u
+    ]), [nt, it] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]), [Y, C] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [lt, J] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(!1), [W, H] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(T !== "system" ? T : typeof window != "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), A = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null), mt = f.join("+").replace(/Key/g, "").replace(/Digit/g, ""), L = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(null), z = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef(!1), ct = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useCallback({
+        "$e.useCallback[ct]": (d)=>{
+            s({
+                "$e.useCallback[ct]": (h)=>{
+                    var y;
+                    return (y = h.find({
+                        "$e.useCallback[ct]": (R)=>R.id === d.id
+                    }["$e.useCallback[ct]"])) != null && y.delete || v.dismiss(d.id), h.filter({
+                        "$e.useCallback[ct]": ({ id: R })=>R !== d.id
+                    }["$e.useCallback[ct]"]);
+                }
+            }["$e.useCallback[ct]"]);
+        }
+    }["$e.useCallback[ct]"], []);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "$e.useEffect": ()=>v.subscribe({
+                "$e.useEffect": (d)=>{
+                    if (d.dismiss) {
+                        s({
+                            "$e.useEffect": (h)=>h.map({
+                                    "$e.useEffect": (y)=>y.id === d.id ? {
+                                            ...y,
+                                            delete: !0
+                                        } : y
+                                }["$e.useEffect"])
+                        }["$e.useEffect"]);
+                        return;
+                    }
+                    setTimeout({
+                        "$e.useEffect": ()=>{
+                            __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].flushSync({
+                                "$e.useEffect": ()=>{
+                                    s({
+                                        "$e.useEffect": (h)=>{
+                                            let y = h.findIndex({
+                                                "$e.useEffect.y": (R)=>R.id === d.id
+                                            }["$e.useEffect.y"]);
+                                            return y !== -1 ? [
+                                                ...h.slice(0, y),
+                                                {
+                                                    ...h[y],
+                                                    ...d
+                                                },
+                                                ...h.slice(y + 1)
+                                            ] : [
+                                                d,
+                                                ...h
+                                            ];
+                                        }
+                                    }["$e.useEffect"]);
+                                }
+                            }["$e.useEffect"]);
+                        }
+                    }["$e.useEffect"]);
+                }
+            }["$e.useEffect"])
+    }["$e.useEffect"], []), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "$e.useEffect": ()=>{
+            if (T !== "system") {
+                H(T);
+                return;
+            }
+            if (T === "system" && (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? H("dark") : H("light")), typeof window == "undefined") return;
+            let d = window.matchMedia("(prefers-color-scheme: dark)");
+            try {
+                d.addEventListener("change", {
+                    "$e.useEffect": ({ matches: h })=>{
+                        H(h ? "dark" : "light");
+                    }
+                }["$e.useEffect"]);
+            } catch (h) {
+                d.addListener({
+                    "$e.useEffect": ({ matches: y })=>{
+                        try {
+                            H(y ? "dark" : "light");
+                        } catch (R) {
+                            console.error(R);
+                        }
+                    }
+                }["$e.useEffect"]);
+            }
+        }
+    }["$e.useEffect"], [
+        T
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "$e.useEffect": ()=>{
+            B.length <= 1 && C(!1);
+        }
+    }["$e.useEffect"], [
+        B
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "$e.useEffect": ()=>{
+            let d = {
+                "$e.useEffect.d": (h)=>{
+                    var R, j;
+                    f.every({
+                        "$e.useEffect.d": (p)=>h[p] || h.code === p
+                    }["$e.useEffect.d"]) && (C(!0), (R = A.current) == null || R.focus()), h.code === "Escape" && (document.activeElement === A.current || (j = A.current) != null && j.contains(document.activeElement)) && C(!1);
+                }
+            }["$e.useEffect.d"];
+            return document.addEventListener("keydown", d), ({
+                "$e.useEffect": ()=>document.removeEventListener("keydown", d)
+            })["$e.useEffect"];
+        }
+    }["$e.useEffect"], [
+        f
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "$e.useEffect": ()=>{
+            if (A.current) return ({
+                "$e.useEffect": ()=>{
+                    L.current && (L.current.focus({
+                        preventScroll: !0
+                    }), L.current = null, z.current = !1);
+                }
+            })["$e.useEffect"];
+        }
+    }["$e.useEffect"], [
+        A.current
+    ]), __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("section", {
+        ref: t,
+        "aria-label": `${pt} ${mt}`,
+        tabIndex: -1,
+        "aria-live": "polite",
+        "aria-relevant": "additions text",
+        "aria-atomic": "false",
+        suppressHydrationWarning: !0
+    }, P.map((d, h)=>{
+        var j;
+        let [y, R] = d.split("-");
+        return B.length ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement("ol", {
+            key: d,
+            dir: ot === "auto" ? _t() : ot,
+            tabIndex: -1,
+            ref: A,
+            className: g,
+            "data-sonner-toaster": !0,
+            "data-theme": W,
+            "data-y-position": y,
+            "data-lifted": Y && B.length > 1 && !w,
+            "data-x-position": R,
+            style: {
+                "--front-toast-height": `${((j = nt[0]) == null ? void 0 : j.height) || 0}px`,
+                "--width": `${he}px`,
+                "--gap": `${at}px`,
+                ...ut,
+                ...Te(i, D)
+            },
+            onBlur: (p)=>{
+                z.current && !p.currentTarget.contains(p.relatedTarget) && (z.current = !1, L.current && (L.current.focus({
+                    preventScroll: !0
+                }), L.current = null));
+            },
+            onFocus: (p)=>{
+                p.target instanceof HTMLElement && p.target.dataset.dismissible === "false" || z.current || (z.current = !0, L.current = p.relatedTarget);
+            },
+            onMouseEnter: ()=>C(!0),
+            onMouseMove: ()=>C(!0),
+            onMouseLeave: ()=>{
+                lt || C(!1);
+            },
+            onDragEnd: ()=>C(!1),
+            onPointerDown: (p)=>{
+                p.target instanceof HTMLElement && p.target.dataset.dismissible === "false" || J(!0);
+            },
+            onPointerUp: ()=>J(!1)
+        }, B.filter((p)=>!p.position && h === 0 || p.position === d).map((p, _)=>{
+            var O, G;
+            return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].createElement(ve, {
+                key: p.id,
+                icons: st,
+                index: _,
+                toast: p,
+                defaultRichColors: F,
+                duration: (O = l == null ? void 0 : l.duration) != null ? O : et,
+                className: l == null ? void 0 : l.className,
+                descriptionClassName: l == null ? void 0 : l.descriptionClassName,
+                invert: a,
+                visibleToasts: ft,
+                closeButton: (G = l == null ? void 0 : l.closeButton) != null ? G : S,
+                interacting: lt,
+                position: d,
+                style: l == null ? void 0 : l.style,
+                unstyled: l == null ? void 0 : l.unstyled,
+                classNames: l == null ? void 0 : l.classNames,
+                cancelButtonStyle: l == null ? void 0 : l.cancelButtonStyle,
+                actionButtonStyle: l == null ? void 0 : l.actionButtonStyle,
+                removeToast: ct,
+                toasts: B.filter((k)=>k.position == p.position),
+                heights: nt.filter((k)=>k.position == p.position),
+                setHeights: it,
+                expandByDefault: w,
+                gap: at,
+                loadingIcon: X,
+                expanded: Y,
+                pauseWhenPageIsHidden: rt,
+                swipeDirections: e.swipeDirections
+            });
+        })) : null;
+    }));
+});
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-id@1.1.1_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-id/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useId",
+    ()=>useId
+]);
+// packages/react/id/src/id.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+;
+;
+var useReactId = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__[" useId ".trim().toString()] || (()=>void 0);
+var count = 0;
+function useId(deterministicId) {
+    const [id, setId] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__.useState(useReactId());
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "useId.useLayoutEffect": ()=>{
+            if (!deterministicId) setId({
+                "useId.useLayoutEffect": (reactId)=>reactId ?? String(count++)
+            }["useId.useLayoutEffect"]);
+        }
+    }["useId.useLayoutEffect"], [
+        deterministicId
+    ]);
+    return deterministicId || (id ? `radix-${id}` : "");
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+utils@0.2.9/node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "alignments",
+    ()=>alignments,
+    "clamp",
+    ()=>clamp,
+    "createCoords",
+    ()=>createCoords,
+    "evaluate",
+    ()=>evaluate,
+    "expandPaddingObject",
+    ()=>expandPaddingObject,
+    "floor",
+    ()=>floor,
+    "getAlignment",
+    ()=>getAlignment,
+    "getAlignmentAxis",
+    ()=>getAlignmentAxis,
+    "getAlignmentSides",
+    ()=>getAlignmentSides,
+    "getAxisLength",
+    ()=>getAxisLength,
+    "getExpandedPlacements",
+    ()=>getExpandedPlacements,
+    "getOppositeAlignmentPlacement",
+    ()=>getOppositeAlignmentPlacement,
+    "getOppositeAxis",
+    ()=>getOppositeAxis,
+    "getOppositeAxisPlacements",
+    ()=>getOppositeAxisPlacements,
+    "getOppositePlacement",
+    ()=>getOppositePlacement,
+    "getPaddingObject",
+    ()=>getPaddingObject,
+    "getSide",
+    ()=>getSide,
+    "getSideAxis",
+    ()=>getSideAxis,
+    "max",
+    ()=>max,
+    "min",
+    ()=>min,
+    "placements",
+    ()=>placements,
+    "rectToClientRect",
+    ()=>rectToClientRect,
+    "round",
+    ()=>round,
+    "sides",
+    ()=>sides
+]);
+/**
+ * Custom positioning reference element.
+ * @see https://floating-ui.com/docs/virtual-elements
+ */ const sides = [
+    'top',
+    'right',
+    'bottom',
+    'left'
+];
+const alignments = [
+    'start',
+    'end'
+];
+const placements = /*#__PURE__*/ sides.reduce((acc, side)=>acc.concat(side, side + "-" + alignments[0], side + "-" + alignments[1]), []);
+const min = Math.min;
+const max = Math.max;
+const round = Math.round;
+const floor = Math.floor;
+const createCoords = (v)=>({
+        x: v,
+        y: v
+    });
+const oppositeSideMap = {
+    left: 'right',
+    right: 'left',
+    bottom: 'top',
+    top: 'bottom'
+};
+const oppositeAlignmentMap = {
+    start: 'end',
+    end: 'start'
+};
+function clamp(start, value, end) {
+    return max(start, min(value, end));
+}
+function evaluate(value, param) {
+    return typeof value === 'function' ? value(param) : value;
+}
+function getSide(placement) {
+    return placement.split('-')[0];
+}
+function getAlignment(placement) {
+    return placement.split('-')[1];
+}
+function getOppositeAxis(axis) {
+    return axis === 'x' ? 'y' : 'x';
+}
+function getAxisLength(axis) {
+    return axis === 'y' ? 'height' : 'width';
+}
+function getSideAxis(placement) {
+    return [
+        'top',
+        'bottom'
+    ].includes(getSide(placement)) ? 'y' : 'x';
+}
+function getAlignmentAxis(placement) {
+    return getOppositeAxis(getSideAxis(placement));
+}
+function getAlignmentSides(placement, rects, rtl) {
+    if (rtl === void 0) {
+        rtl = false;
+    }
+    const alignment = getAlignment(placement);
+    const alignmentAxis = getAlignmentAxis(placement);
+    const length = getAxisLength(alignmentAxis);
+    let mainAlignmentSide = alignmentAxis === 'x' ? alignment === (rtl ? 'end' : 'start') ? 'right' : 'left' : alignment === 'start' ? 'bottom' : 'top';
+    if (rects.reference[length] > rects.floating[length]) {
+        mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
+    }
+    return [
+        mainAlignmentSide,
+        getOppositePlacement(mainAlignmentSide)
+    ];
+}
+function getExpandedPlacements(placement) {
+    const oppositePlacement = getOppositePlacement(placement);
+    return [
+        getOppositeAlignmentPlacement(placement),
+        oppositePlacement,
+        getOppositeAlignmentPlacement(oppositePlacement)
+    ];
+}
+function getOppositeAlignmentPlacement(placement) {
+    return placement.replace(/start|end/g, (alignment)=>oppositeAlignmentMap[alignment]);
+}
+function getSideList(side, isStart, rtl) {
+    const lr = [
+        'left',
+        'right'
+    ];
+    const rl = [
+        'right',
+        'left'
+    ];
+    const tb = [
+        'top',
+        'bottom'
+    ];
+    const bt = [
+        'bottom',
+        'top'
+    ];
+    switch(side){
+        case 'top':
+        case 'bottom':
+            if (rtl) return isStart ? rl : lr;
+            return isStart ? lr : rl;
+        case 'left':
+        case 'right':
+            return isStart ? tb : bt;
+        default:
+            return [];
+    }
+}
+function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
+    const alignment = getAlignment(placement);
+    let list = getSideList(getSide(placement), direction === 'start', rtl);
+    if (alignment) {
+        list = list.map((side)=>side + "-" + alignment);
+        if (flipAlignment) {
+            list = list.concat(list.map(getOppositeAlignmentPlacement));
+        }
+    }
+    return list;
+}
+function getOppositePlacement(placement) {
+    return placement.replace(/left|right|bottom|top/g, (side)=>oppositeSideMap[side]);
+}
+function expandPaddingObject(padding) {
+    return {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        ...padding
+    };
+}
+function getPaddingObject(padding) {
+    return typeof padding !== 'number' ? expandPaddingObject(padding) : {
+        top: padding,
+        right: padding,
+        bottom: padding,
+        left: padding
+    };
+}
+function rectToClientRect(rect) {
+    const { x, y, width, height } = rect;
+    return {
+        width,
+        height,
+        top: y,
+        left: x,
+        right: x + width,
+        bottom: y + height,
+        x,
+        y
+    };
+}
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+utils@0.2.9/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "getComputedStyle",
+    ()=>getComputedStyle,
+    "getContainingBlock",
+    ()=>getContainingBlock,
+    "getDocumentElement",
+    ()=>getDocumentElement,
+    "getFrameElement",
+    ()=>getFrameElement,
+    "getNearestOverflowAncestor",
+    ()=>getNearestOverflowAncestor,
+    "getNodeName",
+    ()=>getNodeName,
+    "getNodeScroll",
+    ()=>getNodeScroll,
+    "getOverflowAncestors",
+    ()=>getOverflowAncestors,
+    "getParentNode",
+    ()=>getParentNode,
+    "getWindow",
+    ()=>getWindow,
+    "isContainingBlock",
+    ()=>isContainingBlock,
+    "isElement",
+    ()=>isElement,
+    "isHTMLElement",
+    ()=>isHTMLElement,
+    "isLastTraversableNode",
+    ()=>isLastTraversableNode,
+    "isNode",
+    ()=>isNode,
+    "isOverflowElement",
+    ()=>isOverflowElement,
+    "isShadowRoot",
+    ()=>isShadowRoot,
+    "isTableElement",
+    ()=>isTableElement,
+    "isTopLayer",
+    ()=>isTopLayer,
+    "isWebKit",
+    ()=>isWebKit
+]);
+function hasWindow() {
+    return typeof window !== 'undefined';
+}
+function getNodeName(node) {
+    if (isNode(node)) {
+        return (node.nodeName || '').toLowerCase();
+    }
+    // Mocked nodes in testing environments may not be instances of Node. By
+    // returning `#document` an infinite loop won't occur.
+    // https://github.com/floating-ui/floating-ui/issues/2317
+    return '#document';
+}
+function getWindow(node) {
+    var _node$ownerDocument;
+    return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+}
+function getDocumentElement(node) {
+    var _ref;
+    return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
+}
+function isNode(value) {
+    if (!hasWindow()) {
+        return false;
+    }
+    return value instanceof Node || value instanceof getWindow(value).Node;
+}
+function isElement(value) {
+    if (!hasWindow()) {
+        return false;
+    }
+    return value instanceof Element || value instanceof getWindow(value).Element;
+}
+function isHTMLElement(value) {
+    if (!hasWindow()) {
+        return false;
+    }
+    return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
+}
+function isShadowRoot(value) {
+    if (!hasWindow() || typeof ShadowRoot === 'undefined') {
+        return false;
+    }
+    return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
+}
+function isOverflowElement(element) {
+    const { overflow, overflowX, overflowY, display } = getComputedStyle(element);
+    return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && ![
+        'inline',
+        'contents'
+    ].includes(display);
+}
+function isTableElement(element) {
+    return [
+        'table',
+        'td',
+        'th'
+    ].includes(getNodeName(element));
+}
+function isTopLayer(element) {
+    return [
+        ':popover-open',
+        ':modal'
+    ].some((selector)=>{
+        try {
+            return element.matches(selector);
+        } catch (e) {
+            return false;
+        }
+    });
+}
+function isContainingBlock(elementOrCss) {
+    const webkit = isWebKit();
+    const css = isElement(elementOrCss) ? getComputedStyle(elementOrCss) : elementOrCss;
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+    // https://drafts.csswg.org/css-transforms-2/#individual-transforms
+    return [
+        'transform',
+        'translate',
+        'scale',
+        'rotate',
+        'perspective'
+    ].some((value)=>css[value] ? css[value] !== 'none' : false) || (css.containerType ? css.containerType !== 'normal' : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== 'none' : false) || !webkit && (css.filter ? css.filter !== 'none' : false) || [
+        'transform',
+        'translate',
+        'scale',
+        'rotate',
+        'perspective',
+        'filter'
+    ].some((value)=>(css.willChange || '').includes(value)) || [
+        'paint',
+        'layout',
+        'strict',
+        'content'
+    ].some((value)=>(css.contain || '').includes(value));
+}
+function getContainingBlock(element) {
+    let currentNode = getParentNode(element);
+    while(isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)){
+        if (isContainingBlock(currentNode)) {
+            return currentNode;
+        } else if (isTopLayer(currentNode)) {
+            return null;
+        }
+        currentNode = getParentNode(currentNode);
+    }
+    return null;
+}
+function isWebKit() {
+    if (typeof CSS === 'undefined' || !CSS.supports) return false;
+    return CSS.supports('-webkit-backdrop-filter', 'none');
+}
+function isLastTraversableNode(node) {
+    return [
+        'html',
+        'body',
+        '#document'
+    ].includes(getNodeName(node));
+}
+function getComputedStyle(element) {
+    return getWindow(element).getComputedStyle(element);
+}
+function getNodeScroll(element) {
+    if (isElement(element)) {
+        return {
+            scrollLeft: element.scrollLeft,
+            scrollTop: element.scrollTop
+        };
+    }
+    return {
+        scrollLeft: element.scrollX,
+        scrollTop: element.scrollY
+    };
+}
+function getParentNode(node) {
+    if (getNodeName(node) === 'html') {
+        return node;
+    }
+    const result = // Step into the shadow DOM of the parent of a slotted node.
+    node.assignedSlot || // DOM Element detected.
+    node.parentNode || // ShadowRoot detected.
+    isShadowRoot(node) && node.host || // Fallback.
+    getDocumentElement(node);
+    return isShadowRoot(result) ? result.host : result;
+}
+function getNearestOverflowAncestor(node) {
+    const parentNode = getParentNode(node);
+    if (isLastTraversableNode(parentNode)) {
+        return node.ownerDocument ? node.ownerDocument.body : node.body;
+    }
+    if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+        return parentNode;
+    }
+    return getNearestOverflowAncestor(parentNode);
+}
+function getOverflowAncestors(node, list, traverseIframes) {
+    var _node$ownerDocument2;
+    if (list === void 0) {
+        list = [];
+    }
+    if (traverseIframes === void 0) {
+        traverseIframes = true;
+    }
+    const scrollableAncestor = getNearestOverflowAncestor(node);
+    const isBody = scrollableAncestor === ((_node$ownerDocument2 = node.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
+    const win = getWindow(scrollableAncestor);
+    if (isBody) {
+        const frameElement = getFrameElement(win);
+        return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], frameElement && traverseIframes ? getOverflowAncestors(frameElement) : []);
+    }
+    return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
+}
+function getFrameElement(win) {
+    return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
+}
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+core@1.6.9/node_modules/@floating-ui/core/dist/floating-ui.core.mjs [app-client] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "arrow",
+    ()=>arrow,
+    "autoPlacement",
+    ()=>autoPlacement,
+    "computePosition",
+    ()=>computePosition,
+    "detectOverflow",
+    ()=>detectOverflow,
+    "flip",
+    ()=>flip,
+    "hide",
+    ()=>hide,
+    "inline",
+    ()=>inline,
+    "limitShift",
+    ()=>limitShift,
+    "offset",
+    ()=>offset,
+    "shift",
+    ()=>shift,
+    "size",
+    ()=>size
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+utils@0.2.9/node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs [app-client] (ecmascript)");
+;
+;
+function computeCoordsFromPlacement(_ref, placement, rtl) {
+    let { reference, floating } = _ref;
+    const sideAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(placement);
+    const alignmentAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignmentAxis"])(placement);
+    const alignLength = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAxisLength"])(alignmentAxis);
+    const side = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement);
+    const isVertical = sideAxis === 'y';
+    const commonX = reference.x + reference.width / 2 - floating.width / 2;
+    const commonY = reference.y + reference.height / 2 - floating.height / 2;
+    const commonAlign = reference[alignLength] / 2 - floating[alignLength] / 2;
+    let coords;
+    switch(side){
+        case 'top':
+            coords = {
+                x: commonX,
+                y: reference.y - floating.height
+            };
+            break;
+        case 'bottom':
+            coords = {
+                x: commonX,
+                y: reference.y + reference.height
+            };
+            break;
+        case 'right':
+            coords = {
+                x: reference.x + reference.width,
+                y: commonY
+            };
+            break;
+        case 'left':
+            coords = {
+                x: reference.x - floating.width,
+                y: commonY
+            };
+            break;
+        default:
+            coords = {
+                x: reference.x,
+                y: reference.y
+            };
+    }
+    switch((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement)){
+        case 'start':
+            coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
+            break;
+        case 'end':
+            coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
+            break;
+    }
+    return coords;
+}
+/**
+ * Computes the `x` and `y` coordinates that will place the floating element
+ * next to a given reference element.
+ *
+ * This export does not have any `platform` interface logic. You will need to
+ * write one for the platform you are using Floating UI with.
+ */ const computePosition = async (reference, floating, config)=>{
+    const { placement = 'bottom', strategy = 'absolute', middleware = [], platform } = config;
+    const validMiddleware = middleware.filter(Boolean);
+    const rtl = await (platform.isRTL == null ? void 0 : platform.isRTL(floating));
+    let rects = await platform.getElementRects({
+        reference,
+        floating,
+        strategy
+    });
+    let { x, y } = computeCoordsFromPlacement(rects, placement, rtl);
+    let statefulPlacement = placement;
+    let middlewareData = {};
+    let resetCount = 0;
+    for(let i = 0; i < validMiddleware.length; i++){
+        const { name, fn } = validMiddleware[i];
+        const { x: nextX, y: nextY, data, reset } = await fn({
+            x,
+            y,
+            initialPlacement: placement,
+            placement: statefulPlacement,
+            strategy,
+            middlewareData,
+            rects,
+            platform,
+            elements: {
+                reference,
+                floating
+            }
+        });
+        x = nextX != null ? nextX : x;
+        y = nextY != null ? nextY : y;
+        middlewareData = {
+            ...middlewareData,
+            [name]: {
+                ...middlewareData[name],
+                ...data
+            }
+        };
+        if (reset && resetCount <= 50) {
+            resetCount++;
+            if (typeof reset === 'object') {
+                if (reset.placement) {
+                    statefulPlacement = reset.placement;
+                }
+                if (reset.rects) {
+                    rects = reset.rects === true ? await platform.getElementRects({
+                        reference,
+                        floating,
+                        strategy
+                    }) : reset.rects;
+                }
+                ({ x, y } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
+            }
+            i = -1;
+        }
+    }
+    return {
+        x,
+        y,
+        placement: statefulPlacement,
+        strategy,
+        middlewareData
+    };
+};
+/**
+ * Resolves with an object of overflow side offsets that determine how much the
+ * element is overflowing a given clipping boundary on each side.
+ * - positive = overflowing the boundary by that number of pixels
+ * - negative = how many pixels left before it will overflow
+ * - 0 = lies flush with the boundary
+ * @see https://floating-ui.com/docs/detectOverflow
+ */ async function detectOverflow(state, options) {
+    var _await$platform$isEle;
+    if (options === void 0) {
+        options = {};
+    }
+    const { x, y, platform, rects, elements, strategy } = state;
+    const { boundary = 'clippingAncestors', rootBoundary = 'viewport', elementContext = 'floating', altBoundary = false, padding = 0 } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+    const paddingObject = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getPaddingObject"])(padding);
+    const altContext = elementContext === 'floating' ? 'reference' : 'floating';
+    const element = elements[altBoundary ? altContext : elementContext];
+    const clippingClientRect = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])(await platform.getClippingRect({
+        element: ((_await$platform$isEle = await (platform.isElement == null ? void 0 : platform.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || await (platform.getDocumentElement == null ? void 0 : platform.getDocumentElement(elements.floating)),
+        boundary,
+        rootBoundary,
+        strategy
+    }));
+    const rect = elementContext === 'floating' ? {
+        x,
+        y,
+        width: rects.floating.width,
+        height: rects.floating.height
+    } : rects.reference;
+    const offsetParent = await (platform.getOffsetParent == null ? void 0 : platform.getOffsetParent(elements.floating));
+    const offsetScale = await (platform.isElement == null ? void 0 : platform.isElement(offsetParent)) ? await (platform.getScale == null ? void 0 : platform.getScale(offsetParent)) || {
+        x: 1,
+        y: 1
+    } : {
+        x: 1,
+        y: 1
+    };
+    const elementClientRect = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])(platform.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform.convertOffsetParentRelativeRectToViewportRelativeRect({
+        elements,
+        rect,
+        offsetParent,
+        strategy
+    }) : rect);
+    return {
+        top: (clippingClientRect.top - elementClientRect.top + paddingObject.top) / offsetScale.y,
+        bottom: (elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom) / offsetScale.y,
+        left: (clippingClientRect.left - elementClientRect.left + paddingObject.left) / offsetScale.x,
+        right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
+    };
+}
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * @see https://floating-ui.com/docs/arrow
+ */ const arrow = (options)=>({
+        name: 'arrow',
+        options,
+        async fn (state) {
+            const { x, y, placement, rects, platform, elements, middlewareData } = state;
+            // Since `element` is required, we don't Partial<> the type.
+            const { element, padding = 0 } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state) || {};
+            if (element == null) {
+                return {};
+            }
+            const paddingObject = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getPaddingObject"])(padding);
+            const coords = {
+                x,
+                y
+            };
+            const axis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignmentAxis"])(placement);
+            const length = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAxisLength"])(axis);
+            const arrowDimensions = await platform.getDimensions(element);
+            const isYAxis = axis === 'y';
+            const minProp = isYAxis ? 'top' : 'left';
+            const maxProp = isYAxis ? 'bottom' : 'right';
+            const clientProp = isYAxis ? 'clientHeight' : 'clientWidth';
+            const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
+            const startDiff = coords[axis] - rects.reference[axis];
+            const arrowOffsetParent = await (platform.getOffsetParent == null ? void 0 : platform.getOffsetParent(element));
+            let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
+            // DOM platform can return `window` as the `offsetParent`.
+            if (!clientSize || !await (platform.isElement == null ? void 0 : platform.isElement(arrowOffsetParent))) {
+                clientSize = elements.floating[clientProp] || rects.floating[length];
+            }
+            const centerToReference = endDiff / 2 - startDiff / 2;
+            // If the padding is large enough that it causes the arrow to no longer be
+            // centered, modify the padding so that it is centered.
+            const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
+            const minPadding = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(paddingObject[minProp], largestPossiblePadding);
+            const maxPadding = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(paddingObject[maxProp], largestPossiblePadding);
+            // Make sure the arrow doesn't overflow the floating element if the center
+            // point is outside the floating element's bounds.
+            const min$1 = minPadding;
+            const max = clientSize - arrowDimensions[length] - maxPadding;
+            const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
+            const offset = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["clamp"])(min$1, center, max);
+            // If the reference is small enough that the arrow's padding causes it to
+            // to point to nothing for an aligned placement, adjust the offset of the
+            // floating element itself. To ensure `shift()` continues to take action,
+            // a single reset is performed when this is true.
+            const shouldAddOffset = !middlewareData.arrow && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement) != null && center !== offset && rects.reference[length] / 2 - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
+            const alignmentOffset = shouldAddOffset ? center < min$1 ? center - min$1 : center - max : 0;
+            return {
+                [axis]: coords[axis] + alignmentOffset,
+                data: {
+                    [axis]: offset,
+                    centerOffset: center - offset - alignmentOffset,
+                    ...shouldAddOffset && {
+                        alignmentOffset
+                    }
+                },
+                reset: shouldAddOffset
+            };
+        }
+    });
+function getPlacementList(alignment, autoAlignment, allowedPlacements) {
+    const allowedPlacementsSortedByAlignment = alignment ? [
+        ...allowedPlacements.filter((placement)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement) === alignment),
+        ...allowedPlacements.filter((placement)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement) !== alignment)
+    ] : allowedPlacements.filter((placement)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement) === placement);
+    return allowedPlacementsSortedByAlignment.filter((placement)=>{
+        if (alignment) {
+            return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement) === alignment || (autoAlignment ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOppositeAlignmentPlacement"])(placement) !== placement : false);
+        }
+        return true;
+    });
+}
+/**
+ * Optimizes the visibility of the floating element by choosing the placement
+ * that has the most space available automatically, without needing to specify a
+ * preferred placement. Alternative to `flip`.
+ * @see https://floating-ui.com/docs/autoPlacement
+ */ const autoPlacement = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'autoPlacement',
+        options,
+        async fn (state) {
+            var _middlewareData$autoP, _middlewareData$autoP2, _placementsThatFitOnE;
+            const { rects, middlewareData, placement, platform, elements } = state;
+            const { crossAxis = false, alignment, allowedPlacements = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["placements"], autoAlignment = true, ...detectOverflowOptions } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            const placements$1 = alignment !== undefined || allowedPlacements === __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["placements"] ? getPlacementList(alignment || null, autoAlignment, allowedPlacements) : allowedPlacements;
+            const overflow = await detectOverflow(state, detectOverflowOptions);
+            const currentIndex = ((_middlewareData$autoP = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP.index) || 0;
+            const currentPlacement = placements$1[currentIndex];
+            if (currentPlacement == null) {
+                return {};
+            }
+            const alignmentSides = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignmentSides"])(currentPlacement, rects, await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating)));
+            // Make `computeCoords` start from the right place.
+            if (placement !== currentPlacement) {
+                return {
+                    reset: {
+                        placement: placements$1[0]
+                    }
+                };
+            }
+            const currentOverflows = [
+                overflow[(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(currentPlacement)],
+                overflow[alignmentSides[0]],
+                overflow[alignmentSides[1]]
+            ];
+            const allOverflows = [
+                ...((_middlewareData$autoP2 = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP2.overflows) || [],
+                {
+                    placement: currentPlacement,
+                    overflows: currentOverflows
+                }
+            ];
+            const nextPlacement = placements$1[currentIndex + 1];
+            // There are more placements to check.
+            if (nextPlacement) {
+                return {
+                    data: {
+                        index: currentIndex + 1,
+                        overflows: allOverflows
+                    },
+                    reset: {
+                        placement: nextPlacement
+                    }
+                };
+            }
+            const placementsSortedByMostSpace = allOverflows.map((d)=>{
+                const alignment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(d.placement);
+                return [
+                    d.placement,
+                    alignment && crossAxis ? // Check along the mainAxis and main crossAxis side.
+                    d.overflows.slice(0, 2).reduce((acc, v)=>acc + v, 0) : // Check only the mainAxis.
+                    d.overflows[0],
+                    d.overflows
+                ];
+            }).sort((a, b)=>a[1] - b[1]);
+            const placementsThatFitOnEachSide = placementsSortedByMostSpace.filter((d)=>d[2].slice(0, // Aligned placements should not check their opposite crossAxis
+                // side.
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(d[0]) ? 2 : 3).every((v)=>v <= 0));
+            const resetPlacement = ((_placementsThatFitOnE = placementsThatFitOnEachSide[0]) == null ? void 0 : _placementsThatFitOnE[0]) || placementsSortedByMostSpace[0][0];
+            if (resetPlacement !== placement) {
+                return {
+                    data: {
+                        index: currentIndex + 1,
+                        overflows: allOverflows
+                    },
+                    reset: {
+                        placement: resetPlacement
+                    }
+                };
+            }
+            return {};
+        }
+    };
+};
+/**
+ * Optimizes the visibility of the floating element by flipping the `placement`
+ * in order to keep it in view when the preferred placement(s) will overflow the
+ * clipping boundary. Alternative to `autoPlacement`.
+ * @see https://floating-ui.com/docs/flip
+ */ const flip = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'flip',
+        options,
+        async fn (state) {
+            var _middlewareData$arrow, _middlewareData$flip;
+            const { placement, middlewareData, rects, initialPlacement, platform, elements } = state;
+            const { mainAxis: checkMainAxis = true, crossAxis: checkCrossAxis = true, fallbackPlacements: specifiedFallbackPlacements, fallbackStrategy = 'bestFit', fallbackAxisSideDirection = 'none', flipAlignment = true, ...detectOverflowOptions } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            // If a reset by the arrow was caused due to an alignment offset being
+            // added, we should skip any logic now since `flip()` has already done its
+            // work.
+            // https://github.com/floating-ui/floating-ui/issues/2549#issuecomment-1719601643
+            if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+                return {};
+            }
+            const side = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement);
+            const initialSideAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(initialPlacement);
+            const isBasePlacement = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(initialPlacement) === initialPlacement;
+            const rtl = await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating));
+            const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [
+                (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOppositePlacement"])(initialPlacement)
+            ] : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getExpandedPlacements"])(initialPlacement));
+            const hasFallbackAxisSideDirection = fallbackAxisSideDirection !== 'none';
+            if (!specifiedFallbackPlacements && hasFallbackAxisSideDirection) {
+                fallbackPlacements.push(...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOppositeAxisPlacements"])(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
+            }
+            const placements = [
+                initialPlacement,
+                ...fallbackPlacements
+            ];
+            const overflow = await detectOverflow(state, detectOverflowOptions);
+            const overflows = [];
+            let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
+            if (checkMainAxis) {
+                overflows.push(overflow[side]);
+            }
+            if (checkCrossAxis) {
+                const sides = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignmentSides"])(placement, rects, rtl);
+                overflows.push(overflow[sides[0]], overflow[sides[1]]);
+            }
+            overflowsData = [
+                ...overflowsData,
+                {
+                    placement,
+                    overflows
+                }
+            ];
+            // One or more sides is overflowing.
+            if (!overflows.every((side)=>side <= 0)) {
+                var _middlewareData$flip2, _overflowsData$filter;
+                const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
+                const nextPlacement = placements[nextIndex];
+                if (nextPlacement) {
+                    // Try next placement and re-run the lifecycle.
+                    return {
+                        data: {
+                            index: nextIndex,
+                            overflows: overflowsData
+                        },
+                        reset: {
+                            placement: nextPlacement
+                        }
+                    };
+                }
+                // First, find the candidates that fit on the mainAxis side of overflow,
+                // then find the placement that fits the best on the main crossAxis side.
+                let resetPlacement = (_overflowsData$filter = overflowsData.filter((d)=>d.overflows[0] <= 0).sort((a, b)=>a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+                // Otherwise fallback.
+                if (!resetPlacement) {
+                    switch(fallbackStrategy){
+                        case 'bestFit':
+                            {
+                                var _overflowsData$filter2;
+                                const placement = (_overflowsData$filter2 = overflowsData.filter((d)=>{
+                                    if (hasFallbackAxisSideDirection) {
+                                        const currentSideAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(d.placement);
+                                        return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
+                                        // reading directions favoring greater width.
+                                        currentSideAxis === 'y';
+                                    }
+                                    return true;
+                                }).map((d)=>[
+                                        d.placement,
+                                        d.overflows.filter((overflow)=>overflow > 0).reduce((acc, overflow)=>acc + overflow, 0)
+                                    ]).sort((a, b)=>a[1] - b[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
+                                if (placement) {
+                                    resetPlacement = placement;
+                                }
+                                break;
+                            }
+                        case 'initialPlacement':
+                            resetPlacement = initialPlacement;
+                            break;
+                    }
+                }
+                if (placement !== resetPlacement) {
+                    return {
+                        reset: {
+                            placement: resetPlacement
+                        }
+                    };
+                }
+            }
+            return {};
+        }
+    };
+};
+function getSideOffsets(overflow, rect) {
+    return {
+        top: overflow.top - rect.height,
+        right: overflow.right - rect.width,
+        bottom: overflow.bottom - rect.height,
+        left: overflow.left - rect.width
+    };
+}
+function isAnySideFullyClipped(overflow) {
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sides"].some((side)=>overflow[side] >= 0);
+}
+/**
+ * Provides data to hide the floating element in applicable situations, such as
+ * when it is not in the same clipping context as the reference element.
+ * @see https://floating-ui.com/docs/hide
+ */ const hide = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'hide',
+        options,
+        async fn (state) {
+            const { rects } = state;
+            const { strategy = 'referenceHidden', ...detectOverflowOptions } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            switch(strategy){
+                case 'referenceHidden':
+                    {
+                        const overflow = await detectOverflow(state, {
+                            ...detectOverflowOptions,
+                            elementContext: 'reference'
+                        });
+                        const offsets = getSideOffsets(overflow, rects.reference);
+                        return {
+                            data: {
+                                referenceHiddenOffsets: offsets,
+                                referenceHidden: isAnySideFullyClipped(offsets)
+                            }
+                        };
+                    }
+                case 'escaped':
+                    {
+                        const overflow = await detectOverflow(state, {
+                            ...detectOverflowOptions,
+                            altBoundary: true
+                        });
+                        const offsets = getSideOffsets(overflow, rects.floating);
+                        return {
+                            data: {
+                                escapedOffsets: offsets,
+                                escaped: isAnySideFullyClipped(offsets)
+                            }
+                        };
+                    }
+                default:
+                    {
+                        return {};
+                    }
+            }
+        }
+    };
+};
+function getBoundingRect(rects) {
+    const minX = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(...rects.map((rect)=>rect.left));
+    const minY = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(...rects.map((rect)=>rect.top));
+    const maxX = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(...rects.map((rect)=>rect.right));
+    const maxY = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(...rects.map((rect)=>rect.bottom));
+    return {
+        x: minX,
+        y: minY,
+        width: maxX - minX,
+        height: maxY - minY
+    };
+}
+function getRectsByLine(rects) {
+    const sortedRects = rects.slice().sort((a, b)=>a.y - b.y);
+    const groups = [];
+    let prevRect = null;
+    for(let i = 0; i < sortedRects.length; i++){
+        const rect = sortedRects[i];
+        if (!prevRect || rect.y - prevRect.y > prevRect.height / 2) {
+            groups.push([
+                rect
+            ]);
+        } else {
+            groups[groups.length - 1].push(rect);
+        }
+        prevRect = rect;
+    }
+    return groups.map((rect)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])(getBoundingRect(rect)));
+}
+/**
+ * Provides improved positioning for inline reference elements that can span
+ * over multiple lines, such as hyperlinks or range selections.
+ * @see https://floating-ui.com/docs/inline
+ */ const inline = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'inline',
+        options,
+        async fn (state) {
+            const { placement, elements, rects, platform, strategy } = state;
+            // A MouseEvent's client{X,Y} coords can be up to 2 pixels off a
+            // ClientRect's bounds, despite the event listener being triggered. A
+            // padding of 2 seems to handle this issue.
+            const { padding = 2, x, y } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            const nativeClientRects = Array.from(await (platform.getClientRects == null ? void 0 : platform.getClientRects(elements.reference)) || []);
+            const clientRects = getRectsByLine(nativeClientRects);
+            const fallback = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])(getBoundingRect(nativeClientRects));
+            const paddingObject = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getPaddingObject"])(padding);
+            function getBoundingClientRect() {
+                // There are two rects and they are disjoined.
+                if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y != null) {
+                    // Find the first rect in which the point is fully inside.
+                    return clientRects.find((rect)=>x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y > rect.top - paddingObject.top && y < rect.bottom + paddingObject.bottom) || fallback;
+                }
+                // There are 2 or more connected rects.
+                if (clientRects.length >= 2) {
+                    if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(placement) === 'y') {
+                        const firstRect = clientRects[0];
+                        const lastRect = clientRects[clientRects.length - 1];
+                        const isTop = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement) === 'top';
+                        const top = firstRect.top;
+                        const bottom = lastRect.bottom;
+                        const left = isTop ? firstRect.left : lastRect.left;
+                        const right = isTop ? firstRect.right : lastRect.right;
+                        const width = right - left;
+                        const height = bottom - top;
+                        return {
+                            top,
+                            bottom,
+                            left,
+                            right,
+                            width,
+                            height,
+                            x: left,
+                            y: top
+                        };
+                    }
+                    const isLeftSide = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement) === 'left';
+                    const maxRight = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(...clientRects.map((rect)=>rect.right));
+                    const minLeft = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(...clientRects.map((rect)=>rect.left));
+                    const measureRects = clientRects.filter((rect)=>isLeftSide ? rect.left === minLeft : rect.right === maxRight);
+                    const top = measureRects[0].top;
+                    const bottom = measureRects[measureRects.length - 1].bottom;
+                    const left = minLeft;
+                    const right = maxRight;
+                    const width = right - left;
+                    const height = bottom - top;
+                    return {
+                        top,
+                        bottom,
+                        left,
+                        right,
+                        width,
+                        height,
+                        x: left,
+                        y: top
+                    };
+                }
+                return fallback;
+            }
+            const resetRects = await platform.getElementRects({
+                reference: {
+                    getBoundingClientRect
+                },
+                floating: elements.floating,
+                strategy
+            });
+            if (rects.reference.x !== resetRects.reference.x || rects.reference.y !== resetRects.reference.y || rects.reference.width !== resetRects.reference.width || rects.reference.height !== resetRects.reference.height) {
+                return {
+                    reset: {
+                        rects: resetRects
+                    }
+                };
+            }
+            return {};
+        }
+    };
+};
+// For type backwards-compatibility, the `OffsetOptions` type was also
+// Derivable.
+async function convertValueToCoords(state, options) {
+    const { placement, platform, elements } = state;
+    const rtl = await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating));
+    const side = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement);
+    const alignment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement);
+    const isVertical = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(placement) === 'y';
+    const mainAxisMulti = [
+        'left',
+        'top'
+    ].includes(side) ? -1 : 1;
+    const crossAxisMulti = rtl && isVertical ? -1 : 1;
+    const rawValue = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+    // eslint-disable-next-line prefer-const
+    let { mainAxis, crossAxis, alignmentAxis } = typeof rawValue === 'number' ? {
+        mainAxis: rawValue,
+        crossAxis: 0,
+        alignmentAxis: null
+    } : {
+        mainAxis: rawValue.mainAxis || 0,
+        crossAxis: rawValue.crossAxis || 0,
+        alignmentAxis: rawValue.alignmentAxis
+    };
+    if (alignment && typeof alignmentAxis === 'number') {
+        crossAxis = alignment === 'end' ? alignmentAxis * -1 : alignmentAxis;
+    }
+    return isVertical ? {
+        x: crossAxis * crossAxisMulti,
+        y: mainAxis * mainAxisMulti
+    } : {
+        x: mainAxis * mainAxisMulti,
+        y: crossAxis * crossAxisMulti
+    };
+}
+/**
+ * Modifies the placement by translating the floating element along the
+ * specified axes.
+ * A number (shorthand for `mainAxis` or distance), or an axes configuration
+ * object may be passed.
+ * @see https://floating-ui.com/docs/offset
+ */ const offset = function(options) {
+    if (options === void 0) {
+        options = 0;
+    }
+    return {
+        name: 'offset',
+        options,
+        async fn (state) {
+            var _middlewareData$offse, _middlewareData$arrow;
+            const { x, y, placement, middlewareData } = state;
+            const diffCoords = await convertValueToCoords(state, options);
+            // If the placement is the same and the arrow caused an alignment offset
+            // then we don't need to change the positioning coordinates.
+            if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+                return {};
+            }
+            return {
+                x: x + diffCoords.x,
+                y: y + diffCoords.y,
+                data: {
+                    ...diffCoords,
+                    placement
+                }
+            };
+        }
+    };
+};
+/**
+ * Optimizes the visibility of the floating element by shifting it in order to
+ * keep it in view when it will overflow the clipping boundary.
+ * @see https://floating-ui.com/docs/shift
+ */ const shift = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'shift',
+        options,
+        async fn (state) {
+            const { x, y, placement } = state;
+            const { mainAxis: checkMainAxis = true, crossAxis: checkCrossAxis = false, limiter = {
+                fn: (_ref)=>{
+                    let { x, y } = _ref;
+                    return {
+                        x,
+                        y
+                    };
+                }
+            }, ...detectOverflowOptions } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            const coords = {
+                x,
+                y
+            };
+            const overflow = await detectOverflow(state, detectOverflowOptions);
+            const crossAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement));
+            const mainAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOppositeAxis"])(crossAxis);
+            let mainAxisCoord = coords[mainAxis];
+            let crossAxisCoord = coords[crossAxis];
+            if (checkMainAxis) {
+                const minSide = mainAxis === 'y' ? 'top' : 'left';
+                const maxSide = mainAxis === 'y' ? 'bottom' : 'right';
+                const min = mainAxisCoord + overflow[minSide];
+                const max = mainAxisCoord - overflow[maxSide];
+                mainAxisCoord = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["clamp"])(min, mainAxisCoord, max);
+            }
+            if (checkCrossAxis) {
+                const minSide = crossAxis === 'y' ? 'top' : 'left';
+                const maxSide = crossAxis === 'y' ? 'bottom' : 'right';
+                const min = crossAxisCoord + overflow[minSide];
+                const max = crossAxisCoord - overflow[maxSide];
+                crossAxisCoord = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["clamp"])(min, crossAxisCoord, max);
+            }
+            const limitedCoords = limiter.fn({
+                ...state,
+                [mainAxis]: mainAxisCoord,
+                [crossAxis]: crossAxisCoord
+            });
+            return {
+                ...limitedCoords,
+                data: {
+                    x: limitedCoords.x - x,
+                    y: limitedCoords.y - y,
+                    enabled: {
+                        [mainAxis]: checkMainAxis,
+                        [crossAxis]: checkCrossAxis
+                    }
+                }
+            };
+        }
+    };
+};
+/**
+ * Built-in `limiter` that will stop `shift()` at a certain point.
+ */ const limitShift = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        options,
+        fn (state) {
+            const { x, y, placement, rects, middlewareData } = state;
+            const { offset = 0, mainAxis: checkMainAxis = true, crossAxis: checkCrossAxis = true } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            const coords = {
+                x,
+                y
+            };
+            const crossAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(placement);
+            const mainAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOppositeAxis"])(crossAxis);
+            let mainAxisCoord = coords[mainAxis];
+            let crossAxisCoord = coords[crossAxis];
+            const rawOffset = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(offset, state);
+            const computedOffset = typeof rawOffset === 'number' ? {
+                mainAxis: rawOffset,
+                crossAxis: 0
+            } : {
+                mainAxis: 0,
+                crossAxis: 0,
+                ...rawOffset
+            };
+            if (checkMainAxis) {
+                const len = mainAxis === 'y' ? 'height' : 'width';
+                const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
+                const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
+                if (mainAxisCoord < limitMin) {
+                    mainAxisCoord = limitMin;
+                } else if (mainAxisCoord > limitMax) {
+                    mainAxisCoord = limitMax;
+                }
+            }
+            if (checkCrossAxis) {
+                var _middlewareData$offse, _middlewareData$offse2;
+                const len = mainAxis === 'y' ? 'width' : 'height';
+                const isOriginSide = [
+                    'top',
+                    'left'
+                ].includes((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement));
+                const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse[crossAxis]) || 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
+                const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : ((_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) || 0) - (isOriginSide ? computedOffset.crossAxis : 0);
+                if (crossAxisCoord < limitMin) {
+                    crossAxisCoord = limitMin;
+                } else if (crossAxisCoord > limitMax) {
+                    crossAxisCoord = limitMax;
+                }
+            }
+            return {
+                [mainAxis]: mainAxisCoord,
+                [crossAxis]: crossAxisCoord
+            };
+        }
+    };
+};
+/**
+ * Provides data that allows you to change the size of the floating element —
+ * for instance, prevent it from overflowing the clipping boundary or match the
+ * width of the reference element.
+ * @see https://floating-ui.com/docs/size
+ */ const size = function(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    return {
+        name: 'size',
+        options,
+        async fn (state) {
+            var _state$middlewareData, _state$middlewareData2;
+            const { placement, rects, platform, elements } = state;
+            const { apply = ()=>{}, ...detectOverflowOptions } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["evaluate"])(options, state);
+            const overflow = await detectOverflow(state, detectOverflowOptions);
+            const side = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSide"])(placement);
+            const alignment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAlignment"])(placement);
+            const isYAxis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSideAxis"])(placement) === 'y';
+            const { width, height } = rects.floating;
+            let heightSide;
+            let widthSide;
+            if (side === 'top' || side === 'bottom') {
+                heightSide = side;
+                widthSide = alignment === (await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating)) ? 'start' : 'end') ? 'left' : 'right';
+            } else {
+                widthSide = side;
+                heightSide = alignment === 'end' ? 'top' : 'bottom';
+            }
+            const maximumClippingHeight = height - overflow.top - overflow.bottom;
+            const maximumClippingWidth = width - overflow.left - overflow.right;
+            const overflowAvailableHeight = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(height - overflow[heightSide], maximumClippingHeight);
+            const overflowAvailableWidth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(width - overflow[widthSide], maximumClippingWidth);
+            const noShift = !state.middlewareData.shift;
+            let availableHeight = overflowAvailableHeight;
+            let availableWidth = overflowAvailableWidth;
+            if ((_state$middlewareData = state.middlewareData.shift) != null && _state$middlewareData.enabled.x) {
+                availableWidth = maximumClippingWidth;
+            }
+            if ((_state$middlewareData2 = state.middlewareData.shift) != null && _state$middlewareData2.enabled.y) {
+                availableHeight = maximumClippingHeight;
+            }
+            if (noShift && !alignment) {
+                const xMin = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.left, 0);
+                const xMax = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.right, 0);
+                const yMin = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.top, 0);
+                const yMax = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.bottom, 0);
+                if (isYAxis) {
+                    availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.left, overflow.right));
+                } else {
+                    availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(overflow.top, overflow.bottom));
+                }
+            }
+            await apply({
+                ...state,
+                availableWidth,
+                availableHeight
+            });
+            const nextDimensions = await platform.getDimensions(elements.floating);
+            if (width !== nextDimensions.width || height !== nextDimensions.height) {
+                return {
+                    reset: {
+                        rects: true
+                    }
+                };
+            }
+            return {};
+        }
+    };
+};
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+dom@1.6.13/node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs [app-client] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "arrow",
+    ()=>arrow,
+    "autoPlacement",
+    ()=>autoPlacement,
+    "autoUpdate",
+    ()=>autoUpdate,
+    "computePosition",
+    ()=>computePosition,
+    "detectOverflow",
+    ()=>detectOverflow,
+    "flip",
+    ()=>flip,
+    "hide",
+    ()=>hide,
+    "inline",
+    ()=>inline,
+    "limitShift",
+    ()=>limitShift,
+    "offset",
+    ()=>offset,
+    "platform",
+    ()=>platform,
+    "shift",
+    ()=>shift,
+    "size",
+    ()=>size
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+utils@0.2.9/node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+core@1.6.9/node_modules/@floating-ui/core/dist/floating-ui.core.mjs [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+utils@0.2.9/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs [app-client] (ecmascript)");
+;
+;
+;
+;
+function getCssDimensions(element) {
+    const css = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(element);
+    // In testing environments, the `width` and `height` properties are empty
+    // strings for SVG elements, returning NaN. Fallback to `0` in this case.
+    let width = parseFloat(css.width) || 0;
+    let height = parseFloat(css.height) || 0;
+    const hasOffset = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(element);
+    const offsetWidth = hasOffset ? element.offsetWidth : width;
+    const offsetHeight = hasOffset ? element.offsetHeight : height;
+    const shouldFallback = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["round"])(width) !== offsetWidth || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["round"])(height) !== offsetHeight;
+    if (shouldFallback) {
+        width = offsetWidth;
+        height = offsetHeight;
+    }
+    return {
+        width,
+        height,
+        $: shouldFallback
+    };
+}
+function unwrapElement(element) {
+    return !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(element) ? element.contextElement : element;
+}
+function getScale(element) {
+    const domElement = unwrapElement(element);
+    if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(domElement)) {
+        return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(1);
+    }
+    const rect = domElement.getBoundingClientRect();
+    const { width, height, $ } = getCssDimensions(domElement);
+    let x = ($ ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["round"])(rect.width) : rect.width) / width;
+    let y = ($ ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["round"])(rect.height) : rect.height) / height;
+    // 0, NaN, or Infinity should always fallback to 1.
+    if (!x || !Number.isFinite(x)) {
+        x = 1;
+    }
+    if (!y || !Number.isFinite(y)) {
+        y = 1;
+    }
+    return {
+        x,
+        y
+    };
+}
+const noOffsets = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+function getVisualOffsets(element) {
+    const win = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(element);
+    if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isWebKit"])() || !win.visualViewport) {
+        return noOffsets;
+    }
+    return {
+        x: win.visualViewport.offsetLeft,
+        y: win.visualViewport.offsetTop
+    };
+}
+function shouldAddVisualOffsets(element, isFixed, floatingOffsetParent) {
+    if (isFixed === void 0) {
+        isFixed = false;
+    }
+    if (!floatingOffsetParent || isFixed && floatingOffsetParent !== (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(element)) {
+        return false;
+    }
+    return isFixed;
+}
+function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
+    if (includeScale === void 0) {
+        includeScale = false;
+    }
+    if (isFixedStrategy === void 0) {
+        isFixedStrategy = false;
+    }
+    const clientRect = element.getBoundingClientRect();
+    const domElement = unwrapElement(element);
+    let scale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(1);
+    if (includeScale) {
+        if (offsetParent) {
+            if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(offsetParent)) {
+                scale = getScale(offsetParent);
+            }
+        } else {
+            scale = getScale(element);
+        }
+    }
+    const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+    let x = (clientRect.left + visualOffsets.x) / scale.x;
+    let y = (clientRect.top + visualOffsets.y) / scale.y;
+    let width = clientRect.width / scale.x;
+    let height = clientRect.height / scale.y;
+    if (domElement) {
+        const win = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(domElement);
+        const offsetWin = offsetParent && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(offsetParent) ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(offsetParent) : offsetParent;
+        let currentWin = win;
+        let currentIFrame = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getFrameElement"])(currentWin);
+        while(currentIFrame && offsetParent && offsetWin !== currentWin){
+            const iframeScale = getScale(currentIFrame);
+            const iframeRect = currentIFrame.getBoundingClientRect();
+            const css = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(currentIFrame);
+            const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
+            const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
+            x *= iframeScale.x;
+            y *= iframeScale.y;
+            width *= iframeScale.x;
+            height *= iframeScale.y;
+            x += left;
+            y += top;
+            currentWin = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(currentIFrame);
+            currentIFrame = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getFrameElement"])(currentWin);
+        }
+    }
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])({
+        width,
+        height,
+        x,
+        y
+    });
+}
+// If <html> has a CSS width greater than the viewport, then this will be
+// incorrect for RTL.
+function getWindowScrollBarX(element, rect) {
+    const leftScroll = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeScroll"])(element).scrollLeft;
+    if (!rect) {
+        return getBoundingClientRect((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element)).left + leftScroll;
+    }
+    return rect.left + leftScroll;
+}
+function getHTMLOffset(documentElement, scroll, ignoreScrollbarX) {
+    if (ignoreScrollbarX === void 0) {
+        ignoreScrollbarX = false;
+    }
+    const htmlRect = documentElement.getBoundingClientRect();
+    const x = htmlRect.left + scroll.scrollLeft - (ignoreScrollbarX ? 0 : // RTL <body> scrollbar.
+    getWindowScrollBarX(documentElement, htmlRect));
+    const y = htmlRect.top + scroll.scrollTop;
+    return {
+        x,
+        y
+    };
+}
+function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
+    let { elements, rect, offsetParent, strategy } = _ref;
+    const isFixed = strategy === 'fixed';
+    const documentElement = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(offsetParent);
+    const topLayer = elements ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isTopLayer"])(elements.floating) : false;
+    if (offsetParent === documentElement || topLayer && isFixed) {
+        return rect;
+    }
+    let scroll = {
+        scrollLeft: 0,
+        scrollTop: 0
+    };
+    let scale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(1);
+    const offsets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+    const isOffsetParentAnElement = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(offsetParent);
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeName"])(offsetParent) !== 'body' || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isOverflowElement"])(documentElement)) {
+            scroll = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeScroll"])(offsetParent);
+        }
+        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(offsetParent)) {
+            const offsetRect = getBoundingClientRect(offsetParent);
+            scale = getScale(offsetParent);
+            offsets.x = offsetRect.x + offsetParent.clientLeft;
+            offsets.y = offsetRect.y + offsetParent.clientTop;
+        }
+    }
+    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll, true) : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+    return {
+        width: rect.width * scale.x,
+        height: rect.height * scale.y,
+        x: rect.x * scale.x - scroll.scrollLeft * scale.x + offsets.x + htmlOffset.x,
+        y: rect.y * scale.y - scroll.scrollTop * scale.y + offsets.y + htmlOffset.y
+    };
+}
+function getClientRects(element) {
+    return Array.from(element.getClientRects());
+}
+// Gets the entire size of the scrollable document area, even extending outside
+// of the `<html>` and `<body>` rect bounds if horizontally scrollable.
+function getDocumentRect(element) {
+    const html = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element);
+    const scroll = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeScroll"])(element);
+    const body = element.ownerDocument.body;
+    const width = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
+    const height = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+    let x = -scroll.scrollLeft + getWindowScrollBarX(element);
+    const y = -scroll.scrollTop;
+    if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(body).direction === 'rtl') {
+        x += (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(html.clientWidth, body.clientWidth) - width;
+    }
+    return {
+        width,
+        height,
+        x,
+        y
+    };
+}
+function getViewportRect(element, strategy) {
+    const win = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(element);
+    const html = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element);
+    const visualViewport = win.visualViewport;
+    let width = html.clientWidth;
+    let height = html.clientHeight;
+    let x = 0;
+    let y = 0;
+    if (visualViewport) {
+        width = visualViewport.width;
+        height = visualViewport.height;
+        const visualViewportBased = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isWebKit"])();
+        if (!visualViewportBased || visualViewportBased && strategy === 'fixed') {
+            x = visualViewport.offsetLeft;
+            y = visualViewport.offsetTop;
+        }
+    }
+    return {
+        width,
+        height,
+        x,
+        y
+    };
+}
+// Returns the inner client rect, subtracting scrollbars if present.
+function getInnerBoundingClientRect(element, strategy) {
+    const clientRect = getBoundingClientRect(element, true, strategy === 'fixed');
+    const top = clientRect.top + element.clientTop;
+    const left = clientRect.left + element.clientLeft;
+    const scale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(element) ? getScale(element) : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(1);
+    const width = element.clientWidth * scale.x;
+    const height = element.clientHeight * scale.y;
+    const x = left * scale.x;
+    const y = top * scale.y;
+    return {
+        width,
+        height,
+        x,
+        y
+    };
+}
+function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
+    let rect;
+    if (clippingAncestor === 'viewport') {
+        rect = getViewportRect(element, strategy);
+    } else if (clippingAncestor === 'document') {
+        rect = getDocumentRect((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element));
+    } else if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(clippingAncestor)) {
+        rect = getInnerBoundingClientRect(clippingAncestor, strategy);
+    } else {
+        const visualOffsets = getVisualOffsets(element);
+        rect = {
+            x: clippingAncestor.x - visualOffsets.x,
+            y: clippingAncestor.y - visualOffsets.y,
+            width: clippingAncestor.width,
+            height: clippingAncestor.height
+        };
+    }
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["rectToClientRect"])(rect);
+}
+function hasFixedPositionAncestor(element, stopNode) {
+    const parentNode = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getParentNode"])(element);
+    if (parentNode === stopNode || !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(parentNode) || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isLastTraversableNode"])(parentNode)) {
+        return false;
+    }
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(parentNode).position === 'fixed' || hasFixedPositionAncestor(parentNode, stopNode);
+}
+// A "clipping ancestor" is an `overflow` element with the characteristic of
+// clipping (or hiding) child elements. This returns all clipping ancestors
+// of the given element up the tree.
+function getClippingElementAncestors(element, cache) {
+    const cachedResult = cache.get(element);
+    if (cachedResult) {
+        return cachedResult;
+    }
+    let result = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOverflowAncestors"])(element, [], false).filter((el)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(el) && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeName"])(el) !== 'body');
+    let currentContainingBlockComputedStyle = null;
+    const elementIsFixed = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(element).position === 'fixed';
+    let currentNode = elementIsFixed ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getParentNode"])(element) : element;
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+    while((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(currentNode) && !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isLastTraversableNode"])(currentNode)){
+        const computedStyle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(currentNode);
+        const currentNodeIsContaining = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isContainingBlock"])(currentNode);
+        if (!currentNodeIsContaining && computedStyle.position === 'fixed') {
+            currentContainingBlockComputedStyle = null;
+        }
+        const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === 'static' && !!currentContainingBlockComputedStyle && [
+            'absolute',
+            'fixed'
+        ].includes(currentContainingBlockComputedStyle.position) || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isOverflowElement"])(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
+        if (shouldDropCurrentNode) {
+            // Drop non-containing blocks.
+            result = result.filter((ancestor)=>ancestor !== currentNode);
+        } else {
+            // Record last containing block for next iteration.
+            currentContainingBlockComputedStyle = computedStyle;
+        }
+        currentNode = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getParentNode"])(currentNode);
+    }
+    cache.set(element, result);
+    return result;
+}
+// Gets the maximum area that the element is visible in due to any number of
+// clipping ancestors.
+function getClippingRect(_ref) {
+    let { element, boundary, rootBoundary, strategy } = _ref;
+    const elementClippingAncestors = boundary === 'clippingAncestors' ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isTopLayer"])(element) ? [] : getClippingElementAncestors(element, this._c) : [].concat(boundary);
+    const clippingAncestors = [
+        ...elementClippingAncestors,
+        rootBoundary
+    ];
+    const firstClippingAncestor = clippingAncestors[0];
+    const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor)=>{
+        const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
+        accRect.top = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(rect.top, accRect.top);
+        accRect.right = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(rect.right, accRect.right);
+        accRect.bottom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(rect.bottom, accRect.bottom);
+        accRect.left = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(rect.left, accRect.left);
+        return accRect;
+    }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
+    return {
+        width: clippingRect.right - clippingRect.left,
+        height: clippingRect.bottom - clippingRect.top,
+        x: clippingRect.left,
+        y: clippingRect.top
+    };
+}
+function getDimensions(element) {
+    const { width, height } = getCssDimensions(element);
+    return {
+        width,
+        height
+    };
+}
+function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
+    const isOffsetParentAnElement = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(offsetParent);
+    const documentElement = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(offsetParent);
+    const isFixed = strategy === 'fixed';
+    const rect = getBoundingClientRect(element, true, isFixed, offsetParent);
+    let scroll = {
+        scrollLeft: 0,
+        scrollTop: 0
+    };
+    const offsets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeName"])(offsetParent) !== 'body' || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isOverflowElement"])(documentElement)) {
+            scroll = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getNodeScroll"])(offsetParent);
+        }
+        if (isOffsetParentAnElement) {
+            const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
+            offsets.x = offsetRect.x + offsetParent.clientLeft;
+            offsets.y = offsetRect.y + offsetParent.clientTop;
+        } else if (documentElement) {
+            // If the <body> scrollbar appears on the left (e.g. RTL systems). Use
+            // Firefox with layout.scrollbar.side = 3 in about:config to test this.
+            offsets.x = getWindowScrollBarX(documentElement);
+        }
+    }
+    const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createCoords"])(0);
+    const x = rect.left + scroll.scrollLeft - offsets.x - htmlOffset.x;
+    const y = rect.top + scroll.scrollTop - offsets.y - htmlOffset.y;
+    return {
+        x,
+        y,
+        width: rect.width,
+        height: rect.height
+    };
+}
+function isStaticPositioned(element) {
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(element).position === 'static';
+}
+function getTrueOffsetParent(element, polyfill) {
+    if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(element) || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(element).position === 'fixed') {
+        return null;
+    }
+    if (polyfill) {
+        return polyfill(element);
+    }
+    let rawOffsetParent = element.offsetParent;
+    // Firefox returns the <html> element as the offsetParent if it's non-static,
+    // while Chrome and Safari return the <body> element. The <body> element must
+    // be used to perform the correct calculations even if the <html> element is
+    // non-static.
+    if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element) === rawOffsetParent) {
+        rawOffsetParent = rawOffsetParent.ownerDocument.body;
+    }
+    return rawOffsetParent;
+}
+// Gets the closest ancestor positioned element. Handles some edge cases,
+// such as table ancestors and cross browser bugs.
+function getOffsetParent(element, polyfill) {
+    const win = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getWindow"])(element);
+    if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isTopLayer"])(element)) {
+        return win;
+    }
+    if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isHTMLElement"])(element)) {
+        let svgOffsetParent = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getParentNode"])(element);
+        while(svgOffsetParent && !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isLastTraversableNode"])(svgOffsetParent)){
+            if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"])(svgOffsetParent) && !isStaticPositioned(svgOffsetParent)) {
+                return svgOffsetParent;
+            }
+            svgOffsetParent = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getParentNode"])(svgOffsetParent);
+        }
+        return win;
+    }
+    let offsetParent = getTrueOffsetParent(element, polyfill);
+    while(offsetParent && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isTableElement"])(offsetParent) && isStaticPositioned(offsetParent)){
+        offsetParent = getTrueOffsetParent(offsetParent, polyfill);
+    }
+    if (offsetParent && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isLastTraversableNode"])(offsetParent) && isStaticPositioned(offsetParent) && !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isContainingBlock"])(offsetParent)) {
+        return win;
+    }
+    return offsetParent || (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getContainingBlock"])(element) || win;
+}
+const getElementRects = async function(data) {
+    const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
+    const getDimensionsFn = this.getDimensions;
+    const floatingDimensions = await getDimensionsFn(data.floating);
+    return {
+        reference: getRectRelativeToOffsetParent(data.reference, await getOffsetParentFn(data.floating), data.strategy),
+        floating: {
+            x: 0,
+            y: 0,
+            width: floatingDimensions.width,
+            height: floatingDimensions.height
+        }
+    };
+};
+function isRTL(element) {
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getComputedStyle"])(element).direction === 'rtl';
+}
+const platform = {
+    convertOffsetParentRelativeRectToViewportRelativeRect,
+    getDocumentElement: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"],
+    getClippingRect,
+    getOffsetParent,
+    getElementRects,
+    getClientRects,
+    getDimensions,
+    getScale,
+    isElement: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isElement"],
+    isRTL
+};
+function rectsAreEqual(a, b) {
+    return a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
+}
+// https://samthor.au/2021/observing-dom/
+function observeMove(element, onMove) {
+    let io = null;
+    let timeoutId;
+    const root = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getDocumentElement"])(element);
+    function cleanup() {
+        var _io;
+        clearTimeout(timeoutId);
+        (_io = io) == null || _io.disconnect();
+        io = null;
+    }
+    function refresh(skip, threshold) {
+        if (skip === void 0) {
+            skip = false;
+        }
+        if (threshold === void 0) {
+            threshold = 1;
+        }
+        cleanup();
+        const elementRectForRootMargin = element.getBoundingClientRect();
+        const { left, top, width, height } = elementRectForRootMargin;
+        if (!skip) {
+            onMove();
+        }
+        if (!width || !height) {
+            return;
+        }
+        const insetTop = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["floor"])(top);
+        const insetRight = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["floor"])(root.clientWidth - (left + width));
+        const insetBottom = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["floor"])(root.clientHeight - (top + height));
+        const insetLeft = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["floor"])(left);
+        const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
+        const options = {
+            rootMargin,
+            threshold: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["max"])(0, (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["min"])(1, threshold)) || 1
+        };
+        let isFirstUpdate = true;
+        function handleObserve(entries) {
+            const ratio = entries[0].intersectionRatio;
+            if (ratio !== threshold) {
+                if (!isFirstUpdate) {
+                    return refresh();
+                }
+                if (!ratio) {
+                    // If the reference is clipped, the ratio is 0. Throttle the refresh
+                    // to prevent an infinite loop of updates.
+                    timeoutId = setTimeout(()=>{
+                        refresh(false, 1e-7);
+                    }, 1000);
+                } else {
+                    refresh(false, ratio);
+                }
+            }
+            if (ratio === 1 && !rectsAreEqual(elementRectForRootMargin, element.getBoundingClientRect())) {
+                // It's possible that even though the ratio is reported as 1, the
+                // element is not actually fully within the IntersectionObserver's root
+                // area anymore. This can happen under performance constraints. This may
+                // be a bug in the browser's IntersectionObserver implementation. To
+                // work around this, we compare the element's bounding rect now with
+                // what it was at the time we created the IntersectionObserver. If they
+                // are not equal then the element moved, so we refresh.
+                refresh();
+            }
+            isFirstUpdate = false;
+        }
+        // Older browsers don't support a `document` as the root and will throw an
+        // error.
+        try {
+            io = new IntersectionObserver(handleObserve, {
+                ...options,
+                // Handle <iframe>s
+                root: root.ownerDocument
+            });
+        } catch (e) {
+            io = new IntersectionObserver(handleObserve, options);
+        }
+        io.observe(element);
+    }
+    refresh(true);
+    return cleanup;
+}
+/**
+ * Automatically updates the position of the floating element when necessary.
+ * Should only be called when the floating element is mounted on the DOM or
+ * visible on the screen.
+ * @returns cleanup function that should be invoked when the floating element is
+ * removed from the DOM or hidden from the screen.
+ * @see https://floating-ui.com/docs/autoUpdate
+ */ function autoUpdate(reference, floating, update, options) {
+    if (options === void 0) {
+        options = {};
+    }
+    const { ancestorScroll = true, ancestorResize = true, elementResize = typeof ResizeObserver === 'function', layoutShift = typeof IntersectionObserver === 'function', animationFrame = false } = options;
+    const referenceEl = unwrapElement(reference);
+    const ancestors = ancestorScroll || ancestorResize ? [
+        ...referenceEl ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOverflowAncestors"])(referenceEl) : [],
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$utils$40$0$2e$2$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$utils$2f$dist$2f$floating$2d$ui$2e$utils$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getOverflowAncestors"])(floating)
+    ] : [];
+    ancestors.forEach((ancestor)=>{
+        ancestorScroll && ancestor.addEventListener('scroll', update, {
+            passive: true
+        });
+        ancestorResize && ancestor.addEventListener('resize', update);
+    });
+    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update) : null;
+    let reobserveFrame = -1;
+    let resizeObserver = null;
+    if (elementResize) {
+        resizeObserver = new ResizeObserver((_ref)=>{
+            let [firstEntry] = _ref;
+            if (firstEntry && firstEntry.target === referenceEl && resizeObserver) {
+                // Prevent update loops when using the `size` middleware.
+                // https://github.com/floating-ui/floating-ui/issues/1740
+                resizeObserver.unobserve(floating);
+                cancelAnimationFrame(reobserveFrame);
+                reobserveFrame = requestAnimationFrame(()=>{
+                    var _resizeObserver;
+                    (_resizeObserver = resizeObserver) == null || _resizeObserver.observe(floating);
+                });
+            }
+            update();
+        });
+        if (referenceEl && !animationFrame) {
+            resizeObserver.observe(referenceEl);
+        }
+        resizeObserver.observe(floating);
+    }
+    let frameId;
+    let prevRefRect = animationFrame ? getBoundingClientRect(reference) : null;
+    if (animationFrame) {
+        frameLoop();
+    }
+    function frameLoop() {
+        const nextRefRect = getBoundingClientRect(reference);
+        if (prevRefRect && !rectsAreEqual(prevRefRect, nextRefRect)) {
+            update();
+        }
+        prevRefRect = nextRefRect;
+        frameId = requestAnimationFrame(frameLoop);
+    }
+    update();
+    return ()=>{
+        var _resizeObserver2;
+        ancestors.forEach((ancestor)=>{
+            ancestorScroll && ancestor.removeEventListener('scroll', update);
+            ancestorResize && ancestor.removeEventListener('resize', update);
+        });
+        cleanupIo == null || cleanupIo();
+        (_resizeObserver2 = resizeObserver) == null || _resizeObserver2.disconnect();
+        resizeObserver = null;
+        if (animationFrame) {
+            cancelAnimationFrame(frameId);
+        }
+    };
+}
+/**
+ * Resolves with an object of overflow side offsets that determine how much the
+ * element is overflowing a given clipping boundary on each side.
+ * - positive = overflowing the boundary by that number of pixels
+ * - negative = how many pixels left before it will overflow
+ * - 0 = lies flush with the boundary
+ * @see https://floating-ui.com/docs/detectOverflow
+ */ const detectOverflow = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["detectOverflow"];
+/**
+ * Modifies the placement by translating the floating element along the
+ * specified axes.
+ * A number (shorthand for `mainAxis` or distance), or an axes configuration
+ * object may be passed.
+ * @see https://floating-ui.com/docs/offset
+ */ const offset = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["offset"];
+/**
+ * Optimizes the visibility of the floating element by choosing the placement
+ * that has the most space available automatically, without needing to specify a
+ * preferred placement. Alternative to `flip`.
+ * @see https://floating-ui.com/docs/autoPlacement
+ */ const autoPlacement = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["autoPlacement"];
+/**
+ * Optimizes the visibility of the floating element by shifting it in order to
+ * keep it in view when it will overflow the clipping boundary.
+ * @see https://floating-ui.com/docs/shift
+ */ const shift = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["shift"];
+/**
+ * Optimizes the visibility of the floating element by flipping the `placement`
+ * in order to keep it in view when the preferred placement(s) will overflow the
+ * clipping boundary. Alternative to `autoPlacement`.
+ * @see https://floating-ui.com/docs/flip
+ */ const flip = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["flip"];
+/**
+ * Provides data that allows you to change the size of the floating element —
+ * for instance, prevent it from overflowing the clipping boundary or match the
+ * width of the reference element.
+ * @see https://floating-ui.com/docs/size
+ */ const size = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["size"];
+/**
+ * Provides data to hide the floating element in applicable situations, such as
+ * when it is not in the same clipping context as the reference element.
+ * @see https://floating-ui.com/docs/hide
+ */ const hide = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["hide"];
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * @see https://floating-ui.com/docs/arrow
+ */ const arrow = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["arrow"];
+/**
+ * Provides improved positioning for inline reference elements that can span
+ * over multiple lines, such as hyperlinks or range selections.
+ * @see https://floating-ui.com/docs/inline
+ */ const inline = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["inline"];
+/**
+ * Built-in `limiter` that will stop `shift()` at a certain point.
+ */ const limitShift = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["limitShift"];
+/**
+ * Computes the `x` and `y` coordinates that will place the floating element
+ * next to a given reference element.
+ */ const computePosition = (reference, floating, options)=>{
+    // This caches the expensive `getClippingElementAncestors` function so that
+    // multiple lifecycle resets re-use the same result. It only lives for a
+    // single call. If other functions become expensive, we can add them as well.
+    const cache = new Map();
+    const mergedOptions = {
+        platform,
+        ...options
+    };
+    const platformWithCache = {
+        ...mergedOptions.platform,
+        _c: cache
+    };
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$core$40$1$2e$6$2e$9$2f$node_modules$2f40$floating$2d$ui$2f$core$2f$dist$2f$floating$2d$ui$2e$core$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["computePosition"])(reference, floating, {
+        ...mergedOptions,
+        platform: platformWithCache
+    });
+};
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+react-dom@2.1._4619683047f5c087c37ca832062ba5ad/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs [app-client] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "arrow",
+    ()=>arrow,
+    "autoPlacement",
+    ()=>autoPlacement,
+    "flip",
+    ()=>flip,
+    "hide",
+    ()=>hide,
+    "inline",
+    ()=>inline,
+    "limitShift",
+    ()=>limitShift,
+    "offset",
+    ()=>offset,
+    "shift",
+    ()=>shift,
+    "size",
+    ()=>size,
+    "useFloating",
+    ()=>useFloating
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+dom@1.6.13/node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react-dom/index.js [app-client] (ecmascript)");
+;
+;
+;
+;
+;
+var index = typeof document !== 'undefined' ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"] : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"];
+// Fork of `fast-deep-equal` that only does the comparisons we need and compares
+// functions
+function deepEqual(a, b) {
+    if (a === b) {
+        return true;
+    }
+    if (typeof a !== typeof b) {
+        return false;
+    }
+    if (typeof a === 'function' && a.toString() === b.toString()) {
+        return true;
+    }
+    let length;
+    let i;
+    let keys;
+    if (a && b && typeof a === 'object') {
+        if (Array.isArray(a)) {
+            length = a.length;
+            if (length !== b.length) return false;
+            for(i = length; i-- !== 0;){
+                if (!deepEqual(a[i], b[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        keys = Object.keys(a);
+        length = keys.length;
+        if (length !== Object.keys(b).length) {
+            return false;
+        }
+        for(i = length; i-- !== 0;){
+            if (!({}).hasOwnProperty.call(b, keys[i])) {
+                return false;
+            }
+        }
+        for(i = length; i-- !== 0;){
+            const key = keys[i];
+            if (key === '_owner' && a.$$typeof) {
+                continue;
+            }
+            if (!deepEqual(a[key], b[key])) {
+                return false;
+            }
+        }
+        return true;
+    }
+    return a !== a && b !== b;
+}
+function getDPR(element) {
+    if (typeof window === 'undefined') {
+        return 1;
+    }
+    const win = element.ownerDocument.defaultView || window;
+    return win.devicePixelRatio || 1;
+}
+function roundByDPR(element, value) {
+    const dpr = getDPR(element);
+    return Math.round(value * dpr) / dpr;
+}
+function useLatestRef(value) {
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](value);
+    index(()=>{
+        ref.current = value;
+    });
+    return ref;
+}
+/**
+ * Provides data to position a floating element.
+ * @see https://floating-ui.com/docs/useFloating
+ */ function useFloating(options) {
+    if (options === void 0) {
+        options = {};
+    }
+    const { placement = 'bottom', strategy = 'absolute', middleware = [], platform, elements: { reference: externalReference, floating: externalFloating } = {}, transform = true, whileElementsMounted, open } = options;
+    const [data, setData] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]({
+        x: 0,
+        y: 0,
+        strategy,
+        placement,
+        middlewareData: {},
+        isPositioned: false
+    });
+    const [latestMiddleware, setLatestMiddleware] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](middleware);
+    if (!deepEqual(latestMiddleware, middleware)) {
+        setLatestMiddleware(middleware);
+    }
+    const [_reference, _setReference] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const [_floating, _setFloating] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const setReference = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "useFloating.useCallback[setReference]": (node)=>{
+            if (node !== referenceRef.current) {
+                referenceRef.current = node;
+                _setReference(node);
+            }
+        }
+    }["useFloating.useCallback[setReference]"], []);
+    const setFloating = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "useFloating.useCallback[setFloating]": (node)=>{
+            if (node !== floatingRef.current) {
+                floatingRef.current = node;
+                _setFloating(node);
+            }
+        }
+    }["useFloating.useCallback[setFloating]"], []);
+    const referenceEl = externalReference || _reference;
+    const floatingEl = externalFloating || _floating;
+    const referenceRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const floatingRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const dataRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](data);
+    const hasWhileElementsMounted = whileElementsMounted != null;
+    const whileElementsMountedRef = useLatestRef(whileElementsMounted);
+    const platformRef = useLatestRef(platform);
+    const openRef = useLatestRef(open);
+    const update = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "useFloating.useCallback[update]": ()=>{
+            if (!referenceRef.current || !floatingRef.current) {
+                return;
+            }
+            const config = {
+                placement,
+                strategy,
+                middleware: latestMiddleware
+            };
+            if (platformRef.current) {
+                config.platform = platformRef.current;
+            }
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["computePosition"])(referenceRef.current, floatingRef.current, config).then({
+                "useFloating.useCallback[update]": (data)=>{
+                    const fullData = {
+                        ...data,
+                        // The floating element's position may be recomputed while it's closed
+                        // but still mounted (such as when transitioning out). To ensure
+                        // `isPositioned` will be `false` initially on the next open, avoid
+                        // setting it to `true` when `open === false` (must be specified).
+                        isPositioned: openRef.current !== false
+                    };
+                    if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
+                        dataRef.current = fullData;
+                        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2d$dom$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["flushSync"]({
+                            "useFloating.useCallback[update]": ()=>{
+                                setData(fullData);
+                            }
+                        }["useFloating.useCallback[update]"]);
+                    }
+                }
+            }["useFloating.useCallback[update]"]);
+        }
+    }["useFloating.useCallback[update]"], [
+        latestMiddleware,
+        placement,
+        strategy,
+        platformRef,
+        openRef
+    ]);
+    index(()=>{
+        if (open === false && dataRef.current.isPositioned) {
+            dataRef.current.isPositioned = false;
+            setData((data)=>({
+                    ...data,
+                    isPositioned: false
+                }));
+        }
+    }, [
+        open
+    ]);
+    const isMountedRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    index(()=>{
+        isMountedRef.current = true;
+        return ()=>{
+            isMountedRef.current = false;
+        };
+    }, []);
+    index(()=>{
+        if (referenceEl) referenceRef.current = referenceEl;
+        if (floatingEl) floatingRef.current = floatingEl;
+        if (referenceEl && floatingEl) {
+            if (whileElementsMountedRef.current) {
+                return whileElementsMountedRef.current(referenceEl, floatingEl, update);
+            }
+            update();
+        }
+    }, [
+        referenceEl,
+        floatingEl,
+        update,
+        whileElementsMountedRef,
+        hasWhileElementsMounted
+    ]);
+    const refs = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "useFloating.useMemo[refs]": ()=>({
+                reference: referenceRef,
+                floating: floatingRef,
+                setReference,
+                setFloating
+            })
+    }["useFloating.useMemo[refs]"], [
+        setReference,
+        setFloating
+    ]);
+    const elements = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "useFloating.useMemo[elements]": ()=>({
+                reference: referenceEl,
+                floating: floatingEl
+            })
+    }["useFloating.useMemo[elements]"], [
+        referenceEl,
+        floatingEl
+    ]);
+    const floatingStyles = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "useFloating.useMemo[floatingStyles]": ()=>{
+            const initialStyles = {
+                position: strategy,
+                left: 0,
+                top: 0
+            };
+            if (!elements.floating) {
+                return initialStyles;
+            }
+            const x = roundByDPR(elements.floating, data.x);
+            const y = roundByDPR(elements.floating, data.y);
+            if (transform) {
+                return {
+                    ...initialStyles,
+                    transform: "translate(" + x + "px, " + y + "px)",
+                    ...getDPR(elements.floating) >= 1.5 && {
+                        willChange: 'transform'
+                    }
+                };
+            }
+            return {
+                position: strategy,
+                left: x,
+                top: y
+            };
+        }
+    }["useFloating.useMemo[floatingStyles]"], [
+        strategy,
+        transform,
+        elements.floating,
+        data.x,
+        data.y
+    ]);
+    return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "useFloating.useMemo": ()=>({
+                ...data,
+                update,
+                refs,
+                elements,
+                floatingStyles
+            })
+    }["useFloating.useMemo"], [
+        data,
+        update,
+        refs,
+        elements,
+        floatingStyles
+    ]);
+}
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * This wraps the core `arrow` middleware to allow React refs as the element.
+ * @see https://floating-ui.com/docs/arrow
+ */ const arrow$1 = (options)=>{
+    function isRef(value) {
+        return ({}).hasOwnProperty.call(value, 'current');
+    }
+    return {
+        name: 'arrow',
+        options,
+        fn (state) {
+            const { element, padding } = typeof options === 'function' ? options(state) : options;
+            if (element && isRef(element)) {
+                if (element.current != null) {
+                    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["arrow"])({
+                        element: element.current,
+                        padding
+                    }).fn(state);
+                }
+                return {};
+            }
+            if (element) {
+                return (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["arrow"])({
+                    element,
+                    padding
+                }).fn(state);
+            }
+            return {};
+        }
+    };
+};
+/**
+ * Modifies the placement by translating the floating element along the
+ * specified axes.
+ * A number (shorthand for `mainAxis` or distance), or an axes configuration
+ * object may be passed.
+ * @see https://floating-ui.com/docs/offset
+ */ const offset = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["offset"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Optimizes the visibility of the floating element by shifting it in order to
+ * keep it in view when it will overflow the clipping boundary.
+ * @see https://floating-ui.com/docs/shift
+ */ const shift = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["shift"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Built-in `limiter` that will stop `shift()` at a certain point.
+ */ const limitShift = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["limitShift"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Optimizes the visibility of the floating element by flipping the `placement`
+ * in order to keep it in view when the preferred placement(s) will overflow the
+ * clipping boundary. Alternative to `autoPlacement`.
+ * @see https://floating-ui.com/docs/flip
+ */ const flip = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["flip"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Provides data that allows you to change the size of the floating element —
+ * for instance, prevent it from overflowing the clipping boundary or match the
+ * width of the reference element.
+ * @see https://floating-ui.com/docs/size
+ */ const size = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["size"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Optimizes the visibility of the floating element by choosing the placement
+ * that has the most space available automatically, without needing to specify a
+ * preferred placement. Alternative to `flip`.
+ * @see https://floating-ui.com/docs/autoPlacement
+ */ const autoPlacement = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["autoPlacement"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Provides data to hide the floating element in applicable situations, such as
+ * when it is not in the same clipping context as the reference element.
+ * @see https://floating-ui.com/docs/hide
+ */ const hide = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["hide"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Provides improved positioning for inline reference elements that can span
+ * over multiple lines, such as hyperlinks or range selections.
+ * @see https://floating-ui.com/docs/inline
+ */ const inline = (options, deps)=>({
+        ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["inline"])(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+/**
+ * Provides data to position an inner element of the floating element so that it
+ * appears centered to the reference element.
+ * This wraps the core `arrow` middleware to allow React refs as the element.
+ * @see https://floating-ui.com/docs/arrow
+ */ const arrow = (options, deps)=>({
+        ...arrow$1(options),
+        options: [
+            options,
+            deps
+        ]
+    });
+;
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-arrow@1.1.3_d5ba6821de96c195a75a0eca6eb599d2/node_modules/@radix-ui/react-arrow/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Arrow",
+    ()=>Arrow,
+    "Root",
+    ()=>Root
+]);
+// packages/react/arrow/src/arrow.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+;
+;
+;
+var NAME = "Arrow";
+var Arrow = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { children, width = 10, height = 5, ...arrowProps } = props;
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].svg, {
+        ...arrowProps,
+        ref: forwardedRef,
+        width,
+        height,
+        viewBox: "0 0 30 10",
+        preserveAspectRatio: "none",
+        children: props.asChild ? children : /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])("polygon", {
+            points: "0,0 30,0 15,10"
+        })
+    });
+});
+Arrow.displayName = NAME;
+var Root = Arrow;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-size@1._f59085c4b51bfee6ba9a11f310dc8ef7/node_modules/@radix-ui/react-use-size/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useSize",
+    ()=>useSize
+]);
+// packages/react/use-size/src/use-size.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+;
+;
+function useSize(element) {
+    const [size, setSize] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](void 0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "useSize.useLayoutEffect": ()=>{
+            if (element) {
+                setSize({
+                    width: element.offsetWidth,
+                    height: element.offsetHeight
+                });
+                const resizeObserver = new ResizeObserver({
+                    "useSize.useLayoutEffect": (entries)=>{
+                        if (!Array.isArray(entries)) {
+                            return;
+                        }
+                        if (!entries.length) {
+                            return;
+                        }
+                        const entry = entries[0];
+                        let width;
+                        let height;
+                        if ("borderBoxSize" in entry) {
+                            const borderSizeEntry = entry["borderBoxSize"];
+                            const borderSize = Array.isArray(borderSizeEntry) ? borderSizeEntry[0] : borderSizeEntry;
+                            width = borderSize["inlineSize"];
+                            height = borderSize["blockSize"];
+                        } else {
+                            width = element.offsetWidth;
+                            height = element.offsetHeight;
+                        }
+                        setSize({
+                            width,
+                            height
+                        });
+                    }
+                }["useSize.useLayoutEffect"]);
+                resizeObserver.observe(element, {
+                    box: "border-box"
+                });
+                return ({
+                    "useSize.useLayoutEffect": ()=>resizeObserver.unobserve(element)
+                })["useSize.useLayoutEffect"];
+            } else {
+                setSize(void 0);
+            }
+        }
+    }["useSize.useLayoutEffect"], [
+        element
+    ]);
+    return size;
+}
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-popper@1.2._9d89e5cff2ac23335ad5197b5f394493/node_modules/@radix-ui/react-popper/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "ALIGN_OPTIONS",
+    ()=>ALIGN_OPTIONS,
+    "Anchor",
+    ()=>Anchor,
+    "Arrow",
+    ()=>Arrow,
+    "Content",
+    ()=>Content,
+    "Popper",
+    ()=>Popper,
+    "PopperAnchor",
+    ()=>PopperAnchor,
+    "PopperArrow",
+    ()=>PopperArrow,
+    "PopperContent",
+    ()=>PopperContent,
+    "Root",
+    ()=>Root2,
+    "SIDE_OPTIONS",
+    ()=>SIDE_OPTIONS,
+    "createPopperScope",
+    ()=>createPopperScope
+]);
+// packages/react/popper/src/popper.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+react-dom@2.1._4619683047f5c087c37ca832062ba5ad/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@floating-ui+dom@1.6.13/node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs [app-client] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$arrow$40$1$2e$1$2e$3_d5ba6821de96c195a75a0eca6eb599d2$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$arrow$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-arrow@1.1.3_d5ba6821de96c195a75a0eca6eb599d2/node_modules/@radix-ui/react-arrow/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-context@1.1_cfa0abbbae6354835f3a1fd3958b0817/node_modules/@radix-ui/react-context/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-callbac_bca1265b0608b80f2bb275ccd9cc349c/node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-layout-_d3f72c8f242b3ea4c5f3716ec429f828/node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$size$40$1$2e$_f59085c4b51bfee6ba9a11f310dc8ef7$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$size$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-size@1._f59085c4b51bfee6ba9a11f310dc8ef7/node_modules/@radix-ui/react-use-size/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+var SIDE_OPTIONS = [
+    "top",
+    "right",
+    "bottom",
+    "left"
+];
+var ALIGN_OPTIONS = [
+    "start",
+    "center",
+    "end"
+];
+var POPPER_NAME = "Popper";
+var [createPopperContext, createPopperScope] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContextScope"])(POPPER_NAME);
+var [PopperProvider, usePopperContext] = createPopperContext(POPPER_NAME);
+var Popper = (props)=>{
+    const { __scopePopper, children } = props;
+    const [anchor, setAnchor] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(PopperProvider, {
+        scope: __scopePopper,
+        anchor,
+        onAnchorChange: setAnchor,
+        children
+    });
+};
+Popper.displayName = POPPER_NAME;
+var ANCHOR_NAME = "PopperAnchor";
+var PopperAnchor = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopePopper, virtualRef, ...anchorProps } = props;
+    const context = usePopperContext(ANCHOR_NAME, __scopePopper);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "PopperAnchor.useEffect": ()=>{
+            context.onAnchorChange(virtualRef?.current || ref.current);
+        }
+    }["PopperAnchor.useEffect"]);
+    return virtualRef ? null : /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+        ...anchorProps,
+        ref: composedRefs
+    });
+});
+PopperAnchor.displayName = ANCHOR_NAME;
+var CONTENT_NAME = "PopperContent";
+var [PopperContentProvider, useContentContext] = createPopperContext(CONTENT_NAME);
+var PopperContent = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopePopper, side = "bottom", sideOffset = 0, align = "center", alignOffset = 0, arrowPadding = 0, avoidCollisions = true, collisionBoundary = [], collisionPadding: collisionPaddingProp = 0, sticky = "partial", hideWhenDetached = false, updatePositionStrategy = "optimized", onPlaced, ...contentProps } = props;
+    const context = usePopperContext(CONTENT_NAME, __scopePopper);
+    const [content, setContent] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, {
+        "PopperContent.useComposedRefs[composedRefs]": (node)=>setContent(node)
+    }["PopperContent.useComposedRefs[composedRefs]"]);
+    const [arrow, setArrow] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const arrowSize = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$size$40$1$2e$_f59085c4b51bfee6ba9a11f310dc8ef7$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$size$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSize"])(arrow);
+    const arrowWidth = arrowSize?.width ?? 0;
+    const arrowHeight = arrowSize?.height ?? 0;
+    const desiredPlacement = side + (align !== "center" ? "-" + align : "");
+    const collisionPadding = typeof collisionPaddingProp === "number" ? collisionPaddingProp : {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        ...collisionPaddingProp
+    };
+    const boundary = Array.isArray(collisionBoundary) ? collisionBoundary : [
+        collisionBoundary
+    ];
+    const hasExplicitBoundaries = boundary.length > 0;
+    const detectOverflowOptions = {
+        padding: collisionPadding,
+        boundary: boundary.filter(isNotNull),
+        // with `strategy: 'fixed'`, this is the only way to get it to respect boundaries
+        altBoundary: hasExplicitBoundaries
+    };
+    const { refs, floatingStyles, placement, isPositioned, middlewareData } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["useFloating"])({
+        // default to `fixed` strategy so users don't have to pick and we also avoid focus scroll issues
+        strategy: "fixed",
+        placement: desiredPlacement,
+        whileElementsMounted: {
+            "PopperContent.useFloating": (...args)=>{
+                const cleanup = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$dom$40$1$2e$6$2e$13$2f$node_modules$2f40$floating$2d$ui$2f$dom$2f$dist$2f$floating$2d$ui$2e$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["autoUpdate"])(...args, {
+                    animationFrame: updatePositionStrategy === "always"
+                });
+                return cleanup;
+            }
+        }["PopperContent.useFloating"],
+        elements: {
+            reference: context.anchor
+        },
+        middleware: [
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["offset"])({
+                mainAxis: sideOffset + arrowHeight,
+                alignmentAxis: alignOffset
+            }),
+            avoidCollisions && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["shift"])({
+                mainAxis: true,
+                crossAxis: false,
+                limiter: sticky === "partial" ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["limitShift"])() : void 0,
+                ...detectOverflowOptions
+            }),
+            avoidCollisions && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["flip"])({
+                ...detectOverflowOptions
+            }),
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["size"])({
+                ...detectOverflowOptions,
+                apply: {
+                    "PopperContent.useFloating": ({ elements, rects, availableWidth, availableHeight })=>{
+                        const { width: anchorWidth, height: anchorHeight } = rects.reference;
+                        const contentStyle = elements.floating.style;
+                        contentStyle.setProperty("--radix-popper-available-width", `${availableWidth}px`);
+                        contentStyle.setProperty("--radix-popper-available-height", `${availableHeight}px`);
+                        contentStyle.setProperty("--radix-popper-anchor-width", `${anchorWidth}px`);
+                        contentStyle.setProperty("--radix-popper-anchor-height", `${anchorHeight}px`);
+                    }
+                }["PopperContent.useFloating"]
+            }),
+            arrow && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["arrow"])({
+                element: arrow,
+                padding: arrowPadding
+            }),
+            transformOrigin({
+                arrowWidth,
+                arrowHeight
+            }),
+            hideWhenDetached && (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$floating$2d$ui$2b$react$2d$dom$40$2$2e$1$2e$_4619683047f5c087c37ca832062ba5ad$2f$node_modules$2f40$floating$2d$ui$2f$react$2d$dom$2f$dist$2f$floating$2d$ui$2e$react$2d$dom$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["hide"])({
+                strategy: "referenceHidden",
+                ...detectOverflowOptions
+            })
+        ]
+    });
+    const [placedSide, placedAlign] = getSideAndAlignFromPlacement(placement);
+    const handlePlaced = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$callbac_bca1265b0608b80f2bb275ccd9cc349c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$callback$2d$ref$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallbackRef"])(onPlaced);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "PopperContent.useLayoutEffect": ()=>{
+            if (isPositioned) {
+                handlePlaced?.();
+            }
+        }
+    }["PopperContent.useLayoutEffect"], [
+        isPositioned,
+        handlePlaced
+    ]);
+    const arrowX = middlewareData.arrow?.x;
+    const arrowY = middlewareData.arrow?.y;
+    const cannotCenterArrow = middlewareData.arrow?.centerOffset !== 0;
+    const [contentZIndex, setContentZIndex] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"]();
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$layout$2d$_d3f72c8f242b3ea4c5f3716ec429f828$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$layout$2d$effect$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLayoutEffect"])({
+        "PopperContent.useLayoutEffect": ()=>{
+            if (content) setContentZIndex(window.getComputedStyle(content).zIndex);
+        }
+    }["PopperContent.useLayoutEffect"], [
+        content
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])("div", {
+        ref: refs.setFloating,
+        "data-radix-popper-content-wrapper": "",
+        style: {
+            ...floatingStyles,
+            transform: isPositioned ? floatingStyles.transform : "translate(0, -200%)",
+            // keep off the page when measuring
+            minWidth: "max-content",
+            zIndex: contentZIndex,
+            ["--radix-popper-transform-origin"]: [
+                middlewareData.transformOrigin?.x,
+                middlewareData.transformOrigin?.y
+            ].join(" "),
+            // hide the content if using the hide middleware and should be hidden
+            // set visibility to hidden and disable pointer events so the UI behaves
+            // as if the PopperContent isn't there at all
+            ...middlewareData.hide?.referenceHidden && {
+                visibility: "hidden",
+                pointerEvents: "none"
+            }
+        },
+        dir: props.dir,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(PopperContentProvider, {
+            scope: __scopePopper,
+            placedSide,
+            onArrowChange: setArrow,
+            arrowX,
+            arrowY,
+            shouldHideArrow: cannotCenterArrow,
+            children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].div, {
+                "data-side": placedSide,
+                "data-align": placedAlign,
+                ...contentProps,
+                ref: composedRefs,
+                style: {
+                    ...contentProps.style,
+                    // if the PopperContent hasn't been placed yet (not all measurements done)
+                    // we prevent animations so that users's animation don't kick in too early referring wrong sides
+                    animation: !isPositioned ? "none" : void 0
+                }
+            })
+        })
+    });
+});
+PopperContent.displayName = CONTENT_NAME;
+var ARROW_NAME = "PopperArrow";
+var OPPOSITE_SIDE = {
+    top: "bottom",
+    right: "left",
+    bottom: "top",
+    left: "right"
+};
+var PopperArrow = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"](function PopperArrow2(props, forwardedRef) {
+    const { __scopePopper, ...arrowProps } = props;
+    const contentContext = useContentContext(ARROW_NAME, __scopePopper);
+    const baseSide = OPPOSITE_SIDE[contentContext.placedSide];
+    return(// we have to use an extra wrapper because `ResizeObserver` (used by `useSize`)
+    // doesn't report size as we'd expect on SVG elements.
+    // it reports their bounding box which is effectively the largest path inside the SVG.
+    /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])("span", {
+        ref: contentContext.onArrowChange,
+        style: {
+            position: "absolute",
+            left: contentContext.arrowX,
+            top: contentContext.arrowY,
+            [baseSide]: 0,
+            transformOrigin: {
+                top: "",
+                right: "0 0",
+                bottom: "center 0",
+                left: "100% 0"
+            }[contentContext.placedSide],
+            transform: {
+                top: "translateY(100%)",
+                right: "translateY(50%) rotate(90deg) translateX(-50%)",
+                bottom: `rotate(180deg)`,
+                left: "translateY(50%) rotate(-90deg) translateX(50%)"
+            }[contentContext.placedSide],
+            visibility: contentContext.shouldHideArrow ? "hidden" : void 0
+        },
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$arrow$40$1$2e$1$2e$3_d5ba6821de96c195a75a0eca6eb599d2$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$arrow$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+            ...arrowProps,
+            ref: forwardedRef,
+            style: {
+                ...arrowProps.style,
+                // ensures the element can be measured correctly (mostly for if SVG)
+                display: "block"
+            }
+        })
+    }));
+});
+PopperArrow.displayName = ARROW_NAME;
+function isNotNull(value) {
+    return value !== null;
+}
+var transformOrigin = (options)=>({
+        name: "transformOrigin",
+        options,
+        fn (data) {
+            const { placement, rects, middlewareData } = data;
+            const cannotCenterArrow = middlewareData.arrow?.centerOffset !== 0;
+            const isArrowHidden = cannotCenterArrow;
+            const arrowWidth = isArrowHidden ? 0 : options.arrowWidth;
+            const arrowHeight = isArrowHidden ? 0 : options.arrowHeight;
+            const [placedSide, placedAlign] = getSideAndAlignFromPlacement(placement);
+            const noArrowAlign = {
+                start: "0%",
+                center: "50%",
+                end: "100%"
+            }[placedAlign];
+            const arrowXCenter = (middlewareData.arrow?.x ?? 0) + arrowWidth / 2;
+            const arrowYCenter = (middlewareData.arrow?.y ?? 0) + arrowHeight / 2;
+            let x = "";
+            let y = "";
+            if (placedSide === "bottom") {
+                x = isArrowHidden ? noArrowAlign : `${arrowXCenter}px`;
+                y = `${-arrowHeight}px`;
+            } else if (placedSide === "top") {
+                x = isArrowHidden ? noArrowAlign : `${arrowXCenter}px`;
+                y = `${rects.floating.height + arrowHeight}px`;
+            } else if (placedSide === "right") {
+                x = `${-arrowHeight}px`;
+                y = isArrowHidden ? noArrowAlign : `${arrowYCenter}px`;
+            } else if (placedSide === "left") {
+                x = `${rects.floating.width + arrowHeight}px`;
+                y = isArrowHidden ? noArrowAlign : `${arrowYCenter}px`;
+            }
+            return {
+                data: {
+                    x,
+                    y
+                }
+            };
+        }
+    });
+function getSideAndAlignFromPlacement(placement) {
+    const [side, align = "center"] = placement.split("-");
+    return [
+        side,
+        align
+    ];
+}
+var Root2 = Popper;
+var Anchor = PopperAnchor;
+var Content = PopperContent;
+var Arrow = PopperArrow;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-tooltip@1.2_dd99b9da8b1a85773f9085c75c04a597/node_modules/@radix-ui/react-tooltip/dist/index.mjs [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Arrow",
+    ()=>Arrow2,
+    "Content",
+    ()=>Content2,
+    "Portal",
+    ()=>Portal,
+    "Provider",
+    ()=>Provider,
+    "Root",
+    ()=>Root3,
+    "Tooltip",
+    ()=>Tooltip,
+    "TooltipArrow",
+    ()=>TooltipArrow,
+    "TooltipContent",
+    ()=>TooltipContent,
+    "TooltipPortal",
+    ()=>TooltipPortal,
+    "TooltipProvider",
+    ()=>TooltipProvider,
+    "TooltipTrigger",
+    ()=>TooltipTrigger,
+    "Trigger",
+    ()=>Trigger,
+    "createTooltipScope",
+    ()=>createTooltipScope
+]);
+// packages/react/tooltip/src/tooltip.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+primitive@1.1.2/node_modules/@radix-ui/primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-compose-ref_1b38f386a2c9f826d51516fc210f3861/node_modules/@radix-ui/react-compose-refs/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-context@1.1_cfa0abbbae6354835f3a1fd3958b0817/node_modules/@radix-ui/react-context/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$dismissable_d70bf76468a29d7aaccf3379f82d0207$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dismissable$2d$layer$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-dismissable_d70bf76468a29d7aaccf3379f82d0207/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$id$40$1$2e$1$2e$1_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$id$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-id@1.1.1_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-id/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-popper@1.2._9d89e5cff2ac23335ad5197b5f394493/node_modules/@radix-ui/react-popper/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$portal$40$1$2e$1$2e$_1842d2a7a75d0a98272fb7729bd301da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$portal$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-portal@1.1._1842d2a7a75d0a98272fb7729bd301da/node_modules/@radix-ui/react-portal/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$presence$40$1$2e$_63e879ae52f586b0037bd210a7056e2f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$presence$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-presence@1._63e879ae52f586b0037bd210a7056e2f/node_modules/@radix-ui/react-presence/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-primitive@2_601398869e783ba44fe9199a299bf27c/node_modules/@radix-ui/react-primitive/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-slot@1.2.0_@types+react@18.3.20_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$control_30e592304562fabd7ca6cd629c5af3dc$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$controllable$2d$state$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-use-control_30e592304562fabd7ca6cd629c5af3dc/node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$visually$2d$hi_114ba245af3f27a158dce91aa94e789f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$visually$2d$hidden$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@radix-ui+react-visually-hi_114ba245af3f27a158dce91aa94e789f/node_modules/@radix-ui/react-visually-hidden/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+var [createTooltipContext, createTooltipScope] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$context$40$1$2e$1_cfa0abbbae6354835f3a1fd3958b0817$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$context$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContextScope"])("Tooltip", [
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPopperScope"]
+]);
+var usePopperScope = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createPopperScope"])();
+var PROVIDER_NAME = "TooltipProvider";
+var DEFAULT_DELAY_DURATION = 700;
+var TOOLTIP_OPEN = "tooltip.open";
+var [TooltipProviderContextProvider, useTooltipProviderContext] = createTooltipContext(PROVIDER_NAME);
+var TooltipProvider = (props)=>{
+    const { __scopeTooltip, delayDuration = DEFAULT_DELAY_DURATION, skipDelayDuration = 300, disableHoverableContent = false, children } = props;
+    const isOpenDelayedRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](true);
+    const isPointerInTransitRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const skipDelayTimerRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](0);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipProvider.useEffect": ()=>{
+            const skipDelayTimer = skipDelayTimerRef.current;
+            return ({
+                "TooltipProvider.useEffect": ()=>window.clearTimeout(skipDelayTimer)
+            })["TooltipProvider.useEffect"];
+        }
+    }["TooltipProvider.useEffect"], []);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(TooltipProviderContextProvider, {
+        scope: __scopeTooltip,
+        isOpenDelayedRef,
+        delayDuration,
+        onOpen: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+            "TooltipProvider.useCallback": ()=>{
+                window.clearTimeout(skipDelayTimerRef.current);
+                isOpenDelayedRef.current = false;
+            }
+        }["TooltipProvider.useCallback"], []),
+        onClose: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+            "TooltipProvider.useCallback": ()=>{
+                window.clearTimeout(skipDelayTimerRef.current);
+                skipDelayTimerRef.current = window.setTimeout({
+                    "TooltipProvider.useCallback": ()=>isOpenDelayedRef.current = true
+                }["TooltipProvider.useCallback"], skipDelayDuration);
+            }
+        }["TooltipProvider.useCallback"], [
+            skipDelayDuration
+        ]),
+        isPointerInTransitRef,
+        onPointerInTransitChange: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+            "TooltipProvider.useCallback": (inTransit)=>{
+                isPointerInTransitRef.current = inTransit;
+            }
+        }["TooltipProvider.useCallback"], []),
+        disableHoverableContent,
+        children
+    });
+};
+TooltipProvider.displayName = PROVIDER_NAME;
+var TOOLTIP_NAME = "Tooltip";
+var [TooltipContextProvider, useTooltipContext] = createTooltipContext(TOOLTIP_NAME);
+var Tooltip = (props)=>{
+    const { __scopeTooltip, children, open: openProp, defaultOpen = false, onOpenChange, disableHoverableContent: disableHoverableContentProp, delayDuration: delayDurationProp } = props;
+    const providerContext = useTooltipProviderContext(TOOLTIP_NAME, props.__scopeTooltip);
+    const popperScope = usePopperScope(__scopeTooltip);
+    const [trigger, setTrigger] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const contentId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$id$40$1$2e$1$2e$1_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$id$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useId"])();
+    const openTimerRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](0);
+    const disableHoverableContent = disableHoverableContentProp ?? providerContext.disableHoverableContent;
+    const delayDuration = delayDurationProp ?? providerContext.delayDuration;
+    const wasOpenDelayedRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const [open = false, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$use$2d$control_30e592304562fabd7ca6cd629c5af3dc$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$use$2d$controllable$2d$state$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useControllableState"])({
+        prop: openProp,
+        defaultProp: defaultOpen,
+        onChange: {
+            "Tooltip.useControllableState": (open2)=>{
+                if (open2) {
+                    providerContext.onOpen();
+                    document.dispatchEvent(new CustomEvent(TOOLTIP_OPEN));
+                } else {
+                    providerContext.onClose();
+                }
+                onOpenChange?.(open2);
+            }
+        }["Tooltip.useControllableState"]
+    });
+    const stateAttribute = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"]({
+        "Tooltip.useMemo[stateAttribute]": ()=>{
+            return open ? wasOpenDelayedRef.current ? "delayed-open" : "instant-open" : "closed";
+        }
+    }["Tooltip.useMemo[stateAttribute]"], [
+        open
+    ]);
+    const handleOpen = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "Tooltip.useCallback[handleOpen]": ()=>{
+            window.clearTimeout(openTimerRef.current);
+            openTimerRef.current = 0;
+            wasOpenDelayedRef.current = false;
+            setOpen(true);
+        }
+    }["Tooltip.useCallback[handleOpen]"], [
+        setOpen
+    ]);
+    const handleClose = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "Tooltip.useCallback[handleClose]": ()=>{
+            window.clearTimeout(openTimerRef.current);
+            openTimerRef.current = 0;
+            setOpen(false);
+        }
+    }["Tooltip.useCallback[handleClose]"], [
+        setOpen
+    ]);
+    const handleDelayedOpen = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "Tooltip.useCallback[handleDelayedOpen]": ()=>{
+            window.clearTimeout(openTimerRef.current);
+            openTimerRef.current = window.setTimeout({
+                "Tooltip.useCallback[handleDelayedOpen]": ()=>{
+                    wasOpenDelayedRef.current = true;
+                    setOpen(true);
+                    openTimerRef.current = 0;
+                }
+            }["Tooltip.useCallback[handleDelayedOpen]"], delayDuration);
+        }
+    }["Tooltip.useCallback[handleDelayedOpen]"], [
+        delayDuration,
+        setOpen
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "Tooltip.useEffect": ()=>{
+            return ({
+                "Tooltip.useEffect": ()=>{
+                    if (openTimerRef.current) {
+                        window.clearTimeout(openTimerRef.current);
+                        openTimerRef.current = 0;
+                    }
+                }
+            })["Tooltip.useEffect"];
+        }
+    }["Tooltip.useEffect"], []);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+        ...popperScope,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(TooltipContextProvider, {
+            scope: __scopeTooltip,
+            contentId,
+            open,
+            stateAttribute,
+            trigger,
+            onTriggerChange: setTrigger,
+            onTriggerEnter: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+                "Tooltip.useCallback": ()=>{
+                    if (providerContext.isOpenDelayedRef.current) handleDelayedOpen();
+                    else handleOpen();
+                }
+            }["Tooltip.useCallback"], [
+                providerContext.isOpenDelayedRef,
+                handleDelayedOpen,
+                handleOpen
+            ]),
+            onTriggerLeave: __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+                "Tooltip.useCallback": ()=>{
+                    if (disableHoverableContent) {
+                        handleClose();
+                    } else {
+                        window.clearTimeout(openTimerRef.current);
+                        openTimerRef.current = 0;
+                    }
+                }
+            }["Tooltip.useCallback"], [
+                handleClose,
+                disableHoverableContent
+            ]),
+            onOpen: handleOpen,
+            onClose: handleClose,
+            disableHoverableContent,
+            children
+        })
+    });
+};
+Tooltip.displayName = TOOLTIP_NAME;
+var TRIGGER_NAME = "TooltipTrigger";
+var TooltipTrigger = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeTooltip, ...triggerProps } = props;
+    const context = useTooltipContext(TRIGGER_NAME, __scopeTooltip);
+    const providerContext = useTooltipProviderContext(TRIGGER_NAME, __scopeTooltip);
+    const popperScope = usePopperScope(__scopeTooltip);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref, context.onTriggerChange);
+    const isPointerDownRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const hasPointerMoveOpenedRef = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](false);
+    const handlePointerUp = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "TooltipTrigger.useCallback[handlePointerUp]": ()=>isPointerDownRef.current = false
+    }["TooltipTrigger.useCallback[handlePointerUp]"], []);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipTrigger.useEffect": ()=>{
+            return ({
+                "TooltipTrigger.useEffect": ()=>document.removeEventListener("pointerup", handlePointerUp)
+            })["TooltipTrigger.useEffect"];
+        }
+    }["TooltipTrigger.useEffect"], [
+        handlePointerUp
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Anchor"], {
+        asChild: true,
+        ...popperScope,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$primitive$40$2_601398869e783ba44fe9199a299bf27c$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Primitive"].button, {
+            "aria-describedby": context.open ? context.contentId : void 0,
+            "data-state": context.stateAttribute,
+            ...triggerProps,
+            ref: composedRefs,
+            onPointerMove: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerMove, (event)=>{
+                if (event.pointerType === "touch") return;
+                if (!hasPointerMoveOpenedRef.current && !providerContext.isPointerInTransitRef.current) {
+                    context.onTriggerEnter();
+                    hasPointerMoveOpenedRef.current = true;
+                }
+            }),
+            onPointerLeave: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerLeave, ()=>{
+                context.onTriggerLeave();
+                hasPointerMoveOpenedRef.current = false;
+            }),
+            onPointerDown: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onPointerDown, ()=>{
+                if (context.open) {
+                    context.onClose();
+                }
+                isPointerDownRef.current = true;
+                document.addEventListener("pointerup", handlePointerUp, {
+                    once: true
+                });
+            }),
+            onFocus: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onFocus, ()=>{
+                if (!isPointerDownRef.current) context.onOpen();
+            }),
+            onBlur: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onBlur, context.onClose),
+            onClick: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$primitive$40$1$2e$1$2e$2$2f$node_modules$2f40$radix$2d$ui$2f$primitive$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["composeEventHandlers"])(props.onClick, context.onClose)
+        })
+    });
+});
+TooltipTrigger.displayName = TRIGGER_NAME;
+var PORTAL_NAME = "TooltipPortal";
+var [PortalProvider, usePortalContext] = createTooltipContext(PORTAL_NAME, {
+    forceMount: void 0
+});
+var TooltipPortal = (props)=>{
+    const { __scopeTooltip, forceMount, children, container } = props;
+    const context = useTooltipContext(PORTAL_NAME, __scopeTooltip);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(PortalProvider, {
+        scope: __scopeTooltip,
+        forceMount,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$presence$40$1$2e$_63e879ae52f586b0037bd210a7056e2f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$presence$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Presence"], {
+            present: forceMount || context.open,
+            children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$portal$40$1$2e$1$2e$_1842d2a7a75d0a98272fb7729bd301da$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$portal$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Portal"], {
+                asChild: true,
+                container,
+                children
+            })
+        })
+    });
+};
+TooltipPortal.displayName = PORTAL_NAME;
+var CONTENT_NAME = "TooltipContent";
+var TooltipContent = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const portalContext = usePortalContext(CONTENT_NAME, props.__scopeTooltip);
+    const { forceMount = portalContext.forceMount, side = "top", ...contentProps } = props;
+    const context = useTooltipContext(CONTENT_NAME, props.__scopeTooltip);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$presence$40$1$2e$_63e879ae52f586b0037bd210a7056e2f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$presence$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Presence"], {
+        present: forceMount || context.open,
+        children: context.disableHoverableContent ? /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(TooltipContentImpl, {
+            side,
+            ...contentProps,
+            ref: forwardedRef
+        }) : /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(TooltipContentHoverable, {
+            side,
+            ...contentProps,
+            ref: forwardedRef
+        })
+    });
+});
+var TooltipContentHoverable = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const context = useTooltipContext(CONTENT_NAME, props.__scopeTooltip);
+    const providerContext = useTooltipProviderContext(CONTENT_NAME, props.__scopeTooltip);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"](null);
+    const composedRefs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$compose$2d$ref_1b38f386a2c9f826d51516fc210f3861$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$compose$2d$refs$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useComposedRefs"])(forwardedRef, ref);
+    const [pointerGraceArea, setPointerGraceArea] = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"](null);
+    const { trigger, onClose } = context;
+    const content = ref.current;
+    const { onPointerInTransitChange } = providerContext;
+    const handleRemoveGraceArea = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "TooltipContentHoverable.useCallback[handleRemoveGraceArea]": ()=>{
+            setPointerGraceArea(null);
+            onPointerInTransitChange(false);
+        }
+    }["TooltipContentHoverable.useCallback[handleRemoveGraceArea]"], [
+        onPointerInTransitChange
+    ]);
+    const handleCreateGraceArea = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"]({
+        "TooltipContentHoverable.useCallback[handleCreateGraceArea]": (event, hoverTarget)=>{
+            const currentTarget = event.currentTarget;
+            const exitPoint = {
+                x: event.clientX,
+                y: event.clientY
+            };
+            const exitSide = getExitSideFromRect(exitPoint, currentTarget.getBoundingClientRect());
+            const paddedExitPoints = getPaddedExitPoints(exitPoint, exitSide);
+            const hoverTargetPoints = getPointsFromRect(hoverTarget.getBoundingClientRect());
+            const graceArea = getHull([
+                ...paddedExitPoints,
+                ...hoverTargetPoints
+            ]);
+            setPointerGraceArea(graceArea);
+            onPointerInTransitChange(true);
+        }
+    }["TooltipContentHoverable.useCallback[handleCreateGraceArea]"], [
+        onPointerInTransitChange
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipContentHoverable.useEffect": ()=>{
+            return ({
+                "TooltipContentHoverable.useEffect": ()=>handleRemoveGraceArea()
+            })["TooltipContentHoverable.useEffect"];
+        }
+    }["TooltipContentHoverable.useEffect"], [
+        handleRemoveGraceArea
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipContentHoverable.useEffect": ()=>{
+            if (trigger && content) {
+                const handleTriggerLeave = {
+                    "TooltipContentHoverable.useEffect.handleTriggerLeave": (event)=>handleCreateGraceArea(event, content)
+                }["TooltipContentHoverable.useEffect.handleTriggerLeave"];
+                const handleContentLeave = {
+                    "TooltipContentHoverable.useEffect.handleContentLeave": (event)=>handleCreateGraceArea(event, trigger)
+                }["TooltipContentHoverable.useEffect.handleContentLeave"];
+                trigger.addEventListener("pointerleave", handleTriggerLeave);
+                content.addEventListener("pointerleave", handleContentLeave);
+                return ({
+                    "TooltipContentHoverable.useEffect": ()=>{
+                        trigger.removeEventListener("pointerleave", handleTriggerLeave);
+                        content.removeEventListener("pointerleave", handleContentLeave);
+                    }
+                })["TooltipContentHoverable.useEffect"];
+            }
+        }
+    }["TooltipContentHoverable.useEffect"], [
+        trigger,
+        content,
+        handleCreateGraceArea,
+        handleRemoveGraceArea
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipContentHoverable.useEffect": ()=>{
+            if (pointerGraceArea) {
+                const handleTrackPointerGrace = {
+                    "TooltipContentHoverable.useEffect.handleTrackPointerGrace": (event)=>{
+                        const target = event.target;
+                        const pointerPosition = {
+                            x: event.clientX,
+                            y: event.clientY
+                        };
+                        const hasEnteredTarget = trigger?.contains(target) || content?.contains(target);
+                        const isPointerOutsideGraceArea = !isPointInPolygon(pointerPosition, pointerGraceArea);
+                        if (hasEnteredTarget) {
+                            handleRemoveGraceArea();
+                        } else if (isPointerOutsideGraceArea) {
+                            handleRemoveGraceArea();
+                            onClose();
+                        }
+                    }
+                }["TooltipContentHoverable.useEffect.handleTrackPointerGrace"];
+                document.addEventListener("pointermove", handleTrackPointerGrace);
+                return ({
+                    "TooltipContentHoverable.useEffect": ()=>document.removeEventListener("pointermove", handleTrackPointerGrace)
+                })["TooltipContentHoverable.useEffect"];
+            }
+        }
+    }["TooltipContentHoverable.useEffect"], [
+        trigger,
+        content,
+        pointerGraceArea,
+        onClose,
+        handleRemoveGraceArea
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(TooltipContentImpl, {
+        ...props,
+        ref: composedRefs
+    });
+});
+var [VisuallyHiddenContentContextProvider, useVisuallyHiddenContentContext] = createTooltipContext(TOOLTIP_NAME, {
+    isInside: false
+});
+var Slottable = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$slot$40$1$2e$2$2e$0_$40$types$2b$react$40$18$2e$3$2e$20_react$40$18$2e$3$2e$1$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createSlottable"])("TooltipContent");
+var TooltipContentImpl = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeTooltip, children, "aria-label": ariaLabel, onEscapeKeyDown, onPointerDownOutside, ...contentProps } = props;
+    const context = useTooltipContext(CONTENT_NAME, __scopeTooltip);
+    const popperScope = usePopperScope(__scopeTooltip);
+    const { onClose } = context;
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipContentImpl.useEffect": ()=>{
+            document.addEventListener(TOOLTIP_OPEN, onClose);
+            return ({
+                "TooltipContentImpl.useEffect": ()=>document.removeEventListener(TOOLTIP_OPEN, onClose)
+            })["TooltipContentImpl.useEffect"];
+        }
+    }["TooltipContentImpl.useEffect"], [
+        onClose
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "TooltipContentImpl.useEffect": ()=>{
+            if (context.trigger) {
+                const handleScroll = {
+                    "TooltipContentImpl.useEffect.handleScroll": (event)=>{
+                        const target = event.target;
+                        if (target?.contains(context.trigger)) onClose();
+                    }
+                }["TooltipContentImpl.useEffect.handleScroll"];
+                window.addEventListener("scroll", handleScroll, {
+                    capture: true
+                });
+                return ({
+                    "TooltipContentImpl.useEffect": ()=>window.removeEventListener("scroll", handleScroll, {
+                            capture: true
+                        })
+                })["TooltipContentImpl.useEffect"];
+            }
+        }
+    }["TooltipContentImpl.useEffect"], [
+        context.trigger,
+        onClose
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$dismissable_d70bf76468a29d7aaccf3379f82d0207$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dismissable$2d$layer$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DismissableLayer"], {
+        asChild: true,
+        disableOutsidePointerEvents: false,
+        onEscapeKeyDown,
+        onPointerDownOutside,
+        onFocusOutside: (event)=>event.preventDefault(),
+        onDismiss: onClose,
+        children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxs"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Content"], {
+            "data-state": context.stateAttribute,
+            ...popperScope,
+            ...contentProps,
+            ref: forwardedRef,
+            style: {
+                ...contentProps.style,
+                // re-namespace exposed content custom properties
+                ...{
+                    "--radix-tooltip-content-transform-origin": "var(--radix-popper-transform-origin)",
+                    "--radix-tooltip-content-available-width": "var(--radix-popper-available-width)",
+                    "--radix-tooltip-content-available-height": "var(--radix-popper-available-height)",
+                    "--radix-tooltip-trigger-width": "var(--radix-popper-anchor-width)",
+                    "--radix-tooltip-trigger-height": "var(--radix-popper-anchor-height)"
+                }
+            },
+            children: [
+                /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(Slottable, {
+                    children
+                }),
+                /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(VisuallyHiddenContentContextProvider, {
+                    scope: __scopeTooltip,
+                    isInside: true,
+                    children: /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$visually$2d$hi_114ba245af3f27a158dce91aa94e789f$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$visually$2d$hidden$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+                        id: context.contentId,
+                        role: "tooltip",
+                        children: ariaLabel || children
+                    })
+                })
+            ]
+        })
+    });
+});
+TooltipContent.displayName = CONTENT_NAME;
+var ARROW_NAME = "TooltipArrow";
+var TooltipArrow = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"]((props, forwardedRef)=>{
+    const { __scopeTooltip, ...arrowProps } = props;
+    const popperScope = usePopperScope(__scopeTooltip);
+    const visuallyHiddenContentContext = useVisuallyHiddenContentContext(ARROW_NAME, __scopeTooltip);
+    return visuallyHiddenContentContext.isInside ? null : /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$radix$2d$ui$2b$react$2d$popper$40$1$2e$2$2e$_9d89e5cff2ac23335ad5197b5f394493$2f$node_modules$2f40$radix$2d$ui$2f$react$2d$popper$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Arrow"], {
+        ...popperScope,
+        ...arrowProps,
+        ref: forwardedRef
+    });
+});
+TooltipArrow.displayName = ARROW_NAME;
+function getExitSideFromRect(point, rect) {
+    const top = Math.abs(rect.top - point.y);
+    const bottom = Math.abs(rect.bottom - point.y);
+    const right = Math.abs(rect.right - point.x);
+    const left = Math.abs(rect.left - point.x);
+    switch(Math.min(top, bottom, right, left)){
+        case left:
+            return "left";
+        case right:
+            return "right";
+        case top:
+            return "top";
+        case bottom:
+            return "bottom";
+        default:
+            throw new Error("unreachable");
+    }
+}
+function getPaddedExitPoints(exitPoint, exitSide, padding = 5) {
+    const paddedExitPoints = [];
+    switch(exitSide){
+        case "top":
+            paddedExitPoints.push({
+                x: exitPoint.x - padding,
+                y: exitPoint.y + padding
+            }, {
+                x: exitPoint.x + padding,
+                y: exitPoint.y + padding
+            });
+            break;
+        case "bottom":
+            paddedExitPoints.push({
+                x: exitPoint.x - padding,
+                y: exitPoint.y - padding
+            }, {
+                x: exitPoint.x + padding,
+                y: exitPoint.y - padding
+            });
+            break;
+        case "left":
+            paddedExitPoints.push({
+                x: exitPoint.x + padding,
+                y: exitPoint.y - padding
+            }, {
+                x: exitPoint.x + padding,
+                y: exitPoint.y + padding
+            });
+            break;
+        case "right":
+            paddedExitPoints.push({
+                x: exitPoint.x - padding,
+                y: exitPoint.y - padding
+            }, {
+                x: exitPoint.x - padding,
+                y: exitPoint.y + padding
+            });
+            break;
+    }
+    return paddedExitPoints;
+}
+function getPointsFromRect(rect) {
+    const { top, right, bottom, left } = rect;
+    return [
+        {
+            x: left,
+            y: top
+        },
+        {
+            x: right,
+            y: top
+        },
+        {
+            x: right,
+            y: bottom
+        },
+        {
+            x: left,
+            y: bottom
+        }
+    ];
+}
+function isPointInPolygon(point, polygon) {
+    const { x, y } = point;
+    let inside = false;
+    for(let i = 0, j = polygon.length - 1; i < polygon.length; j = i++){
+        const xi = polygon[i].x;
+        const yi = polygon[i].y;
+        const xj = polygon[j].x;
+        const yj = polygon[j].y;
+        const intersect = yi > y !== yj > y && x < (xj - xi) * (y - yi) / (yj - yi) + xi;
+        if (intersect) inside = !inside;
+    }
+    return inside;
+}
+function getHull(points) {
+    const newPoints = points.slice();
+    newPoints.sort((a, b)=>{
+        if (a.x < b.x) return -1;
+        else if (a.x > b.x) return 1;
+        else if (a.y < b.y) return -1;
+        else if (a.y > b.y) return 1;
+        else return 0;
+    });
+    return getHullPresorted(newPoints);
+}
+function getHullPresorted(points) {
+    if (points.length <= 1) return points.slice();
+    const upperHull = [];
+    for(let i = 0; i < points.length; i++){
+        const p = points[i];
+        while(upperHull.length >= 2){
+            const q = upperHull[upperHull.length - 1];
+            const r = upperHull[upperHull.length - 2];
+            if ((q.x - r.x) * (p.y - r.y) >= (q.y - r.y) * (p.x - r.x)) upperHull.pop();
+            else break;
+        }
+        upperHull.push(p);
+    }
+    upperHull.pop();
+    const lowerHull = [];
+    for(let i = points.length - 1; i >= 0; i--){
+        const p = points[i];
+        while(lowerHull.length >= 2){
+            const q = lowerHull[lowerHull.length - 1];
+            const r = lowerHull[lowerHull.length - 2];
+            if ((q.x - r.x) * (p.y - r.y) >= (q.y - r.y) * (p.x - r.x)) lowerHull.pop();
+            else break;
+        }
+        lowerHull.push(p);
+    }
+    lowerHull.pop();
+    if (upperHull.length === 1 && lowerHull.length === 1 && upperHull[0].x === lowerHull[0].x && upperHull[0].y === lowerHull[0].y) {
+        return upperHull;
+    } else {
+        return upperHull.concat(lowerHull);
+    }
+}
+var Provider = TooltipProvider;
+var Root3 = Tooltip;
+var Trigger = TooltipTrigger;
+var Portal = TooltipPortal;
+var Content2 = TooltipContent;
+var Arrow2 = TooltipArrow;
+;
+ //# sourceMappingURL=index.mjs.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "addToEnd",
+    ()=>addToEnd,
+    "addToStart",
+    ()=>addToStart,
+    "ensureQueryFn",
+    ()=>ensureQueryFn,
+    "functionalUpdate",
+    ()=>functionalUpdate,
+    "hashKey",
+    ()=>hashKey,
+    "hashQueryKeyByOptions",
+    ()=>hashQueryKeyByOptions,
+    "isPlainArray",
+    ()=>isPlainArray,
+    "isPlainObject",
+    ()=>isPlainObject,
+    "isServer",
+    ()=>isServer,
+    "isValidTimeout",
+    ()=>isValidTimeout,
+    "keepPreviousData",
+    ()=>keepPreviousData,
+    "matchMutation",
+    ()=>matchMutation,
+    "matchQuery",
+    ()=>matchQuery,
+    "noop",
+    ()=>noop,
+    "partialMatchKey",
+    ()=>partialMatchKey,
+    "replaceData",
+    ()=>replaceData,
+    "replaceEqualDeep",
+    ()=>replaceEqualDeep,
+    "resolveEnabled",
+    ()=>resolveEnabled,
+    "resolveStaleTime",
+    ()=>resolveStaleTime,
+    "shallowEqualObjects",
+    ()=>shallowEqualObjects,
+    "skipToken",
+    ()=>skipToken,
+    "sleep",
+    ()=>sleep,
+    "timeUntilStale",
+    ()=>timeUntilStale
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+// src/utils.ts
+var isServer = typeof window === "undefined" || "Deno" in globalThis;
+function noop() {}
+function functionalUpdate(updater, input) {
+    return typeof updater === "function" ? updater(input) : updater;
+}
+function isValidTimeout(value) {
+    return typeof value === "number" && value >= 0 && value !== Infinity;
+}
+function timeUntilStale(updatedAt, staleTime) {
+    return Math.max(updatedAt + (staleTime || 0) - Date.now(), 0);
+}
+function resolveStaleTime(staleTime, query) {
+    return typeof staleTime === "function" ? staleTime(query) : staleTime;
+}
+function resolveEnabled(enabled, query) {
+    return typeof enabled === "function" ? enabled(query) : enabled;
+}
+function matchQuery(filters, query) {
+    const { type = "all", exact, fetchStatus, predicate, queryKey, stale } = filters;
+    if (queryKey) {
+        if (exact) {
+            if (query.queryHash !== hashQueryKeyByOptions(queryKey, query.options)) {
+                return false;
+            }
+        } else if (!partialMatchKey(query.queryKey, queryKey)) {
+            return false;
+        }
+    }
+    if (type !== "all") {
+        const isActive = query.isActive();
+        if (type === "active" && !isActive) {
+            return false;
+        }
+        if (type === "inactive" && isActive) {
+            return false;
+        }
+    }
+    if (typeof stale === "boolean" && query.isStale() !== stale) {
+        return false;
+    }
+    if (fetchStatus && fetchStatus !== query.state.fetchStatus) {
+        return false;
+    }
+    if (predicate && !predicate(query)) {
+        return false;
+    }
+    return true;
+}
+function matchMutation(filters, mutation) {
+    const { exact, status, predicate, mutationKey } = filters;
+    if (mutationKey) {
+        if (!mutation.options.mutationKey) {
+            return false;
+        }
+        if (exact) {
+            if (hashKey(mutation.options.mutationKey) !== hashKey(mutationKey)) {
+                return false;
+            }
+        } else if (!partialMatchKey(mutation.options.mutationKey, mutationKey)) {
+            return false;
+        }
+    }
+    if (status && mutation.state.status !== status) {
+        return false;
+    }
+    if (predicate && !predicate(mutation)) {
+        return false;
+    }
+    return true;
+}
+function hashQueryKeyByOptions(queryKey, options) {
+    const hashFn = options?.queryKeyHashFn || hashKey;
+    return hashFn(queryKey);
+}
+function hashKey(queryKey) {
+    return JSON.stringify(queryKey, (_, val)=>isPlainObject(val) ? Object.keys(val).sort().reduce((result, key)=>{
+            result[key] = val[key];
+            return result;
+        }, {}) : val);
+}
+function partialMatchKey(a, b) {
+    if (a === b) {
+        return true;
+    }
+    if (typeof a !== typeof b) {
+        return false;
+    }
+    if (a && b && typeof a === "object" && typeof b === "object") {
+        return Object.keys(b).every((key)=>partialMatchKey(a[key], b[key]));
+    }
+    return false;
+}
+function replaceEqualDeep(a, b) {
+    if (a === b) {
+        return a;
+    }
+    const array = isPlainArray(a) && isPlainArray(b);
+    if (array || isPlainObject(a) && isPlainObject(b)) {
+        const aItems = array ? a : Object.keys(a);
+        const aSize = aItems.length;
+        const bItems = array ? b : Object.keys(b);
+        const bSize = bItems.length;
+        const copy = array ? [] : {};
+        let equalItems = 0;
+        for(let i = 0; i < bSize; i++){
+            const key = array ? i : bItems[i];
+            if ((!array && aItems.includes(key) || array) && a[key] === void 0 && b[key] === void 0) {
+                copy[key] = void 0;
+                equalItems++;
+            } else {
+                copy[key] = replaceEqualDeep(a[key], b[key]);
+                if (copy[key] === a[key] && a[key] !== void 0) {
+                    equalItems++;
+                }
+            }
+        }
+        return aSize === bSize && equalItems === aSize ? a : copy;
+    }
+    return b;
+}
+function shallowEqualObjects(a, b) {
+    if (!b || Object.keys(a).length !== Object.keys(b).length) {
+        return false;
+    }
+    for(const key in a){
+        if (a[key] !== b[key]) {
+            return false;
+        }
+    }
+    return true;
+}
+function isPlainArray(value) {
+    return Array.isArray(value) && value.length === Object.keys(value).length;
+}
+function isPlainObject(o) {
+    if (!hasObjectPrototype(o)) {
+        return false;
+    }
+    const ctor = o.constructor;
+    if (ctor === void 0) {
+        return true;
+    }
+    const prot = ctor.prototype;
+    if (!hasObjectPrototype(prot)) {
+        return false;
+    }
+    if (!prot.hasOwnProperty("isPrototypeOf")) {
+        return false;
+    }
+    if (Object.getPrototypeOf(o) !== Object.prototype) {
+        return false;
+    }
+    return true;
+}
+function hasObjectPrototype(o) {
+    return Object.prototype.toString.call(o) === "[object Object]";
+}
+function sleep(timeout) {
+    return new Promise((resolve)=>{
+        setTimeout(resolve, timeout);
+    });
+}
+function replaceData(prevData, data, options) {
+    if (typeof options.structuralSharing === "function") {
+        return options.structuralSharing(prevData, data);
+    } else if (options.structuralSharing !== false) {
+        if ("TURBOPACK compile-time truthy", 1) {
+            try {
+                return replaceEqualDeep(prevData, data);
+            } catch (error) {
+                console.error(`Structural sharing requires data to be JSON serializable. To fix this, turn off structuralSharing or return JSON-serializable data from your queryFn. [${options.queryHash}]: ${error}`);
+                throw error;
+            }
+        }
+        return replaceEqualDeep(prevData, data);
+    }
+    return data;
+}
+function keepPreviousData(previousData) {
+    return previousData;
+}
+function addToEnd(items, item, max = 0) {
+    const newItems = [
+        ...items,
+        item
+    ];
+    return max && newItems.length > max ? newItems.slice(1) : newItems;
+}
+function addToStart(items, item, max = 0) {
+    const newItems = [
+        item,
+        ...items
+    ];
+    return max && newItems.length > max ? newItems.slice(0, -1) : newItems;
+}
+var skipToken = Symbol();
+function ensureQueryFn(options, fetchOptions) {
+    if ("TURBOPACK compile-time truthy", 1) {
+        if (options.queryFn === skipToken) {
+            console.error(`Attempted to invoke queryFn when set to skipToken. This is likely a configuration error. Query hash: '${options.queryHash}'`);
+        }
+    }
+    if (!options.queryFn && fetchOptions?.initialPromise) {
+        return ()=>fetchOptions.initialPromise;
+    }
+    if (!options.queryFn || options.queryFn === skipToken) {
+        return ()=>Promise.reject(new Error(`Missing queryFn: '${options.queryHash}'`));
+    }
+    return options.queryFn;
+}
+;
+ //# sourceMappingURL=utils.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "createNotifyManager",
+    ()=>createNotifyManager,
+    "defaultScheduler",
+    ()=>defaultScheduler,
+    "notifyManager",
+    ()=>notifyManager
+]);
+// src/notifyManager.ts
+var defaultScheduler = (cb)=>setTimeout(cb, 0);
+function createNotifyManager() {
+    let queue = [];
+    let transactions = 0;
+    let notifyFn = (callback)=>{
+        callback();
+    };
+    let batchNotifyFn = (callback)=>{
+        callback();
+    };
+    let scheduleFn = defaultScheduler;
+    const schedule = (callback)=>{
+        if (transactions) {
+            queue.push(callback);
+        } else {
+            scheduleFn(()=>{
+                notifyFn(callback);
+            });
+        }
+    };
+    const flush = ()=>{
+        const originalQueue = queue;
+        queue = [];
+        if (originalQueue.length) {
+            scheduleFn(()=>{
+                batchNotifyFn(()=>{
+                    originalQueue.forEach((callback)=>{
+                        notifyFn(callback);
+                    });
+                });
+            });
+        }
+    };
+    return {
+        batch: (callback)=>{
+            let result;
+            transactions++;
+            try {
+                result = callback();
+            } finally{
+                transactions--;
+                if (!transactions) {
+                    flush();
+                }
+            }
+            return result;
+        },
+        /**
+     * All calls to the wrapped function will be batched.
+     */ batchCalls: (callback)=>{
+            return (...args)=>{
+                schedule(()=>{
+                    callback(...args);
+                });
+            };
+        },
+        schedule,
+        /**
+     * Use this method to set a custom notify function.
+     * This can be used to for example wrap notifications with `React.act` while running tests.
+     */ setNotifyFunction: (fn)=>{
+            notifyFn = fn;
+        },
+        /**
+     * Use this method to set a custom function to batch notifications together into a single tick.
+     * By default React Query will use the batch function provided by ReactDOM or React Native.
+     */ setBatchNotifyFunction: (fn)=>{
+            batchNotifyFn = fn;
+        },
+        setScheduler: (fn)=>{
+            scheduleFn = fn;
+        }
+    };
+}
+var notifyManager = createNotifyManager();
+;
+ //# sourceMappingURL=notifyManager.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/subscribable.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Subscribable",
+    ()=>Subscribable
+]);
+// src/subscribable.ts
+var Subscribable = class {
+    constructor(){
+        this.listeners = /* @__PURE__ */ new Set();
+        this.subscribe = this.subscribe.bind(this);
+    }
+    subscribe(listener) {
+        this.listeners.add(listener);
+        this.onSubscribe();
+        return ()=>{
+            this.listeners.delete(listener);
+            this.onUnsubscribe();
+        };
+    }
+    hasListeners() {
+        return this.listeners.size > 0;
+    }
+    onSubscribe() {}
+    onUnsubscribe() {}
+};
+;
+ //# sourceMappingURL=subscribable.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/focusManager.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "FocusManager",
+    ()=>FocusManager,
+    "focusManager",
+    ()=>focusManager
+]);
+// src/focusManager.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/subscribable.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+;
+;
+var FocusManager = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Subscribable"] {
+    #focused;
+    #cleanup;
+    #setup;
+    constructor(){
+        super();
+        this.#setup = (onFocus)=>{
+            if (!__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isServer"] && window.addEventListener) {
+                const listener = ()=>onFocus();
+                window.addEventListener("visibilitychange", listener, false);
+                return ()=>{
+                    window.removeEventListener("visibilitychange", listener);
+                };
+            }
+            return;
+        };
+    }
+    onSubscribe() {
+        if (!this.#cleanup) {
+            this.setEventListener(this.#setup);
+        }
+    }
+    onUnsubscribe() {
+        if (!this.hasListeners()) {
+            this.#cleanup?.();
+            this.#cleanup = void 0;
+        }
+    }
+    setEventListener(setup) {
+        this.#setup = setup;
+        this.#cleanup?.();
+        this.#cleanup = setup((focused)=>{
+            if (typeof focused === "boolean") {
+                this.setFocused(focused);
+            } else {
+                this.onFocus();
+            }
+        });
+    }
+    setFocused(focused) {
+        const changed = this.#focused !== focused;
+        if (changed) {
+            this.#focused = focused;
+            this.onFocus();
+        }
+    }
+    onFocus() {
+        const isFocused = this.isFocused();
+        this.listeners.forEach((listener)=>{
+            listener(isFocused);
+        });
+    }
+    isFocused() {
+        if (typeof this.#focused === "boolean") {
+            return this.#focused;
+        }
+        return globalThis.document?.visibilityState !== "hidden";
+    }
+};
+var focusManager = new FocusManager();
+;
+ //# sourceMappingURL=focusManager.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/onlineManager.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "OnlineManager",
+    ()=>OnlineManager,
+    "onlineManager",
+    ()=>onlineManager
+]);
+// src/onlineManager.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/subscribable.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+;
+;
+var OnlineManager = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Subscribable"] {
+    #online = true;
+    #cleanup;
+    #setup;
+    constructor(){
+        super();
+        this.#setup = (onOnline)=>{
+            if (!__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isServer"] && window.addEventListener) {
+                const onlineListener = ()=>onOnline(true);
+                const offlineListener = ()=>onOnline(false);
+                window.addEventListener("online", onlineListener, false);
+                window.addEventListener("offline", offlineListener, false);
+                return ()=>{
+                    window.removeEventListener("online", onlineListener);
+                    window.removeEventListener("offline", offlineListener);
+                };
+            }
+            return;
+        };
+    }
+    onSubscribe() {
+        if (!this.#cleanup) {
+            this.setEventListener(this.#setup);
+        }
+    }
+    onUnsubscribe() {
+        if (!this.hasListeners()) {
+            this.#cleanup?.();
+            this.#cleanup = void 0;
+        }
+    }
+    setEventListener(setup) {
+        this.#setup = setup;
+        this.#cleanup?.();
+        this.#cleanup = setup(this.setOnline.bind(this));
+    }
+    setOnline(online) {
+        const changed = this.#online !== online;
+        if (changed) {
+            this.#online = online;
+            this.listeners.forEach((listener)=>{
+                listener(online);
+            });
+        }
+    }
+    isOnline() {
+        return this.#online;
+    }
+};
+var onlineManager = new OnlineManager();
+;
+ //# sourceMappingURL=onlineManager.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/thenable.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "pendingThenable",
+    ()=>pendingThenable
+]);
+// src/thenable.ts
+function pendingThenable() {
+    let resolve;
+    let reject;
+    const thenable = new Promise((_resolve, _reject)=>{
+        resolve = _resolve;
+        reject = _reject;
+    });
+    thenable.status = "pending";
+    thenable.catch(()=>{});
+    function finalize(data) {
+        Object.assign(thenable, data);
+        delete thenable.resolve;
+        delete thenable.reject;
+    }
+    thenable.resolve = (value)=>{
+        finalize({
+            status: "fulfilled",
+            value
+        });
+        resolve(value);
+    };
+    thenable.reject = (reason)=>{
+        finalize({
+            status: "rejected",
+            reason
+        });
+        reject(reason);
+    };
+    return thenable;
+}
+;
+ //# sourceMappingURL=thenable.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/retryer.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "CancelledError",
+    ()=>CancelledError,
+    "canFetch",
+    ()=>canFetch,
+    "createRetryer",
+    ()=>createRetryer,
+    "isCancelledError",
+    ()=>isCancelledError
+]);
+// src/retryer.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$focusManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/focusManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/onlineManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$thenable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/thenable.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+;
+;
+;
+;
+function defaultRetryDelay(failureCount) {
+    return Math.min(1e3 * 2 ** failureCount, 3e4);
+}
+function canFetch(networkMode) {
+    return (networkMode ?? "online") === "online" ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["onlineManager"].isOnline() : true;
+}
+var CancelledError = class extends Error {
+    constructor(options){
+        super("CancelledError");
+        this.revert = options?.revert;
+        this.silent = options?.silent;
+    }
+};
+function isCancelledError(value) {
+    return value instanceof CancelledError;
+}
+function createRetryer(config) {
+    let isRetryCancelled = false;
+    let failureCount = 0;
+    let isResolved = false;
+    let continueFn;
+    const thenable = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$thenable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["pendingThenable"])();
+    const cancel = (cancelOptions)=>{
+        if (!isResolved) {
+            reject(new CancelledError(cancelOptions));
+            config.abort?.();
+        }
+    };
+    const cancelRetry = ()=>{
+        isRetryCancelled = true;
+    };
+    const continueRetry = ()=>{
+        isRetryCancelled = false;
+    };
+    const canContinue = ()=>__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$focusManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["focusManager"].isFocused() && (config.networkMode === "always" || __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["onlineManager"].isOnline()) && config.canRun();
+    const canStart = ()=>canFetch(config.networkMode) && config.canRun();
+    const resolve = (value)=>{
+        if (!isResolved) {
+            isResolved = true;
+            config.onSuccess?.(value);
+            continueFn?.();
+            thenable.resolve(value);
+        }
+    };
+    const reject = (value)=>{
+        if (!isResolved) {
+            isResolved = true;
+            config.onError?.(value);
+            continueFn?.();
+            thenable.reject(value);
+        }
+    };
+    const pause = ()=>{
+        return new Promise((continueResolve)=>{
+            continueFn = (value)=>{
+                if (isResolved || canContinue()) {
+                    continueResolve(value);
+                }
+            };
+            config.onPause?.();
+        }).then(()=>{
+            continueFn = void 0;
+            if (!isResolved) {
+                config.onContinue?.();
+            }
+        });
+    };
+    const run = ()=>{
+        if (isResolved) {
+            return;
+        }
+        let promiseOrValue;
+        const initialPromise = failureCount === 0 ? config.initialPromise : void 0;
+        try {
+            promiseOrValue = initialPromise ?? config.fn();
+        } catch (error) {
+            promiseOrValue = Promise.reject(error);
+        }
+        Promise.resolve(promiseOrValue).then(resolve).catch((error)=>{
+            if (isResolved) {
+                return;
+            }
+            const retry = config.retry ?? (__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isServer"] ? 0 : 3);
+            const retryDelay = config.retryDelay ?? defaultRetryDelay;
+            const delay = typeof retryDelay === "function" ? retryDelay(failureCount, error) : retryDelay;
+            const shouldRetry = retry === true || typeof retry === "number" && failureCount < retry || typeof retry === "function" && retry(failureCount, error);
+            if (isRetryCancelled || !shouldRetry) {
+                reject(error);
+                return;
+            }
+            failureCount++;
+            config.onFail?.(failureCount, error);
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["sleep"])(delay).then(()=>{
+                return canContinue() ? void 0 : pause();
+            }).then(()=>{
+                if (isRetryCancelled) {
+                    reject(error);
+                } else {
+                    run();
+                }
+            });
+        });
+    };
+    return {
+        promise: thenable,
+        cancel,
+        continue: ()=>{
+            continueFn?.();
+            return thenable;
+        },
+        cancelRetry,
+        continueRetry,
+        canStart,
+        start: ()=>{
+            if (canStart()) {
+                run();
+            } else {
+                pause().then(run);
+            }
+            return thenable;
+        }
+    };
+}
+;
+ //# sourceMappingURL=retryer.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/removable.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Removable",
+    ()=>Removable
+]);
+// src/removable.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+;
+var Removable = class {
+    #gcTimeout;
+    destroy() {
+        this.clearGcTimeout();
+    }
+    scheduleGc() {
+        this.clearGcTimeout();
+        if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isValidTimeout"])(this.gcTime)) {
+            this.#gcTimeout = setTimeout(()=>{
+                this.optionalRemove();
+            }, this.gcTime);
+        }
+    }
+    updateGcTime(newGcTime) {
+        this.gcTime = Math.max(this.gcTime || 0, newGcTime ?? (__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isServer"] ? Infinity : 5 * 60 * 1e3));
+    }
+    clearGcTimeout() {
+        if (this.#gcTimeout) {
+            clearTimeout(this.#gcTimeout);
+            this.#gcTimeout = void 0;
+        }
+    }
+};
+;
+ //# sourceMappingURL=removable.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/query.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Query",
+    ()=>Query,
+    "fetchState",
+    ()=>fetchState
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
+// src/query.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/retryer.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$removable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/removable.js [app-client] (ecmascript)");
+;
+;
+;
+;
+var Query = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$removable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Removable"] {
+    #initialState;
+    #revertState;
+    #cache;
+    #client;
+    #retryer;
+    #defaultOptions;
+    #abortSignalConsumed;
+    constructor(config){
+        super();
+        this.#abortSignalConsumed = false;
+        this.#defaultOptions = config.defaultOptions;
+        this.setOptions(config.options);
+        this.observers = [];
+        this.#client = config.client;
+        this.#cache = this.#client.getQueryCache();
+        this.queryKey = config.queryKey;
+        this.queryHash = config.queryHash;
+        this.#initialState = getDefaultState(this.options);
+        this.state = config.state ?? this.#initialState;
+        this.scheduleGc();
+    }
+    get meta() {
+        return this.options.meta;
+    }
+    get promise() {
+        return this.#retryer?.promise;
+    }
+    setOptions(options) {
+        this.options = {
+            ...this.#defaultOptions,
+            ...options
+        };
+        this.updateGcTime(this.options.gcTime);
+    }
+    optionalRemove() {
+        if (!this.observers.length && this.state.fetchStatus === "idle") {
+            this.#cache.remove(this);
+        }
+    }
+    setData(newData, options) {
+        const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["replaceData"])(this.state.data, newData, this.options);
+        this.#dispatch({
+            data,
+            type: "success",
+            dataUpdatedAt: options?.updatedAt,
+            manual: options?.manual
+        });
+        return data;
+    }
+    setState(state, setStateOptions) {
+        this.#dispatch({
+            type: "setState",
+            state,
+            setStateOptions
+        });
+    }
+    cancel(options) {
+        const promise = this.#retryer?.promise;
+        this.#retryer?.cancel(options);
+        return promise ? promise.then(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]).catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]) : Promise.resolve();
+    }
+    destroy() {
+        super.destroy();
+        this.cancel({
+            silent: true
+        });
+    }
+    reset() {
+        this.destroy();
+        this.setState(this.#initialState);
+    }
+    isActive() {
+        return this.observers.some((observer)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["resolveEnabled"])(observer.options.enabled, this) !== false);
+    }
+    isDisabled() {
+        if (this.getObserversCount() > 0) {
+            return !this.isActive();
+        }
+        return this.options.queryFn === __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["skipToken"] || this.state.dataUpdateCount + this.state.errorUpdateCount === 0;
+    }
+    isStale() {
+        if (this.state.isInvalidated) {
+            return true;
+        }
+        if (this.getObserversCount() > 0) {
+            return this.observers.some((observer)=>observer.getCurrentResult().isStale);
+        }
+        return this.state.data === void 0;
+    }
+    isStaleByTime(staleTime = 0) {
+        return this.state.isInvalidated || this.state.data === void 0 || !(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["timeUntilStale"])(this.state.dataUpdatedAt, staleTime);
+    }
+    onFocus() {
+        const observer = this.observers.find((x)=>x.shouldFetchOnWindowFocus());
+        observer?.refetch({
+            cancelRefetch: false
+        });
+        this.#retryer?.continue();
+    }
+    onOnline() {
+        const observer = this.observers.find((x)=>x.shouldFetchOnReconnect());
+        observer?.refetch({
+            cancelRefetch: false
+        });
+        this.#retryer?.continue();
+    }
+    addObserver(observer) {
+        if (!this.observers.includes(observer)) {
+            this.observers.push(observer);
+            this.clearGcTimeout();
+            this.#cache.notify({
+                type: "observerAdded",
+                query: this,
+                observer
+            });
+        }
+    }
+    removeObserver(observer) {
+        if (this.observers.includes(observer)) {
+            this.observers = this.observers.filter((x)=>x !== observer);
+            if (!this.observers.length) {
+                if (this.#retryer) {
+                    if (this.#abortSignalConsumed) {
+                        this.#retryer.cancel({
+                            revert: true
+                        });
+                    } else {
+                        this.#retryer.cancelRetry();
+                    }
+                }
+                this.scheduleGc();
+            }
+            this.#cache.notify({
+                type: "observerRemoved",
+                query: this,
+                observer
+            });
+        }
+    }
+    getObserversCount() {
+        return this.observers.length;
+    }
+    invalidate() {
+        if (!this.state.isInvalidated) {
+            this.#dispatch({
+                type: "invalidate"
+            });
+        }
+    }
+    fetch(options, fetchOptions) {
+        if (this.state.fetchStatus !== "idle") {
+            if (this.state.data !== void 0 && fetchOptions?.cancelRefetch) {
+                this.cancel({
+                    silent: true
+                });
+            } else if (this.#retryer) {
+                this.#retryer.continueRetry();
+                return this.#retryer.promise;
+            }
+        }
+        if (options) {
+            this.setOptions(options);
+        }
+        if (!this.options.queryFn) {
+            const observer = this.observers.find((x)=>x.options.queryFn);
+            if (observer) {
+                this.setOptions(observer.options);
+            }
+        }
+        if ("TURBOPACK compile-time truthy", 1) {
+            if (!Array.isArray(this.options.queryKey)) {
+                console.error(`As of v4, queryKey needs to be an Array. If you are using a string like 'repoData', please change it to an Array, e.g. ['repoData']`);
+            }
+        }
+        const abortController = new AbortController();
+        const addSignalProperty = (object)=>{
+            Object.defineProperty(object, "signal", {
+                enumerable: true,
+                get: ()=>{
+                    this.#abortSignalConsumed = true;
+                    return abortController.signal;
+                }
+            });
+        };
+        const fetchFn = ()=>{
+            const queryFn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ensureQueryFn"])(this.options, fetchOptions);
+            const queryFnContext = {
+                client: this.#client,
+                queryKey: this.queryKey,
+                meta: this.meta
+            };
+            addSignalProperty(queryFnContext);
+            this.#abortSignalConsumed = false;
+            if (this.options.persister) {
+                return this.options.persister(queryFn, queryFnContext, this);
+            }
+            return queryFn(queryFnContext);
+        };
+        const context = {
+            fetchOptions,
+            options: this.options,
+            queryKey: this.queryKey,
+            client: this.#client,
+            state: this.state,
+            fetchFn
+        };
+        addSignalProperty(context);
+        this.options.behavior?.onFetch(context, this);
+        this.#revertState = this.state;
+        if (this.state.fetchStatus === "idle" || this.state.fetchMeta !== context.fetchOptions?.meta) {
+            this.#dispatch({
+                type: "fetch",
+                meta: context.fetchOptions?.meta
+            });
+        }
+        const onError = (error)=>{
+            if (!((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isCancelledError"])(error) && error.silent)) {
+                this.#dispatch({
+                    type: "error",
+                    error
+                });
+            }
+            if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isCancelledError"])(error)) {
+                this.#cache.config.onError?.(error, this);
+                this.#cache.config.onSettled?.(this.state.data, error, this);
+            }
+            this.scheduleGc();
+        };
+        this.#retryer = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createRetryer"])({
+            initialPromise: fetchOptions?.initialPromise,
+            fn: context.fetchFn,
+            abort: abortController.abort.bind(abortController),
+            onSuccess: (data)=>{
+                if (data === void 0) {
+                    if ("TURBOPACK compile-time truthy", 1) {
+                        console.error(`Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ${this.queryHash}`);
+                    }
+                    onError(new Error(`${this.queryHash} data is undefined`));
+                    return;
+                }
+                try {
+                    this.setData(data);
+                } catch (error) {
+                    onError(error);
+                    return;
+                }
+                this.#cache.config.onSuccess?.(data, this);
+                this.#cache.config.onSettled?.(data, this.state.error, this);
+                this.scheduleGc();
+            },
+            onError,
+            onFail: (failureCount, error)=>{
+                this.#dispatch({
+                    type: "failed",
+                    failureCount,
+                    error
+                });
+            },
+            onPause: ()=>{
+                this.#dispatch({
+                    type: "pause"
+                });
+            },
+            onContinue: ()=>{
+                this.#dispatch({
+                    type: "continue"
+                });
+            },
+            retry: context.options.retry,
+            retryDelay: context.options.retryDelay,
+            networkMode: context.options.networkMode,
+            canRun: ()=>true
+        });
+        return this.#retryer.start();
+    }
+    #dispatch(action) {
+        const reducer = (state)=>{
+            switch(action.type){
+                case "failed":
+                    return {
+                        ...state,
+                        fetchFailureCount: action.failureCount,
+                        fetchFailureReason: action.error
+                    };
+                case "pause":
+                    return {
+                        ...state,
+                        fetchStatus: "paused"
+                    };
+                case "continue":
+                    return {
+                        ...state,
+                        fetchStatus: "fetching"
+                    };
+                case "fetch":
+                    return {
+                        ...state,
+                        ...fetchState(state.data, this.options),
+                        fetchMeta: action.meta ?? null
+                    };
+                case "success":
+                    return {
+                        ...state,
+                        data: action.data,
+                        dataUpdateCount: state.dataUpdateCount + 1,
+                        dataUpdatedAt: action.dataUpdatedAt ?? Date.now(),
+                        error: null,
+                        isInvalidated: false,
+                        status: "success",
+                        ...!action.manual && {
+                            fetchStatus: "idle",
+                            fetchFailureCount: 0,
+                            fetchFailureReason: null
+                        }
+                    };
+                case "error":
+                    const error = action.error;
+                    if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["isCancelledError"])(error) && error.revert && this.#revertState) {
+                        return {
+                            ...this.#revertState,
+                            fetchStatus: "idle"
+                        };
+                    }
+                    return {
+                        ...state,
+                        error,
+                        errorUpdateCount: state.errorUpdateCount + 1,
+                        errorUpdatedAt: Date.now(),
+                        fetchFailureCount: state.fetchFailureCount + 1,
+                        fetchFailureReason: error,
+                        fetchStatus: "idle",
+                        status: "error"
+                    };
+                case "invalidate":
+                    return {
+                        ...state,
+                        isInvalidated: true
+                    };
+                case "setState":
+                    return {
+                        ...state,
+                        ...action.state
+                    };
+            }
+        };
+        this.state = reducer(this.state);
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.observers.forEach((observer)=>{
+                observer.onQueryUpdate();
+            });
+            this.#cache.notify({
+                query: this,
+                type: "updated",
+                action
+            });
+        });
+    }
+};
+function fetchState(data, options) {
+    return {
+        fetchFailureCount: 0,
+        fetchFailureReason: null,
+        fetchStatus: (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["canFetch"])(options.networkMode) ? "fetching" : "paused",
+        ...data === void 0 && {
+            error: null,
+            status: "pending"
+        }
+    };
+}
+function getDefaultState(options) {
+    const data = typeof options.initialData === "function" ? options.initialData() : options.initialData;
+    const hasData = data !== void 0;
+    const initialDataUpdatedAt = hasData ? typeof options.initialDataUpdatedAt === "function" ? options.initialDataUpdatedAt() : options.initialDataUpdatedAt : 0;
+    return {
+        data,
+        dataUpdateCount: 0,
+        dataUpdatedAt: hasData ? initialDataUpdatedAt ?? Date.now() : 0,
+        error: null,
+        errorUpdateCount: 0,
+        errorUpdatedAt: 0,
+        fetchFailureCount: 0,
+        fetchFailureReason: null,
+        fetchMeta: null,
+        isInvalidated: false,
+        status: hasData ? "success" : "pending",
+        fetchStatus: "idle"
+    };
+}
+;
+ //# sourceMappingURL=query.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/queryCache.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "QueryCache",
+    ()=>QueryCache
+]);
+// src/queryCache.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$query$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/query.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/subscribable.js [app-client] (ecmascript)");
+;
+;
+;
+;
+var QueryCache = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Subscribable"] {
+    constructor(config = {}){
+        super();
+        this.config = config;
+        this.#queries = /* @__PURE__ */ new Map();
+    }
+    #queries;
+    build(client, options, state) {
+        const queryKey = options.queryKey;
+        const queryHash = options.queryHash ?? (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["hashQueryKeyByOptions"])(queryKey, options);
+        let query = this.get(queryHash);
+        if (!query) {
+            query = new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$query$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Query"]({
+                client,
+                queryKey,
+                queryHash,
+                options: client.defaultQueryOptions(options),
+                state,
+                defaultOptions: client.getQueryDefaults(queryKey)
+            });
+            this.add(query);
+        }
+        return query;
+    }
+    add(query) {
+        if (!this.#queries.has(query.queryHash)) {
+            this.#queries.set(query.queryHash, query);
+            this.notify({
+                type: "added",
+                query
+            });
+        }
+    }
+    remove(query) {
+        const queryInMap = this.#queries.get(query.queryHash);
+        if (queryInMap) {
+            query.destroy();
+            if (queryInMap === query) {
+                this.#queries.delete(query.queryHash);
+            }
+            this.notify({
+                type: "removed",
+                query
+            });
+        }
+    }
+    clear() {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.getAll().forEach((query)=>{
+                this.remove(query);
+            });
+        });
+    }
+    get(queryHash) {
+        return this.#queries.get(queryHash);
+    }
+    getAll() {
+        return [
+            ...this.#queries.values()
+        ];
+    }
+    find(filters) {
+        const defaultedFilters = {
+            exact: true,
+            ...filters
+        };
+        return this.getAll().find((query)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["matchQuery"])(defaultedFilters, query));
+    }
+    findAll(filters = {}) {
+        const queries = this.getAll();
+        return Object.keys(filters).length > 0 ? queries.filter((query)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["matchQuery"])(filters, query)) : queries;
+    }
+    notify(event) {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.listeners.forEach((listener)=>{
+                listener(event);
+            });
+        });
+    }
+    onFocus() {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.getAll().forEach((query)=>{
+                query.onFocus();
+            });
+        });
+    }
+    onOnline() {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.getAll().forEach((query)=>{
+                query.onOnline();
+            });
+        });
+    }
+};
+;
+ //# sourceMappingURL=queryCache.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/mutation.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Mutation",
+    ()=>Mutation,
+    "getDefaultState",
+    ()=>getDefaultState
+]);
+// src/mutation.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$removable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/removable.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/retryer.js [app-client] (ecmascript)");
+;
+;
+;
+var Mutation = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$removable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Removable"] {
+    #observers;
+    #mutationCache;
+    #retryer;
+    constructor(config){
+        super();
+        this.mutationId = config.mutationId;
+        this.#mutationCache = config.mutationCache;
+        this.#observers = [];
+        this.state = config.state || getDefaultState();
+        this.setOptions(config.options);
+        this.scheduleGc();
+    }
+    setOptions(options) {
+        this.options = options;
+        this.updateGcTime(this.options.gcTime);
+    }
+    get meta() {
+        return this.options.meta;
+    }
+    addObserver(observer) {
+        if (!this.#observers.includes(observer)) {
+            this.#observers.push(observer);
+            this.clearGcTimeout();
+            this.#mutationCache.notify({
+                type: "observerAdded",
+                mutation: this,
+                observer
+            });
+        }
+    }
+    removeObserver(observer) {
+        this.#observers = this.#observers.filter((x)=>x !== observer);
+        this.scheduleGc();
+        this.#mutationCache.notify({
+            type: "observerRemoved",
+            mutation: this,
+            observer
+        });
+    }
+    optionalRemove() {
+        if (!this.#observers.length) {
+            if (this.state.status === "pending") {
+                this.scheduleGc();
+            } else {
+                this.#mutationCache.remove(this);
+            }
+        }
+    }
+    continue() {
+        return this.#retryer?.continue() ?? // continuing a mutation assumes that variables are set, mutation must have been dehydrated before
+        this.execute(this.state.variables);
+    }
+    async execute(variables) {
+        const onContinue = ()=>{
+            this.#dispatch({
+                type: "continue"
+            });
+        };
+        this.#retryer = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$retryer$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createRetryer"])({
+            fn: ()=>{
+                if (!this.options.mutationFn) {
+                    return Promise.reject(new Error("No mutationFn found"));
+                }
+                return this.options.mutationFn(variables);
+            },
+            onFail: (failureCount, error)=>{
+                this.#dispatch({
+                    type: "failed",
+                    failureCount,
+                    error
+                });
+            },
+            onPause: ()=>{
+                this.#dispatch({
+                    type: "pause"
+                });
+            },
+            onContinue,
+            retry: this.options.retry ?? 0,
+            retryDelay: this.options.retryDelay,
+            networkMode: this.options.networkMode,
+            canRun: ()=>this.#mutationCache.canRun(this)
+        });
+        const restored = this.state.status === "pending";
+        const isPaused = !this.#retryer.canStart();
+        try {
+            if (restored) {
+                onContinue();
+            } else {
+                this.#dispatch({
+                    type: "pending",
+                    variables,
+                    isPaused
+                });
+                await this.#mutationCache.config.onMutate?.(variables, this);
+                const context = await this.options.onMutate?.(variables);
+                if (context !== this.state.context) {
+                    this.#dispatch({
+                        type: "pending",
+                        context,
+                        variables,
+                        isPaused
+                    });
+                }
+            }
+            const data = await this.#retryer.start();
+            await this.#mutationCache.config.onSuccess?.(data, variables, this.state.context, this);
+            await this.options.onSuccess?.(data, variables, this.state.context);
+            await this.#mutationCache.config.onSettled?.(data, null, this.state.variables, this.state.context, this);
+            await this.options.onSettled?.(data, null, variables, this.state.context);
+            this.#dispatch({
+                type: "success",
+                data
+            });
+            return data;
+        } catch (error) {
+            try {
+                await this.#mutationCache.config.onError?.(error, variables, this.state.context, this);
+                await this.options.onError?.(error, variables, this.state.context);
+                await this.#mutationCache.config.onSettled?.(void 0, error, this.state.variables, this.state.context, this);
+                await this.options.onSettled?.(void 0, error, variables, this.state.context);
+                throw error;
+            } finally{
+                this.#dispatch({
+                    type: "error",
+                    error
+                });
+            }
+        } finally{
+            this.#mutationCache.runNext(this);
+        }
+    }
+    #dispatch(action) {
+        const reducer = (state)=>{
+            switch(action.type){
+                case "failed":
+                    return {
+                        ...state,
+                        failureCount: action.failureCount,
+                        failureReason: action.error
+                    };
+                case "pause":
+                    return {
+                        ...state,
+                        isPaused: true
+                    };
+                case "continue":
+                    return {
+                        ...state,
+                        isPaused: false
+                    };
+                case "pending":
+                    return {
+                        ...state,
+                        context: action.context,
+                        data: void 0,
+                        failureCount: 0,
+                        failureReason: null,
+                        error: null,
+                        isPaused: action.isPaused,
+                        status: "pending",
+                        variables: action.variables,
+                        submittedAt: Date.now()
+                    };
+                case "success":
+                    return {
+                        ...state,
+                        data: action.data,
+                        failureCount: 0,
+                        failureReason: null,
+                        error: null,
+                        status: "success",
+                        isPaused: false
+                    };
+                case "error":
+                    return {
+                        ...state,
+                        data: void 0,
+                        error: action.error,
+                        failureCount: state.failureCount + 1,
+                        failureReason: action.error,
+                        isPaused: false,
+                        status: "error"
+                    };
+            }
+        };
+        this.state = reducer(this.state);
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.#observers.forEach((observer)=>{
+                observer.onMutationUpdate(action);
+            });
+            this.#mutationCache.notify({
+                mutation: this,
+                type: "updated",
+                action
+            });
+        });
+    }
+};
+function getDefaultState() {
+    return {
+        context: void 0,
+        data: void 0,
+        error: null,
+        failureCount: 0,
+        failureReason: null,
+        isPaused: false,
+        status: "idle",
+        variables: void 0,
+        submittedAt: 0
+    };
+}
+;
+ //# sourceMappingURL=mutation.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/mutationCache.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "MutationCache",
+    ()=>MutationCache
+]);
+// src/mutationCache.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$mutation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/mutation.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/subscribable.js [app-client] (ecmascript)");
+;
+;
+;
+;
+var MutationCache = class extends __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$subscribable$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Subscribable"] {
+    constructor(config = {}){
+        super();
+        this.config = config;
+        this.#mutations = /* @__PURE__ */ new Set();
+        this.#scopes = /* @__PURE__ */ new Map();
+        this.#mutationId = 0;
+    }
+    #mutations;
+    #scopes;
+    #mutationId;
+    build(client, options, state) {
+        const mutation = new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$mutation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Mutation"]({
+            mutationCache: this,
+            mutationId: ++this.#mutationId,
+            options: client.defaultMutationOptions(options),
+            state
+        });
+        this.add(mutation);
+        return mutation;
+    }
+    add(mutation) {
+        this.#mutations.add(mutation);
+        const scope = scopeFor(mutation);
+        if (typeof scope === "string") {
+            const scopedMutations = this.#scopes.get(scope);
+            if (scopedMutations) {
+                scopedMutations.push(mutation);
+            } else {
+                this.#scopes.set(scope, [
+                    mutation
+                ]);
+            }
+        }
+        this.notify({
+            type: "added",
+            mutation
+        });
+    }
+    remove(mutation) {
+        if (this.#mutations.delete(mutation)) {
+            const scope = scopeFor(mutation);
+            if (typeof scope === "string") {
+                const scopedMutations = this.#scopes.get(scope);
+                if (scopedMutations) {
+                    if (scopedMutations.length > 1) {
+                        const index = scopedMutations.indexOf(mutation);
+                        if (index !== -1) {
+                            scopedMutations.splice(index, 1);
+                        }
+                    } else if (scopedMutations[0] === mutation) {
+                        this.#scopes.delete(scope);
+                    }
+                }
+            }
+        }
+        this.notify({
+            type: "removed",
+            mutation
+        });
+    }
+    canRun(mutation) {
+        const scope = scopeFor(mutation);
+        if (typeof scope === "string") {
+            const mutationsWithSameScope = this.#scopes.get(scope);
+            const firstPendingMutation = mutationsWithSameScope?.find((m)=>m.state.status === "pending");
+            return !firstPendingMutation || firstPendingMutation === mutation;
+        } else {
+            return true;
+        }
+    }
+    runNext(mutation) {
+        const scope = scopeFor(mutation);
+        if (typeof scope === "string") {
+            const foundMutation = this.#scopes.get(scope)?.find((m)=>m !== mutation && m.state.isPaused);
+            return foundMutation?.continue() ?? Promise.resolve();
+        } else {
+            return Promise.resolve();
+        }
+    }
+    clear() {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.#mutations.forEach((mutation)=>{
+                this.notify({
+                    type: "removed",
+                    mutation
+                });
+            });
+            this.#mutations.clear();
+            this.#scopes.clear();
+        });
+    }
+    getAll() {
+        return Array.from(this.#mutations);
+    }
+    find(filters) {
+        const defaultedFilters = {
+            exact: true,
+            ...filters
+        };
+        return this.getAll().find((mutation)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["matchMutation"])(defaultedFilters, mutation));
+    }
+    findAll(filters = {}) {
+        return this.getAll().filter((mutation)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["matchMutation"])(filters, mutation));
+    }
+    notify(event) {
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.listeners.forEach((listener)=>{
+                listener(event);
+            });
+        });
+    }
+    resumePausedMutations() {
+        const pausedMutations = this.getAll().filter((x)=>x.state.isPaused);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>Promise.all(pausedMutations.map((mutation)=>mutation.continue().catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]))));
+    }
+};
+function scopeFor(mutation) {
+    return mutation.options.scope?.id;
+}
+;
+ //# sourceMappingURL=mutationCache.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "hasNextPage",
+    ()=>hasNextPage,
+    "hasPreviousPage",
+    ()=>hasPreviousPage,
+    "infiniteQueryBehavior",
+    ()=>infiniteQueryBehavior
+]);
+// src/infiniteQueryBehavior.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+;
+function infiniteQueryBehavior(pages) {
+    return {
+        onFetch: (context, query)=>{
+            const options = context.options;
+            const direction = context.fetchOptions?.meta?.fetchMore?.direction;
+            const oldPages = context.state.data?.pages || [];
+            const oldPageParams = context.state.data?.pageParams || [];
+            let result = {
+                pages: [],
+                pageParams: []
+            };
+            let currentPage = 0;
+            const fetchFn = async ()=>{
+                let cancelled = false;
+                const addSignalProperty = (object)=>{
+                    Object.defineProperty(object, "signal", {
+                        enumerable: true,
+                        get: ()=>{
+                            if (context.signal.aborted) {
+                                cancelled = true;
+                            } else {
+                                context.signal.addEventListener("abort", ()=>{
+                                    cancelled = true;
+                                });
+                            }
+                            return context.signal;
+                        }
+                    });
+                };
+                const queryFn = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ensureQueryFn"])(context.options, context.fetchOptions);
+                const fetchPage = async (data, param, previous)=>{
+                    if (cancelled) {
+                        return Promise.reject();
+                    }
+                    if (param == null && data.pages.length) {
+                        return Promise.resolve(data);
+                    }
+                    const queryFnContext = {
+                        client: context.client,
+                        queryKey: context.queryKey,
+                        pageParam: param,
+                        direction: previous ? "backward" : "forward",
+                        meta: context.options.meta
+                    };
+                    addSignalProperty(queryFnContext);
+                    const page = await queryFn(queryFnContext);
+                    const { maxPages } = context.options;
+                    const addTo = previous ? __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["addToStart"] : __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["addToEnd"];
+                    return {
+                        pages: addTo(data.pages, page, maxPages),
+                        pageParams: addTo(data.pageParams, param, maxPages)
+                    };
+                };
+                if (direction && oldPages.length) {
+                    const previous = direction === "backward";
+                    const pageParamFn = previous ? getPreviousPageParam : getNextPageParam;
+                    const oldData = {
+                        pages: oldPages,
+                        pageParams: oldPageParams
+                    };
+                    const param = pageParamFn(options, oldData);
+                    result = await fetchPage(oldData, param, previous);
+                } else {
+                    const remainingPages = pages ?? oldPages.length;
+                    do {
+                        const param = currentPage === 0 ? oldPageParams[0] ?? options.initialPageParam : getNextPageParam(options, result);
+                        if (currentPage > 0 && param == null) {
+                            break;
+                        }
+                        result = await fetchPage(result, param);
+                        currentPage++;
+                    }while (currentPage < remainingPages)
+                }
+                return result;
+            };
+            if (context.options.persister) {
+                context.fetchFn = ()=>{
+                    return context.options.persister?.(fetchFn, {
+                        client: context.client,
+                        queryKey: context.queryKey,
+                        meta: context.options.meta,
+                        signal: context.signal
+                    }, query);
+                };
+            } else {
+                context.fetchFn = fetchFn;
+            }
+        }
+    };
+}
+function getNextPageParam(options, { pages, pageParams }) {
+    const lastIndex = pages.length - 1;
+    return pages.length > 0 ? options.getNextPageParam(pages[lastIndex], pages, pageParams[lastIndex], pageParams) : void 0;
+}
+function getPreviousPageParam(options, { pages, pageParams }) {
+    return pages.length > 0 ? options.getPreviousPageParam?.(pages[0], pages, pageParams[0], pageParams) : void 0;
+}
+function hasNextPage(options, data) {
+    if (!data) return false;
+    return getNextPageParam(options, data) != null;
+}
+function hasPreviousPage(options, data) {
+    if (!data || !options.getPreviousPageParam) return false;
+    return getPreviousPageParam(options, data) != null;
+}
+;
+ //# sourceMappingURL=infiniteQueryBehavior.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/queryClient.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "QueryClient",
+    ()=>QueryClient
+]);
+// src/queryClient.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/utils.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$queryCache$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/queryCache.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$mutationCache$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/mutationCache.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$focusManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/focusManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/onlineManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/notifyManager.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$infiniteQueryBehavior$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+query-core@5.74.4/node_modules/@tanstack/query-core/build/modern/infiniteQueryBehavior.js [app-client] (ecmascript)");
+;
+;
+;
+;
+;
+;
+;
+var QueryClient = class {
+    #queryCache;
+    #mutationCache;
+    #defaultOptions;
+    #queryDefaults;
+    #mutationDefaults;
+    #mountCount;
+    #unsubscribeFocus;
+    #unsubscribeOnline;
+    constructor(config = {}){
+        this.#queryCache = config.queryCache || new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$queryCache$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["QueryCache"]();
+        this.#mutationCache = config.mutationCache || new __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$mutationCache$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MutationCache"]();
+        this.#defaultOptions = config.defaultOptions || {};
+        this.#queryDefaults = /* @__PURE__ */ new Map();
+        this.#mutationDefaults = /* @__PURE__ */ new Map();
+        this.#mountCount = 0;
+    }
+    mount() {
+        this.#mountCount++;
+        if (this.#mountCount !== 1) return;
+        this.#unsubscribeFocus = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$focusManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["focusManager"].subscribe(async (focused)=>{
+            if (focused) {
+                await this.resumePausedMutations();
+                this.#queryCache.onFocus();
+            }
+        });
+        this.#unsubscribeOnline = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["onlineManager"].subscribe(async (online)=>{
+            if (online) {
+                await this.resumePausedMutations();
+                this.#queryCache.onOnline();
+            }
+        });
+    }
+    unmount() {
+        this.#mountCount--;
+        if (this.#mountCount !== 0) return;
+        this.#unsubscribeFocus?.();
+        this.#unsubscribeFocus = void 0;
+        this.#unsubscribeOnline?.();
+        this.#unsubscribeOnline = void 0;
+    }
+    isFetching(filters) {
+        return this.#queryCache.findAll({
+            ...filters,
+            fetchStatus: "fetching"
+        }).length;
+    }
+    isMutating(filters) {
+        return this.#mutationCache.findAll({
+            ...filters,
+            status: "pending"
+        }).length;
+    }
+    /**
+   * Imperative (non-reactive) way to retrieve data for a QueryKey.
+   * Should only be used in callbacks or functions where reading the latest data is necessary, e.g. for optimistic updates.
+   *
+   * Hint: Do not use this function inside a component, because it won't receive updates.
+   * Use `useQuery` to create a `QueryObserver` that subscribes to changes.
+   */ getQueryData(queryKey) {
+        const options = this.defaultQueryOptions({
+            queryKey
+        });
+        return this.#queryCache.get(options.queryHash)?.state.data;
+    }
+    ensureQueryData(options) {
+        const defaultedOptions = this.defaultQueryOptions(options);
+        const query = this.#queryCache.build(this, defaultedOptions);
+        const cachedData = query.state.data;
+        if (cachedData === void 0) {
+            return this.fetchQuery(options);
+        }
+        if (options.revalidateIfStale && query.isStaleByTime((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["resolveStaleTime"])(defaultedOptions.staleTime, query))) {
+            void this.prefetchQuery(defaultedOptions);
+        }
+        return Promise.resolve(cachedData);
+    }
+    getQueriesData(filters) {
+        return this.#queryCache.findAll(filters).map(({ queryKey, state })=>{
+            const data = state.data;
+            return [
+                queryKey,
+                data
+            ];
+        });
+    }
+    setQueryData(queryKey, updater, options) {
+        const defaultedOptions = this.defaultQueryOptions({
+            queryKey
+        });
+        const query = this.#queryCache.get(defaultedOptions.queryHash);
+        const prevData = query?.state.data;
+        const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["functionalUpdate"])(updater, prevData);
+        if (data === void 0) {
+            return void 0;
+        }
+        return this.#queryCache.build(this, defaultedOptions).setData(data, {
+            ...options,
+            manual: true
+        });
+    }
+    setQueriesData(filters, updater, options) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>this.#queryCache.findAll(filters).map(({ queryKey })=>[
+                    queryKey,
+                    this.setQueryData(queryKey, updater, options)
+                ]));
+    }
+    getQueryState(queryKey) {
+        const options = this.defaultQueryOptions({
+            queryKey
+        });
+        return this.#queryCache.get(options.queryHash)?.state;
+    }
+    removeQueries(filters) {
+        const queryCache = this.#queryCache;
+        __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            queryCache.findAll(filters).forEach((query)=>{
+                queryCache.remove(query);
+            });
+        });
+    }
+    resetQueries(filters, options) {
+        const queryCache = this.#queryCache;
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            queryCache.findAll(filters).forEach((query)=>{
+                query.reset();
+            });
+            return this.refetchQueries({
+                type: "active",
+                ...filters
+            }, options);
+        });
+    }
+    cancelQueries(filters, cancelOptions = {}) {
+        const defaultedCancelOptions = {
+            revert: true,
+            ...cancelOptions
+        };
+        const promises = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>this.#queryCache.findAll(filters).map((query)=>query.cancel(defaultedCancelOptions)));
+        return Promise.all(promises).then(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]).catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]);
+    }
+    invalidateQueries(filters, options = {}) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>{
+            this.#queryCache.findAll(filters).forEach((query)=>{
+                query.invalidate();
+            });
+            if (filters?.refetchType === "none") {
+                return Promise.resolve();
+            }
+            return this.refetchQueries({
+                ...filters,
+                type: filters?.refetchType ?? filters?.type ?? "active"
+            }, options);
+        });
+    }
+    refetchQueries(filters, options = {}) {
+        const fetchOptions = {
+            ...options,
+            cancelRefetch: options.cancelRefetch ?? true
+        };
+        const promises = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$notifyManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["notifyManager"].batch(()=>this.#queryCache.findAll(filters).filter((query)=>!query.isDisabled()).map((query)=>{
+                let promise = query.fetch(void 0, fetchOptions);
+                if (!fetchOptions.throwOnError) {
+                    promise = promise.catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]);
+                }
+                return query.state.fetchStatus === "paused" ? Promise.resolve() : promise;
+            }));
+        return Promise.all(promises).then(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]);
+    }
+    fetchQuery(options) {
+        const defaultedOptions = this.defaultQueryOptions(options);
+        if (defaultedOptions.retry === void 0) {
+            defaultedOptions.retry = false;
+        }
+        const query = this.#queryCache.build(this, defaultedOptions);
+        return query.isStaleByTime((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["resolveStaleTime"])(defaultedOptions.staleTime, query)) ? query.fetch(defaultedOptions) : Promise.resolve(query.state.data);
+    }
+    prefetchQuery(options) {
+        return this.fetchQuery(options).then(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]).catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]);
+    }
+    fetchInfiniteQuery(options) {
+        options.behavior = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$infiniteQueryBehavior$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["infiniteQueryBehavior"])(options.pages);
+        return this.fetchQuery(options);
+    }
+    prefetchInfiniteQuery(options) {
+        return this.fetchInfiniteQuery(options).then(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]).catch(__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["noop"]);
+    }
+    ensureInfiniteQueryData(options) {
+        options.behavior = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$infiniteQueryBehavior$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["infiniteQueryBehavior"])(options.pages);
+        return this.ensureQueryData(options);
+    }
+    resumePausedMutations() {
+        if (__TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$onlineManager$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["onlineManager"].isOnline()) {
+            return this.#mutationCache.resumePausedMutations();
+        }
+        return Promise.resolve();
+    }
+    getQueryCache() {
+        return this.#queryCache;
+    }
+    getMutationCache() {
+        return this.#mutationCache;
+    }
+    getDefaultOptions() {
+        return this.#defaultOptions;
+    }
+    setDefaultOptions(options) {
+        this.#defaultOptions = options;
+    }
+    setQueryDefaults(queryKey, options) {
+        this.#queryDefaults.set((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["hashKey"])(queryKey), {
+            queryKey,
+            defaultOptions: options
+        });
+    }
+    getQueryDefaults(queryKey) {
+        const defaults = [
+            ...this.#queryDefaults.values()
+        ];
+        const result = {};
+        defaults.forEach((queryDefault)=>{
+            if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["partialMatchKey"])(queryKey, queryDefault.queryKey)) {
+                Object.assign(result, queryDefault.defaultOptions);
+            }
+        });
+        return result;
+    }
+    setMutationDefaults(mutationKey, options) {
+        this.#mutationDefaults.set((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["hashKey"])(mutationKey), {
+            mutationKey,
+            defaultOptions: options
+        });
+    }
+    getMutationDefaults(mutationKey) {
+        const defaults = [
+            ...this.#mutationDefaults.values()
+        ];
+        const result = {};
+        defaults.forEach((queryDefault)=>{
+            if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["partialMatchKey"])(mutationKey, queryDefault.mutationKey)) {
+                Object.assign(result, queryDefault.defaultOptions);
+            }
+        });
+        return result;
+    }
+    defaultQueryOptions(options) {
+        if (options._defaulted) {
+            return options;
+        }
+        const defaultedOptions = {
+            ...this.#defaultOptions.queries,
+            ...this.getQueryDefaults(options.queryKey),
+            ...options,
+            _defaulted: true
+        };
+        if (!defaultedOptions.queryHash) {
+            defaultedOptions.queryHash = (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["hashQueryKeyByOptions"])(defaultedOptions.queryKey, defaultedOptions);
+        }
+        if (defaultedOptions.refetchOnReconnect === void 0) {
+            defaultedOptions.refetchOnReconnect = defaultedOptions.networkMode !== "always";
+        }
+        if (defaultedOptions.throwOnError === void 0) {
+            defaultedOptions.throwOnError = !!defaultedOptions.suspense;
+        }
+        if (!defaultedOptions.networkMode && defaultedOptions.persister) {
+            defaultedOptions.networkMode = "offlineFirst";
+        }
+        if (defaultedOptions.queryFn === __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f40$tanstack$2b$query$2d$core$40$5$2e$74$2e$4$2f$node_modules$2f40$tanstack$2f$query$2d$core$2f$build$2f$modern$2f$utils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["skipToken"]) {
+            defaultedOptions.enabled = false;
+        }
+        return defaultedOptions;
+    }
+    defaultMutationOptions(options) {
+        if (options?._defaulted) {
+            return options;
+        }
+        return {
+            ...this.#defaultOptions.mutations,
+            ...options?.mutationKey && this.getMutationDefaults(options.mutationKey),
+            ...options,
+            _defaulted: true
+        };
+    }
+    clear() {
+        this.#queryCache.clear();
+        this.#mutationCache.clear();
+    }
+};
+;
+ //# sourceMappingURL=queryClient.js.map
+}),
+"[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/@tanstack+react-query@5.74.4_react@18.3.1/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "QueryClientContext",
+    ()=>QueryClientContext,
+    "QueryClientProvider",
+    ()=>QueryClientProvider,
+    "useQueryClient",
+    ()=>useQueryClient
+]);
+// src/QueryClientProvider.tsx
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/dyad-apps/the-open-shelf/node_modules/.pnpm/next@16.1.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/compiled/react/jsx-runtime.js [app-client] (ecmascript)");
+"use client";
+;
+;
+var QueryClientContext = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"](void 0);
+var useQueryClient = (queryClient)=>{
+    const client = __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useContext"](QueryClientContext);
+    if (queryClient) {
+        return queryClient;
+    }
+    if (!client) {
+        throw new Error("No QueryClient set, use QueryClientProvider to set one");
+    }
+    return client;
+};
+var QueryClientProvider = ({ client, children })=>{
+    __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"]({
+        "QueryClientProvider.useEffect": ()=>{
+            client.mount();
+            return ({
+                "QueryClientProvider.useEffect": ()=>{
+                    client.unmount();
+                }
+            })["QueryClientProvider.useEffect"];
+        }
+    }["QueryClientProvider.useEffect"], [
+        client
+    ]);
+    return /* @__PURE__ */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$dyad$2d$apps$2f$the$2d$open$2d$shelf$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$1$2e$4_react$2d$dom$40$18$2e$3$2e$1_react$40$18$2e$3$2e$1_$5f$react$40$18$2e$3$2e$1$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsx"])(QueryClientContext.Provider, {
+        value: client,
+        children
+    });
+};
+;
+ //# sourceMappingURL=QueryClientProvider.js.map
+}),
+]);
+
+//# sourceMappingURL=c7722__pnpm_6873ece9._.js.map

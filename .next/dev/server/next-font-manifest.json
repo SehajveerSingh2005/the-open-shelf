@@ -1,0 +1,19 @@
+{
+  "app": {
+    "[project]/dyad-apps/the-open-shelf/src/app/page": [
+      "static/media/e41d5df559864f9e-s.p.380d09ea.woff2",
+      "static/media/f06bf9da926bae75-s.p.c68a79fb.woff2"
+    ],
+    "[project]/dyad-apps/the-open-shelf/src/app/shelf/article/[articleId]/page": [
+      "static/media/e41d5df559864f9e-s.p.380d09ea.woff2",
+      "static/media/f06bf9da926bae75-s.p.c68a79fb.woff2"
+    ],
+    "[project]/dyad-apps/the-open-shelf/src/app/shelf/page": [
+      "static/media/e41d5df559864f9e-s.p.380d09ea.woff2",
+      "static/media/f06bf9da926bae75-s.p.c68a79fb.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/sehaj/dyad-apps/the-open-shelf/src/app/page.tsx"],"sourcesContent":["import Landing from \"@/pages/Landing\";\n\nexport default function Home() {\n  return <Landing />;\n}"],"names":[],"mappings":";;;;;;;;;;;;AAEe,SAAS;IACtB,qBAAO,qZAAC;;;;;AACV"}}]
+}
