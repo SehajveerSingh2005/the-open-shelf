@@ -27,7 +27,7 @@ const Index = () => {
   
   const { data: articlesData, isLoading, refetch } = useArticles();
 
-  // Check onboarding status and feed count
+  // Check onboarding status
   useEffect(() => {
     const checkOnboarding = async () => {
       if (!user) return;
@@ -40,18 +40,7 @@ const Index = () => {
         
       const onboardingCompleted = profileData?.onboarding_completed;
 
-      const { count: feedCount } = await supabase
-        .from('feeds')
-        .select('id', { count: 'exact', head: true })
-        .eq('user_id', user.id);
-
-      if (!onboardingCompleted || (feedCount === 0 && onboardingCompleted)) {
-        if (onboardingCompleted) {
-           await supabase
-            .from('profiles')
-            .update({ onboarding_completed: false })
-            .eq('id', user.id);
-        }
+      if (!onboardingCompleted) {
         router.push('/onboarding');
       } else {
         setOnboardingChecked(true);
@@ -66,11 +55,12 @@ const Index = () => {
   }, [articlesData, articleId]);
 
   const handleArticleClick = (article: Article) => {
-    router.push(`/shelf/article/${article.id}`);
+    // Navigate without scrolling to top to keep canvas stable
+    router.push(`/shelf/article/${article.id}`, { scroll: false });
   };
 
   const handleCloseReader = () => {
-    router.push('/shelf');
+    router.push('/shelf', { scroll: false });
   };
 
   const syncFeeds = async (isAuto = false) => {

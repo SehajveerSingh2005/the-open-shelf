@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ interface SavedArticle {
 
 const Profile = () => {
   const { user, signOut } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [stacks, setStacks] = useState<Stack[]>([]);
   const [savedArticles, setSavedArticles] = useState<SavedArticle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -135,13 +135,13 @@ const Profile = () => {
   };
 
   const handleArticleClick = (article: Article) => {
-    navigate(`/app/article/${article.id}`);
+    router.push(`/shelf/article/${article.id}`);
   };
 
   return (
     <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-        <div className="flex flex-col items-start cursor-pointer group" onClick={() => navigate('/app')}>
+        <div className="flex flex-col items-start cursor-pointer group" onClick={() => router.push('/shelf')}>
           <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 group-hover:text-gray-900 transition-colors">The</span>
           <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900">
             Open Shelf

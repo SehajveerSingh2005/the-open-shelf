@@ -16,6 +16,7 @@ interface CanvasViewProps {
 const STORAGE_KEY = 'open-shelf-camera-v11';
 
 const getStoredState = () => {
+  if (typeof window === 'undefined') return { x: 0, y: 0, scale: 0.8 };
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.8 };
@@ -26,7 +27,9 @@ const getStoredState = () => {
 
 const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const initialState = useMemo(() => getStoredState(), []);
+  
+  // Initialize with stored state to avoid flicker
+  const [initialState] = useState(() => getStoredState());
   
   const rawX = useMotionValue(initialState.x);
   const rawY = useMotionValue(initialState.y);
@@ -71,17 +74,14 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
 
     const nextVisible: { article: Article; offset: { x: number; y: number }; key: string }[] = [];
 
-    // Increase search range slightly to ensure smooth infinite scroll
     for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
       for (let by = blockY - 2; by <= blockY + 2; by++) {
         const offsetX = bx * width;
         const offsetY = by * height;
         
-        // Add deterministic "shuffling" per block based on bx/by to break patterns
         const seed = Math.abs((bx * 31 + by * 17) % articles.items.length);
         
         for (let i = 0; i < articles.items.length; i++) {
-          // Shuffle indices deterministically for this specific block
           const index = (i + seed) % articles.items.length;
           const art = articles.items[index];
           
@@ -102,7 +102,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
-  }, [articles]);
+  }, [articles, rawScale, rawX, rawY]);
 
   useEffect(() => {
     const unsubX = rawX.on('change', () => updateVisibility());
@@ -134,7 +134,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           rawScale.set(newScale);
         }
       } else {
-        // Only prevent if scrolling horizontally or explicitly scrolling the canvas
         rawX.set(rawX.get() - e.deltaX);
         rawY.set(rawY.get() - e.deltaY);
       }

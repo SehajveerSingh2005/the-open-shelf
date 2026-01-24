@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -12,7 +12,7 @@ import { showSuccess, showError } from '@/utils/toast';
 
 const Onboarding = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   
@@ -103,7 +103,7 @@ const Onboarding = () => {
       if (profileError) throw profileError;
 
       showSuccess("Welcome to your shelf.");
-      navigate('/app');
+      router.push('/shelf');
     } catch (err: any) {
       console.error("Onboarding error:", err);
       showError("Something went wrong finalizing your shelf.");
