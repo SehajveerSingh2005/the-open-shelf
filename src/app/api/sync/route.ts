@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 
     if (feedError) throw feedError;
 
-    const articles = feed.items.map((item) => {
+    const articles = feed.items.map((item: any) => {
       const content = item.contentEncoded || item.content || item.description || '';
       const wordCount = content.split(/\s+/).length;
       return {
