@@ -28,6 +28,9 @@ const ShelfContent = () => {
   const hasAttemptedInitialSync = useRef(false);
   
   const { data: articlesData, isLoading, refetch } = useArticles();
+  
+  // Explicitly extract items to help TypeScript with narrowing
+  const articles = articlesData?.items;
 
   // Check onboarding status
   useEffect(() => {
@@ -52,9 +55,9 @@ const ShelfContent = () => {
   }, [user, router]);
 
   const selectedArticle = useMemo(() => {
-    if (!articlesData?.items || !articleId) return null;
-    return articlesData.items.find(a => a.id === articleId) || null;
-  }, [articlesData, articleId]);
+    if (!articles || !articleId) return null;
+    return articles.find(a => a.id === articleId) || null;
+  }, [articles, articleId]);
 
   const handleArticleClick = (article: Article) => {
     router.push(`/shelf?article=${article.id}`, { scroll: false });
@@ -101,13 +104,17 @@ const ShelfContent = () => {
     }
   };
 
+  // Safe access to length for the dependency array
+  const articlesLength = articles?.length ?? 0;
+
   useEffect(() => {
-    if (onboardingChecked && !isLoading && !hasAttemptedInitialSync.current && (!articlesData?.items || articlesData.items.length === 0)) {
+    if (onboardingChecked && !isLoading && !hasAttemptedInitialSync.current && articlesLength === 0) {
       syncFeeds(true);
     }
-  }, [isLoading, onboardingChecked, articlesData?.items?.length]);
+  }, [isLoading, onboardingChecked, articlesLength]);
 
-  if (!onboardingChecked || (isLoading && !articlesData?.items && !isSyncing)) {
+  // Simplified loading condition to avoid 'never' type narrowing issues
+  if (!onboardingChecked || (isLoading && !articles && !isSyncing)) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
         <Loader2 className="animate-spin text-gray-200" size={32} />
@@ -152,7 +159,7 @@ const ShelfContent = () => {
       </header>
 
       <main className="flex-1 mt-[73px] relative overflow-hidden">
-        {articlesData?.items && articlesData.items.length > 0 ? (
+        {articlesData && articlesData.items.length > 0 ? (
           view === 'canvas' ? (
             <CanvasView articles={articlesData} onArticleClick={handleArticleClick} />
           ) : (
