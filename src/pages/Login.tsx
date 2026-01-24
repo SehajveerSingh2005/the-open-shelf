@@ -19,6 +19,9 @@ const Login = () => {
     }
   }, [session, navigate]);
 
+  // Determine the base URL for redirection dynamically
+  const redirectUrl = window.location.origin + '/app';
+
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2 bg-white selection:bg-gray-100 selection:text-black">
       {/* Editorial Side */}
@@ -119,7 +122,7 @@ const Login = () => {
               supabaseClient={supabase}
               providers={['google']}
               view={view}
-              redirectTo={window.location.origin + '/app'}
+              redirectTo={redirectUrl}
               appearance={{
                 theme: ThemeSupa,
                 variables: {
