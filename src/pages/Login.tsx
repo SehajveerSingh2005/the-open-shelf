@@ -136,8 +136,8 @@ const Login = () => {
                       inputBorderHover: '#9ca3af',
                     },
                     radii: {
-                      buttonRadius: '0px',
-                      inputRadius: '0px',
+                      borderRadiusButton: '0px',
+                      inputBorderRadius: '0px',
                     },
                     fontSizes: {
                       baseBodySize: '15px',

@@ -19,7 +19,7 @@ const ShelfContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Using an explicit null check to satisfy the TypeScript compiler
+  // Explicit check for compiler stability
   const articleId = searchParams ? searchParams.get('article') : null;
   
   const [view, setView] = useState<'canvas' | 'feed'>('canvas');
@@ -29,8 +29,8 @@ const ShelfContent = () => {
   
   const { data: articlesData, isLoading, refetch } = useArticles();
   
-  // Explicitly extract items to help TypeScript with narrowing
-  const articles = articlesData?.items;
+  // Stable reference to items to avoid 'never' narrowing
+  const articles: Article[] = articlesData?.items || [];
 
   // Check onboarding status
   useEffect(() => {
@@ -55,7 +55,7 @@ const ShelfContent = () => {
   }, [user, router]);
 
   const selectedArticle = useMemo(() => {
-    if (!articles || !articleId) return null;
+    if (articles.length === 0 || !articleId) return null;
     return articles.find(a => a.id === articleId) || null;
   }, [articles, articleId]);
 
@@ -104,17 +104,13 @@ const ShelfContent = () => {
     }
   };
 
-  // Safe access to length for the dependency array
-  const articlesLength = articles?.length ?? 0;
-
   useEffect(() => {
-    if (onboardingChecked && !isLoading && !hasAttemptedInitialSync.current && articlesLength === 0) {
+    if (onboardingChecked && !isLoading && !hasAttemptedInitialSync.current && articles.length === 0) {
       syncFeeds(true);
     }
-  }, [isLoading, onboardingChecked, articlesLength]);
+  }, [isLoading, onboardingChecked, articles.length]);
 
-  // Simplified loading condition to avoid 'never' type narrowing issues
-  if (!onboardingChecked || (isLoading && !articles && !isSyncing)) {
+  if (!onboardingChecked || (isLoading && articles.length === 0 && !isSyncing)) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
         <Loader2 className="animate-spin text-gray-200" size={32} />
@@ -159,12 +155,12 @@ const ShelfContent = () => {
       </header>
 
       <main className="flex-1 mt-[73px] relative overflow-hidden">
-        {articlesData && articlesData.items.length > 0 ? (
-          view === 'canvas' ? (
+        {articles.length > 0 ? (
+          view === 'canvas' && articlesData ? (
             <CanvasView articles={articlesData} onArticleClick={handleArticleClick} />
           ) : (
             <div className="h-full overflow-y-auto subtle-grid">
-              <FeedView articles={articlesData.items} onArticleClick={handleArticleClick} />
+              <FeedView articles={articles} onArticleClick={handleArticleClick} />
             </div>
           )
         ) : (
