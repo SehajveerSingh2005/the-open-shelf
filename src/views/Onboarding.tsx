@@ -15,15 +15,15 @@ const Onboarding = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  
+
   // Step 1: Interests
   const [topics, setTopics] = useState<any[]>([]);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  
+
   // Step 2: Suggested Feeds
   const [suggestedFeeds, setSuggestedFeeds] = useState<any[]>([]);
   const [selectedFeeds, setSelectedFeeds] = useState<string[]>([]);
-  
+
   // Step 3: Custom Feed
   const [customUrl, setCustomUrl] = useState('');
 
@@ -42,23 +42,25 @@ const Onboarding = () => {
       .from('suggested_feeds')
       .select('*')
       .in('topic_id', topics.filter(t => selectedTopics.includes(t.slug)).map(t => t.id));
-    
+
     if (data) {
-      setSuggestedFeeds(data);
-      setSelectedFeeds(data.map(f => f.url)); // Default select all
+      // Ensure unique feeds by URL
+      const uniqueFeeds = Array.from(new Map(data.map(item => [item.url, item])).values());
+      setSuggestedFeeds(uniqueFeeds);
+      setSelectedFeeds(uniqueFeeds.map(f => f.url)); // Default select all
     }
     setLoading(false);
     setStep(2);
   };
 
   const toggleTopic = (slug: string) => {
-    setSelectedTopics(prev => 
+    setSelectedTopics(prev =>
       prev.includes(slug) ? prev.filter(s => s !== slug) : [...prev, slug]
     );
   };
 
   const toggleFeed = (url: string) => {
-    setSelectedFeeds(prev => 
+    setSelectedFeeds(prev =>
       prev.includes(url) ? prev.filter(u => u !== url) : [...prev, url]
     );
   };
@@ -80,7 +82,7 @@ const Onboarding = () => {
         const { error: feedError } = await supabase
           .from('feeds')
           .upsert(feedsToAdd, { onConflict: 'url,user_id' });
-        
+
         if (feedError) throw feedError;
 
         // Trigger sync for all added feeds
@@ -94,9 +96,9 @@ const Onboarding = () => {
       // 2. Update profile
       const { error: profileError } = await supabase
         .from('profiles')
-        .update({ 
+        .update({
           onboarding_completed: true,
-          interests: selectedTopics 
+          interests: selectedTopics
         })
         .eq('id', user?.id);
 
@@ -115,15 +117,22 @@ const Onboarding = () => {
   const handleAddCustom = async (e: FormEvent) => {
     e.preventDefault();
     if (!customUrl) return;
+
+    if (suggestedFeeds.some(f => f.url === customUrl)) {
+      showError("This source is already in your selection.");
+      setCustomUrl('');
+      return;
+    }
+
     setLoading(true);
     try {
       const { error } = await supabase.functions.invoke('fetch-rss', {
         body: { feedUrl: customUrl }
       });
       if (error) throw error;
-      
+
       const { data: feedData } = await supabase.from('feeds').select('title').eq('url', customUrl).single();
-      
+
       setSelectedFeeds(prev => [...prev, customUrl]);
       setSuggestedFeeds(prev => [...prev, { title: feedData?.title || 'Custom Source', url: customUrl }]);
       setCustomUrl('');
@@ -140,7 +149,7 @@ const Onboarding = () => {
       <div className="w-full max-w-2xl">
         <AnimatePresence mode="wait">
           {step === 1 && (
-            <motion.div 
+            <motion.div
               key="step1"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -160,11 +169,10 @@ const Onboarding = () => {
                   <button
                     key={topic.id}
                     onClick={() => toggleTopic(topic.slug)}
-                    className={`px-6 py-3 border transition-all duration-500 text-[10px] uppercase tracking-[0.3em] font-bold ${
-                      selectedTopics.includes(topic.slug)
-                        ? 'bg-gray-900 border-gray-900 text-white'
-                        : 'bg-white border-gray-100 text-gray-400 hover:border-gray-900 hover:text-gray-900'
-                    }`}
+                    className={`px-6 py-3 border transition-all duration-500 text-[10px] uppercase tracking-[0.3em] font-bold ${selectedTopics.includes(topic.slug)
+                      ? 'bg-gray-900 border-gray-900 text-white'
+                      : 'bg-white border-gray-100 text-gray-400 hover:border-gray-900 hover:text-gray-900'
+                      }`}
                   >
                     {topic.name}
                   </button>
@@ -172,7 +180,7 @@ const Onboarding = () => {
               </div>
 
               <div className="flex justify-center pt-4">
-                <Button 
+                <Button
                   onClick={fetchSuggestedFeeds}
                   disabled={selectedTopics.length === 0 || loading}
                   className="rounded-none bg-white text-gray-900 border border-gray-100 hover:border-gray-900 hover:bg-white h-14 px-10 text-[10px] uppercase tracking-[0.4em] font-bold"
@@ -184,7 +192,7 @@ const Onboarding = () => {
           )}
 
           {step === 2 && (
-            <motion.div 
+            <motion.div
               key="step2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -204,11 +212,10 @@ const Onboarding = () => {
                   <button
                     key={feed.url}
                     onClick={() => toggleFeed(feed.url)}
-                    className={`flex items-center justify-between p-4 border transition-all duration-300 ${
-                      selectedFeeds.includes(feed.url)
-                        ? 'border-gray-900 bg-gray-50/50'
-                        : 'border-gray-100 bg-white hover:border-gray-300'
-                    }`}
+                    className={`flex items-center justify-between p-4 border transition-all duration-300 ${selectedFeeds.includes(feed.url)
+                      ? 'border-gray-900 bg-gray-50/50'
+                      : 'border-gray-100 bg-white hover:border-gray-300'
+                      }`}
                   >
                     <div className="text-left overflow-hidden">
                       <p className="font-serif font-medium text-base text-gray-900 truncate">{feed.title}</p>
@@ -224,8 +231,8 @@ const Onboarding = () => {
                 <form onSubmit={handleAddCustom} className="flex gap-2">
                   <div className="relative flex-1">
                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300" size={14} />
-                    <Input 
-                      placeholder="https://substack.com/feed" 
+                    <Input
+                      placeholder="https://substack.com/feed"
                       value={customUrl}
                       onChange={(e) => setCustomUrl(e.target.value)}
                       className="h-12 pl-12 rounded-none border-gray-100 focus:border-gray-900"
@@ -239,7 +246,7 @@ const Onboarding = () => {
 
               <div className="flex justify-between items-center pt-4">
                 <button onClick={() => setStep(1)} className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400 hover:text-gray-900">Back</button>
-                <Button 
+                <Button
                   onClick={handleCompleteOnboarding}
                   disabled={loading}
                   className="rounded-none bg-gray-900 text-white h-14 px-10 text-[10px] uppercase tracking-[0.4em] font-bold"
