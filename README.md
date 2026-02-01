@@ -34,11 +34,12 @@ Organize your findings into thematic collections. Stacks allow you to categorize
 
 This application is built with a focus on speed, responsiveness, and clean architecture:
 
-*   **Frontend:** React 18, TypeScript, Vite
-*   **Animations:** Framer Motion (for the spatial interactions)
+*   **Framework:** Next.js 14+ (App Router)
+*   **Language:** TypeScript
+*   **Animations:** Framer Motion (for spatial interactions)
 *   **Styling:** Tailwind CSS + shadcn/ui
 *   **Database & Auth:** Supabase (PostgreSQL)
-*   **Server Logic:** Supabase Edge Functions (Deno) for RSS parsing
+*   **Server Logic:** Next.js API Routes / Server Actions
 *   **State Management:** TanStack Query (React Query)
 
 ## Getting Started
@@ -49,7 +50,13 @@ This application is built with a focus on speed, responsiveness, and clean archi
 npm install
 ```
 
-### 2. Supabase Configuration
+### 2. Environment Setup
+Create a `.env.local` file in the root directory and add your Supabase credentials:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
 This application uses Supabase for backend services. The client configuration is located in `src/integrations/supabase/client.ts`.
 
