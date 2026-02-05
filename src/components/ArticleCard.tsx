@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, memo } from 'react';
+import { useState, memo, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Article } from '@/types/article';
 import { cn } from '@/lib/utils';
-
-const LOADED_IMAGES = new Set<string>();
 
 interface ArticleCardProps {
   article: Article;
@@ -15,17 +13,39 @@ interface ArticleCardProps {
 
 const ArticleCard = memo(({ article, onClick, isCanvas = false }: ArticleCardProps) => {
   const imageUrl = article.imageUrl ? `${article.imageUrl}${article.imageUrl.includes('?') ? '&' : '?'}w=600&auto=format&q=75` : null;
-  const [imageLoaded, setImageLoaded] = useState(() => imageUrl ? LOADED_IMAGES.has(imageUrl) : false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [shouldLoadImage, setShouldLoadImage] = useState(!isCanvas);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleLoad = () => {
-    if (imageUrl) {
-      LOADED_IMAGES.add(imageUrl);
-      setImageLoaded(true);
+  // Viewport-based image loading for canvas view
+  useEffect(() => {
+    if (!isCanvas || !imageUrl) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoadImage(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '400px',
+        threshold: 0
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
     }
-  };
+
+    return () => observer.disconnect();
+  }, [isCanvas, imageUrl]);
 
   return (
     <motion.div
+      ref={cardRef}
       whileHover={{ y: -4 }}
       className={cn(
         "bg-white border border-gray-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all cursor-pointer group overflow-hidden",
@@ -33,21 +53,21 @@ const ArticleCard = memo(({ article, onClick, isCanvas = false }: ArticleCardPro
       )}
       onClick={() => onClick(article)}
     >
-      {imageUrl && (
+      {imageUrl && shouldLoadImage && (
         <div className="w-full h-44 overflow-hidden bg-gray-50 relative">
           <div className={cn(
             "absolute inset-0 bg-gray-100 transition-opacity duration-300",
             imageLoaded ? "opacity-0" : "opacity-100"
           )} />
-          <motion.img 
+          <motion.img
             initial={false}
             animate={{ opacity: imageLoaded ? 1 : 0 }}
             transition={{ duration: 0.2 }}
-            src={imageUrl} 
+            src={imageUrl}
             alt={article.title}
-            onLoad={handleLoad}
+            onLoad={() => setImageLoaded(true)}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
+            loading="eager"
             onError={(e) => (e.currentTarget.style.display = 'none')}
           />
         </div>

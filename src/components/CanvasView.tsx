@@ -17,12 +17,12 @@ interface CanvasViewProps {
 const STORAGE_KEY = 'open-shelf-camera-v11';
 
 const getStoredState = () => {
-  if (typeof window === 'undefined') return { x: 0, y: 0, scale: 0.8 };
+  if (typeof window === 'undefined') return { x: 0, y: 0, scale: 1.0 };
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 0.8 };
+    return saved ? JSON.parse(saved) : { x: 0, y: 0, scale: 1.0 };
   } catch {
-    return { x: 0, y: 0, scale: 0.8 };
+    return { x: 0, y: 0, scale: 1.0 };
   }
 };
 
@@ -108,12 +108,38 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const y = useSpring(rawY, { damping: 45, stiffness: 350, mass: 0.6 });
   const scale = useSpring(rawScale, { damping: 30, stiffness: 300 });
 
-  const [visibleItems, setVisibleItems] = useState<{ article: Article; offset: { x: number; y: number }; key: string }[]>([]);
+  const [visibleItems, setVisibleItems] = useState<Article[]>([]);
   const lastUpdatePos = useRef({ x: -9999, y: -9999, scale: -1 });
 
   const isDragging = useRef(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
   const dragDistance = useRef(0);
+
+  // Helper to clamp pan values within content bounds
+  const clampPan = useCallback((newX: number, newY: number, currentScale: number) => {
+    const container = containerRef.current;
+    if (!container) return { x: newX, y: newY };
+
+    const { width, height } = articles.dimensions;
+
+    // Calculate content bounds in screen space
+    const contentWidth = width * currentScale;
+    const contentHeight = height * currentScale;
+
+    // Add padding to allow some overscroll
+    const padding = 200;
+
+    // Calculate max/min pan values
+    const maxX = (contentWidth / 2) + padding;
+    const minX = -(contentWidth / 2) - padding;
+    const maxY = (contentHeight / 2) + padding;
+    const minY = -(contentHeight / 2) - padding;
+
+    return {
+      x: Math.max(minX, Math.min(maxX, newX)),
+      y: Math.max(minY, Math.min(maxY, newY))
+    };
+  }, [articles.dimensions]);
 
   const updateVisibility = useCallback((force = false) => {
     const container = containerRef.current;
@@ -122,8 +148,6 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const s = rawScale.get();
     const curX = rawX.get();
     const curY = rawY.get();
-    const { width, height } = articles.dimensions;
-    if (width === 0 || height === 0) return;
 
     const dist = Math.sqrt(Math.pow(curX - lastUpdatePos.current.x, 2) + Math.pow(curY - lastUpdatePos.current.y, 2));
     const scaleDiff = Math.abs(s - lastUpdatePos.current.scale);
@@ -138,36 +162,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const worldViewTop = (-curY - container.offsetHeight / 2) / s - margin;
     const worldViewBottom = (-curY + container.offsetHeight / 2) / s + margin;
 
-    const blockX = Math.floor(-curX / width);
-    const blockY = Math.floor(-curY / height);
-
-    const nextVisible: { article: Article; offset: { x: number; y: number }; key: string }[] = [];
-
-    for (let bx = blockX - 2; bx <= blockX + 2; bx++) {
-      for (let by = blockY - 2; by <= blockY + 2; by++) {
-        const offsetX = bx * width;
-        const offsetY = by * height;
-
-        const seed = Math.abs((bx * 31 + by * 17) % articles.items.length);
-
-        for (let i = 0; i < articles.items.length; i++) {
-          const index = (i + seed) % articles.items.length;
-          const art = articles.items[index];
-
-          const absX = art.x + offsetX;
-          const absY = art.y + offsetY;
-
-          if (absX >= worldViewLeft && absX <= worldViewRight &&
-            absY >= worldViewTop && absY <= worldViewBottom) {
-            nextVisible.push({
-              article: art,
-              offset: { x: offsetX, y: offsetY },
-              key: `${art.id}-${bx}-${by}`
-            });
-          }
-        }
-      }
-    }
+    // Simple visibility check - no duplication
+    const nextVisible = articles.items.filter(art => {
+      return art.x >= worldViewLeft && art.x <= worldViewRight &&
+        art.y >= worldViewTop && art.y <= worldViewBottom;
+    });
 
     setVisibleItems(nextVisible);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ x: curX, y: curY, scale: s }));
@@ -203,8 +202,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           rawScale.set(newScale);
         }
       } else {
-        rawX.set(rawX.get() - e.deltaX);
-        rawY.set(rawY.get() - e.deltaY);
+        const newX = rawX.get() - e.deltaX;
+        const newY = rawY.get() - e.deltaY;
+        const clamped = clampPan(newX, newY, rawScale.get());
+        rawX.set(clamped.x);
+        rawY.set(clamped.y);
       }
     };
 
@@ -220,8 +222,11 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       const dx = e.clientX - lastMousePos.current.x;
       const dy = e.clientY - lastMousePos.current.y;
       dragDistance.current += Math.sqrt(dx * dx + dy * dy);
-      rawX.set(rawX.get() + dx);
-      rawY.set(rawY.get() + dy);
+      const newX = rawX.get() + dx;
+      const newY = rawY.get() + dy;
+      const clamped = clampPan(newX, newY, rawScale.get());
+      rawX.set(clamped.x);
+      rawY.set(clamped.y);
       lastMousePos.current = { x: e.clientX, y: e.clientY };
     };
 
@@ -259,13 +264,13 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
         style={{ x, y, scale }}
         className="absolute left-1/2 top-1/2 pointer-events-none"
       >
-        {visibleItems.map(({ article, offset, key }) => (
+        {visibleItems.map((article) => (
           <div
-            key={key}
+            key={article.id}
             className="absolute pointer-events-auto"
             style={{
-              left: article.x + offset.x,
-              top: article.y + offset.y,
+              left: article.x,
+              top: article.y,
               transform: 'translateX(-50%)',
               willChange: 'transform'
             }}
