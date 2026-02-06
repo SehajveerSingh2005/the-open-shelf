@@ -13,6 +13,7 @@ import { Loader2, RefreshCw, PlusCircle, User } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { showSuccess, showError } from '@/utils/toast';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const ShelfContent = () => {
     const { user, loading: authLoading } = useAuth();
@@ -116,19 +117,19 @@ const ShelfContent = () => {
 
     if (authLoading || !onboardingChecked || (isLoading && articles.length === 0 && !isSyncing)) {
         return (
-            <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa] space-y-4">
-                <Loader2 className="animate-spin text-gray-200" size={32} />
-                <p className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">Opening the shelf...</p>
+            <div className="h-screen w-screen flex flex-col items-center justify-center bg-background dark:bg-background space-y-4">
+                <Loader2 className="animate-spin text-gray-200 dark:text-gray-700" size={32} />
+                <p className="text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 font-sans">Opening the shelf...</p>
             </div>
         );
     }
 
     return (
         <div className="h-screen w-screen bg-background flex flex-col overflow-hidden">
-            <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 flex justify-between items-center">
+            <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 px-6 py-4 flex justify-between items-center">
                 <div className="flex flex-col items-start cursor-pointer group" onClick={() => router.push('/')}>
-                    <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 group-hover:text-gray-900 transition-colors">The</span>
-                    <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900">
+                    <span className="text-[9px] uppercase tracking-[0.4em] font-sans font-bold text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">The</span>
+                    <h1 className="text-xl font-serif font-medium tracking-tight text-gray-900 dark:text-gray-100">
                         Open Shelf
                     </h1>
                 </div>
@@ -136,21 +137,23 @@ const ShelfContent = () => {
                 <div className="flex items-center space-x-6">
                     <FeedManager onUpdate={refetch} />
 
-                    <button onClick={() => syncFeeds(false)} disabled={isSyncing} className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 transition-colors">
+                    <button onClick={() => syncFeeds(false)} disabled={isSyncing} className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
                         <RefreshCw className={isSyncing ? "animate-spin" : ""} size={14} />
                         <span>Sync</span>
                     </button>
 
                     <Tabs value={view} onValueChange={(v) => setView(v as 'canvas' | 'feed')}>
-                        <TabsList className="bg-gray-100/50 rounded-none h-9">
+                        <TabsList className="bg-gray-100/50 dark:bg-gray-800/50 rounded-none h-9">
                             <TabsTrigger value="canvas" className="text-[10px] uppercase tracking-widest px-4">Canvas</TabsTrigger>
                             <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4">Feed</TabsTrigger>
                         </TabsList>
                     </Tabs>
 
+                    <ThemeToggle />
+
                     <button
                         onClick={() => router.push('/profile')}
-                        className="p-2 text-gray-300 hover:text-gray-900 transition-colors"
+                        className="p-2 text-gray-300 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                         title="Profile & Stacks"
                     >
                         <User size={16} />
@@ -170,10 +173,10 @@ const ShelfContent = () => {
                 ) : (
                     <div className="h-full flex flex-col items-center justify-center text-center px-6 space-y-6">
                         <div className="space-y-2">
-                            <p className="text-gray-400 font-serif italic text-xl">
+                            <p className="text-gray-400 dark:text-gray-500 font-serif italic text-xl">
                                 {isSyncing ? "Syncing your sources..." : "Your shelf is empty."}
                             </p>
-                            <p className="text-[10px] uppercase tracking-widest text-gray-300 font-sans max-w-xs mx-auto">
+                            <p className="text-[10px] uppercase tracking-widest text-gray-300 dark:text-gray-600 font-sans max-w-xs mx-auto">
                                 {isSyncing
                                     ? "We're fetching the latest articles for you."
                                     : "Add an RSS feed via 'Manage Feeds' to start your collection."}
@@ -181,13 +184,13 @@ const ShelfContent = () => {
                         </div>
                         {!isSyncing && (
                             <FeedManager onUpdate={refetch} trigger={
-                                <button className="flex items-center space-x-2 px-8 py-4 border border-gray-100 hover:border-gray-900 transition-all text-[10px] uppercase tracking-[0.3em] font-bold">
+                                <button className="flex items-center space-x-2 px-8 py-4 border border-gray-100 dark:border-gray-800 hover:border-gray-900 dark:hover:border-gray-100 transition-all text-[10px] uppercase tracking-[0.3em] font-bold">
                                     <PlusCircle size={16} />
                                     <span>Add First Source</span>
                                 </button>
                             } />
                         )}
-                        {isSyncing && <Loader2 className="animate-spin text-gray-100" size={24} />}
+                        {isSyncing && <Loader2 className="animate-spin text-gray-100 dark:text-gray-800" size={24} />}
                     </div>
                 )}
             </main>
@@ -203,8 +206,8 @@ const ShelfContent = () => {
 export default function Index() {
     return (
         <Suspense fallback={
-            <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#fafafa]">
-                <Loader2 className="animate-spin text-gray-200" size={32} />
+            <div className="h-screen w-screen flex flex-col items-center justify-center bg-background">
+                <Loader2 className="animate-spin text-gray-200 dark:text-gray-700" size={32} />
             </div>
         }>
             <ShelfContent />

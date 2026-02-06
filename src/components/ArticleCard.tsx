@@ -48,15 +48,15 @@ const ArticleCard = memo(({ article, onClick, isCanvas = false }: ArticleCardPro
       ref={cardRef}
       whileHover={{ y: -4 }}
       className={cn(
-        "bg-white border border-gray-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all cursor-pointer group overflow-hidden",
+        "bg-white dark:bg-gray-900 border border-gray-200/60 dark:border-gray-800/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_12px_40px_rgb(0,0,0,0.4)] transition-all cursor-pointer group overflow-hidden",
         isCanvas ? 'w-[320px]' : 'w-full mb-6'
       )}
       onClick={() => onClick(article)}
     >
       {imageUrl && shouldLoadImage && (
-        <div className="w-full h-44 overflow-hidden bg-gray-50 relative">
+        <div className="w-full h-44 overflow-hidden bg-gray-50 dark:bg-gray-800 relative">
           <div className={cn(
-            "absolute inset-0 bg-gray-100 transition-opacity duration-300",
+            "absolute inset-0 bg-gray-100 dark:bg-gray-700 transition-opacity duration-300",
             imageLoaded ? "opacity-0" : "opacity-100"
           )} />
           <motion.img
@@ -75,15 +75,15 @@ const ArticleCard = memo(({ article, onClick, isCanvas = false }: ArticleCardPro
       <div className="p-6 space-y-4">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-[9px] uppercase tracking-[0.3em] text-gray-400 font-sans font-bold">{article.source}</p>
-            <p className="text-[9px] text-gray-300 font-sans uppercase tracking-widest">{article.readingTime}</p>
+            <p className="text-[9px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 font-sans font-bold">{article.source}</p>
+            <p className="text-[9px] text-gray-300 dark:text-gray-600 font-sans uppercase tracking-widest">{article.readingTime}</p>
           </div>
-          <h3 className="text-[17px] font-sans font-semibold leading-tight text-gray-900 line-clamp-2">{article.title}</h3>
+          <h3 className="text-[17px] font-sans font-semibold leading-tight text-gray-900 dark:text-gray-100 line-clamp-2">{article.title}</h3>
         </div>
-        <p className="text-[13px] text-gray-500 line-clamp-3 font-serif italic leading-relaxed">{article.excerpt}</p>
-        <div className="pt-3 border-t border-gray-50 flex items-center justify-between">
-          <p className="text-[10px] text-gray-400 font-sans font-medium">by {article.author}</p>
-          <span className="text-[9px] text-gray-300 font-sans">{article.publishedAt}</span>
+        <p className="text-[13px] text-gray-500 dark:text-gray-400 line-clamp-3 font-serif italic leading-relaxed">{article.excerpt}</p>
+        <div className="pt-3 border-t border-gray-50 dark:border-gray-800 flex items-center justify-between">
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 font-sans font-medium">by {article.author}</p>
+          <span className="text-[9px] text-gray-300 dark:text-gray-600 font-sans">{article.publishedAt}</span>
         </div>
       </div>
     </motion.div>

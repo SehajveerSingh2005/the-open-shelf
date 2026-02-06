@@ -252,9 +252,9 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     >
       <SpatialGuide />
       <motion.div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.08] text-gray-900 dark:text-gray-100"
         style={{
-          backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
           backgroundPosition: useTransform([x, y], ([bx, by]) => `calc(50% + ${bx}px) calc(50% + ${by}px)`)
         }}

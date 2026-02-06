@@ -39,6 +39,39 @@
 
     --radius: 0rem;
   }
+
+  .dark {
+    /* Deep Black Editorial Palette */
+    --background: 0 0% 4%;       /* #0a0a0a - Deep Black */
+    --foreground: 0 0% 96%;      /* #f5f5f5 - Off White */
+
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 96%;
+
+    --radius: 0rem;
+  }
 }
 
 @layer base {
