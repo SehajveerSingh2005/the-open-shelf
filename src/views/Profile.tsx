@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, LogOut, Heart, Repeat, History, Bookmark, User as UserIcon, Settings } from 'lucide-react';
-import { showSuccess, showError } from '@/utils/toast';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowLeft, LogOut, Heart, Repeat, History, Bookmark, User as UserIcon } from 'lucide-react';
+import { showError } from '@/utils/toast';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import ArticleCard from '@/components/ArticleCard';
-import { Article } from '@/types/article';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Profile = () => {
@@ -41,14 +40,15 @@ const Profile = () => {
           .from('reading_activity')
           .select('*, articles(*)')
           .eq('user_id', user.id)
-          .order('last_read_at', { ascending: false });
+          .order('last_read_at', { ascending: false })
+          .limit(10);
       } else if (tab === 'stacks') {
         result = await supabase
           .from('stacks')
           .select('*')
           .eq('user_id', user.id);
       }
-      
+
       setData(result?.data || []);
     } catch (err) {
       showError("Could not load your collection.");
@@ -93,7 +93,7 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="flex flex-col items-center text-center mb-16 space-y-4">
           <div className="w-24 h-24 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center border-4 border-background shadow-xl">
-             <UserIcon size={40} className="text-gray-300" />
+            <UserIcon size={40} className="text-gray-300" />
           </div>
           <div className="space-y-1">
             <h2 className="text-3xl font-serif font-medium">{user?.email?.split('@')[0]}</h2>
@@ -134,26 +134,37 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 gap-8 space-y-8">
-                  {data.map((item, i) => (
-                    <div key={item.id || i} className="break-inside-avoid relative group">
-                      {activeTab === 'reposts' && item.highlight_text && (
-                        <div className="absolute -top-4 -left-4 z-10 w-full">
-                          <div className="bg-gray-950 text-white p-4 text-[13px] font-serif italic shadow-2xl border border-white/10 rotate-[-1deg] group-hover:rotate-0 transition-transform">
-                             "{item.highlight_text}"
-                             {item.comment && (
-                               <div className="mt-2 pt-2 border-t border-white/10 text-[10px] uppercase font-sans tracking-widest text-gray-400 not-italic">
-                                 {item.comment}
-                               </div>
-                             )}
+                  {data.map((item, i) => {
+                    const rawArticle = item.articles || item;
+                    // Map snake_case from DB to camelCase for component
+                    const mappedArticle = {
+                      ...rawArticle,
+                      imageUrl: rawArticle.image_url,
+                      readingTime: rawArticle.reading_time,
+                      publishedAt: rawArticle.published_at ? new Date(rawArticle.published_at).toLocaleDateString() : 'Recently',
+                    };
+
+                    return (
+                      <div key={item.id || i} className="break-inside-avoid relative group">
+                        {activeTab === 'reposts' && item.highlight_text && (
+                          <div className="absolute -top-4 -left-4 z-10 w-full">
+                            <div className="bg-gray-950 text-white p-4 text-[13px] font-serif italic shadow-2xl border border-white/10 rotate-[-1deg] group-hover:rotate-0 transition-transform">
+                              "{item.highlight_text}"
+                              {item.comment && (
+                                <div className="mt-2 pt-2 border-t border-white/10 text-[10px] uppercase font-sans tracking-widest text-gray-400 not-italic">
+                                  {item.comment}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      <ArticleCard 
-                        article={item.articles || item} 
-                        onClick={() => handleArticleClick(item)} 
-                      />
-                    </div>
-                  ))}
+                        )}
+                        <ArticleCard
+                          article={mappedArticle}
+                          onClick={() => handleArticleClick(item)}
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </motion.div>

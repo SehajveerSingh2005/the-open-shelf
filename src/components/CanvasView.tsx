@@ -4,7 +4,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { Article } from '@/types/article';
 import ArticleCard from './ArticleCard';
-import { Hand, MousePointer2, X } from 'lucide-react';
+import { Hand, MousePointer2, X, RefreshCw } from 'lucide-react';
 
 interface CanvasViewProps {
   articles: {
@@ -12,6 +12,7 @@ interface CanvasViewProps {
     dimensions: { width: number; height: number };
   };
   onArticleClick: (article: Article) => void;
+  onRefresh?: () => void;
 }
 
 const STORAGE_KEY = 'open-shelf-camera-v11';
@@ -94,7 +95,7 @@ const SpatialGuide = () => {
   );
 };
 
-const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
+const CanvasView = ({ articles, onArticleClick, onRefresh }: CanvasViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Initialize with stored state to avoid flicker
@@ -115,8 +116,32 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
   const lastMousePos = useRef({ x: 0, y: 0 });
   const dragDistance = useRef(0);
 
+  // Dynamic opacity for Explore button based on distance from center
+  const radius = articles.dimensions.width / 2;
+  const exploreOpacity = useTransform(
+    [x, y, scale],
+    ([latestX, latestY, latestScale]) => {
+      const s = latestScale as number;
+      // Calculate center in content space
+      const centerX = -(latestX as number) / s;
+      const centerY = -(latestY as number) / s;
+      const dist = Math.sqrt(centerX * centerX + centerY * centerY);
+
+      // Fade in when approaching the edge (70% of radius)
+      const threshold = radius * 0.7;
+      if (dist < threshold) return 0;
+      return Math.min((dist - threshold) / 200, 1);
+    }
+  );
+
+  const explorePointerEvents = useTransform(exploreOpacity, opacity => opacity > 0.1 ? 'auto' : 'none');
+
   // Helper to clamp pan values within content bounds
   const clampPan = useCallback((newX: number, newY: number, currentScale: number) => {
+    // ... (keep logic but relax clamping to allow exploring empty space?)
+    // Actually, user wants to find the button in empty area, so we MUST allow panning into empty area.
+    // I will relax the padding significantly or remove hard clamping if "Explore" is the goal.
+    // But for now keeping standard clamping with large padding is safer to prevent getting lost.
     const container = containerRef.current;
     if (!container) return { x: newX, y: newY };
 
@@ -126,8 +151,8 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
     const contentWidth = width * currentScale;
     const contentHeight = height * currentScale;
 
-    // Add padding to allow some overscroll
-    const padding = 200;
+    // Increase padding to allow users to see "Explore" area
+    const padding = 600;
 
     // Calculate max/min pan values
     const maxX = (contentWidth / 2) + padding;
@@ -243,7 +268,7 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [rawX, rawY, rawScale]);
+  }, [rawX, rawY, rawScale, clampPan]);
 
   return (
     <div
@@ -283,6 +308,24 @@ const CanvasView = ({ articles, onArticleClick }: CanvasViewProps) => {
           </div>
         ))}
       </motion.div>
+
+      {/* Floating Explore Button */}
+      {onRefresh && (
+        <motion.div
+          style={{ opacity: exploreOpacity, pointerEvents: explorePointerEvents }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center space-y-3"
+        >
+          <button
+            onClick={() => onRefresh()}
+            className="w-16 h-16 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-[0_10px_40px_rgba(0,0,0,0.2)] flex items-center justify-center text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-110 transition-all duration-300 group"
+          >
+            <RefreshCw size={24} className="group-hover:rotate-180 transition-transform duration-700" />
+          </button>
+          <span className="text-[10px] uppercase tracking-[0.2em] font-sans font-bold text-gray-400 dark:text-gray-500 bg-background/80 backdrop-blur-md px-4 py-2 rounded-full border border-gray-100 dark:border-gray-800 shadow-sm">
+            Explore More
+          </span>
+        </motion.div>
+      )}
     </div>
   );
 };

@@ -27,7 +27,7 @@ const ShelfContent = () => {
     const [onboardingChecked, setOnboardingChecked] = useState(false);
     const hasAttemptedInitialSync = useRef(false);
 
-    const { data: articlesData, isLoading, refetch } = useArticles();
+    const { data: articlesData, isLoading, refetch, fetchNextPage } = useArticles();
 
     const articles: Article[] = articlesData?.items || [];
 
@@ -164,7 +164,7 @@ const ShelfContent = () => {
             <main className="flex-1 mt-[73px] relative overflow-hidden">
                 {articles.length > 0 ? (
                     view === 'canvas' && articlesData ? (
-                        <CanvasView articles={articlesData} onArticleClick={handleArticleClick} />
+                        <CanvasView articles={articlesData} onArticleClick={handleArticleClick} onRefresh={fetchNextPage} />
                     ) : (
                         <div className="h-full overflow-y-auto subtle-grid">
                             <FeedView articles={articles} onArticleClick={handleArticleClick} />

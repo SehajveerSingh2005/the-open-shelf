@@ -22,6 +22,6 @@ export const updateReadingProgress = async (articleId: string, userId: string, p
     article_id: articleId,
     user_id: userId,
     progress,
-    last_read_at: new Error().toISOString() // This is a hack to get current time if not using raw SQL
+    last_read_at: new Date().toISOString()
   }, { onConflict: 'user_id,article_id' });
 };

@@ -75,9 +75,13 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
 
   const fetchFeeds = async (showLoading = true) => {
     if (showLoading) setLoading(true);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
     const { data, error } = await supabase
       .from('feeds')
       .select('*')
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (!error && data) setFeeds(data);
@@ -108,10 +112,18 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
     if (!newUrl) return;
     setAdding(true);
     try {
-      const { error } = await supabase.functions.invoke('fetch-rss', {
-        body: { feedUrl: newUrl }
+      const { data: { session } } = await supabase.auth.getSession();
+      const response = await fetch('/api/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify({ feedUrl: newUrl })
       });
-      if (error) throw error;
+
+      if (!response.ok) throw new Error('Failed to add feed');
+
       showSuccess("Source added to shelf");
       setNewUrl('');
       await fetchFeeds(false);
@@ -138,6 +150,27 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
       onUpdate();
     }
   };
+
+  const toggleAll = async (hide: boolean) => {
+    const originalFeeds = [...feeds];
+    // Optimistic update
+    setFeeds(prev => prev.map(f => ({ ...f, is_hidden: hide })));
+
+    const { error } = await supabase
+      .from('feeds')
+      .update({ is_hidden: hide })
+      .in('id', feeds.map(f => f.id));
+
+    if (error) {
+      showError("Could not update feeds.");
+      setFeeds(originalFeeds);
+    } else {
+      onUpdate();
+    }
+  };
+
+  // Check if all feeds are currently hidden
+  const allHidden = feeds.length > 0 && feeds.every(f => f.is_hidden);
 
   const handleDelete = async (id: string) => {
     const previousFeeds = [...feeds];
@@ -234,6 +267,32 @@ const FeedManager = ({ onUpdate, trigger }: FeedManagerProps) => {
                   )}
                 </Button>
               </form>
+
+
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-gray-100 dark:border-gray-800">
+                <div className="flex items-center space-x-2">
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400">My Sources</span>
+                  <span className="text-[10px] text-gray-300 dark:text-gray-600 font-mono">({feeds.length})</span>
+                </div>
+                {feeds.length > 0 && (
+                  <button
+                    onClick={() => toggleAll(!allHidden)}
+                    className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  >
+                    {allHidden ? (
+                      <>
+                        <Eye size={12} />
+                        <span>Show All</span>
+                      </>
+                    ) : (
+                      <>
+                        <EyeOff size={12} />
+                        <span>Hide All</span>
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
 
               <div className="max-h-[400px] overflow-y-auto space-y-2 pr-2">
                 {loading && feeds.length === 0 ? (

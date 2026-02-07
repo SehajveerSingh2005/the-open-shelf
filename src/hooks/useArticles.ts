@@ -1,25 +1,61 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Article } from '@/types/article';
 
+// ... (imports)
 export function useArticles() {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['articles'],
-    queryFn: async () => {
-      const { data, error } = await supabase
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return { items: [] };
+
+      // 1. Get feeds (only if page 0, but we need urls every time. optimizing to fetch once? 
+      // React Query caches this queryFn, so fetching feeds every time is okay for now or we can cache feeds separately.
+      // For simplicity/robustness, we fetch feeds every time. It's fast.)
+      const { data: feeds } = await supabase
+        .from('feeds')
+        .select('url')
+        .eq('user_id', user.id)
+        .eq('is_hidden', false);
+
+      if (!feeds || feeds.length === 0) {
+        return { items: [] };
+      }
+
+      const feedUrls = feeds.map(f => f.url);
+
+      // Dynamic page size: 
+      // Initial load (page 0): Get 200 items to fill the shelf.
+      // Subsequent loads: Get 50 items for speed.
+      // If fewer sources (<5), increase initial load to 500.
+      let pageSize = pageParam === 0 ? 200 : 50;
+      if (feedUrls.length < 5 && pageParam === 0) pageSize = 500;
+
+      // Calculate range
+      const from = pageParam;
+      const to = from + pageSize - 1;
+
+      // 2. Fetch global articles matching those feed URLs
+      const { data: articles, error } = await supabase
         .from('articles')
-        .select(`
-          *,
-          feeds:feeds!articles_feed_id_fkey (
-            is_hidden
-          )
-        `)
-        .order('published_at', { ascending: false });
+        .select('*')
+        .in('feed_url', feedUrls)
+        .order('published_at', { ascending: false })
+        .range(from, to);
 
       if (error) throw error;
 
-      const items = (data || []).filter(item => !item.feeds?.is_hidden);
-
+      return { items: articles || [] };
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      // If last page is empty, we are done.
+      if (lastPage.items.length === 0) return undefined;
+      // Next offset is the total number of items fetched so far
+      return allPages.reduce((total, page) => total + page.items.length, 0);
+    },
+    select: (data) => {
       // Seeded shuffle function for consistent randomization
       const seededShuffle = <T,>(array: T[], seed: number): T[] => {
         const shuffled = [...array];
@@ -40,40 +76,25 @@ export function useArticles() {
         return shuffled;
       };
 
-      // Shuffle articles to mix sources randomly (using user ID or constant seed for consistency)
-      const shuffledItems = seededShuffle(items, 42);
+      // Flatten and stable shuffle
+      const allItems = data.pages.flatMap((page, pageIdx) =>
+        seededShuffle(page.items, 42 + pageIdx)
+      );
 
-      // Masonry grid with balanced rows and columns for circular distribution
-      const CARD_WIDTH = 380;
-      const GAP = 60;
+      // Spiral Layout
+      // Theta increment: Golden Angle = PI * (3 - sqrt(5)) approx 2.39996
+      const thetaIncrement = Math.PI * (3 - Math.sqrt(5));
+      const spread = 300; // Tighter packing (was 450)
 
-      // Use more balanced column count (closer to square) for better circular fill
-      const NUM_COLS = Math.ceil(Math.sqrt(items.length * 1.2));
-      const GRID_WIDTH = NUM_COLS * CARD_WIDTH;
+      const positioned = allItems.map((item: any, idx) => {
+        // Spiral equations
+        // r = c * sqrt(n)
+        // theta = n * increment
+        const r = spread * Math.sqrt(idx);
+        const theta = idx * thetaIncrement;
 
-      // Track column heights for masonry interlocking
-      const colHeights: number[] = new Array(NUM_COLS).fill(0).map((_, i) => (i % 2 === 0 ? 0 : 40));
-
-      const positioned = shuffledItems.map((item: any, idx: number) => {
-        // Find shortest column for interlocking masonry pattern
-        const minHeight = Math.min(...colHeights);
-        const colIndex = colHeights.indexOf(minHeight);
-
-        // Horizontal position with jitter
-        const jitterX = (Math.sin(idx * 1.5) * 30);
-        const x = (colIndex * CARD_WIDTH) - (GRID_WIDTH / 2) + (CARD_WIDTH / 2) + jitterX;
-
-        // Vertical position from column height
-        const y = colHeights[colIndex] + (Math.cos(idx * 0.8) * 20);
-
-        // Variable card heights based on content
-        const hasImage = !!item.image_url;
-        const baseHeight = hasImage ? 380 : 260;
-        const variableHeight = (Math.abs(Math.sin(idx)) * 120);
-        const estimatedHeight = baseHeight + variableHeight;
-
-        // Update column height for next card (creates interlocking)
-        colHeights[colIndex] += estimatedHeight + GAP;
+        const x = r * Math.cos(theta);
+        const y = r * Math.sin(theta);
 
         return {
           id: item.id,
@@ -91,34 +112,22 @@ export function useArticles() {
         };
       });
 
-      // Center the grid vertically
-      const totalHeight = Math.max(...colHeights);
-      const verticalOffset = totalHeight / 2;
+      // Calculate new boundary
+      const maxRadius = positioned.length > 0
+        ? Math.sqrt(Math.pow(positioned[positioned.length - 1].x, 2) + Math.pow(positioned[positioned.length - 1].y, 2))
+        : 4000;
 
-      const centeredPositioned = positioned.map(item => ({
-        ...item,
-        y: item.y - verticalOffset
-      }));
-
-      // Apply circular boundary - filter out articles outside the circle
-      const maxDimension = Math.max(GRID_WIDTH, totalHeight);
-      const radius = maxDimension / 2;
-
-      const circularFiltered = centeredPositioned.filter(item => {
-        const distance = Math.sqrt(item.x * item.x + item.y * item.y);
-        return distance <= radius;
-      });
+      const dim = Math.max(4000, maxRadius * 2 + 1000);
 
       return {
-        items: circularFiltered as Article[],
+        items: positioned as Article[],
         dimensions: {
-          width: maxDimension,
-          height: maxDimension
+          width: dim,
+          height: dim
         }
       };
     },
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    retry: 1,
   });
 }

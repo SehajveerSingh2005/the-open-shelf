@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { X, ExternalLink, Type, Moon, Sun, AlignLeft, AlignCenter, AlignJustify, Heart, Share2, Quote, MessageSquare, Check } from 'lucide-react';
+import { X, Moon, Sun, AlignCenter, AlignJustify, Heart, Share2, Quote, Settings, Minus, Plus } from 'lucide-react';
 import { Article } from '@/types/article';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-import { saveScrollPosition, getScrollPosition } from '@/lib/scrollPositionDB';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -34,16 +32,14 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   const [repostComment, setRepostComment] = useState('');
 
   const [settings, setSettings] = useState(() => {
+    const defaults = { fontSize: 20, lineHeight: 1.75, fontType: 'sans' as FontType, layout: 'standard' as LayoutType };
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : {
-        fontSize: 20,
-        lineHeight: 1.75,
-        fontType: 'sans' as FontType,
-        layout: 'standard' as LayoutType
-      };
+      if (!saved) return defaults;
+      const parsed = JSON.parse(saved);
+      return { ...defaults, ...parsed };
     } catch {
-      return { fontSize: 20, lineHeight: 1.75, fontType: 'sans', layout: 'standard' };
+      return defaults;
     }
   });
 
@@ -75,22 +71,55 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
       });
   };
 
-  const handleTextSelection = useCallback(() => {
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
-      setSelection(null);
-      return;
-    }
+  // Optimize selection handling: Use mouseup/keyup to avoid re-renders during drag
+  // This fixes the "laggy" feel and "rendering resets selection" bug.
+  useEffect(() => {
+    const handleSelectionEnd = () => {
+      // Use RAF to ensure selection is final
+      requestAnimationFrame(() => {
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+          setSelection(null);
+          return;
+        }
 
-    const range = sel.getRangeAt(0);
-    const rect = range.getBoundingClientRect();
-    
-    setSelection({
-      text: sel.toString().trim(),
-      top: rect.top + window.scrollY - 60,
-      left: rect.left + rect.width / 2
-    });
-  }, []);
+        const range = sel.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        // Calculate position - ReaderView is fixed, so we use viewport coordinates directly
+        // If the window itself doesn't scroll, window.scrollY is 0.
+        // We use absolute positioning for the tooltip.
+        setSelection({
+          text: sel.toString().trim(),
+          top: rect.top - 60, // Removed window.scrollY as ReaderView is fixed overlay
+          left: rect.left + rect.width / 2
+        });
+      });
+    };
+
+    document.addEventListener('mouseup', handleSelectionEnd);
+    document.addEventListener('keyup', handleSelectionEnd);
+
+    // Optional: Hide tooltip on scroll to prevent drifting
+    const container = containerRef.current;
+    const handleScroll = () => {
+      if (selection) setSelection(null);
+    };
+
+    if (container) container.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      document.removeEventListener('mouseup', handleSelectionEnd);
+      document.removeEventListener('keyup', handleSelectionEnd);
+      if (container) container.removeEventListener('scroll', handleScroll);
+    };
+  }, [selection]); // Depend on selection to allow scroll-clearing logic to work properly? 
+  // Actually, we don't need handleTextSelection as a dependency anymore since logic is inline or stable.
+  // But wait, if I inline it, I need access to setSelection. 
+  // 'selection' dependency is needed for handleScroll to know if it should clear (optimization).
+
+  // NOTE: I removed the useCallback 'handleTextSelection' block entirely in favor of this effect
+  // to clean up duplicated logic potential.
 
   const handleRepost = async () => {
     if (!user || !selection) return;
@@ -106,11 +135,6 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
     setIsReposting(false);
   };
 
-  useEffect(() => {
-    document.addEventListener('selectionchange', handleTextSelection);
-    return () => document.removeEventListener('selectionchange', handleTextSelection);
-  }, [handleTextSelection]);
-
   // Reading progress tracking
   useEffect(() => {
     if (!containerRef.current || !user) return;
@@ -125,14 +149,19 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   return (
     <motion.div
       ref={containerRef}
-      initial={{ y: '100vh' }}
+      initial={{ y: '100%' }}
       animate={{ y: 0 }}
-      exit={{ y: '100vh' }}
+      exit={{ y: '100%' }}
+      transition={{
+        type: "tween",
+        ease: [0.22, 1, 0.36, 1],
+        duration: 0.5
+      }}
       className={cn("fixed inset-0 z-50 overflow-y-auto", theme === 'light' ? 'bg-white text-gray-900' : 'bg-[#0a0a0a] text-gray-100')}
     >
       <div className={cn("fixed top-0 left-0 right-0 h-14 z-50 flex items-center justify-between px-6 border-b", theme === 'light' ? 'bg-white/95 border-gray-50' : 'bg-[#0a0a0a]/95 border-gray-900')}>
         <motion.div className={cn("absolute bottom-0 left-0 right-0 h-[1.5px] origin-left", theme === 'light' ? 'bg-gray-900' : 'bg-gray-100')} style={{ scaleX }} />
-        
+
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="icon" onClick={handleLike} className={isLiked ? "text-red-500" : "text-gray-400"}>
             <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
@@ -144,25 +173,76 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
 
         <div className="flex items-center space-x-1">
           <Popover>
-            <PopoverTrigger asChild><Button variant="ghost" size="icon" className="text-gray-400"><Type size={18} /></Button></PopoverTrigger>
-            <PopoverContent className="w-64 p-5 rounded-none border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
-               <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase font-bold text-gray-400">Theme</span>
-                    <div className="flex border rounded-none p-0.5">
-                      <button onClick={() => setTheme('light')} className={cn("p-1.5", theme === 'light' ? 'bg-gray-100' : '')}><Sun size={12} /></button>
-                      <button onClick={() => setTheme('dark')} className={cn("p-1.5", theme === 'dark' ? 'bg-gray-800' : '')}><Moon size={12} /></button>
+            <PopoverTrigger asChild><Button variant="ghost" size="icon" className="text-gray-400"><Settings size={18} /></Button></PopoverTrigger>
+            <PopoverContent className="w-64 p-5 rounded-none border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950 shadow-xl">
+              <div className="space-y-6">
+                {/* Theme & Layout Combined Row for compactness */}
+                <div className="flex justify-between items-start space-x-4">
+                  <div className="space-y-2 flex-1">
+                    <span className="text-[10px] uppercase font-bold text-gray-400 block mb-2">Theme</span>
+                    <div className="flex border rounded-none p-0.5 w-fit">
+                      <button onClick={() => setTheme('light')} className={cn("p-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors", theme === 'light' ? 'bg-gray-100 dark:bg-gray-800' : '')}><Sun size={14} /></button>
+                      <button onClick={() => setTheme('dark')} className={cn("p-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors", theme === 'dark' ? 'bg-gray-100 dark:bg-gray-800' : '')}><Moon size={14} /></button>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <span className="text-[10px] uppercase font-bold text-gray-400">Layout</span>
-                    <div className="grid grid-cols-3 gap-1">
+
+                  <div className="space-y-2 flex-1">
+                    <span className="text-[10px] uppercase font-bold text-gray-400 block mb-2">Width</span>
+                    <div className="flex border rounded-none p-0.5 w-fit">
                       {['narrow', 'standard', 'wide'].map((l) => (
-                        <Button key={l} variant={settings.layout === l ? 'secondary' : 'outline'} size="sm" className="h-7 text-[10px]" onClick={() => setSettings({...settings, layout: l})}>{l}</Button>
+                        <button
+                          key={l}
+                          onClick={() => setSettings({ ...settings, layout: l as any })}
+                          className={cn(
+                            "p-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors relative group",
+                            settings.layout === l ? 'bg-gray-100 dark:bg-gray-800' : ''
+                          )}
+                          title={l.charAt(0).toUpperCase() + l.slice(1)}
+                        >
+                          {l === 'narrow' && <AlignJustify size={14} className="rotate-90" />}
+                          {l === 'standard' && <AlignCenter size={14} />}
+                          {l === 'wide' && <AlignJustify size={14} />}
+                        </button>
                       ))}
                     </div>
                   </div>
-               </div>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <span className="text-[10px] uppercase font-bold text-gray-400">Typography</span>
+
+                  <div className="grid grid-cols-3 gap-1 mb-3">
+                    {['sans', 'serif', 'mono'].map((f) => (
+                      <button
+                        key={f}
+                        onClick={() => setSettings({ ...settings, fontType: f as any })}
+                        className={cn(
+                          "text-xs py-1 px-2 border hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors",
+                          settings.fontType === f ? 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700' : 'border-transparent'
+                        )}
+                      >
+                        {f === 'sans' ? 'Sans' : f === 'serif' ? 'Serif' : 'Mono'}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between border rounded-none p-1">
+                    <button
+                      onClick={() => setSettings({ ...settings, fontSize: Math.max(14, settings.fontSize - 2) })}
+                      className="p-1 px-3 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors text-gray-500"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="text-xs font-mono w-8 text-center">{settings.fontSize}</span>
+                    <button
+                      onClick={() => setSettings({ ...settings, fontSize: Math.min(32, settings.fontSize + 2) })}
+                      className="p-1 px-3 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors text-gray-500"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </PopoverContent>
           </Popover>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-gray-400"><X size={20} /></Button>
@@ -196,8 +276,8 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
                     value={repostComment}
                     onChange={(e) => setRepostComment(e.target.value)}
                   />
-                  <Button 
-                    onClick={handleRepost} 
+                  <Button
+                    onClick={handleRepost}
                     disabled={isReposting}
                     className="w-full bg-white text-black hover:bg-gray-200 rounded-none h-10 text-[10px] uppercase tracking-widest font-bold"
                   >
@@ -228,6 +308,12 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
           ref={contentRef}
           className={cn(
             "prose prose-lg max-w-none transition-all duration-300",
+            // Aggressive Image/Media handling: ensure no overflow is possible
+            "[&_img]:!max-w-full [&_img]:!h-auto [&_img]:!rounded-md [&_img]:!my-6 [&_img]:!mx-auto [&_img]:object-contain",
+            "[&_figure]:!max-w-full [&_figure]:!mx-auto",
+            "[&_video]:!max-w-full [&_video]:!h-auto [&_video]:!rounded-md [&_video]:!mx-auto",
+            // Iframe/Video handling
+            "[&_iframe]:!max-w-full [&_iframe]:!w-full [&_iframe]:aspect-video [&_iframe]:!rounded-md [&_iframe]:!my-6",
             settings.fontType === 'serif' ? 'font-serif' : 'font-sans',
             theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray'
           )}
