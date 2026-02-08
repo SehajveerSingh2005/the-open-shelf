@@ -22,7 +22,22 @@ const ShelfContent = () => {
 
     const articleId = searchParams ? searchParams.get('article') : null;
 
-    const [view, setView] = useState<'canvas' | 'feed'>('canvas');
+    const [view, setView] = useState<'canvas' | 'feed'>(() => {
+        if (typeof window !== 'undefined') {
+            try {
+                const saved = localStorage.getItem('open-shelf-view-mode');
+                return (saved === 'feed' ? 'feed' : 'canvas');
+            } catch {
+                return 'canvas';
+            }
+        }
+        return 'canvas';
+    });
+
+    useEffect(() => {
+        localStorage.setItem('open-shelf-view-mode', view);
+    }, [view]);
+
     const [isSyncing, setIsSyncing] = useState(false);
     const [onboardingChecked, setOnboardingChecked] = useState(false);
     const hasAttemptedInitialSync = useRef(false);
@@ -144,8 +159,8 @@ const ShelfContent = () => {
 
                     <Tabs value={view} onValueChange={(v) => setView(v as 'canvas' | 'feed')}>
                         <TabsList className="bg-gray-100/50 dark:bg-gray-800/50 rounded-none h-9">
-                            <TabsTrigger value="canvas" className="text-[10px] uppercase tracking-widest px-4">Canvas</TabsTrigger>
-                            <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4">Feed</TabsTrigger>
+                            <TabsTrigger value="canvas" className="text-[10px] uppercase tracking-widest px-4">Spatial</TabsTrigger>
+                            <TabsTrigger value="feed" className="text-[10px] uppercase tracking-widest px-4">Grid</TabsTrigger>
                         </TabsList>
                     </Tabs>
 
@@ -158,8 +173,8 @@ const ShelfContent = () => {
                     >
                         <User size={16} />
                     </button>
-                </div>
-            </header>
+                </div >
+            </header >
 
             <main className="flex-1 mt-[73px] relative overflow-hidden">
                 {articles.length > 0 ? (
@@ -199,7 +214,7 @@ const ShelfContent = () => {
                 article={selectedArticle}
                 onClose={handleCloseReader}
             />
-        </div>
+        </div >
     );
 };
 

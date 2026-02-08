@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { X, Moon, Sun, AlignCenter, AlignJustify, Heart, Share2, Quote, Settings, Minus, Plus, ExternalLink } from 'lucide-react';
+import { X, Moon, Sun, AlignCenter, AlignJustify, Heart, Share2, Quote, Settings, Minus, Plus, ExternalLink, Layers } from 'lucide-react';
+import { AddToStack } from '@/components/AddToStack';
 import { Article } from '@/types/article';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useTheme } from '@/contexts/ThemeContext';
@@ -30,9 +32,10 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   const [selection, setSelection] = useState<{ text: string; top: number; left: number; timestamp: number } | null>(null);
   const [isReposting, setIsReposting] = useState(false);
   const [repostComment, setRepostComment] = useState('');
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
 
   const [settings, setSettings] = useState(() => {
-    const defaults = { fontSize: 20, lineHeight: 1.75, fontType: 'sans' as FontType, layout: 'standard' as LayoutType };
+    const defaults = { fontSize: 20, lineHeight: 1.75, fontType: 'sans' as FontType, layout: 'standard' as LayoutType, heroMode: false };
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return defaults;
@@ -57,18 +60,37 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
     checkLike();
   }, [article.id, user]);
 
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  }, [settings]);
+
   const handleLike = async () => {
     if (!user) return;
     const { error } = await toggleLike(article.id, user.id, isLiked);
     if (!error) setIsLiked(!isLiked);
   };
 
-  const handleShare = () => {
-    navigator.share?.({ title: article.title, url: window.location.href })
-      .catch(() => {
-        navigator.clipboard.writeText(window.location.href);
-        showSuccess("Link copied to clipboard");
-      });
+  const handleShare = async () => {
+    const shareData = {
+      title: article.title,
+      text: `Read "${article.title}"`,
+      url: article.url, // Share the original source URL for better compatibility
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // Only fallback if it wasn't a user cancellation
+        if ((err as Error).name !== 'AbortError') {
+          navigator.clipboard.writeText(shareData.url);
+          showSuccess("Link copied to clipboard");
+        }
+      }
+    } else {
+      navigator.clipboard.writeText(shareData.url);
+      showSuccess("Link copied to clipboard");
+    }
   };
 
   // Optimize selection handling: Use mouseup/keyup to avoid re-renders during drag
@@ -238,6 +260,11 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
           <Button variant="ghost" size="icon" onClick={handleLike} className={isLiked ? "text-red-500" : "text-gray-400"}>
             <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
           </Button>
+          <AddToStack article={article}>
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+              <Layers size={18} />
+            </Button>
+          </AddToStack>
           <Button variant="ghost" size="icon" onClick={handleShare} className="text-gray-400">
             <Share2 size={18} />
           </Button>
@@ -325,6 +352,14 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
                     </button>
                   </div>
                 </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <span className="text-[10px] uppercase font-bold text-gray-400">Hero Mode</span>
+                  <Switch
+                    checked={settings.heroMode}
+                    onCheckedChange={(checked) => setSettings({ ...settings, heroMode: checked })}
+                  />
+                </div>
               </div>
             </PopoverContent>
           </Popover>
@@ -376,55 +411,107 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
         )}
       </AnimatePresence>
 
-      <article className={cn(
-        settings.layout === 'narrow' ? 'max-w-2xl' : settings.layout === 'wide' ? 'max-w-5xl' : 'max-w-3xl',
-        "mx-auto px-6 py-32"
-      )}>
-        <header className="mb-20 space-y-6">
-          <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400">{article.source} • {article.publishedAt}</p>
-          <h1 className="text-5xl md:text-7xl font-serif font-medium leading-[1.0] tracking-tight">{article.title}</h1>
-          <div className="flex items-center space-x-4 text-xl font-serif italic text-gray-400 border-t pt-8">
-            <span>by {article.author}</span>
-            <span className="w-1 h-1 rounded-full bg-gray-300" />
-            <span>{article.readingTime}</span>
+      <div className="min-h-screen pb-32">
+        {settings.heroMode && article.imageUrl ? (
+          <div className="relative w-full h-[60vh] md:h-[70vh] flex items-end justify-center mb-12">
+            <div className="absolute inset-0">
+              <img
+                src={article.imageUrl}
+                alt=""
+                className={cn(
+                  "w-full h-full object-cover transition-opacity duration-300",
+                  heroImageLoaded ? "opacity-100" : "opacity-0"
+                )}
+                onLoad={() => setHeroImageLoaded(true)}
+                loading="eager"
+                // @ts-ignore
+                fetchPriority="high"
+              />
+              <div className="absolute inset-0 bg-gray-100 dark:bg-gray-900 -z-10" />
+              <div className="absolute inset-0 bg-black/30" />
+            </div>
+
+            <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pb-12 md:pb-20 text-center text-white">
+              <p className="text-xs uppercase tracking-[0.4em] font-bold text-white/80 mb-4 drop-shadow-md">{article.source} • {article.publishedAt}</p>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium leading-[1.1] tracking-tight mb-6 text-white drop-shadow-lg">{article.title}</h1>
+              <div className="flex items-center justify-center space-x-4 text-lg font-serif italic text-white/90 drop-shadow-md">
+                <span>by {article.author}</span>
+                <span className="w-1 h-1 rounded-full bg-white/60" />
+                <span>{article.readingTime}</span>
+              </div>
+            </div>
           </div>
-        </header>
+        ) : null}
 
-        <div
-          ref={contentRef}
-          className={cn(
-            "prose prose-lg max-w-none transition-all duration-300",
-            // Aggressive Image/Media handling: ensure no overflow is possible
-            "[&_img]:!max-w-full [&_img]:!h-auto [&_img]:!rounded-md [&_img]:!my-6 [&_img]:!mx-auto [&_img]:object-contain",
-            "[&_figure]:!max-w-full [&_figure]:!mx-auto",
-            "[&_video]:!max-w-full [&_video]:!h-auto [&_video]:!rounded-md [&_video]:!mx-auto",
-            // Iframe/Video handling
-            "[&_iframe]:!max-w-full [&_iframe]:!w-full [&_iframe]:aspect-video [&_iframe]:!rounded-md [&_iframe]:!my-6",
-            settings.fontType === 'serif' ? 'font-serif' : 'font-sans',
-            theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray'
+        <article className={cn(
+          settings.layout === 'narrow' ? 'max-w-2xl' : settings.layout === 'wide' ? 'max-w-5xl' : 'max-w-3xl',
+          "mx-auto px-6",
+          settings.heroMode && article.imageUrl ? "pt-12" : "pt-32"
+        )}>
+          {!settings.heroMode && (
+            <header className="mb-20 space-y-6">
+              <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400">{article.source} • {article.publishedAt}</p>
+              <h1 className="text-5xl md:text-7xl font-serif font-medium leading-[1.0] tracking-tight">{article.title}</h1>
+              <div className="flex items-center space-x-4 text-xl font-serif italic text-gray-400 border-t pt-8">
+                <span>by {article.author}</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
+                <span>{article.readingTime}</span>
+              </div>
+            </header>
           )}
-          style={{ fontSize: `${settings.fontSize}px`, lineHeight: settings.lineHeight }}
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
 
-        <footer className="mt-6 mb-6 flex flex-col items-center justify-center space-y-6 border-t border-gray-100 dark:border-gray-800 pt-12">
-          <p className="font-serif italic text-gray-400 dark:text-gray-500 text-lg">
-            End of article
-          </p>
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center space-x-2 text-xs uppercase tracking-[0.2em] font-bold border border-gray-200 dark:border-gray-800 px-6 py-3 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-black transition-all"
-          >
-            <span>Read Original on {article.source}</span>
-            <ExternalLink size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-        </footer>
-      </article>
+          {/* Same header if no image in hero mode? We can fall back */}
+          {settings.heroMode && !article.imageUrl && (
+            <header className="mb-20 space-y-6">
+              <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400">{article.source} • {article.publishedAt}</p>
+              <h1 className="text-5xl md:text-7xl font-serif font-medium leading-[1.0] tracking-tight">{article.title}</h1>
+              <div className="flex items-center space-x-4 text-xl font-serif italic text-gray-400 border-t pt-8">
+                <span>by {article.author}</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
+                <span>{article.readingTime}</span>
+              </div>
+            </header>
+          )}
+
+          <div
+            ref={contentRef}
+            className={cn(
+              "prose prose-lg max-w-none transition-all duration-300",
+              // Aggressive Image/Media handling: ensure no overflow is possible
+              "[&_img]:!max-w-full [&_img]:!h-auto [&_img]:!rounded-md [&_img]:!my-6 [&_img]:!mx-auto [&_img]:object-contain",
+              "[&_figure]:!max-w-full [&_figure]:!mx-auto",
+              "[&_video]:!max-w-full [&_video]:!h-auto [&_video]:!rounded-md [&_video]:!mx-auto",
+              // Iframe/Video handling
+              "[&_iframe]:!max-w-full [&_iframe]:!w-full [&_iframe]:aspect-video [&_iframe]:!rounded-md [&_iframe]:!my-6",
+              // Hide first image if Hero Mode is on (to avoid duplication)
+              settings.heroMode && article.imageUrl ? "[&>*:first-child_img]:hidden [&>figure:first-child]:hidden [&>img:first-child]:hidden" : "",
+              settings.fontType === 'serif' ? 'font-serif' : settings.fontType === 'mono' ? 'font-mono' : 'font-sans',
+              theme === 'light' ? 'prose-gray' : 'prose-invert prose-gray'
+            )}
+            style={{ fontSize: `${settings.fontSize}px`, lineHeight: settings.lineHeight }}
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+
+          <footer className="mt-24 mb-12 flex flex-col items-center justify-center space-y-6 border-t border-gray-100 dark:border-gray-800 pt-12">
+            <p className="font-serif italic text-gray-400 dark:text-gray-500 text-lg">
+              End of article
+            </p>
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center space-x-2 text-xs uppercase tracking-[0.2em] font-bold border border-gray-200 dark:border-gray-800 px-6 py-3 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-black transition-all"
+            >
+              <span>Read Original on {article.source}</span>
+              <ExternalLink size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+          </footer>
+        </article>
+      </div>
     </motion.div>
   );
 };
+
 
 const ReaderView = ({ article, onClose }: ReaderViewProps) => {
   return (

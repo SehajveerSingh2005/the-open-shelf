@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Instrument_Sans } from "next/font/google";
+import { Instrument_Serif, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import "../globals.css";
 import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/toaster";
@@ -20,6 +20,11 @@ const instrumentSans = Instrument_Sans({
   variable: "--font-sans",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"], // JetBrains Mono doesn't have multiple weights in default variable import usually, but we can specify or leave default
+  variable: "--font-mono",
+});
+
 export const metadata: Metadata = {
   title: "The Open Shelf | A Spatial Reading Platform",
   description: "A non-linear repository for ideas, essays, and slow media.",
@@ -35,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${instrumentSerif.variable} ${instrumentSans.variable} font-sans antialiased`}>
+      <body className={`${instrumentSerif.variable} ${instrumentSans.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <ThemeProvider>
           <QueryProvider>
             <AuthProvider>

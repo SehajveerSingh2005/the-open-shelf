@@ -21,6 +21,7 @@ export default {
       fontFamily: {
         serif: ['"Instrument Serif"', "serif"],
         sans: ['"Instrument Sans"', "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
         reading: ['"Instrument Sans"', "sans-serif"],
       },
       colors: {
