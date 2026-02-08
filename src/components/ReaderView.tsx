@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { X, Moon, Sun, AlignCenter, AlignJustify, Heart, Share2, Quote, Settings, Minus, Plus } from 'lucide-react';
+import { X, Moon, Sun, AlignCenter, AlignJustify, Heart, Share2, Quote, Settings, Minus, Plus, ExternalLink } from 'lucide-react';
 import { Article } from '@/types/article';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -27,7 +27,7 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   const { theme, setTheme } = useTheme();
   const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
-  const [selection, setSelection] = useState<{ text: string; top: number; left: number } | null>(null);
+  const [selection, setSelection] = useState<{ text: string; top: number; left: number; timestamp: number } | null>(null);
   const [isReposting, setIsReposting] = useState(false);
   const [repostComment, setRepostComment] = useState('');
 
@@ -73,8 +73,19 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
 
   // Optimize selection handling: Use mouseup/keyup to avoid re-renders during drag
   // This fixes the "laggy" feel and "rendering resets selection" bug.
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  // Optimize selection handling: Use mouseup/keyup to avoid re-renders during drag
+  // This fixes the "laggy" feel and "rendering resets selection" bug.
+  // We utilize a ref for the popover state to start reading the fresh state immediately inside the listener
+  const isPopoverOpenRef = useRef(false);
+  useEffect(() => { isPopoverOpenRef.current = isPopoverOpen; }, [isPopoverOpen]);
+
   useEffect(() => {
     const handleSelectionEnd = () => {
+      // Don't clear selection if we're interacting with the repost popover
+      if (isPopoverOpenRef.current) return;
+
       // Use RAF to ensure selection is final
       requestAnimationFrame(() => {
         const sel = window.getSelection();
@@ -92,7 +103,8 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
         setSelection({
           text: sel.toString().trim(),
           top: rect.top - 60, // Removed window.scrollY as ReaderView is fixed overlay
-          left: rect.left + rect.width / 2
+          left: rect.left + rect.width / 2,
+          timestamp: Date.now()
         });
       });
     };
@@ -103,7 +115,11 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
     // Optional: Hide tooltip on scroll to prevent drifting
     const container = containerRef.current;
     const handleScroll = () => {
-      if (selection) setSelection(null);
+      // Don't clear if popover is open (user might be reposting)
+      // Also ignore scroll events immediately after selection (grace period for inertial scroll)
+      if (selection && !isPopoverOpenRef.current && (Date.now() - selection.timestamp > 500)) {
+        setSelection(null);
+      }
     };
 
     if (container) container.addEventListener('scroll', handleScroll, { passive: true });
@@ -136,15 +152,71 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
   };
 
   // Reading progress tracking
+  // Scroll restoration and progress tracking
+  const [hasRestoredScroll, setHasRestoredScroll] = useState(false);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const latestProgressRef = useRef(0);
+
+  // Restore scroll position
+  useEffect(() => {
+    if (!user || hasRestoredScroll) return;
+
+    const loadProgress = async () => {
+      const { data } = await supabase
+        .from('reading_activity')
+        .select('progress')
+        .eq('user_id', user.id)
+        .eq('article_id', article.id)
+        .single();
+
+      if (data?.progress && data.progress > 0 && containerRef.current) {
+        // Allow a brief moment for layout paint
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            if (containerRef.current) {
+              const { scrollHeight, clientHeight } = containerRef.current;
+              const targetScroll = (scrollHeight - clientHeight) * data.progress;
+              containerRef.current.scrollTo({
+                top: targetScroll,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
+        });
+      }
+      setHasRestoredScroll(true);
+    };
+    loadProgress();
+  }, [article.id, user, hasRestoredScroll]);
+
+  // Optimized save function
+  const debouncedSave = useCallback((progress: number) => {
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    saveTimeoutRef.current = setTimeout(() => {
+      if (user) {
+        updateReadingProgress(article.id, user.id, progress);
+      }
+    }, 1000); // 1.5s debounce for optimal performance
+  }, [article.id, user]);
+
+  // Track scroll progress
   useEffect(() => {
     if (!containerRef.current || !user) return;
+
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest > 0.1) {
-        updateReadingProgress(article.id, user.id, latest);
-      }
+      latestProgressRef.current = latest;
+      debouncedSave(latest);
     });
-    return () => unsubscribe();
-  }, [scrollYProgress, article.id, user]);
+
+    return () => {
+      unsubscribe();
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      // Attempt to save final position on unmount/close
+      if (latestProgressRef.current > 0) {
+        updateReadingProgress(article.id, user.id, latestProgressRef.current);
+      }
+    };
+  }, [scrollYProgress, article.id, user, debouncedSave]);
 
   return (
     <motion.div
@@ -162,13 +234,24 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
       <div className={cn("fixed top-0 left-0 right-0 h-14 z-50 flex items-center justify-between px-6 border-b", theme === 'light' ? 'bg-white/95 border-gray-50' : 'bg-[#0a0a0a]/95 border-gray-900')}>
         <motion.div className={cn("absolute bottom-0 left-0 right-0 h-[1.5px] origin-left", theme === 'light' ? 'bg-gray-900' : 'bg-gray-100')} style={{ scaleX }} />
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 relative z-10">
           <Button variant="ghost" size="icon" onClick={handleLike} className={isLiked ? "text-red-500" : "text-gray-400"}>
             <Heart size={18} fill={isLiked ? "currentColor" : "none"} />
           </Button>
           <Button variant="ghost" size="icon" onClick={handleShare} className="text-gray-400">
             <Share2 size={18} />
           </Button>
+        </div>
+
+        {/* Centered Article Info */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none w-full px-24 flex items-center justify-center space-x-3">
+          <span className="text-xs uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 font-bold shrink-0">
+            {article.source}
+          </span>
+          <span className="text-gray-300 dark:text-gray-700 text-xs">•</span>
+          <span className="text-base font-serif font-medium text-gray-900 dark:text-gray-100 truncate max-w-[500px]">
+            {article.title}
+          </span>
         </div>
 
         <div className="flex items-center space-x-1">
@@ -259,9 +342,12 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
             style={{ position: 'fixed', top: selection.top, left: selection.left, transform: 'translateX(-50%)' }}
             className="z-[60] bg-gray-950 text-white rounded-full px-4 py-2 flex items-center space-x-4 shadow-xl border border-white/10"
           >
-            <Popover>
+            <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
               <PopoverTrigger asChild>
-                <button className="flex items-center space-x-2 text-[10px] uppercase tracking-widest font-bold hover:text-gray-300">
+                <button
+                  onMouseDown={(e) => e.preventDefault()} // Prevent focus loss/selection clearing on click
+                  className="flex items-center space-x-2 text-[10px] uppercase tracking-widest font-bold hover:text-gray-300"
+                >
                   <Quote size={14} />
                   <span>Repost</span>
                 </button>
@@ -320,6 +406,21 @@ const ReaderContent = ({ article, onClose }: { article: Article, onClose: () => 
           style={{ fontSize: `${settings.fontSize}px`, lineHeight: settings.lineHeight }}
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
+
+        <footer className="mt-6 mb-6 flex flex-col items-center justify-center space-y-6 border-t border-gray-100 dark:border-gray-800 pt-12">
+          <p className="font-serif italic text-gray-400 dark:text-gray-500 text-lg">
+            End of article
+          </p>
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center space-x-2 text-xs uppercase tracking-[0.2em] font-bold border border-gray-200 dark:border-gray-800 px-6 py-3 hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-black transition-all"
+          >
+            <span>Read Original on {article.source}</span>
+            <ExternalLink size={14} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+          </a>
+        </footer>
       </article>
     </motion.div>
   );
