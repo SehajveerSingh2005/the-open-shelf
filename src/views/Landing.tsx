@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useTransform, useSpring, useMotionValue, useScroll, MotionValue } from 'framer-motion';
+import { motion, useTransform, useSpring, useMotionValue, MotionValue } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Map, Zap, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import MagnetLines from '@/components/MagnetLines';
 
 const GrainOverlay = () => (
   <div className="fixed inset-0 pointer-events-none z-[99] opacity-[0.035]">
@@ -154,37 +155,36 @@ const ConnectionLines = () => (
   </svg>
 );
 
-const Feature = ({ icon: Icon, title, description, index }: any) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 1.2, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-    className="space-y-6 text-center group"
-  >
-    <div className="flex justify-center">
-      <div className="w-10 h-10 flex items-center justify-center text-gray-300 dark:text-gray-600 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors duration-700">
-        <Icon size={20} strokeWidth={1} />
+const FeatureRow = ({ number, title, description }: any) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      className="group flex flex-col md:flex-row md:items-baseline py-16 border-t border-gray-100 dark:border-gray-900 last:border-b transition-colors duration-300"
+    >
+      <div className="w-24 shrink-0 mb-4 md:mb-0">
+        <span className="text-xs font-mono text-gray-400 dark:text-gray-600">({number})</span>
       </div>
-    </div>
-    <div className="space-y-3">
-      <h3 className="text-xl font-serif font-medium text-gray-900 dark:text-gray-100">{title}</h3>
-      <p className="text-gray-400 dark:text-gray-500 font-serif leading-relaxed italic text-[15px] max-w-[240px] mx-auto opacity-70 group-hover:opacity-100 transition-opacity duration-700">
-        {description}
-      </p>
-    </div>
-  </motion.div>
-);
+      <div className="flex-1 md:pr-12">
+        <h3 className="text-4xl md:text-6xl font-serif font-medium text-gray-900 dark:text-gray-100 group-hover:italic transition-all duration-500">{title}</h3>
+      </div>
+      <div className="md:w-[400px] mt-6 md:mt-0">
+        <p className="text-lg text-gray-500 dark:text-gray-400 font-serif leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+          {description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
 
 const Landing = () => {
   const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const { scrollYProgress } = useScroll();
 
-  const manifestoOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.55, 0.65], [0, 1, 1, 0]);
-  const manifestoScale = useTransform(scrollYProgress, [0.25, 0.35], [0.98, 1]);
 
   useEffect(() => {
     setMounted(true);
@@ -222,9 +222,8 @@ const Landing = () => {
       />
 
       {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center relative shrink-0 z-0">
+      <section className="h-screen flex flex-col items-center justify-center relative shrink-0 z-0 overflow-hidden">
         <ConnectionLines />
-
         <FloatingCard
           delay={0.2} x={-460} y={-260}
           title="The Varieties of Isolation"
@@ -282,7 +281,7 @@ const Landing = () => {
             className="space-y-10"
           >
             <div className="flex flex-col items-center space-y-6">
-              <span className="text-[9px] uppercase font-sans font-bold tracking-[0.8em] text-gray-300 dark:text-gray-600">A Spatial Repository</span>
+              <span className="text-xl md:text-xl font-sans font-bold tracking-[0.4em] text-gray-900 dark:text-gray-100 uppercase">The Open Shelf</span>
               <h1 className="text-7xl md:text-[10rem] font-serif font-medium tracking-tighter text-gray-900 dark:text-gray-100 leading-[0.75]">
                 A place to think <br />
                 <span className="italic">with what you read.</span>
@@ -315,29 +314,133 @@ const Landing = () => {
       </section>
 
       {/* Feature Section - Clean Typography */}
-      <section className="py-48 px-6 bg-white dark:bg-gray-950 relative z-10 transition-colors duration-300">
+      {/* Source Aggregation Section - The Engine */}
+      <section className="py-24 px-6 bg-white dark:bg-gray-950 relative z-10 transition-colors duration-300">
+        <div className="max-w-6xl mx-auto text-center space-y-32">
+
+          {/* Main Statement */}
+          <div className="space-y-8">
+            <span className="text-[10px] uppercase tracking-[0.6em] text-gray-300 dark:text-gray-600 font-sans font-bold">The Engine</span>
+            <h3 className="text-5xl md:text-8xl font-serif font-medium text-gray-900 dark:text-gray-100 leading-[0.9] tracking-tight">
+              Powered by <span className="italic text-gray-400 dark:text-gray-600">open standards.</span> <br />
+              Curated by <span className="italic text-gray-400 dark:text-gray-600">you.</span>
+            </h3>
+          </div>
+
+          {/* Curated Sources Marquee */}
+          {/* Curated Sources Marquee */}
+          <div className="relative overflow-hidden w-full py-12 border-y border-gray-100 dark:border-gray-900">
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10" />
+
+            {/*  
+              Source Brand Colors:
+              Atlantic: #E11B22 (Red)
+              The Verge: #4823D4 (Blurple-ish for distinction) or #E21B3C
+              Aeon: #279A91 (Teal)
+              Substack: #FF6719 (Orange)
+              NYT: #121212 (Black)
+              Wired: #000000
+              Ars Technica: #FF4E00 (Orange)
+              Hacker News: #FF6600 (Orange)
+              The New Yorker: #2B2B2B
+            */}
+            <div className="flex items-center space-x-24 animate-scroll whitespace-nowrap">
+              {[
+                { name: "The Atlantic", color: "#E11B22", url: "https://www.theatlantic.com" },
+                { name: "The Verge", color: "#E21B3C", url: "https://www.theverge.com" },
+                { name: "Aeon", color: "#279A91", url: "https://aeon.co" },
+                { name: "Substack", color: "#FF6719", url: "https://substack.com" },
+                { name: "New York Times", color: "#666", url: "https://www.nytimes.com" }, // Keep neutral or specific
+                { name: "Wired", color: "#000000", url: "https://www.wired.com" },
+                { name: "Ars Technica", color: "#FF4E00", url: "https://arstechnica.com" },
+                { name: "Hacker News", color: "#FF6600", url: "https://news.ycombinator.com" },
+                { name: "The New Yorker", color: "#121212", url: "https://www.newyorker.com" }
+              ].map((source, i) => (
+                <a
+                  key={i}
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-3xl md:text-5xl font-serif italic transition-all duration-500 opacity-60 hover:opacity-100 grayscale hover:grayscale-0 cursor-pointer"
+                  style={{ color: source.color }}
+                >
+                  {source.name}
+                </a>
+              ))}
+              {[
+                { name: "The Atlantic", color: "#E11B22", url: "https://www.theatlantic.com" },
+                { name: "The Verge", color: "#E21B3C", url: "https://www.theverge.com" },
+                { name: "Aeon", color: "#279A91", url: "https://aeon.co" },
+                { name: "Substack", color: "#FF6719", url: "https://substack.com" },
+                { name: "New York Times", color: "#666", url: "https://www.nytimes.com" },
+                { name: "Wired", color: "#000000", url: "https://www.wired.com" },
+                { name: "Ars Technica", color: "#FF4E00", url: "https://arstechnica.com" },
+                { name: "Hacker News", color: "#FF6600", url: "https://news.ycombinator.com" },
+                { name: "The New Yorker", color: "#121212", url: "https://www.newyorker.com" }
+              ].map((source, i) => (
+                <a
+                  key={`dup-${i}`}
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-3xl md:text-5xl font-serif italic transition-all duration-500 opacity-60 hover:opacity-100 grayscale hover:grayscale-0 cursor-pointer"
+                  style={{ color: source.color }}
+                >
+                  {source.name}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Details */}
+          <div className="grid md:grid-cols-2 gap-24 text-left max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <span className="text-xs font-mono text-gray-400 dark:text-gray-600">(01) Curated Library</span>
+              <p className="text-xl text-gray-600 dark:text-gray-400 font-serif leading-relaxed">
+                We've hand-picked the most thoughtful corners of the internet. A starting foundation of high-signal prose, ready for you to explore.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <span className="text-xs font-mono text-gray-400 dark:text-gray-600">(02) Bring Your Own</span>
+              <p className="text-xl text-gray-600 dark:text-gray-400 font-serif leading-relaxed">
+                Complete freedom. Add any RSS feed, newsletter, or publication you trust. Build a personal repository that reflects your intellectual curiosity.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Feature Section - Clean Typography */}
+      <section className="py-24 px-6 bg-white dark:bg-gray-950 relative z-10 transition-colors duration-300">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-24">
-            <Feature
-              index={0} icon={Map} title="Spatial Layout"
-              description="Break free from the list. Arrange articles and notes on a two-dimensional map."
+          <div className="flex flex-col">
+            <FeatureRow
+              number="01"
+              title="Progressive Feed"
+              description="A spatial arrangement that respects your cognitive load. It grows as you explore, revealing new ideas only when you're ready to see them."
             />
-            <Feature
-              index={1} icon={BookOpen} title="Editorial Reader"
-              description="A focused reading environment that puts typography first. No distractions."
+            <FeatureRow
+              number="02"
+              title="Editorial Engine"
+              description="Typography first. A reading environment stripped of noise and distractions, designed purely for deep engagement and focus."
             />
-            <Feature
-              index={2} icon={Zap} title="Thought Sync"
-              description="Connect your favorite RSS feeds and newsletters. Curate your intellectual garden."
+            <FeatureRow
+              number="03"
+              title="Curated Stacks"
+              description="Don't just browse—collect. Group your high-signal sources into meaningful stacks for later retrieval and contemplation."
             />
           </div>
         </div>
       </section>
-
       {/* Manifesto Section - Pure Typography */}
       <section className="relative h-screen flex flex-col items-center justify-center p-6 text-center z-10 bg-white dark:bg-gray-950 transition-colors duration-300">
         <motion.div
-          style={{ opacity: manifestoOpacity, scale: manifestoScale }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-20%" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-6xl space-y-12"
         >
           <div className="space-y-6">
@@ -350,14 +453,26 @@ const Landing = () => {
           </div>
 
           <p className="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-serif leading-relaxed italic max-w-2xl mx-auto opacity-70">
-            "We believe that how you organize your digital consumption changes how you think. The Open Shelf is a horizontal expanse for the slow and the profound."
+            "We believe that how you organize your digital consumption changes how you think. The Open Shelf is a spatial expanse for the slow and the profound."
           </p>
         </motion.div>
       </section>
 
       {/* CTA Section - Minimal */}
-      <section className="py-60 relative z-10 bg-background border-t border-gray-50 dark:border-gray-900 flex flex-col items-center justify-center text-center transition-colors duration-300">
-        <div className="space-y-12">
+      <section className="py-60 relative z-10 bg-white dark:bg-gray-950 border-t border-gray-50 dark:border-gray-900 flex flex-col items-center justify-center text-center transition-colors duration-300 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center -z-10 opacity-40 dark:opacity-30">
+          <MagnetLines
+            rows={20}
+            columns={24}
+            containerSize="120vw"
+            lineColor="currentColor"
+            lineWidth="1.5px"
+            lineHeight="2.5rem"
+            baseAngle={0}
+            className="text-gray-900 dark:text-gray-100"
+          />
+        </div>
+        <div className="space-y-12 relative z-20 bg-white/50 dark:bg-gray-950/50 backdrop-blur-sm p-12 -mx-12 rounded-full">
           <h3 className="text-5xl md:text-7xl font-serif font-medium text-gray-900 dark:text-gray-100 italic tracking-tighter">Ready to slow down?</h3>
           <Link href="/shelf">
             <MagneticButton
@@ -368,7 +483,7 @@ const Landing = () => {
             </MagneticButton>
           </Link>
         </div>
-      </section>
+      </section >
 
       {/* Footer - Minimal Editorial */}
       <footer className="bg-white dark:bg-gray-950 pt-48 pb-24 relative z-10 transition-colors duration-300">
@@ -408,8 +523,8 @@ const Landing = () => {
             </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 };
 

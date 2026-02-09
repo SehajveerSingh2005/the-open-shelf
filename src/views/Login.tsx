@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 const Login = () => {
   const { session } = useAuth();
@@ -15,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (session) {
-      router.push('/shelf');
+      router.replace('/shelf');
     }
   }, [session, router]);
 
@@ -32,15 +33,15 @@ const Login = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 0.4, 
-                ease: "easeOut" 
+              transition={{
+                duration: 0.4,
+                ease: "easeOut"
               }}
               className="absolute inset-0"
             >
-              <img 
-                src={view === 'sign_in' ? '/login.jpg' : '/signup.jpg'} 
-                alt="Background" 
+              <img
+                src={view === 'sign_in' ? '/login.jpg' : '/signup.jpg'}
+                alt="Background"
                 className="w-full h-full object-cover grayscale-[10%]"
               />
               <div className="absolute inset-0 bg-black/40" />
@@ -48,12 +49,14 @@ const Login = () => {
           </AnimatePresence>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="relative z-10"
         >
-          <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-white/90">The Open Shelf</span>
+          <Link href="/" className="inline-block cursor-pointer hover:opacity-80 transition-opacity">
+            <span className="text-[11px] uppercase tracking-[0.6em] font-sans font-bold text-white/90">The Open Shelf</span>
+          </Link>
         </motion.div>
 
         <div className="relative z-10 max-w-md text-white">
@@ -74,7 +77,7 @@ const Login = () => {
                 )}
               </h1>
               <p className="text-xl text-white/80 font-serif leading-relaxed italic">
-                {view === 'sign_in' 
+                {view === 'sign_in'
                   ? "Your curated repository of ideas and slow media is waiting."
                   : "Create a space designed for depth, away from the noise."}
               </p>
@@ -82,7 +85,7 @@ const Login = () => {
           </AnimatePresence>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="relative z-10"
@@ -96,18 +99,20 @@ const Login = () => {
       {/* Form Side */}
       <div className="flex flex-col justify-center px-8 sm:px-16 lg:px-24 bg-white">
         <div className="lg:hidden absolute top-8 left-8">
-           <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-300">The Open Shelf</span>
+          <Link href="/" className="inline-block cursor-pointer hover:opacity-80 transition-opacity">
+            <span className="text-[10px] uppercase tracking-[0.6em] font-sans font-bold text-gray-300">The Open Shelf</span>
+          </Link>
         </div>
 
         <div className="w-full max-w-sm mx-auto space-y-8">
           <div className="flex justify-center lg:justify-start space-x-10 border-b border-gray-100 pb-4">
-            <button 
+            <button
               onClick={() => setView('sign_in')}
               className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all ${view === 'sign_in' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
             >
               Sign In
             </button>
-            <button 
+            <button
               onClick={() => setView('sign_up')}
               className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all ${view === 'sign_up' ? 'text-gray-900 border-b-2 border-gray-900 pb-4 -mb-[18px]' : 'text-gray-300 hover:text-gray-500'}`}
             >

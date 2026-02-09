@@ -51,7 +51,7 @@ const ShelfContent = () => {
             if (authLoading) return;
 
             if (!user) {
-                router.push('/login');
+                router.replace('/login');
                 return;
             }
 
@@ -63,12 +63,12 @@ const ShelfContent = () => {
                     .single();
 
                 if (error || !profileData?.onboarding_completed) {
-                    router.push('/onboarding');
+                    router.replace('/onboarding');
                 } else {
                     setOnboardingChecked(true);
                 }
             } catch (err) {
-                router.push('/onboarding');
+                router.replace('/onboarding');
             }
         };
         checkOnboarding();
